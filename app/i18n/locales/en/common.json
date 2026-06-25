@@ -1,0 +1,16 @@
+{
+  "common": {
+    "footer": {
+      "copy": "© {year} CPWD. All rights reserved.",
+      "built": "Built with Nuxt & love."
+    },
+    "marquee": {
+      "items": "CREATIVE DEVELOPMENT — MOTION DESIGN — 3D WEB — BRAND EXPERIENCES — NUXT — THREE.JS — GSAP —"
+    },
+    "motion": {
+      "label": "MOTION",
+      "heading": "Motion with intent — never decoration.",
+      "body": "Abstract dot systems, scroll-driven typography and seamlessly looping motion — built to carry your brand and deepen the experience."
+    }
+  }
+}

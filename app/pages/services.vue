@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { t } = useI18n()
+const services = useSectionTranslations('services')
 
 definePageMeta({ layout: 'default' })
 </script>
@@ -7,9 +7,9 @@ definePageMeta({ layout: 'default' })
 <template>
   <div class="page-services">
     <section class="page-services__hero">
-      <span class="font-mono page-services__label">{{ t('services.label') }}</span>
+      <span class="font-mono page-services__label">{{ services.t('label') }}</span>
       <h1 class="page-services__heading font-display">
-        {{ t('services.heading') }}
+        {{ services.t('heading') }}
       </h1>
     </section>
 

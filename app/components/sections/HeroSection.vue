@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { t } = useI18n()
+const hero = useSectionTranslations('hero')
 const localePath = useLocalePath()
 
 const canvasEl = ref<HTMLCanvasElement>()
@@ -128,14 +128,14 @@ onMounted(async () => {
       </p>
 
       <h1 class="hero__headline">
-        <span class="hero__line hero__line--body">{{ t('hero.line1') }}</span>
-        <span class="hero__line hero__line--display"><em>{{ t('hero.line2') }}</em></span>
-        <span class="hero__line hero__line--body">{{ t('hero.line3') }}</span>
+        <span class="hero__line hero__line--body">{{ hero.t('line1') }}</span>
+        <span class="hero__line hero__line--display"><em>{{ hero.t('line2') }}</em></span>
+        <span class="hero__line hero__line--body">{{ hero.t('line3') }}</span>
       </h1>
 
       <div ref="bottomEl" class="hero__bottom">
         <NuxtLink :to="localePath('/work')" class="link-arrow" data-cursor="view">
-          {{ t('hero.cta') }}
+          {{ hero.t('cta') }}
           <span class="arrow-icon">→</span>
         </NuxtLink>
 

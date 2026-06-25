@@ -1,0 +1,18 @@
+{
+  "contact": {
+    "label": "CONTACT",
+    "heading": "Laten we iets bouwen.",
+    "subtext": "Heb je een project in gedachten? Stuur een bericht en laten we praten.",
+    "email": "info{'@'}cpwd.nl",
+    "cta": "Stuur een bericht",
+    "form": {
+      "name": "Naam",
+      "email": "E-mail",
+      "message": "Bericht",
+      "submit": "Verstuur bericht",
+      "loading": "Versturen...",
+      "success": "Bericht verzonden!",
+      "error": "Er ging iets mis. Probeer het opnieuw."
+    }
+  }
+}

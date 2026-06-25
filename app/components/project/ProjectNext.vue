@@ -2,8 +2,8 @@
 import type { Project } from '~/types'
 
 defineProps<{ project: Project }>()
+const project = useSectionTranslations('project')
 const localePath = useLocalePath()
-const { t } = useI18n()
 const { setCursorState } = useCursor()
 </script>
 
@@ -15,7 +15,7 @@ const { setCursorState } = useCursor()
     @mouseenter="setCursorState('view')"
     @mouseleave="setCursorState('default')"
   >
-    <span class="project-next__label font-mono">{{ t('project.next') }}</span>
+    <span class="project-next__label font-mono">{{ project.t('next') }}</span>
     <h3 class="project-next__title font-display">
       {{ project.title }}
     </h3>

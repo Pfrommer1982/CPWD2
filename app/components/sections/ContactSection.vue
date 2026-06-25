@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { t } = useI18n()
+const contact = useSectionTranslations('contact')
 const localePath = useLocalePath()
 const sectionRef = ref<HTMLElement | null>(null)
 
@@ -28,26 +28,26 @@ onMounted(async () => {
   <section ref="sectionRef" class="contact-section">
     <ThreeNoiseBackground />
     <div class="contact-section__inner">
-      <p class="section-label contact-section__label">{{ t('contact.label') }}</p>
+      <p class="section-label contact-section__label">{{ contact.t('label') }}</p>
       <ProjectOutlineText
-        :text="t('contact.heading')"
+        :text="contact.t('heading')"
         tag="h2"
         size="display"
         class="contact-section__heading"
       />
       <ProjectOutlineText
-        :text="t('contact.subtext')"
+        :text="contact.t('subtext')"
         tag="p"
         size="body"
         scroll-start="top 85%"
         scroll-end="top 45%"
         class="contact-section__subtext"
       />
-      <a :href="`mailto:${t('contact.email')}`" class="contact-section__email link-slide">
-        {{ t('contact.email') }}
+      <a :href="`mailto:${contact.t('email')}`" class="contact-section__email link-slide">
+        {{ contact.t('email') }}
       </a>
       <GsapMagneticButton :to="localePath('/contact')" class="contact-section__cta">
-        {{ t('contact.cta') }}
+        {{ contact.t('cta') }}
       </GsapMagneticButton>
     </div>
   </section>

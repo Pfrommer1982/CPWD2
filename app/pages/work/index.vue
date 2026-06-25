@@ -3,7 +3,7 @@ import { projects } from '~/data/projects'
 
 definePageMeta({ layout: 'default' })
 
-const { t } = useI18n()
+const work = useSectionTranslations('work')
 const localePath = useLocalePath()
 const imageKit = useImageKit()
 
@@ -50,9 +50,9 @@ onMounted(async () => {
   <div class="work-page">
     <section class="work-header section">
       <div class="container">
-        <span class="section-label">{{ t('work.label') }}</span>
+        <span class="section-label">{{ work.t('label') }}</span>
         <h1 class="work-header__title">
-          {{ t('work.heading') }}
+          {{ work.t('heading') }}
         </h1>
       </div>
     </section>
@@ -88,7 +88,7 @@ onMounted(async () => {
                 <span class="label work-card__year">{{ project.year }}</span>
               </div>
               <div class="work-card__cta">
-                <span>{{ t('work.viewProject') }}</span>
+                <span>{{ work.t('viewProject') }}</span>
                 <span>→</span>
               </div>
             </div>

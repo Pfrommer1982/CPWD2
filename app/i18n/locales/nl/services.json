@@ -1,0 +1,45 @@
+{
+  "services": {
+    "label": "DIENSTEN",
+    "heading": "Wat we doen",
+    "intro": "Design, code, cloud en sound — alles onder één dak, afgestemd op merken die online willen opvallen.",
+    "items": [
+      {
+        "number": "01",
+        "title": "Webdesign",
+        "desc": "Visuele concepten, design systems en interfaces die premium aanvoelen — donker, scherp en doordacht tot in detail.",
+        "tags": ["UI/UX", "Design systems", "Figma", "Art direction"]
+      },
+      {
+        "number": "02",
+        "title": "Webdevelopment",
+        "desc": "Custom websites en webapps met Nuxt, Vue en moderne tooling. Snel, schaalbaar en gebouwd om lang mee te gaan.",
+        "tags": ["Nuxt", "Vue 3", "TypeScript", "Headless CMS"]
+      },
+      {
+        "number": "03",
+        "title": "Cloud & hosting",
+        "desc": "Deploy, CDN, beeldoptimalisatie en beveiligde omgevingen — zodat jouw site snel laadt, overal ter wereld.",
+        "tags": ["Vercel", "ImageKit", "Firebase", "CI/CD"]
+      },
+      {
+        "number": "04",
+        "title": "Sound design",
+        "desc": "Audio-identiteit voor merken en labels — van subtiele UI-feedback tot sfeervolle soundscapes die je site laten leven.",
+        "tags": ["Sound identity", "Web audio", "Labels", "Immersive UX"]
+      },
+      {
+        "number": "05",
+        "title": "Motion & interactie",
+        "desc": "Scroll-animaties, page transitions en micro-interacties met GSAP — motion met intentie, nooit als decor.",
+        "tags": ["GSAP", "ScrollTrigger", "Three.js", "Lenis"]
+      },
+      {
+        "number": "06",
+        "title": "Brand & strategie",
+        "desc": "Visuele identiteit, tone of voice en digitale merkbeleving — consistent over website, socials en campagnes.",
+        "tags": ["Branding", "Identity", "Copy", "Launch"]
+      }
+    ]
+  }
+}

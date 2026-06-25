@@ -7,7 +7,8 @@ const props = defineProps<{
   showcase: ShowcaseData
 }>()
 
-const { locale, t } = useI18n()
+const { locale } = useI18n()
+const projectI18n = useSectionTranslations('project')
 const imageKit = useImageKit()
 const pageRef = ref<HTMLElement>()
 const heroMedia = ref<HTMLElement>()
@@ -236,7 +237,7 @@ onMounted(async () => {
     <section class="showcase-overview section">
       <div class="container">
         <p class="showcase-overview__eyebrow overview-reveal label">
-          {{ t('project.overview') }}
+          {{ projectI18n.t('overview') }}
         </p>
         <h2 class="showcase-overview__title overview-reveal">
           {{ project.title }}
@@ -244,19 +245,19 @@ onMounted(async () => {
 
         <div class="showcase-overview__grid">
           <div class="showcase-overview__col overview-reveal">
-            <span class="label showcase-overview__key">• {{ t('project.role') }}</span>
+            <span class="label showcase-overview__key">• {{ projectI18n.t('role') }}</span>
             <ul class="showcase-overview__list">
               <li v-for="role in project.role" :key="role">{{ role }}</li>
             </ul>
           </div>
 
           <div class="showcase-overview__col overview-reveal">
-            <span class="label showcase-overview__key">• {{ t('project.year') }}</span>
+            <span class="label showcase-overview__key">• {{ projectI18n.t('year') }}</span>
             <p class="showcase-overview__value">{{ project.year }}</p>
           </div>
 
           <div class="showcase-overview__col showcase-overview__col--wide overview-reveal">
-            <span class="label showcase-overview__key">• {{ t('project.note') }}</span>
+            <span class="label showcase-overview__key">• {{ projectI18n.t('note') }}</span>
             <ProjectOutlineText
               :text="introText"
               size="body"
@@ -266,14 +267,14 @@ onMounted(async () => {
           </div>
 
           <div v-if="project.liveUrl" class="showcase-overview__col overview-reveal">
-            <span class="label showcase-overview__key">• {{ t('project.live') }}</span>
+            <span class="label showcase-overview__key">• {{ projectI18n.t('live') }}</span>
             <a
               :href="project.liveUrl"
               target="_blank"
               rel="noopener noreferrer"
               class="link-arrow showcase-overview__link"
             >
-              {{ t('project.viewSite') }}
+              {{ projectI18n.t('viewSite') }}
               <span class="arrow-icon">↗</span>
             </a>
           </div>
@@ -371,7 +372,7 @@ onMounted(async () => {
 
     <section v-if="project.gallery.length" class="showcase-chapter section">
       <div class="container showcase-chapter__head">
-        <span class="section-label">{{ t('project.moreScreens') }}</span>
+        <span class="section-label">{{ projectI18n.t('moreScreens') }}</span>
       </div>
 
       <div class="container">

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const { t, locale } = useI18n()
+const nav = useSectionTranslations('nav')
+const { locale } = useI18n()
 const localePath = useLocalePath()
 const route = useRoute()
 const switchLocalePath = useSwitchLocalePath()
@@ -8,10 +9,10 @@ const isScrolled = ref(false)
 const menuOpen = ref(false)
 
 const navItems = [
-  { to: '/work', label: 'nav.work' },
-  { to: '/about', label: 'nav.about' },
-  { to: '/services', label: 'nav.services' },
-  { to: '/contact', label: 'nav.contact' },
+  { to: '/work', label: 'work' },
+  { to: '/about', label: 'about' },
+  { to: '/services', label: 'services' },
+  { to: '/contact', label: 'contact' },
 ]
 
 function isActive(path: string) {
@@ -51,7 +52,7 @@ watch(menuOpen, (open) => {
             class="nav-link"
             :class="{ active: isActive(item.to) }"
           >
-            {{ t(item.label) }}
+            {{ nav.t(item.label) }}
           </NuxtLink>
         </li>
       </ul>
@@ -110,8 +111,8 @@ watch(menuOpen, (open) => {
             >
               <span class="menu-link__number label">0{{ index + 1 }}</span>
               <span class="menu-link__text link-split">
-                <span class="split-top">{{ t(item.label) }}</span>
-                <span class="split-bottom">{{ t(item.label) }}</span>
+                <span class="split-top">{{ nav.t(item.label) }}</span>
+                <span class="split-bottom">{{ nav.t(item.label) }}</span>
               </span>
             </NuxtLink>
           </li>

@@ -1,0 +1,18 @@
+{
+  "contact": {
+    "label": "CONTACT",
+    "heading": "Let's build something.",
+    "subtext": "Got a project in mind? Drop a message and let's talk.",
+    "email": "info{'@'}cpwd.nl",
+    "cta": "Send a message",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "submit": "Send message",
+      "loading": "Sending...",
+      "success": "Message sent!",
+      "error": "Something went wrong. Please try again."
+    }
+  }
+}

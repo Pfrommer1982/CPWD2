@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const { t } = useI18n()
-const text = computed(() => t('marquee.items'))
+const common = useSectionTranslations('common')
+const text = computed(() => common.t('marquee.items'))
 
 const row1 = ref<HTMLElement>()
 const row2 = ref<HTMLElement>()

@@ -2,7 +2,7 @@
 import type { Project } from '~/types'
 
 defineProps<{ project: Project }>()
-const { t } = useI18n()
+const projectI18n = useSectionTranslations('project')
 </script>
 
 <template>
@@ -18,12 +18,12 @@ const { t } = useI18n()
     </div>
     <div class="project-info__divider" />
     <div class="project-info__item">
-      <span class="project-info__label font-mono">{{ t('project.role') }}</span>
+      <span class="project-info__label font-mono">{{ projectI18n.t('role') }}</span>
       <span>{{ project.role.join(', ') }}</span>
     </div>
     <div class="project-info__divider" />
     <div class="project-info__item project-info__item--tags">
-      <span class="project-info__label font-mono">{{ t('project.technologies') }}</span>
+      <span class="project-info__label font-mono">{{ projectI18n.t('technologies') }}</span>
       <div class="project-info__tags">
         <span v-for="tech in project.technologies" :key="tech" class="project-info__tag font-mono">
           {{ tech }}

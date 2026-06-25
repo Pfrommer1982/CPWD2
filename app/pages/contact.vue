@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { t } = useI18n()
+const contact = useSectionTranslations('contact')
 
 definePageMeta({ layout: 'default' })
 
@@ -31,36 +31,36 @@ async function submitForm() {
 <template>
   <div class="page-contact">
     <section class="page-contact__hero">
-      <span class="font-mono page-contact__label">{{ t('contact.label') }}</span>
+      <span class="font-mono page-contact__label">{{ contact.t('label') }}</span>
       <h1 class="page-contact__heading font-display">
-        {{ t('contact.heading') }}
+        {{ contact.t('heading') }}
       </h1>
       <p class="page-contact__subtext">
-        {{ t('contact.subtext') }}
+        {{ contact.t('subtext') }}
       </p>
     </section>
 
     <form class="page-contact__form" @submit.prevent="submitForm">
       <div class="page-contact__field">
-        <label for="name">Name</label>
+        <label for="name">{{ contact.t('form.name') }}</label>
         <input id="name" v-model="form.name" type="text" required>
       </div>
       <div class="page-contact__field">
-        <label for="email">Email</label>
+        <label for="email">{{ contact.t('form.email') }}</label>
         <input id="email" v-model="form.email" type="email" required>
       </div>
       <div class="page-contact__field">
-        <label for="message">Message</label>
+        <label for="message">{{ contact.t('form.message') }}</label>
         <textarea id="message" v-model="form.message" rows="6" required />
       </div>
       <GsapMagneticButton type="submit">
-        {{ status === 'loading' ? '...' : t('contact.cta') }}
+        {{ status === 'loading' ? contact.t('form.loading') : contact.t('form.submit') }}
       </GsapMagneticButton>
       <p v-if="status === 'success'" class="page-contact__status page-contact__status--success">
-        Message sent!
+        {{ contact.t('form.success') }}
       </p>
       <p v-if="status === 'error'" class="page-contact__status page-contact__status--error">
-        Something went wrong. Please try again.
+        {{ contact.t('form.error') }}
       </p>
     </form>
   </div>

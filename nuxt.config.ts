@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { createI18nLocaleConfig } from './app/i18n/config'
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
@@ -11,6 +13,16 @@ export default defineNuxtConfig({
   css: ['~/assets/scss/main.scss'],
 
   vite: {
+    optimizeDeps: {
+      include: [
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
+        'gsap',
+        'gsap/ScrollTrigger',
+        'lenis',
+        'three',
+      ],
+    },
     css: {
       preprocessorOptions: {
         scss: {
@@ -24,14 +36,19 @@ export default defineNuxtConfig({
   },
 
   i18n: {
-    restructureDir: 'i18n',
-    locales: [
-      { code: 'nl', name: 'Nederlands', file: 'nl.json' },
-      { code: 'en', name: 'English', file: 'en.json' },
-    ],
-    defaultLocale: 'nl',
+    restructureDir: 'app/i18n',
     langDir: 'locales',
+    lazy: true,
+    defaultLocale: 'nl',
+    fallbackLocale: 'en',
+    locales: createI18nLocaleConfig(),
     strategy: 'prefix_except_default',
+    vueI18n: './i18n.config.ts',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root',
+    },
   },
 
   runtimeConfig: {

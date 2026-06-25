@@ -4,7 +4,8 @@ import type { ProjectGalleryItem } from '~/data/projects'
 
 definePageMeta({ layout: 'project' })
 
-const { t, locale } = useI18n()
+const { locale } = useI18n()
+const projectI18n = useSectionTranslations('project')
 const localePath = useLocalePath()
 const route = useRoute()
 const imageKit = useImageKit()
@@ -227,7 +228,7 @@ onMounted(async () => {
 
               <div class="project-info__meta">
                 <div class="project-info__meta-item">
-                  <span class="label">{{ t('project.role') }}</span>
+                  <span class="label">{{ projectI18n.t('role') }}</span>
                   <ul>
                     <li v-for="role in project.role" :key="role">
                       {{ role }}
@@ -236,7 +237,7 @@ onMounted(async () => {
                 </div>
 
                 <div class="project-info__meta-item">
-                  <span class="label">{{ t('project.technologies') }}</span>
+                  <span class="label">{{ projectI18n.t('technologies') }}</span>
                   <div class="project-info__tags">
                     <span
                       v-for="tech in project.technologies"
@@ -247,14 +248,14 @@ onMounted(async () => {
                 </div>
 
                 <div v-if="project.liveUrl" class="project-info__meta-item">
-                  <span class="label">{{ t('project.live') }}</span>
+                  <span class="label">{{ projectI18n.t('live') }}</span>
                   <a
                     :href="project.liveUrl"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="link-arrow"
                   >
-                    {{ t('project.viewSite') }}
+                    {{ projectI18n.t('viewSite') }}
                     <span class="arrow-icon">↗</span>
                   </a>
                 </div>
@@ -267,14 +268,14 @@ onMounted(async () => {
           <div class="container">
             <div class="project-story__grid">
               <div class="project-story__block will-reveal">
-                <span class="section-label">{{ t('project.challenge') }}</span>
+                <span class="section-label">{{ projectI18n.t('challenge') }}</span>
                 <p class="project-story__text">
                   {{ locale === 'nl' ? project.challenge.nl : project.challenge.en }}
                 </p>
               </div>
 
               <div class="project-story__block will-reveal">
-                <span class="section-label">{{ t('project.solution') }}</span>
+                <span class="section-label">{{ projectI18n.t('solution') }}</span>
                 <p class="project-story__text">
                   {{ locale === 'nl' ? project.solution.nl : project.solution.en }}
                 </p>
@@ -394,7 +395,7 @@ onMounted(async () => {
         </div>
 
         <div class="project-next__content container">
-          <span class="label project-next__label">{{ t('project.nextProject') }}</span>
+          <span class="label project-next__label">{{ projectI18n.t('nextProject') }}</span>
           <h2 class="project-next__title">
             {{ nextProject.title }}
           </h2>

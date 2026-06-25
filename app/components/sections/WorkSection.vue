@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { getFeaturedProjects } from '~/data/projects'
 
-const { t } = useI18n()
+const work = useSectionTranslations('work')
 const localePath = useLocalePath()
 const imageKit = useImageKit()
 const projects = getFeaturedProjects()
@@ -34,10 +34,10 @@ onMounted(async () => {
   <section class="work-section section">
     <div class="work-section__header container">
       <p class="section-label">
-        {{ t('work.label') }}
+        {{ work.t('label') }}
       </p>
       <ProjectOutlineText
-        :text="t('work.heading')"
+        :text="work.t('heading')"
         tag="h2"
         size="display"
         class="work-section__heading"
@@ -72,7 +72,7 @@ onMounted(async () => {
               <span>{{ project.category }}</span>
               <span>{{ project.year }}</span>
             </div>
-            <span class="project-cta">{{ t('work.viewProject') }}</span>
+            <span class="project-cta">{{ work.t('viewProject') }}</span>
           </div>
         </div>
       </NuxtLink>
@@ -80,7 +80,7 @@ onMounted(async () => {
 
     <div class="work-section__footer container">
       <NuxtLink :to="localePath('/work')" class="link-arrow" data-cursor="view">
-        {{ t('work.viewAll') }}
+        {{ work.t('viewAll') }}
         <span class="arrow-icon">→</span>
       </NuxtLink>
     </div>

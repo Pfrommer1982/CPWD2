@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import { localeList, localeTags, type ServiceLocaleItem } from '~/utils/i18n'
+import { localeList, localeTags, resolveLocaleMessage, type ServiceLocaleItem } from '~/utils/i18n'
 
-const { t, tm } = useI18n()
+const services = useSectionTranslations('services')
 const sectionRef = ref<HTMLElement | null>(null)
 const activeIndex = ref<number | null>(null)
 
 const items = computed(() => {
-  const raw = tm('services.items')
-  return localeList<ServiceLocaleItem>(raw).map(item => ({
-    ...item,
-    tags: localeTags(item.tags),
-  }))
+  const raw = services.tm('items')
+  return localeList<Record<string, unknown>>(raw).map(item => ({
+    number: resolveLocaleMessage(item.number, services.rt),
+    title: resolveLocaleMessage(item.title, services.rt),
+    desc: resolveLocaleMessage(item.desc, services.rt),
+    tags: localeTags(item.tags).map(tag => resolveLocaleMessage(tag, services.rt)),
+  } satisfies ServiceLocaleItem))
 })
 
 onMounted(async () => {
@@ -45,15 +47,15 @@ onMounted(async () => {
   <section ref="sectionRef" class="services-section section">
     <div class="container">
       <div class="services-section__header">
-        <span class="section-label">{{ t('services.label') }}</span>
+        <span class="section-label">{{ services.t('label') }}</span>
         <ProjectOutlineText
-          :text="t('services.heading')"
+          :text="services.t('heading')"
           tag="h2"
           size="display"
           class="services-section__heading"
         />
         <ProjectOutlineText
-          :text="t('services.intro')"
+          :text="services.t('intro')"
           tag="p"
           size="body"
           scroll-start="top 88%"

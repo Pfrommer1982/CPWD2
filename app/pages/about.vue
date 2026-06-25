@@ -1,18 +1,18 @@
 <script setup lang="ts">
-const { t } = useI18n()
+const about = useSectionTranslations('about')
 const { parseHighlightedBody } = useSplitText()
 
 definePageMeta({ layout: 'default' })
 
-const bodyHtml = computed(() => parseHighlightedBody(t('about.body')))
+const bodyHtml = computed(() => parseHighlightedBody(about.t('body')))
 </script>
 
 <template>
   <div class="page-about">
     <section class="page-about__hero">
-      <span class="font-mono page-about__label">{{ t('about.label') }}</span>
+      <span class="font-mono page-about__label">{{ about.t('label') }}</span>
       <GsapSplitText tag="h1" class="page-about__heading font-display">
-        {{ t('about.heading') }}
+        {{ about.t('heading') }}
       </GsapSplitText>
     </section>
 

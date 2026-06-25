@@ -1,9 +1,9 @@
 <script setup lang="ts">
-const { t } = useI18n()
+const about = useSectionTranslations('about')
 const localePath = useLocalePath()
 const sectionRef = ref<HTMLElement | null>(null)
 
-const outlineBody = computed(() => t('about.body').replace(/\*/g, ''))
+const outlineBody = computed(() => about.t('body').replace(/\*/g, ''))
 
 const stats = [
   { value: 5, suffix: '+', key: 'years' },
@@ -46,9 +46,9 @@ onMounted(async () => {
   <section ref="sectionRef" class="about-section">
     <div class="about-section__grid">
       <div class="about-section__text">
-        <span class="about-section__label font-mono">{{ t('about.label') }}</span>
+        <span class="about-section__label font-mono">{{ about.t('label') }}</span>
         <ProjectOutlineText
-          :text="t('about.heading')"
+          :text="about.t('heading')"
           tag="h2"
           size="display"
           class="about-section__heading"
@@ -62,7 +62,7 @@ onMounted(async () => {
           class="about-section__body"
         />
         <GsapMagneticButton :to="localePath('/about')" variant="ghost" class="about-section__cta">
-          {{ t('about.cta') }}
+          {{ about.t('cta') }}
         </GsapMagneticButton>
       </div>
 
@@ -76,7 +76,7 @@ onMounted(async () => {
     <div class="about-section__stats">
       <div v-for="(stat, i) in stats" :key="stat.key" class="about-section__stat">
         <span :ref="el => { if (el) statRefs[i] = el as HTMLElement }" class="about-section__stat-value font-display">0</span>
-        <span class="about-section__stat-label font-mono">{{ t(`about.stats.${stat.key}`) }}</span>
+        <span class="about-section__stat-label font-mono">{{ about.t(`stats.${stat.key}`) }}</span>
       </div>
     </div>
   </section>

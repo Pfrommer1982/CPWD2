@@ -1,0 +1,17 @@
+{
+  "project": {
+    "overview": "Project Overview",
+    "year": "YEAR",
+    "note": "NOTE",
+    "role": "ROLE",
+    "technologies": "TECHNOLOGIES",
+    "live": "LIVE SITE",
+    "viewSite": "View website",
+    "challenge": "THE CHALLENGE",
+    "solution": "THE SOLUTION",
+    "results": "Results",
+    "next": "Next project",
+    "nextProject": "NEXT PROJECT",
+    "moreScreens": "MORE SCREENS"
+  }
+}

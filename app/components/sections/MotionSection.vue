@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { t } = useI18n()
+const common = useSectionTranslations('common')
 </script>
 
 <template>
@@ -11,16 +11,16 @@ const { t } = useI18n()
     <div class="motion-section__vignette" aria-hidden="true" />
 
     <div class="motion-section__content container">
-      <span class="section-label motion-section__label">{{ t('motion.label') }}</span>
+      <span class="section-label motion-section__label">{{ common.t('motion.label') }}</span>
       <ProjectOutlineText
-        :text="t('motion.heading')"
+        :text="common.t('motion.heading')"
         tag="h2"
         size="display"
         scroll-start="top 85%"
         scroll-end="top 25%"
       />
       <ProjectOutlineText
-        :text="t('motion.body')"
+        :text="common.t('motion.body')"
         tag="p"
         size="body"
         scroll-start="top 80%"

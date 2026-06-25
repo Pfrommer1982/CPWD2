@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { t } = useI18n()
+const common = useSectionTranslations('common')
 const localePath = useLocalePath()
 const year = new Date().getFullYear()
 </script>
@@ -14,13 +14,13 @@ const year = new Date().getFullYear()
           <UiAppLogo :height="40" />
         </NuxtLink>
         <p class="app-footer__tagline label">
-          {{ t('footer.built') }}
+          {{ common.t('footer.built') }}
         </p>
       </div>
 
       <div class="app-footer__bottom">
         <p class="app-footer__copy text-muted">
-          {{ t('footer.copy', { year }) }}
+          {{ common.t('footer.copy', { year }) }}
         </p>
         <div class="app-footer__links">
           <a href="mailto:info@cpwd.nl" class="link-slide">info@cpwd.nl</a>
