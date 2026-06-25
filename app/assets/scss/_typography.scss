@@ -1,0 +1,79 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+@import '@fontsource/dm-serif-display/400.css';
+@import '@fontsource/dm-serif-display/400-italic.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/space-grotesk/400.css';
+@import '@fontsource/space-grotesk/500.css';
+@import '@fontsource/space-grotesk/700.css';
+
+body {
+  font-family: $font-body;
+  font-size: $text-base;
+  color: $color-text;
+  background-color: $color-bg;
+}
+
+.font-display {
+  font-family: $font-display;
+}
+
+.font-body {
+  font-family: $font-body;
+}
+
+.font-mono {
+  font-family: $font-mono;
+  font-size: $text-xs;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.italic-serif {
+  font-family: $font-display;
+  font-style: italic;
+}
+
+.highlight-word {
+  display: inline-block;
+  position: relative;
+  cursor: default;
+  transition: color $duration-fast $ease-out-expo;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: $color-accent;
+    transition: width $duration-med $ease-out-expo;
+  }
+
+  &:hover {
+    color: $color-accent;
+
+    &::after {
+      width: 100%;
+    }
+  }
+}
+
+.text-reveal {
+  overflow: hidden;
+
+  .word {
+    display: inline-block;
+  }
+
+  .char {
+    display: inline-block;
+  }
+}
+
+.link-underline {
+  @include hover-underline;
+}

@@ -1,0 +1,60 @@
+// Colors — dark & premium
+$color-bg:         #0A0A0A;
+$color-bg-alt:     #111111;
+$color-surface:    #1A1A1A;
+$color-border:     rgba(255, 255, 255, 0.08);
+$color-text:       #F0EDE8;
+$color-text-muted: rgba(240, 237, 232, 0.45);
+$color-accent:     #C8FF00;
+$color-accent-alt: #FF4D00;
+
+// Typography
+$font-display: 'DM Serif Display', 'Georgia', serif;
+$font-body:    'Space Grotesk', 'Inter', sans-serif;
+$font-mono:    'JetBrains Mono', 'Courier New', monospace;
+
+// Type scale
+$text-xs:   clamp(0.7rem,  0.65rem + 0.25vw, 0.8rem);
+$text-sm:   clamp(0.85rem, 0.8rem  + 0.25vw, 1rem);
+$text-base: clamp(1rem,    0.95rem + 0.25vw, 1.125rem);
+$text-lg:   clamp(1.15rem, 1.1rem  + 0.5vw,  1.35rem);
+$text-xl:   clamp(1.35rem, 1.2rem  + 0.75vw, 1.75rem);
+$text-2xl:  clamp(1.75rem, 1.5rem  + 1.5vw,  2.5rem);
+$text-3xl:  clamp(2.5rem,  2rem    + 3vw,    4rem);
+$text-4xl:  clamp(4rem,    3rem    + 5vw,    7rem);
+$text-hero: clamp(5rem,    4rem    + 7vw,    11rem);
+
+// Spacing
+$space-xs:   4px;
+$space-sm:   8px;
+$space-md:   16px;
+$space-lg:   24px;
+$space-xl:   48px;
+$space-2xl:  80px;
+$space-3xl:  128px;
+$space-4xl:  200px;
+
+// Layout
+$grid-cols:    12;
+$grid-gutter:  clamp(16px, 2vw, 32px);
+$max-width:    1440px;
+$border-radius-sm: 4px;
+$border-radius-md: 12px;
+$border-radius-full: 100px;
+
+// Timing
+$ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+$ease-in-expo:   cubic-bezier(0.7, 0, 0.84, 0);
+$ease-in-out:    cubic-bezier(0.83, 0, 0.17, 1);
+$duration-fast:  200ms;
+$duration-med:   400ms;
+$duration-slow:  800ms;
+$duration-xslow: 1200ms;
+
+// Z-index layers
+$z-canvas:   0;
+$z-content:  10;
+$z-nav:      100;
+$z-cursor:   1000;
+$z-overlay:  500;
+$z-loader:   900;

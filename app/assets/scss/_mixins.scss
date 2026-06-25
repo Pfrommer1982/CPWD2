@@ -1,0 +1,58 @@
+@use 'variables' as *;
+
+@mixin container {
+  width: 100%;
+  max-width: $max-width;
+  margin-inline: auto;
+  padding-inline: $grid-gutter;
+}
+
+@mixin grid {
+  display: grid;
+  grid-template-columns: repeat($grid-cols, 1fr);
+  gap: $grid-gutter;
+}
+
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+@mixin hover-underline {
+  position: relative;
+  display: inline-block;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: currentColor;
+    transition: width $duration-med $ease-out-expo;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}
+
+@mixin glass {
+  background: rgba($color-bg, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
