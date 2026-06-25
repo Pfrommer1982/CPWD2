@@ -36,9 +36,12 @@ onMounted(async () => {
       <p class="section-label">
         {{ t('work.label') }}
       </p>
-      <GsapSplitText tag="h2" class="work-section__heading">
-        {{ t('work.heading') }}
-      </GsapSplitText>
+      <ProjectOutlineText
+        :text="t('work.heading')"
+        tag="h2"
+        size="display"
+        class="work-section__heading"
+      />
     </div>
 
     <div ref="gridRef" class="work-section__grid container container--wide">
@@ -91,11 +94,7 @@ onMounted(async () => {
   }
 
   &__heading {
-    font-family: $font-display;
-    font-size: $text-3xl;
-    font-weight: 300;
     max-width: 14ch;
-    line-height: $leading-tight;
   }
 
   &__grid {

@@ -1,10 +1,9 @@
 <script setup lang="ts">
 const { t } = useI18n()
 const localePath = useLocalePath()
-const { parseHighlightedBody } = useSplitText()
 const sectionRef = ref<HTMLElement | null>(null)
 
-const bodyHtml = computed(() => parseHighlightedBody(t('about.body')))
+const outlineBody = computed(() => t('about.body').replace(/\*/g, ''))
 
 const stats = [
   { value: 5, suffix: '+', key: 'years' },
@@ -48,11 +47,20 @@ onMounted(async () => {
     <div class="about-section__grid">
       <div class="about-section__text">
         <span class="about-section__label font-mono">{{ t('about.label') }}</span>
-        <h2 class="about-section__heading">
-          <span class="italic-serif">About</span>
-          {{ t('about.heading').replace(/^About\s/i, '').replace(/^Over\s/i, '') }}
-        </h2>
-        <p class="about-section__body" v-html="bodyHtml" />
+        <ProjectOutlineText
+          :text="t('about.heading')"
+          tag="h2"
+          size="display"
+          class="about-section__heading"
+        />
+        <ProjectOutlineText
+          :text="outlineBody"
+          tag="p"
+          size="body"
+          scroll-start="top 88%"
+          scroll-end="top 40%"
+          class="about-section__body"
+        />
         <GsapMagneticButton :to="localePath('/about')" variant="ghost" class="about-section__cta">
           {{ t('about.cta') }}
         </GsapMagneticButton>
@@ -98,25 +106,20 @@ onMounted(async () => {
   }
 
   &__heading {
-    font-size: $text-2xl;
-    line-height: 1.2;
     margin-bottom: $space-xl;
-    max-width: 20ch;
   }
 
   &__body {
-    font-size: $text-lg;
-    color: $color-text-muted;
-    line-height: 1.7;
     margin-bottom: $space-xl;
-    max-width: 45ch;
   }
 
   &__visual {
+    position: relative;
     min-height: 400px;
     background: $color-surface;
     border-radius: $border-radius-md;
     overflow: hidden;
+    border: 1px solid $color-border;
   }
 
   &__stats {

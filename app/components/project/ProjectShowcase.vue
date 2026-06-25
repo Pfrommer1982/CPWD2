@@ -11,8 +11,12 @@ const { locale, t } = useI18n()
 const imageKit = useImageKit()
 const pageRef = ref<HTMLElement>()
 const heroMedia = ref<HTMLElement>()
-const heroImg = ref<HTMLImageElement>()
+const heroClip = ref<HTMLElement>()
+const heroInner = ref<HTMLElement>()
 const videoRef = ref<HTMLVideoElement>()
+
+const lightboxOpen = ref(false)
+const lightboxIndex = ref(0)
 
 const taglineLines = computed(() =>
   locale.value === 'nl' ? props.showcase.tagline.nl : props.showcase.tagline.en,
@@ -21,6 +25,25 @@ const taglineLines = computed(() =>
 const introText = computed(() =>
   locale.value === 'nl' ? props.showcase.intro.nl : props.showcase.intro.en,
 )
+
+const lightboxImages = computed(() => {
+  const fromGroups = props.showcase.imageGroups.flatMap(g => g.images)
+  const fromGallery = props.project.gallery.map(item => ({
+    src: item.src,
+    alt: item.alt,
+  }))
+  return [...fromGroups, ...fromGallery].map(img => ({
+    ...img,
+    url: imageKit.screenshot(img.src, 1800),
+  }))
+})
+
+function openLightbox(src: string) {
+  const idx = lightboxImages.value.findIndex(img => img.src === src)
+  if (idx === -1) return
+  lightboxIndex.value = idx
+  lightboxOpen.value = true
+}
 
 onMounted(async () => {
   if (!import.meta.client || !pageRef.value) return
@@ -33,36 +56,35 @@ onMounted(async () => {
 
     const { ScrollTrigger } = await import('gsap/ScrollTrigger')
 
-    const heroTl = gsap.timeline({ delay: 0.15 })
+    const heroTl = gsap.timeline({ delay: 0.08 })
+
+    if (heroClip.value) {
+      heroTl.from(heroClip.value, {
+        clipPath: 'inset(100% 0 0 0)',
+        duration: 1.5,
+        ease: 'power4.out',
+      })
+    }
 
     heroTl.from('.showcase-hero__line', {
       y: '120%',
       opacity: 0,
       duration: 1.1,
-      stagger: 0.12,
+      stagger: 0.1,
       ease: 'power4.out',
-    })
-
-    if (heroImg.value) {
-      heroTl.from(heroImg.value, {
-        scale: 1.08,
-        opacity: 0,
-        duration: 1.6,
-        ease: 'power3.out',
-      }, '-=0.8')
-    }
+    }, '-=0.85')
 
     heroTl.from('.showcase-hero__meta, .showcase-hero__scroll', {
       opacity: 0,
-      y: 24,
-      duration: 0.8,
-      stagger: 0.1,
+      y: 28,
+      duration: 0.85,
+      stagger: 0.12,
       ease: 'power3.out',
-    }, '-=0.5')
+    }, '-=0.55')
 
-    if (heroImg.value && heroMedia.value) {
-      gsap.to(heroImg.value, {
-        yPercent: 12,
+    if (heroInner.value && heroMedia.value) {
+      gsap.to(heroInner.value, {
+        yPercent: 18,
         ease: 'none',
         scrollTrigger: {
           trigger: heroMedia.value,
@@ -73,59 +95,85 @@ onMounted(async () => {
       })
     }
 
-    gsap.utils.toArray<HTMLElement>('.reveal-item').forEach((el) => {
+    gsap.utils.toArray<HTMLElement>('.overview-reveal').forEach((el, i) => {
+      gsap.from(el, {
+        y: 48,
+        opacity: 0,
+        duration: 1,
+        delay: i * 0.06,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          toggleActions: 'play none none none',
+        },
+      })
+    })
+
+    gsap.utils.toArray<HTMLElement>('.device-reveal').forEach((el, i) => {
+      gsap.from(el, {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        delay: i * 0.12,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 90%',
+          toggleActions: 'play none none none',
+        },
+      })
+    })
+
+    gsap.utils.toArray<HTMLElement>('.gallery-tile__clip').forEach((clip, i) => {
       gsap.fromTo(
-        el,
-        { y: 48, opacity: 0 },
+        clip,
+        { clipPath: 'inset(100% 0 0 0)' },
         {
-          y: 0,
-          opacity: 1,
+          clipPath: 'inset(0% 0 0 0)',
           duration: 1,
+          delay: (i % 2) * 0.06,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: el,
-            start: 'top 88%',
+            trigger: clip,
+            start: 'top 92%',
             toggleActions: 'play none none none',
           },
         },
       )
     })
 
-    gsap.utils.toArray<HTMLElement>('.reveal-block').forEach((el, i) => {
+    const videoFrame = pageRef.value.querySelector('.showcase-video__frame')
+    if (videoFrame) {
       gsap.fromTo(
-        el,
-        { y: 60, opacity: 0 },
+        videoFrame,
+        { clipPath: 'inset(100% 0 0 0)' },
         {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          delay: i * 0.05,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 85%',
-            toggleActions: 'play none none none',
-          },
-        },
-      )
-    })
-
-    gsap.utils.toArray<HTMLElement>('.device-shot').forEach((el, i) => {
-      gsap.fromTo(
-        el,
-        { y: i % 2 === 0 ? 80 : 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
+          clipPath: 'inset(0% 0 0 0)',
           duration: 1.2,
-          ease: 'power3.out',
+          ease: 'power4.out',
           scrollTrigger: {
-            trigger: el,
-            start: 'top 85%',
+            trigger: videoFrame,
+            start: 'top 90%',
             toggleActions: 'play none none none',
           },
         },
       )
+    }
+
+    gsap.utils.toArray<HTMLElement>('.showcase-results__stat').forEach((el, i) => {
+      gsap.from(el, {
+        y: 36,
+        opacity: 0,
+        duration: 0.9,
+        delay: i * 0.08,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 90%',
+          toggleActions: 'play none none none',
+        },
+      })
     })
 
     if (videoRef.value) {
@@ -146,15 +194,18 @@ onMounted(async () => {
   <div ref="pageRef" class="showcase" :style="{ '--project-accent': project.accentColor }">
     <section class="showcase-hero">
       <div ref="heroMedia" class="showcase-hero__media">
-        <img
-          ref="heroImg"
-          :src="imageKit.responsive(project.heroImage, 1920)"
-          :srcset="imageKit.srcset(project.heroImage)"
-          :alt="project.title"
-          sizes="100vw"
-          fetchpriority="high"
-          class="showcase-hero__img"
-        >
+        <div ref="heroClip" class="showcase-hero__clip">
+          <div ref="heroInner" class="showcase-hero__inner">
+            <img
+              :src="imageKit.responsive(project.heroImage, 1920)"
+              :srcset="imageKit.srcset(project.heroImage)"
+              :alt="project.title"
+              sizes="100vw"
+              fetchpriority="high"
+              class="showcase-hero__img"
+            >
+          </div>
+        </div>
         <div class="showcase-hero__vignette" />
         <div class="showcase-hero__grain" aria-hidden="true" />
       </div>
@@ -165,7 +216,7 @@ onMounted(async () => {
           <span class="label showcase-hero__year">{{ project.year }}</span>
         </div>
 
-        <h1 class="showcase-hero__title" aria-label="Accurate Black">
+        <h1 class="showcase-hero__title" :aria-label="project.title">
           <span
             v-for="(line, i) in taglineLines"
             :key="i"
@@ -182,118 +233,170 @@ onMounted(async () => {
       </div>
     </section>
 
-    <section class="showcase-intro section">
-      <div class="container showcase-intro__grid">
-        <div class="showcase-intro__lead reveal-block">
-          <span class="section-label">{{ project.title }}</span>
-          <p class="showcase-intro__text">
-            {{ introText }}
-          </p>
-        </div>
+    <section class="showcase-overview section">
+      <div class="container">
+        <p class="showcase-overview__eyebrow overview-reveal label">
+          {{ t('project.overview') }}
+        </p>
+        <h2 class="showcase-overview__title overview-reveal">
+          {{ project.title }}
+        </h2>
 
-        <aside class="showcase-intro__aside reveal-block">
-          <div class="showcase-intro__meta-item">
-            <span class="label">{{ t('project.role') }}</span>
-            <ul>
+        <div class="showcase-overview__grid">
+          <div class="showcase-overview__col overview-reveal">
+            <span class="label showcase-overview__key">• {{ t('project.role') }}</span>
+            <ul class="showcase-overview__list">
               <li v-for="role in project.role" :key="role">{{ role }}</li>
             </ul>
           </div>
 
-          <div class="showcase-intro__meta-item">
-            <span class="label">{{ t('project.technologies') }}</span>
-            <div class="showcase-intro__tags">
-              <span
-                v-for="tech in project.technologies"
-                :key="tech"
-                class="showcase-intro__tag"
-              >{{ tech }}</span>
-            </div>
+          <div class="showcase-overview__col overview-reveal">
+            <span class="label showcase-overview__key">• {{ t('project.year') }}</span>
+            <p class="showcase-overview__value">{{ project.year }}</p>
           </div>
 
-          <div v-if="project.liveUrl" class="showcase-intro__meta-item">
-            <span class="label">{{ t('project.live') }}</span>
+          <div class="showcase-overview__col showcase-overview__col--wide overview-reveal">
+            <span class="label showcase-overview__key">• {{ t('project.note') }}</span>
+            <ProjectOutlineText
+              :text="introText"
+              size="body"
+              scroll-start="top 90%"
+              scroll-end="top 50%"
+            />
+          </div>
+
+          <div v-if="project.liveUrl" class="showcase-overview__col overview-reveal">
+            <span class="label showcase-overview__key">• {{ t('project.live') }}</span>
             <a
               :href="project.liveUrl"
               target="_blank"
               rel="noopener noreferrer"
-              class="link-arrow"
+              class="link-arrow showcase-overview__link"
             >
               {{ t('project.viewSite') }}
               <span class="arrow-icon">↗</span>
             </a>
           </div>
-        </aside>
+        </div>
       </div>
     </section>
 
     <section class="showcase-devices section">
-      <div class="container">
-        <div
-          v-for="(device, i) in showcase.devices"
+      <div class="container showcase-devices__stack">
+        <figure
+          v-for="device in showcase.devices"
           :key="device.src"
-          class="device-shot"
-          :class="{ 'device-shot--offset': i % 2 === 1 }"
+          class="showcase-devices__item device-reveal"
         >
           <ProjectScreenshot
             :src="imageKit.screenshot(device.src, 1200)"
             :srcset="imageKit.srcsetScreenshot(device.src, [600, 900, 1200])"
             :alt="device.alt"
-            sizes="(max-width: 768px) 100vw, 900px"
+            sizes="(max-width: 768px) 100vw, 760px"
             fit="contain"
           />
-        </div>
+        </figure>
       </div>
     </section>
 
     <section
       v-for="group in showcase.imageGroups"
       :key="group.id"
-      class="showcase-group section"
+      class="showcase-chapter section"
     >
-      <div class="container">
-        <div class="showcase-group__header reveal-block">
-          <span class="section-label">{{ locale === 'nl' ? group.title.nl : group.title.en }}</span>
-          <p class="showcase-group__body">
-            {{ locale === 'nl' ? group.body.nl : group.body.en }}
-          </p>
-        </div>
-
-        <ProjectImageGrid
-          :images="group.images"
-          :group-id="group.id"
+      <div class="container showcase-chapter__head">
+        <span class="section-label">
+          {{ locale === 'nl' ? group.title.nl : group.title.en }}
+        </span>
+        <ProjectOutlineText
+          :text="locale === 'nl' ? group.body.nl : group.body.en"
+          size="display"
         />
+      </div>
+
+      <div class="container">
+        <div class="showcase-chapter__grid">
+          <button
+            v-for="image in group.images"
+            :key="image.src"
+            type="button"
+            class="gallery-tile"
+            @click="openLightbox(image.src)"
+          >
+            <div class="gallery-tile__clip">
+              <ProjectScreenshot
+                :src="imageKit.screenshot(image.src, 900)"
+                :srcset="imageKit.srcsetScreenshot(image.src, [500, 900, 1400])"
+                :alt="image.alt"
+                sizes="(max-width: 640px) 100vw, 50vw"
+                fit="cover"
+              />
+            </div>
+            <span class="gallery-tile__label">{{ image.alt }}</span>
+          </button>
+        </div>
       </div>
     </section>
 
     <section class="showcase-video section">
       <div class="container">
-        <div class="showcase-video__header reveal-block">
+        <div class="showcase-video__head">
           <span class="section-label">
             {{ locale === 'nl' ? showcase.custom.title.nl : showcase.custom.title.en }}
           </span>
-          <p class="showcase-video__body">
-            {{ locale === 'nl' ? showcase.custom.body.nl : showcase.custom.body.en }}
-          </p>
+          <ProjectOutlineText
+            :text="locale === 'nl' ? showcase.custom.body.nl : showcase.custom.body.en"
+            size="display"
+          />
         </div>
 
-        <div class="showcase-video__frame reveal-block">
+        <div class="showcase-video__frame">
           <video
             ref="videoRef"
             :src="imageKit.video(showcase.video.src)"
             :poster="showcase.video.poster ? imageKit.responsive(showcase.video.poster, 1200) : undefined"
             class="showcase-video__player"
-            autoplay
             muted
             loop
             playsinline
             preload="metadata"
           />
-          <div class="showcase-video__glow" aria-hidden="true" />
         </div>
 
         <p v-if="showcase.video.caption" class="showcase-video__caption">
           {{ locale === 'nl' ? showcase.video.caption.nl : showcase.video.caption.en }}
         </p>
+      </div>
+    </section>
+
+    <section v-if="project.gallery.length" class="showcase-chapter section">
+      <div class="container showcase-chapter__head">
+        <span class="section-label">{{ t('project.moreScreens') }}</span>
+      </div>
+
+      <div class="container">
+        <div class="showcase-chapter__grid">
+          <button
+            v-for="item in project.gallery"
+            :key="item.src"
+            type="button"
+            class="gallery-tile"
+            @click="openLightbox(item.src)"
+          >
+            <div class="gallery-tile__clip">
+              <ProjectScreenshot
+                :src="imageKit.screenshot(item.src, 900)"
+                :srcset="imageKit.srcsetScreenshot(item.src, [500, 900, 1400])"
+                :alt="item.alt"
+                sizes="(max-width: 640px) 100vw, 50vw"
+                :fit="item.fit === 'contain' ? 'contain' : 'cover'"
+              />
+            </div>
+            <span v-if="item.caption || item.alt" class="gallery-tile__label">
+              {{ item.caption || item.alt }}
+            </span>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -303,7 +406,7 @@ onMounted(async () => {
           <div
             v-for="stat in project.results"
             :key="getStatLabel(stat, locale)"
-            class="showcase-results__stat reveal-block"
+            class="showcase-results__stat"
           >
             <div class="showcase-results__value">{{ stat.value }}</div>
             <div class="showcase-results__label">{{ getStatLabel(stat, locale) }}</div>
@@ -312,60 +415,12 @@ onMounted(async () => {
       </div>
     </section>
 
-    <section class="showcase-stack section">
-      <div class="container reveal-block">
-        <span class="section-label">{{ t('project.technologies') }}</span>
-        <ul class="showcase-stack__list">
-          <li
-            v-for="(tech, i) in showcase.stack"
-            :key="tech"
-            class="showcase-stack__item"
-            :style="{ '--i': i }"
-          >
-            {{ tech }}
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="showcase-story section">
-      <div class="container">
-        <div class="showcase-story__grid">
-          <div class="showcase-story__block reveal-block">
-            <span class="section-label">{{ t('project.challenge') }}</span>
-            <p class="showcase-story__text">
-              {{ locale === 'nl' ? project.challenge.nl : project.challenge.en }}
-            </p>
-          </div>
-          <div class="showcase-story__block reveal-block">
-            <span class="section-label">{{ t('project.solution') }}</span>
-            <p class="showcase-story__text">
-              {{ locale === 'nl' ? project.solution.nl : project.solution.en }}
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section v-if="project.gallery.length" class="showcase-extra section">
-      <div class="container">
-        <span class="section-label reveal-block">{{ t('project.moreScreens') }}</span>
-        <div class="showcase-extra__strip">
-          <figure
-            v-for="item in project.gallery"
-            :key="item.src"
-            class="showcase-extra__item reveal-item"
-          >
-            <ProjectScreenshot
-              :src="imageKit.screenshot(item.src, 1400)"
-              :alt="item.alt"
-              fit="contain"
-            />
-            <figcaption class="showcase-extra__caption">{{ item.alt }}</figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
+    <ProjectLightbox
+      v-if="lightboxOpen"
+      :images="lightboxImages"
+      :initial-index="lightboxIndex"
+      @close="lightboxOpen = false"
+    />
   </div>
 </template>
 
@@ -383,12 +438,24 @@ onMounted(async () => {
     overflow: hidden;
   }
 
+  &__clip {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    will-change: clip-path;
+  }
+
+  &__inner {
+    width: 100%;
+    height: 118%;
+    will-change: transform;
+  }
+
   &__img {
     width: 100%;
-    height: 112%;
+    height: 100%;
     object-fit: cover;
     object-position: center 20%;
-    will-change: transform;
   }
 
   &__vignette {
@@ -396,7 +463,8 @@ onMounted(async () => {
     inset: 0;
     background:
       radial-gradient(ellipse 80% 60% at 50% 100%, rgba(8, 8, 8, 0.95) 0%, transparent 70%),
-      linear-gradient(to bottom, rgba(8, 8, 8, 0.35) 0%, rgba(8, 8, 8, 0.85) 100%);
+      linear-gradient(to bottom, rgba(8, 8, 8, 0.35) 0%, rgba(8, 8, 8, 0.88) 100%);
+    pointer-events: none;
   }
 
   &__grain {
@@ -412,6 +480,7 @@ onMounted(async () => {
     bottom: clamp(48px, 8vh, 96px);
     left: 0;
     right: 0;
+    z-index: 2;
   }
 
   &__meta {
@@ -449,6 +518,7 @@ onMounted(async () => {
     position: absolute;
     bottom: $space-8;
     right: clamp(20px, 4vw, 60px);
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -464,132 +534,178 @@ onMounted(async () => {
   }
 }
 
-.showcase-intro {
+.showcase-overview {
   border-bottom: 1px solid $color-border;
+  padding-block: clamp(64px, 10vh, 120px);
+
+  &__eyebrow {
+    color: $color-gold;
+    margin-bottom: $space-5;
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: clamp(2rem, 4vw + 0.5rem, 4rem);
+    font-weight: 300;
+    line-height: $leading-tight;
+    letter-spacing: $tracking-tight;
+    color: $color-text;
+    margin-bottom: clamp(40px, 6vh, 72px);
+    max-width: 16ch;
+  }
 
   &__grid {
     display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: $space-10;
-    align-items: start;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(32px, 5vw, 56px);
 
-    @media (max-width: 900px) {
+    @media (max-width: 768px) {
       grid-template-columns: 1fr;
     }
   }
 
-  &__text {
-    font-family: $font-display;
-    font-size: $text-2xl;
-    font-weight: 300;
-    line-height: $leading-snug;
-    color: $color-text-muted;
-    margin-top: $space-5;
-    max-width: 52ch;
+  &__col {
+    &--wide {
+      grid-column: 1 / -1;
+    }
   }
 
-  &__aside {
-    display: flex;
-    flex-direction: column;
-    gap: $space-6;
-    padding-top: $space-2;
+  &__key {
+    display: block;
+    margin-bottom: $space-3;
+    color: $color-text-faint;
+  }
 
-    ul {
-      list-style: none;
-      margin-top: $space-2;
-    }
+  &__list {
+    list-style: none;
 
     li {
       font-size: $text-sm;
       color: $color-text;
       line-height: $leading-relaxed;
+
+      & + li {
+        margin-top: $space-1;
+      }
     }
   }
 
-  &__meta-item .label {
-    display: block;
-    margin-bottom: $space-2;
+  &__value {
+    font-family: $font-display;
+    font-size: $text-2xl;
+    font-weight: 300;
+    color: $color-text;
   }
 
-  &__tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: $space-2;
-    margin-top: $space-2;
-  }
-
-  &__tag {
-    padding: 4px 10px;
-    border: 1px solid $color-border;
-    border-radius: $radius-full;
-    font-family: $font-mono;
-    font-size: $text-xs;
-    color: $color-text-muted;
-    letter-spacing: $tracking-wide;
+  &__link {
+    margin-top: $space-1;
   }
 }
 
 .showcase-devices {
-  padding-block: $space-16;
+  border-bottom: 1px solid $color-border;
 
-  .container {
+  &__stack {
     display: flex;
     flex-direction: column;
-    gap: $space-10;
     align-items: center;
+    gap: clamp(32px, 5vh, 56px);
+    max-width: 760px;
+  }
+
+  &__item {
+    margin: 0;
+    width: 100%;
   }
 }
 
-.device-shot {
-  width: min(900px, 100%);
-  filter: drop-shadow(0 32px 64px rgba(0, 0, 0, 0.45));
+.showcase-chapter {
+  padding-block: clamp(72px, 11vh, 128px);
+  border-bottom: 1px solid $color-border;
 
-  &--offset {
-    @media (min-width: 768px) {
-      margin-left: auto;
-      margin-right: clamp(0px, 8vw, 80px);
+  &__head {
+    margin-bottom: clamp(40px, 6vh, 64px);
+    max-width: 900px;
+
+    .section-label {
+      display: block;
+      margin-bottom: $space-6;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(12px, 1.5vw, 18px);
+
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
     }
   }
 }
 
-.showcase-group {
-  &__header {
-    max-width: 640px;
-    margin-bottom: $space-8;
+.gallery-tile {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+
+  &__clip {
+    overflow: hidden;
+    border-radius: $radius-md;
+    will-change: clip-path;
+
+    :deep(.project-shot) {
+      border-radius: inherit;
+      aspect-ratio: 16 / 10;
+    }
+
+    :deep(.project-shot--cover) {
+      height: 100%;
+    }
+
+    :deep(.project-shot__img) {
+      transform: none;
+      transition: transform $dur-slow $ease-gold;
+    }
   }
 
-  &__body {
-    font-size: $text-base;
-    line-height: $leading-relaxed;
-    color: $color-text-muted;
-    margin-top: $space-5;
+  &:hover :deep(.project-shot__img) {
+    transform: scale(1.03);
   }
 
-  & + & {
-    padding-top: 0;
+  &__label {
+    font-family: $font-mono;
+    font-size: $text-xs;
+    letter-spacing: $tracking-wide;
+    color: $color-text-faint;
+    padding-inline: $space-1;
   }
 }
 
 .showcase-video {
-  &__header {
-    max-width: 640px;
-    margin-bottom: $space-8;
-  }
+  &__head {
+    max-width: 900px;
+    margin-bottom: clamp(40px, 6vh, 56px);
 
-  &__body {
-    font-size: $text-base;
-    line-height: $leading-relaxed;
-    color: $color-text-muted;
-    margin-top: $space-5;
+    .section-label {
+      display: block;
+      margin-bottom: $space-6;
+    }
   }
 
   &__frame {
-    position: relative;
-    border-radius: $radius-md;
     overflow: hidden;
+    border-radius: $radius-md;
     border: 1px solid $color-border;
     background: $color-surface;
     aspect-ratio: 16 / 9;
+    will-change: clip-path;
   }
 
   &__player {
@@ -597,14 +713,6 @@ onMounted(async () => {
     height: 100%;
     object-fit: cover;
     display: block;
-  }
-
-  &__glow {
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    box-shadow: inset 0 0 80px rgba(212, 175, 83, 0.06);
-    pointer-events: none;
   }
 
   &__caption {
@@ -647,82 +755,6 @@ onMounted(async () => {
     text-transform: uppercase;
     color: $color-text-muted;
     margin-top: $space-2;
-  }
-}
-
-.showcase-stack {
-  border-bottom: 1px solid $color-border;
-
-  &__list {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: $space-3;
-    margin-top: $space-6;
-  }
-
-  &__item {
-    padding: $space-3 $space-5;
-    border: 1px solid $color-border;
-    border-radius: $radius-full;
-    font-family: $font-mono;
-    font-size: $text-sm;
-    letter-spacing: $tracking-wide;
-    color: $color-text;
-    transition: border-color $dur-fast $ease-gold, color $dur-fast $ease-gold;
-
-    &:hover {
-      border-color: $color-gold;
-      color: $color-gold;
-    }
-  }
-}
-
-.showcase-story {
-  &__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: $space-10;
-
-    @media (max-width: 768px) {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  &__block {
-    border-top: 1px solid $color-border;
-    padding-top: $space-5;
-  }
-
-  &__text {
-    font-size: $text-base;
-    line-height: $leading-relaxed;
-    color: $color-text-muted;
-    margin-top: $space-5;
-  }
-}
-
-.showcase-extra {
-  &__strip {
-    display: flex;
-    flex-direction: column;
-    gap: $space-8;
-    margin-top: $space-8;
-  }
-
-  &__item {
-    margin: 0;
-    overflow: visible;
-    background: transparent;
-  }
-
-  &__caption {
-    padding: $space-3 $space-4;
-    font-family: $font-mono;
-    font-size: $text-xs;
-    letter-spacing: $tracking-wide;
-    color: $color-text-faint;
-    text-align: center;
   }
 }
 </style>

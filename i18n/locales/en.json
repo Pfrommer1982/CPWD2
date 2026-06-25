@@ -15,6 +15,11 @@
   "marquee": {
     "items": "CREATIVE DEVELOPMENT — MOTION DESIGN — 3D WEB — BRAND EXPERIENCES — NUXT — THREE.JS — GSAP —"
   },
+  "motion": {
+    "label": "MOTION",
+    "heading": "Motion with intent — never decoration.",
+    "body": "Abstract dot systems, scroll-driven typography and seamlessly looping motion — built to carry your brand and deepen the experience."
+  },
   "work": {
     "label": "SELECTED WORK",
     "heading": "Projects that speak",
@@ -35,12 +40,44 @@
   "services": {
     "label": "SERVICES",
     "heading": "What we do",
+    "intro": "Design, code, cloud and sound — under one roof, tailored for brands that want to stand out online.",
     "items": [
-      { "number": "01", "title": "Creative Development", "desc": "High-end websites with a focus on animation, interaction and performance." },
-      { "number": "02", "title": "Motion & Animation", "desc": "GSAP, Lottie and CSS — animations that bring your brand to life." },
-      { "number": "03", "title": "3D Web Experiences", "desc": "Three.js and WebGL for immersive three-dimensional experiences." },
-      { "number": "04", "title": "Brand Strategy", "desc": "Visual identity that is consistent, distinctive and recognisable." },
-      { "number": "05", "title": "Performance Optimisation", "desc": "Lighthouse 95+, Core Web Vitals, and clean code as a foundation." }
+      {
+        "number": "01",
+        "title": "Web Design",
+        "desc": "Visual concepts, design systems and interfaces that feel premium — dark, sharp and considered down to the last detail.",
+        "tags": ["UI/UX", "Design systems", "Figma", "Art direction"]
+      },
+      {
+        "number": "02",
+        "title": "Web Development",
+        "desc": "Custom websites and web apps with Nuxt, Vue and modern tooling. Fast, scalable and built to last.",
+        "tags": ["Nuxt", "Vue 3", "TypeScript", "Headless CMS"]
+      },
+      {
+        "number": "03",
+        "title": "Cloud & Hosting",
+        "desc": "Deploy, CDN, image optimisation and secure environments — so your site loads fast, anywhere in the world.",
+        "tags": ["Vercel", "ImageKit", "Firebase", "CI/CD"]
+      },
+      {
+        "number": "04",
+        "title": "Sound Design",
+        "desc": "Audio identity for brands and labels — from subtle UI feedback to atmospheric soundscapes that bring your site to life.",
+        "tags": ["Sound identity", "Web audio", "Labels", "Immersive UX"]
+      },
+      {
+        "number": "05",
+        "title": "Motion & Interaction",
+        "desc": "Scroll animations, page transitions and micro-interactions with GSAP — motion with intent, never decoration.",
+        "tags": ["GSAP", "ScrollTrigger", "Three.js", "Lenis"]
+      },
+      {
+        "number": "06",
+        "title": "Brand & Strategy",
+        "desc": "Visual identity, tone of voice and digital brand experience — consistent across website, socials and campaigns.",
+        "tags": ["Branding", "Identity", "Copy", "Launch"]
+      }
     ]
   },
   "contact": {
@@ -55,6 +92,9 @@
     "built": "Built with Nuxt & love."
   },
   "project": {
+    "overview": "Project Overview",
+    "year": "YEAR",
+    "note": "NOTE",
     "role": "ROLE",
     "technologies": "TECHNOLOGIES",
     "live": "LIVE SITE",

@@ -10,15 +10,15 @@ onMounted(async () => {
   const gsap = await init()
   if (!gsap) return
 
-  gsap.from(sectionRef.value.querySelector('.contact-section__heading'), {
-    y: 80,
+  gsap.from(sectionRef.value.querySelector('.contact-section__email'), {
+    y: 24,
     opacity: 0,
-    duration: 1,
+    duration: 0.9,
     ease: 'power3.out',
     scrollTrigger: {
       trigger: sectionRef.value,
-      start: 'top 80%',
-      toggleActions: 'play none none reverse',
+      start: 'top 75%',
+      toggleActions: 'play none none none',
     },
   })
 })
@@ -29,12 +29,20 @@ onMounted(async () => {
     <ThreeNoiseBackground />
     <div class="contact-section__inner">
       <p class="section-label contact-section__label">{{ t('contact.label') }}</p>
-      <h2 class="contact-section__heading font-display">
-        {{ t('contact.heading') }}
-      </h2>
-      <p class="contact-section__subtext">
-        {{ t('contact.subtext') }}
-      </p>
+      <ProjectOutlineText
+        :text="t('contact.heading')"
+        tag="h2"
+        size="display"
+        class="contact-section__heading"
+      />
+      <ProjectOutlineText
+        :text="t('contact.subtext')"
+        tag="p"
+        size="body"
+        scroll-start="top 85%"
+        scroll-end="top 45%"
+        class="contact-section__subtext"
+      />
       <a :href="`mailto:${t('contact.email')}`" class="contact-section__email link-slide">
         {{ t('contact.email') }}
       </a>
@@ -57,6 +65,9 @@ onMounted(async () => {
     position: relative;
     z-index: $z-content;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   &__label {
@@ -65,16 +76,13 @@ onMounted(async () => {
   }
 
   &__heading {
-    font-size: $text-4xl;
-    margin-bottom: $space-lg;
-    line-height: 1;
+    margin-bottom: $space-6;
+    max-width: 16ch;
   }
 
   &__subtext {
-    color: $color-text-muted;
     margin-bottom: $space-xl;
-    max-width: 40ch;
-    margin-inline: auto;
+    max-width: 42ch;
   }
 
   &__email {

@@ -15,6 +15,11 @@
   "marquee": {
     "items": "CREATIVE DEVELOPMENT — MOTION DESIGN — 3D WEB — BRAND EXPERIENCES — NUXT — THREE.JS — GSAP —"
   },
+  "motion": {
+    "label": "MOTION",
+    "heading": "Beweging met intentie — nooit als decor.",
+    "body": "Abstracte dot-systemen, scroll-gedreven typografie en loops die naadloos lopen. Motion die je merk draagt en de ervaring verdiept."
+  },
   "work": {
     "label": "GESELECTEERD WERK",
     "heading": "Projecten die spreken",
@@ -35,12 +40,44 @@
   "services": {
     "label": "DIENSTEN",
     "heading": "Wat we doen",
+    "intro": "Design, code, cloud en sound — alles onder één dak, afgestemd op merken die online willen opvallen.",
     "items": [
-      { "number": "01", "title": "Creative Development", "desc": "High-end websites met focus op animatie, interactie en performance." },
-      { "number": "02", "title": "Motion & Animation", "desc": "GSAP, Lottie en CSS — animaties die je merk tot leven brengen." },
-      { "number": "03", "title": "3D Web Experiences", "desc": "Three.js en WebGL voor meeslepende driedimensionale ervaringen." },
-      { "number": "04", "title": "Brand Strategy", "desc": "Visuele identiteit die consistent, onderscheidend en herkenbaar is." },
-      { "number": "05", "title": "Performance Optimalisatie", "desc": "Lighthouse 95+, Core Web Vitals, en schone code als fundament." }
+      {
+        "number": "01",
+        "title": "Webdesign",
+        "desc": "Visuele concepten, design systems en interfaces die premium aanvoelen — donker, scherp en doordacht tot in detail.",
+        "tags": ["UI/UX", "Design systems", "Figma", "Art direction"]
+      },
+      {
+        "number": "02",
+        "title": "Webdevelopment",
+        "desc": "Custom websites en webapps met Nuxt, Vue en moderne tooling. Snel, schaalbaar en gebouwd om lang mee te gaan.",
+        "tags": ["Nuxt", "Vue 3", "TypeScript", "Headless CMS"]
+      },
+      {
+        "number": "03",
+        "title": "Cloud & hosting",
+        "desc": "Deploy, CDN, beeldoptimalisatie en beveiligde omgevingen — zodat jouw site snel laadt, overal ter wereld.",
+        "tags": ["Vercel", "ImageKit", "Firebase", "CI/CD"]
+      },
+      {
+        "number": "04",
+        "title": "Sound design",
+        "desc": "Audio-identiteit voor merken en labels — van subtiele UI-feedback tot sfeervolle soundscapes die je site laten leven.",
+        "tags": ["Sound identity", "Web audio", "Labels", "Immersive UX"]
+      },
+      {
+        "number": "05",
+        "title": "Motion & interactie",
+        "desc": "Scroll-animaties, page transitions en micro-interacties met GSAP — motion met intentie, nooit als decor.",
+        "tags": ["GSAP", "ScrollTrigger", "Three.js", "Lenis"]
+      },
+      {
+        "number": "06",
+        "title": "Brand & strategie",
+        "desc": "Visuele identiteit, tone of voice en digitale merkbeleving — consistent over website, socials en campagnes.",
+        "tags": ["Branding", "Identity", "Copy", "Launch"]
+      }
     ]
   },
   "contact": {
@@ -55,6 +92,9 @@
     "built": "Gebouwd met Nuxt & liefde."
   },
   "project": {
+    "overview": "Projectoverzicht",
+    "year": "JAAR",
+    "note": "NOTITIE",
     "role": "ROL",
     "technologies": "TECHNOLOGIEËN",
     "live": "LIVE SITE",

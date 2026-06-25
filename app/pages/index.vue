@@ -9,6 +9,7 @@ definePageMeta({ layout: 'default' })
     <SectionsWorkSection />
     <SectionsAboutSection />
     <SectionsServicesSection />
+    <SectionsMotionSection />
     <SectionsTestimonialsSection />
     <SectionsContactSection />
   </div>

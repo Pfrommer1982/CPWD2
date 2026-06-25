@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const emit = defineEmits<{ complete: [] }>()
 
-const imageKit = useImageKit()
 const progress = ref(0)
 const visible = ref(true)
 const loaderRef = ref<HTMLElement | null>(null)
@@ -51,13 +50,7 @@ async function dismiss() {
 <template>
   <div v-if="visible" ref="loaderRef" class="app-loader">
     <div class="app-loader__inner">
-      <img
-        :src="imageKit.logo(56)"
-        alt="CPWD"
-        class="app-loader__logo"
-        height="56"
-        width="auto"
-      >
+      <UiAppLogo :height="56" class="app-loader__logo" />
       <div class="app-loader__ring" />
       <p class="app-loader__progress label">
         {{ progress }}%
@@ -83,8 +76,6 @@ async function dismiss() {
   &__logo {
     display: block;
     margin: 0 auto $space-8;
-    height: 56px;
-    width: auto;
     opacity: 0;
     animation: fade-in 0.6s $ease-out-expo 0.2s forwards;
   }

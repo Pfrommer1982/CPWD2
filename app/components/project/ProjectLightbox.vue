@@ -89,24 +89,25 @@ onUnmounted(() => {
         data-cursor="hover"
         @click="onSlideClick"
       >
-        <Transition
-          name="lightbox-fade"
-          mode="out-in"
-          @after-leave="isTransitioning = false"
-          @after-enter="isTransitioning = false"
-        >
-          <figure :key="current" class="lightbox__figure">
-            <img
-              :src="images[current].url"
-              :alt="images[current].alt"
-              class="lightbox__img"
-              draggable="false"
-            >
-            <figcaption class="lightbox__caption">
-              {{ images[current].alt }}
-            </figcaption>
-          </figure>
-        </Transition>
+        <div class="lightbox__slides">
+          <Transition
+            name="lightbox-fade"
+            @before-leave="isTransitioning = true"
+            @after-enter="isTransitioning = false"
+          >
+            <figure :key="current" class="lightbox__figure">
+              <img
+                :src="images[current].url"
+                :alt="images[current].alt"
+                class="lightbox__img"
+                draggable="false"
+              >
+              <figcaption class="lightbox__caption">
+                {{ images[current].alt }}
+              </figcaption>
+            </figure>
+          </Transition>
+        </div>
 
         <button
           v-if="images.length > 1"
@@ -214,9 +215,19 @@ onUnmounted(() => {
     padding: 0 clamp(12px, 3vw, 32px) clamp(24px, 5vw, 48px);
     pointer-events: auto;
     cursor: none;
+    min-height: 0;
+  }
+
+  &__slides {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: min(1200px, 94vw);
+    max-height: calc(100vh - 120px);
   }
 
   &__figure {
+    grid-area: 1 / 1;
     margin: 0;
     max-width: min(1200px, 94vw);
     max-height: calc(100vh - 120px);
@@ -294,11 +305,26 @@ onUnmounted(() => {
 
 .lightbox-fade-enter-active,
 .lightbox-fade-leave-active {
-  transition: opacity 0.4s $ease-gold;
+  transition: opacity 0.42s $ease-gold;
+}
+
+.lightbox-fade-leave-active {
+  grid-area: 1 / 1;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.lightbox-fade-enter-active {
+  z-index: 2;
 }
 
 .lightbox-fade-enter-from,
 .lightbox-fade-leave-to {
   opacity: 0;
+}
+
+.lightbox-fade-enter-to,
+.lightbox-fade-leave-from {
+  opacity: 1;
 }
 </style>

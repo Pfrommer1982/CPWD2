@@ -24,6 +24,7 @@ export default defineNuxtConfig({
   },
 
   i18n: {
+    restructureDir: 'i18n',
     locales: [
       { code: 'nl', name: 'Nederlands', file: 'nl.json' },
       { code: 'en', name: 'English', file: 'en.json' },
@@ -52,7 +53,11 @@ export default defineNuxtConfig({
         { property: 'og:image', content: '/og-image.jpg' },
       ],
       link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32.png' },
+        { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16.png' },
+        { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {

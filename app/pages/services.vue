@@ -1,13 +1,7 @@
 <script setup lang="ts">
-const { t, tm } = useI18n()
+const { t } = useI18n()
 
 definePageMeta({ layout: 'default' })
-
-const items = computed(() => tm('services.items') as Array<{
-  number: string
-  title: string
-  desc: string
-}>)
 </script>
 
 <template>
