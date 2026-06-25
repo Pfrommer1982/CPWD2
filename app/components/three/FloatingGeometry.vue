@@ -25,10 +25,10 @@ onMounted(async () => {
   ]
 
   const material = new THREE.MeshBasicMaterial({
-    color: 0xC8FF00,
+    color: 0xD4AF53,
     wireframe: true,
     transparent: true,
-    opacity: 0.15,
+    opacity: 0.2,
   })
 
   const meshes = geometries.map((geo, i) => {

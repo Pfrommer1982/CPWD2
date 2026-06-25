@@ -28,14 +28,14 @@ onMounted(async () => {
   <section ref="sectionRef" class="contact-section">
     <ThreeNoiseBackground />
     <div class="contact-section__inner">
-      <span class="contact-section__label font-mono">{{ t('contact.label') }}</span>
+      <p class="section-label contact-section__label">{{ t('contact.label') }}</p>
       <h2 class="contact-section__heading font-display">
         {{ t('contact.heading') }}
       </h2>
       <p class="contact-section__subtext">
         {{ t('contact.subtext') }}
       </p>
-      <a :href="`mailto:${t('contact.email')}`" class="contact-section__email link-underline">
+      <a :href="`mailto:${t('contact.email')}`" class="contact-section__email link-slide">
         {{ t('contact.email') }}
       </a>
       <GsapMagneticButton :to="localePath('/contact')" class="contact-section__cta">
@@ -60,9 +60,8 @@ onMounted(async () => {
   }
 
   &__label {
-    display: block;
-    color: $color-accent;
-    margin-bottom: $space-md;
+    justify-content: center;
+    margin-bottom: $space-6;
   }
 
   &__heading {
@@ -86,7 +85,7 @@ onMounted(async () => {
     transition: color $duration-fast $ease-out-expo;
 
     &:hover {
-      color: $color-accent;
+      color: $color-gold-light;
     }
   }
 

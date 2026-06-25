@@ -58,7 +58,7 @@ export function useThree(canvasRef: Ref<HTMLCanvasElement | null>) {
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
 
     const material = new THREE.PointsMaterial({
-      color: 0xC8FF00,
+      color: 0xD4AF53,
       size: 0.02,
       transparent: true,
       opacity: 0.6,

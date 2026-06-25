@@ -1,125 +1,148 @@
 <script setup lang="ts">
-const { cursorState, cursorVisible } = useCursor()
-const dotRef = ref<HTMLElement | null>(null)
-const ringRef = ref<HTMLElement | null>(null)
-const labelRef = ref<HTMLElement | null>(null)
-
-const isTouch = ref(true)
+const cursorEl = ref<HTMLElement>()
+const dotEl = ref<HTMLElement>()
+const ringEl = ref<HTMLElement>()
+const labelEl = ref<HTMLElement>()
 
 onMounted(async () => {
-  isTouch.value = 'ontouchstart' in window || navigator.maxTouchPoints > 0
-  if (isTouch.value) return
+  if (!import.meta.client) return
+  if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return
 
-  document.body.classList.add('has-custom-cursor')
+  const { gsap } = await import('gsap')
 
-  const gsap = (await import('gsap')).gsap
   let mouseX = 0
   let mouseY = 0
+  let ringX = 0
+  let ringY = 0
 
   const onMove = (e: MouseEvent) => {
     mouseX = e.clientX
     mouseY = e.clientY
-
-    if (dotRef.value) {
-      gsap.to(dotRef.value, { x: mouseX, y: mouseY, duration: 0.1, ease: 'power2.out' })
-    }
-    if (ringRef.value) {
-      gsap.to(ringRef.value, { x: mouseX, y: mouseY, duration: 0.35, ease: 'power2.out' })
-    }
-    if (labelRef.value) {
-      gsap.to(labelRef.value, { x: mouseX, y: mouseY, duration: 0.25, ease: 'power2.out' })
-    }
+    gsap.set(dotEl.value, { x: mouseX, y: mouseY })
   }
 
+  const tick = () => {
+    ringX += (mouseX - ringX) * 0.12
+    ringY += (mouseY - ringY) * 0.12
+    gsap.set(ringEl.value, { x: ringX, y: ringY })
+  }
+
+  gsap.ticker.add(tick)
   window.addEventListener('mousemove', onMove)
+
+  const setHover = () => {
+    gsap.to(ringEl.value, { scale: 1.8, borderColor: '#D4AF53', duration: 0.3 })
+    gsap.to(dotEl.value, { scale: 0, duration: 0.2 })
+  }
+
+  const setView = () => {
+    if (labelEl.value) labelEl.value.textContent = 'VIEW'
+    gsap.to(ringEl.value, {
+      scale: 2.5,
+      borderColor: '#D4AF53',
+      backgroundColor: 'rgba(212,175,83,0.1)',
+      duration: 0.3,
+    })
+    gsap.to(dotEl.value, { scale: 0, duration: 0.2 })
+    gsap.to(labelEl.value, { opacity: 1, duration: 0.2 })
+  }
+
+  const resetCursor = () => {
+    gsap.to(ringEl.value, {
+      scale: 1,
+      borderColor: 'rgba(242,238,232,0.4)',
+      backgroundColor: 'transparent',
+      duration: 0.3,
+    })
+    gsap.to(dotEl.value, { scale: 1, duration: 0.2 })
+    gsap.to(labelEl.value, { opacity: 0, duration: 0.1 })
+  }
+
+  function bindEl(el: Element) {
+    if (el.hasAttribute('data-cursor-bound')) return
+    el.setAttribute('data-cursor-bound', '')
+
+    el.addEventListener('mouseenter', () => {
+      const type = (el as HTMLElement).dataset.cursor
+      if (type === 'view') setView()
+      else setHover()
+    })
+    el.addEventListener('mouseleave', resetCursor)
+  }
+
+  document.querySelectorAll('a, button, [data-cursor]').forEach(bindEl)
+
+  const observer = new MutationObserver(() => {
+    document.querySelectorAll('a, button, [data-cursor]').forEach(bindEl)
+  })
+  observer.observe(document.body, { childList: true, subtree: true })
 
   onUnmounted(() => {
     window.removeEventListener('mousemove', onMove)
-    document.body.classList.remove('has-custom-cursor')
+    gsap.ticker.remove(tick)
+    observer.disconnect()
   })
 })
 </script>
 
 <template>
-  <div
-    v-if="!isTouch"
-    class="app-cursor"
-    :class="[`app-cursor--${cursorState}`, { 'app-cursor--visible': cursorVisible }]"
-  >
-    <div ref="dotRef" class="app-cursor__dot" />
-    <div ref="ringRef" class="app-cursor__ring" />
-    <div ref="labelRef" class="app-cursor__label">
-      VIEW →
+  <ClientOnly>
+    <div ref="cursorEl" class="cursor">
+      <div ref="dotEl" class="cursor__dot" />
+      <div ref="ringEl" class="cursor__ring">
+        <span ref="labelEl" class="cursor__label" />
+      </div>
     </div>
-  </div>
+  </ClientOnly>
 </template>
 
 <style lang="scss" scoped>
-.app-cursor {
-  &__dot,
-  &__ring,
-  &__label {
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: $z-cursor;
-    transform: translate(-50%, -50%);
-    will-change: transform;
-  }
+.cursor {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: $z-cursor;
 
-  &__dot {
-    width: 6px;
-    height: 6px;
-    background: $color-text;
-    border-radius: 50%;
+  @media (hover: none) {
+    display: none;
   }
+}
 
-  &__ring {
-    width: 40px;
-    height: 40px;
-    border: 1px solid rgba($color-text, 0.5);
-    border-radius: 50%;
-    transition: width $duration-med $ease-out-expo,
-      height $duration-med $ease-out-expo,
-      background $duration-med $ease-out-expo,
-      border-color $duration-med $ease-out-expo,
-      opacity $duration-med $ease-out-expo;
-  }
+.cursor__dot {
+  position: fixed;
+  top: -3px;
+  left: -3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: $color-gold;
+  transform-origin: center;
+  will-change: transform;
+}
 
-  &__label {
-    font-family: $font-mono;
-    font-size: $text-xs;
-    letter-spacing: 0.15em;
-    opacity: 0;
-    transition: opacity $duration-fast $ease-out-expo;
-  }
+.cursor__ring {
+  position: fixed;
+  top: -18px;
+  left: -18px;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(242, 238, 232, 0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center;
+  will-change: transform;
+}
 
-  &--hover {
-    .app-cursor__ring {
-      width: 56px;
-      height: 56px;
-      background: rgba($color-accent, 0.15);
-      border-color: $color-accent;
-    }
-  }
-
-  &--view {
-    .app-cursor__ring {
-      opacity: 0;
-    }
-
-    .app-cursor__label {
-      opacity: 1;
-    }
-  }
-
-  &--drag {
-    .app-cursor__ring {
-      width: 32px;
-      height: 32px;
-      border-style: dashed;
-    }
-  }
+.cursor__label {
+  font-family: $font-mono;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: $color-gold;
+  opacity: 0;
+  white-space: nowrap;
 }
 </style>

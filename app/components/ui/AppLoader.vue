@@ -50,10 +50,11 @@ async function dismiss() {
 <template>
   <div v-if="visible" ref="loaderRef" class="app-loader">
     <div class="app-loader__inner">
-      <p class="app-loader__logo font-display">
+      <p class="app-loader__logo">
         CPWD
       </p>
-      <p class="app-loader__progress font-mono">
+      <div class="app-loader__ring" />
+      <p class="app-loader__progress label">
         {{ progress }}%
       </p>
     </div>
@@ -75,10 +76,24 @@ async function dismiss() {
   }
 
   &__logo {
+    font-family: $font-display;
     font-size: $text-3xl;
-    margin-bottom: $space-xl;
+    font-weight: 300;
+    letter-spacing: $tracking-wide;
+    color: $color-gold;
+    margin-bottom: $space-8;
     opacity: 0;
     animation: fade-in 0.6s $ease-out-expo 0.2s forwards;
+  }
+
+  &__ring {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto $space-6;
+    border: 1px solid $color-border;
+    border-top-color: $color-gold;
+    border-radius: 50%;
+    animation: spin-gold 1s linear infinite;
   }
 
   &__progress {

@@ -1,0 +1,243 @@
+@use 'variables' as *;
+
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.link-slide {
+  position: relative;
+  display: inline-block;
+  color: $color-text;
+  transition: color $dur-med $ease-gold;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: $color-gold;
+    transition: width $dur-med $ease-out-expo;
+    transform-origin: left;
+  }
+
+  &:hover {
+    color: $color-gold-light;
+
+    &::before {
+      width: 100%;
+    }
+  }
+}
+
+.link-fill {
+  position: relative;
+  display: inline-block;
+  color: $color-text-muted;
+  transition: color $dur-med $ease-gold;
+  overflow: hidden;
+
+  &::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: $color-gold;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path $dur-slow $ease-out-expo;
+    white-space: nowrap;
+  }
+
+  &:hover::after {
+    clip-path: inset(0 0% 0 0);
+  }
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  color: $color-text;
+  font-family: $font-body;
+  font-weight: 400;
+  letter-spacing: $tracking-wide;
+  text-transform: uppercase;
+  font-size: $text-sm;
+  overflow: hidden;
+  transition: color $dur-fast $ease-gold;
+
+  .arrow-icon {
+    display: inline-block;
+    width: 0;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition:
+      width $dur-med $ease-out-expo,
+      opacity $dur-med $ease-gold,
+      transform $dur-med $ease-out-expo;
+    margin-left: 0;
+  }
+
+  &:hover {
+    color: $color-gold;
+
+    .arrow-icon {
+      width: 20px;
+      opacity: 1;
+      transform: translateX(0);
+      margin-left: 8px;
+    }
+  }
+}
+
+.link-glow {
+  display: inline-block;
+  padding: 10px 24px;
+  border: 1px solid $color-border;
+  border-radius: $radius-full;
+  color: $color-text-muted;
+  font-family: $font-mono;
+  font-size: $text-xs;
+  letter-spacing: $tracking-wider;
+  text-transform: uppercase;
+  transition:
+    border-color $dur-med $ease-gold,
+    color $dur-med $ease-gold,
+    box-shadow $dur-med $ease-gold,
+    background-color $dur-med $ease-gold;
+
+  &:hover {
+    border-color: $color-gold;
+    color: $color-gold;
+    box-shadow: $shadow-gold-sm;
+    background-color: $color-gold-muted;
+  }
+}
+
+.link-split {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+
+  .split-top,
+  .split-bottom {
+    display: block;
+    transition: transform $dur-med $ease-out-expo;
+  }
+
+  .split-top {
+    transform: translateY(0);
+  }
+
+  .split-bottom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: $color-gold;
+    transform: translateY(100%);
+  }
+
+  &:hover {
+    .split-top {
+      transform: translateY(-100%);
+    }
+
+    .split-bottom {
+      transform: translateY(0);
+    }
+  }
+}
+
+.nav-link {
+  position: relative;
+  display: inline-block;
+  font-family: $font-mono;
+  font-size: $text-xs;
+  letter-spacing: $tracking-widest;
+  text-transform: uppercase;
+  color: $color-text-muted;
+  padding: 4px 0;
+  transition: color $dur-fast $ease-gold;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background: $color-gold;
+    transform: translateX(-50%);
+    transition: width $dur-med $ease-out-expo;
+  }
+
+  &:hover,
+  &.active {
+    color: $color-text;
+
+    &::after {
+      width: 100%;
+    }
+  }
+
+  &.active::after {
+    background: $color-gold;
+    width: 100%;
+  }
+}
+
+.link-underline {
+  @extend .link-slide;
+}
+
+.project-link {
+  display: block;
+  position: relative;
+  overflow: hidden;
+
+  .project-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(8, 8, 8, 0.95) 0%,
+      rgba(8, 8, 8, 0.4) 50%,
+      transparent 100%
+    );
+    opacity: 0;
+    transition: opacity $dur-med $ease-gold;
+    display: flex;
+    align-items: flex-end;
+    padding: $space-6;
+  }
+
+  .project-cta {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    color: $color-gold;
+    font-family: $font-mono;
+    font-size: $text-xs;
+    letter-spacing: $tracking-widest;
+    text-transform: uppercase;
+    transform: translateY(12px);
+    transition: transform $dur-med $ease-out-expo;
+
+    &::after {
+      content: '→';
+    }
+  }
+
+  &:hover {
+    .project-overlay {
+      opacity: 1;
+    }
+
+    .project-cta {
+      transform: translateY(0);
+    }
+  }
+}

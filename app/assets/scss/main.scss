@@ -1,13 +1,12 @@
 @use 'variables' as *;
-@use 'mixins' as *;
-
-html,
-body {
-  overflow-x: hidden;
-}
+@use 'reset';
+@use 'typography';
+@use 'animations';
+@use 'links';
+@use 'components';
 
 ::selection {
-  background: $color-accent;
+  background: $color-gold;
   color: $color-bg;
 }
 
@@ -26,24 +25,11 @@ body {
   transform: translateY(-20px);
 }
 
-.has-custom-cursor {
-  cursor: none;
-
+@media (hover: none) and (pointer: coarse) {
+  body,
   a,
   button,
   [role='button'] {
-    cursor: none;
-  }
-}
-
-@media (hover: none) and (pointer: coarse) {
-  .has-custom-cursor {
     cursor: auto;
-
-    a,
-    button,
-    [role='button'] {
-      cursor: pointer;
-    }
   }
 }

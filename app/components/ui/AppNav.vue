@@ -1,268 +1,302 @@
 <script setup lang="ts">
-const { t, locale, locales } = useI18n()
+const { t, locale } = useI18n()
 const localePath = useLocalePath()
-const switchLocalePath = useSwitchLocalePath()
 const route = useRoute()
+const switchLocalePath = useSwitchLocalePath()
 
 const isScrolled = ref(false)
 const menuOpen = ref(false)
 
-const navLinks = computed(() => [
-  { label: t('nav.work'), to: localePath('/work') },
-  { label: t('nav.about'), to: localePath('/about') },
-  { label: t('nav.services'), to: localePath('/services') },
-  { label: t('nav.contact'), to: localePath('/contact') },
-])
+const navItems = [
+  { to: '/work', label: 'nav.work' },
+  { to: '/about', label: 'nav.about' },
+  { to: '/services', label: 'nav.services' },
+  { to: '/contact', label: 'nav.contact' },
+]
 
-const availableLocales = computed(() =>
-  (locales.value as { code: string, name: string }[]).filter(l => l.code !== locale.value),
-)
+const otherLocale = computed(() => (locale.value === 'nl' ? 'en' : 'nl'))
 
-function toggleMenu() {
-  menuOpen.value = !menuOpen.value
-  document.body.style.overflow = menuOpen.value ? 'hidden' : ''
+function switchLocale() {
+  navigateTo(switchLocalePath(otherLocale.value))
 }
 
-function closeMenu() {
-  menuOpen.value = false
-  document.body.style.overflow = ''
-}
-
-function switchLocale(code: string) {
-  navigateTo(switchLocalePath(code))
+function isActive(path: string) {
+  const localized = localePath(path)
+  return route.path === localized || route.path.startsWith(`${localized}/`)
 }
 
 onMounted(() => {
   const onScroll = () => {
-    isScrolled.value = window.scrollY > 80
+    isScrolled.value = window.scrollY > 60
   }
   window.addEventListener('scroll', onScroll, { passive: true })
   onUnmounted(() => window.removeEventListener('scroll', onScroll))
 })
 
-const { setCursorState } = useCursor()
+watch(() => route.path, () => {
+  menuOpen.value = false
+  document.body.style.overflow = ''
+})
 
-function onLinkEnter() {
-  setCursorState('hover')
-}
-
-function onLinkLeave() {
-  setCursorState('default')
-}
+watch(menuOpen, (open) => {
+  document.body.style.overflow = open ? 'hidden' : ''
+})
 </script>
 
 <template>
-  <header class="app-nav" :class="{ 'app-nav--scrolled': isScrolled, 'app-nav--open': menuOpen }">
-    <div class="app-nav__inner">
-      <NuxtLink :to="localePath('/')" class="app-nav__logo font-display" @click="closeMenu">
-        CPWD
+  <nav class="nav" :class="{ 'nav--scrolled': isScrolled, 'nav--open': menuOpen }">
+    <div class="nav__inner container">
+      <NuxtLink :to="localePath('/')" class="nav__logo link-fill" data-text="CPWD">
+        <span>CPWD</span>
       </NuxtLink>
 
-      <nav class="app-nav__desktop">
-        <NuxtLink
-          v-for="link in navLinks"
-          :key="link.to"
-          :to="link.to"
-          class="app-nav__link"
-          :class="{ 'app-nav__link--active': route.path === link.to || route.path.startsWith(link.to + '/') }"
-          @mouseenter="onLinkEnter"
-          @mouseleave="onLinkLeave"
-        >
-          <span class="app-nav__link-text">{{ link.label }}</span>
-          <span class="app-nav__link-arrow">↗</span>
-        </NuxtLink>
-
-        <div class="app-nav__lang">
-          <button
-            v-for="loc in availableLocales"
-            :key="loc.code"
-            class="app-nav__lang-btn font-mono"
-            @click="switchLocale(loc.code)"
+      <ul class="nav__links" role="list">
+        <li v-for="item in navItems" :key="item.to">
+          <NuxtLink
+            :to="localePath(item.to)"
+            class="nav-link"
+            :class="{ active: isActive(item.to) }"
           >
-            {{ loc.code.toUpperCase() }}
-          </button>
+            {{ t(item.label) }}
+          </NuxtLink>
+        </li>
+      </ul>
+
+      <div class="nav__right">
+        <button
+          class="nav__lang"
+          :aria-label="`Switch to ${otherLocale}`"
+          @click="switchLocale"
+        >
+          <span class="label">{{ otherLocale.toUpperCase() }}</span>
+        </button>
+
+        <button
+          class="nav__hamburger"
+          :class="{ 'is-open': menuOpen }"
+          :aria-label="menuOpen ? 'Sluit menu' : 'Open menu'"
+          :aria-expanded="menuOpen"
+          @click="menuOpen = !menuOpen"
+        >
+          <span class="hamburger-line" />
+          <span class="hamburger-line" />
+        </button>
+      </div>
+    </div>
+
+    <Transition name="menu">
+      <div v-if="menuOpen" class="nav__menu">
+        <ul class="nav__menu-links" role="list">
+          <li
+            v-for="(item, index) in navItems"
+            :key="item.to"
+            :style="{ '--delay': `${index * 0.07}s` }"
+          >
+            <NuxtLink
+              :to="localePath(item.to)"
+              class="nav__menu-link"
+              @click="menuOpen = false"
+            >
+              <span class="menu-link__number label">0{{ index + 1 }}</span>
+              <span class="menu-link__text link-split">
+                <span class="split-top">{{ t(item.label) }}</span>
+                <span class="split-bottom">{{ t(item.label) }}</span>
+              </span>
+            </NuxtLink>
+          </li>
+        </ul>
+
+        <div class="nav__menu-footer">
+          <a href="mailto:info@cpwd.nl" class="link-slide">info@cpwd.nl</a>
         </div>
-      </nav>
-
-      <button class="app-nav__toggle" aria-label="Toggle menu" @click="toggleMenu">
-        <span /><span />
-      </button>
-    </div>
-
-    <div class="app-nav__mobile" :class="{ 'app-nav__mobile--open': menuOpen }">
-      <NuxtLink
-        v-for="(link, i) in navLinks"
-        :key="link.to"
-        :to="link.to"
-        class="app-nav__mobile-link font-display"
-        :style="{ transitionDelay: `${i * 0.05}s` }"
-        @click="closeMenu"
-      >
-        {{ link.label }}
-      </NuxtLink>
-    </div>
-  </header>
+      </div>
+    </Transition>
+  </nav>
 </template>
 
 <style lang="scss" scoped>
-.app-nav {
+.nav {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: $z-nav;
-  padding: $space-lg $grid-gutter;
-  transition: background $duration-med $ease-out-expo,
-    backdrop-filter $duration-med $ease-out-expo;
+  padding: 24px 0;
+  transition:
+    padding $dur-med $ease-gold,
+    background-color $dur-med $ease-gold,
+    backdrop-filter $dur-med $ease-gold;
 
   &--scrolled {
-    @include glass;
+    padding: 16px 0;
+    background-color: rgba(8, 8, 8, 0.85);
+    backdrop-filter: blur(20px);
     border-bottom: 1px solid $color-border;
   }
 
   &__inner {
-    @include container;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: $space-6;
   }
 
   &__logo {
-    font-size: $text-xl;
-    z-index: 2;
+    font-family: $font-display;
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: $tracking-wide;
+    color: $color-text;
+    z-index: 1;
   }
 
-  &__desktop {
-    display: none;
-    align-items: center;
-    gap: $space-xl;
-
-    @media (min-width: 900px) {
-      display: flex;
-    }
-  }
-
-  &__link {
-    position: relative;
-    font-size: $text-sm;
+  &__links {
     display: flex;
     align-items: center;
-    gap: $space-xs;
-    transition: color $duration-fast $ease-out-expo;
+    gap: $space-8;
+    list-style: none;
 
-    &-arrow {
-      font-size: 0.7em;
-      opacity: 0;
-      transform: rotate(0deg);
-      transition: opacity $duration-fast $ease-out-expo,
-        transform $duration-med $ease-out-expo;
+    @media (max-width: 768px) {
+      display: none;
     }
+  }
 
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 1px;
-      background: $color-accent;
-      transition: width $duration-med $ease-out-expo;
-    }
-
-    &:hover {
-      color: $color-accent;
-
-      .app-nav__link-arrow {
-        opacity: 1;
-        transform: rotate(45deg);
-      }
-
-      &::after {
-        width: 100%;
-      }
-    }
-
-    &--active::after {
-      width: 100%;
-    }
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: $space-5;
   }
 
   &__lang {
-    display: flex;
-    gap: $space-sm;
-    margin-left: $space-md;
-  }
-
-  &__lang-btn {
+    background: none;
+    border: 1px solid $color-border;
     color: $color-text-muted;
-    transition: color $duration-fast $ease-out-expo;
+    padding: 6px 12px;
+    border-radius: $radius-full;
+    transition:
+      border-color $dur-fast $ease-gold,
+      color $dur-fast $ease-gold;
 
     &:hover {
-      color: $color-accent;
+      border-color: $color-gold;
+      color: $color-gold;
     }
   }
 
-  &__toggle {
+  &__hamburger {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    z-index: 2;
+    background: none;
+    border: none;
+    padding: 4px;
+    width: 32px;
 
-    @media (min-width: 900px) {
+    @media (min-width: 769px) {
       display: none;
     }
 
-    span {
+    .hamburger-line {
       display: block;
-      width: 24px;
+      width: 100%;
       height: 1px;
       background: $color-text;
-      transition: transform $duration-med $ease-out-expo;
+      transform-origin: center;
+      transition:
+        transform $dur-med $ease-out-expo,
+        opacity $dur-fast $ease-gold,
+        background-color $dur-fast $ease-gold;
+    }
+
+    &.is-open {
+      .hamburger-line:first-child {
+        transform: rotate(45deg) translateY(3.5px);
+        background: $color-gold;
+      }
+
+      .hamburger-line:last-child {
+        transform: rotate(-45deg) translateY(-3.5px);
+        background: $color-gold;
+      }
     }
   }
 
-  &--open &__toggle span:first-child {
-    transform: translateY(3.5px) rotate(45deg);
-  }
-
-  &--open &__toggle span:last-child {
-    transform: translateY(-3.5px) rotate(-45deg);
-  }
-
-  &__mobile {
+  &__menu {
     position: fixed;
     inset: 0;
     background: $color-bg;
+    z-index: -1;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    gap: $space-xl;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity $duration-med $ease-out-expo;
-
-    @media (min-width: 900px) {
-      display: none;
-    }
-
-    &--open {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    padding: $space-24 clamp(20px, 4vw, 60px);
+    border-top: 1px solid $color-border;
   }
 
-  &__mobile-link {
+  &__menu-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  &__menu-link {
+    display: flex;
+    align-items: center;
+    gap: $space-5;
+    font-family: $font-display;
     font-size: $text-3xl;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity $duration-med $ease-out-expo,
-      transform $duration-med $ease-out-expo;
+    font-weight: 300;
+    color: $color-text-muted;
+    padding: $space-4 0;
+    border-bottom: 1px solid $color-border;
+    transition: color $dur-fast $ease-gold;
+
+    &:hover {
+      color: $color-text;
+    }
+
+    .menu-link__number {
+      color: $color-gold;
+      font-family: $font-mono;
+      font-size: $text-xs;
+      margin-top: 4px;
+    }
   }
 
-  &__mobile--open &__mobile-link {
-    opacity: 1;
-    transform: translateY(0);
+  &__menu-footer {
+    margin-top: auto;
+    padding-top: $space-8;
   }
+}
+
+.menu-enter-active {
+  transition: clip-path $dur-slow $ease-out-expo;
+}
+
+.menu-leave-active {
+  transition: clip-path $dur-med $ease-in-expo;
+}
+
+.menu-enter-from,
+.menu-leave-to {
+  clip-path: inset(0 0 100% 0);
+}
+
+.menu-enter-to {
+  clip-path: inset(0 0 0% 0);
+}
+
+.nav--open .nav__menu-links li {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.nav__menu-links li {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition:
+    opacity $dur-med $ease-out-expo var(--delay),
+    transform $dur-med $ease-out-expo var(--delay);
 }
 </style>

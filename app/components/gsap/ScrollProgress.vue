@@ -45,7 +45,7 @@ onMounted(async () => {
   &__bar {
     height: 100%;
     width: 100%;
-    background: $color-accent;
+    background: $color-gold;
     transform: scaleX(0);
     transform-origin: left center;
   }

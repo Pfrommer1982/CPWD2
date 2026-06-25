@@ -1,19 +1,56 @@
 @use 'variables' as *;
-@use 'mixins' as *;
 
-@import '@fontsource/dm-serif-display/400.css';
-@import '@fontsource/dm-serif-display/400-italic.css';
-@import '@fontsource/inter/400.css';
-@import '@fontsource/inter/500.css';
-@import '@fontsource/space-grotesk/400.css';
-@import '@fontsource/space-grotesk/500.css';
-@import '@fontsource/space-grotesk/700.css';
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
 
 body {
   font-family: $font-body;
   font-size: $text-base;
+  font-weight: 300;
+  line-height: $leading-normal;
   color: $color-text;
   background-color: $color-bg;
+}
+
+.display,
+h1,
+h2 {
+  font-family: $font-display;
+  font-weight: 300;
+  line-height: $leading-tight;
+  letter-spacing: $tracking-tight;
+  color: $color-text;
+}
+
+h3,
+h4 {
+  font-family: $font-body;
+  font-weight: 400;
+  line-height: $leading-snug;
+}
+
+.label {
+  font-family: $font-mono;
+  font-size: $text-xs;
+  letter-spacing: $tracking-widest;
+  text-transform: uppercase;
+  color: $color-gold;
+  font-weight: 400;
+}
+
+.text-gold { color: $color-gold; }
+.text-muted { color: $color-text-muted; }
+.text-faint { color: $color-text-faint; }
+
+.italic-display {
+  font-family: $font-display;
+  font-style: italic;
+  font-weight: 300;
+  color: $color-gold-light;
 }
 
 .font-display {
@@ -27,20 +64,21 @@ body {
 .font-mono {
   font-family: $font-mono;
   font-size: $text-xs;
-  letter-spacing: 0.12em;
+  letter-spacing: $tracking-wider;
   text-transform: uppercase;
 }
 
 .italic-serif {
   font-family: $font-display;
   font-style: italic;
+  color: $color-gold-light;
 }
 
 .highlight-word {
   display: inline-block;
   position: relative;
   cursor: default;
-  transition: color $duration-fast $ease-out-expo;
+  transition: color $dur-fast $ease-gold;
 
   &::after {
     content: '';
@@ -49,12 +87,12 @@ body {
     left: 0;
     width: 0;
     height: 1px;
-    background: $color-accent;
-    transition: width $duration-med $ease-out-expo;
+    background: $color-gold;
+    transition: width $dur-med $ease-out-expo;
   }
 
   &:hover {
-    color: $color-accent;
+    color: $color-gold-light;
 
     &::after {
       width: 100%;
@@ -65,15 +103,8 @@ body {
 .text-reveal {
   overflow: hidden;
 
-  .word {
-    display: inline-block;
-  }
-
+  .word,
   .char {
     display: inline-block;
   }
-}
-
-.link-underline {
-  @include hover-underline;
 }

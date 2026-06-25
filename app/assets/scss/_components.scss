@@ -1,0 +1,180 @@
+@use 'variables' as *;
+
+.section {
+  padding: $space-20 0;
+
+  @media (max-width: 768px) {
+    padding: $space-12 0;
+  }
+}
+
+.section--hero {
+  padding: 0;
+  min-height: 100svh;
+}
+
+.container {
+  width: 100%;
+  max-width: $content-width;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 60px);
+}
+
+.container--wide {
+  max-width: $max-width;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  margin-bottom: $space-6;
+  font-family: $font-mono;
+  font-size: $text-xs;
+  letter-spacing: $tracking-widest;
+  text-transform: uppercase;
+  color: $color-gold;
+  font-weight: 400;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: $color-gold;
+  }
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: $color-border;
+}
+
+.divider--gold {
+  background: linear-gradient(
+    to right,
+    transparent,
+    $color-gold,
+    transparent
+  );
+}
+
+.accent-bar {
+  position: relative;
+  padding-left: $space-5;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.2em;
+    height: 1em;
+    width: 2px;
+    background: $color-gold;
+  }
+}
+
+.stat {
+  &__number {
+    font-family: $font-display;
+    font-size: $text-3xl;
+    font-weight: 300;
+    color: $color-gold;
+    line-height: 1;
+    letter-spacing: $tracking-tight;
+  }
+
+  &__label {
+    font-family: $font-mono;
+    font-size: $text-xs;
+    letter-spacing: $tracking-wider;
+    text-transform: uppercase;
+    color: $color-text-muted;
+    margin-top: $space-2;
+  }
+}
+
+.card {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  transition:
+    border-color $dur-med $ease-gold,
+    box-shadow $dur-med $ease-gold;
+
+  &:hover {
+    border-color: $color-border-hover;
+    box-shadow: $shadow-gold;
+  }
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-3;
+  padding: 14px 32px;
+  background: $color-gold;
+  color: $color-bg;
+  font-family: $font-mono;
+  font-size: $text-xs;
+  font-weight: 400;
+  letter-spacing: $tracking-widest;
+  text-transform: uppercase;
+  border: none;
+  border-radius: $radius-sm;
+  cursor: pointer;
+  transition:
+    background-color $dur-fast $ease-gold,
+    transform $dur-fast $ease-gold,
+    box-shadow $dur-fast $ease-gold;
+
+  &:hover {
+    background: $color-gold-light;
+    transform: translateY(-1px);
+    box-shadow: $shadow-gold;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-3;
+  padding: 13px 31px;
+  background: transparent;
+  color: $color-gold;
+  font-family: $font-mono;
+  font-size: $text-xs;
+  letter-spacing: $tracking-widest;
+  text-transform: uppercase;
+  border: 1px solid $color-gold;
+  border-radius: $radius-sm;
+  cursor: pointer;
+  transition:
+    background-color $dur-fast $ease-gold,
+    color $dur-fast $ease-gold,
+    box-shadow $dur-fast $ease-gold;
+
+  &:hover {
+    background: $color-gold;
+    color: $color-bg;
+    box-shadow: $shadow-gold;
+  }
+}
+
+@mixin noise-overlay($opacity: 0.03) {
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: $opacity;
+    pointer-events: none;
+    z-index: 1;
+  }
+}

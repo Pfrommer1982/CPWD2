@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const loaderComplete = ref(false)
+const loaderDone = ref(false)
 
 function onLoaderComplete() {
-  loaderComplete.value = true
+  loaderDone.value = true
 }
 
 onMounted(() => {
@@ -11,11 +11,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="layout-default">
-    <UiAppLoader @complete="onLoaderComplete" />
+  <div class="layout">
+    <UiAppLoader v-if="!loaderDone" @complete="onLoaderComplete" />
     <UiAppCursor />
     <UiAppNav />
-    <main class="layout-default__main">
+    <main class="layout__main">
       <slot />
     </main>
     <UiAppFooter />
@@ -23,14 +23,10 @@ onMounted(() => {
   </div>
 </template>
 
-<style lang="scss" scoped>
-.layout-default {
-  position: relative;
+<style lang="scss">
+.layout {
   min-height: 100vh;
-
-  &__main {
-    position: relative;
-    z-index: $z-content;
-  }
+  background: $color-bg;
+  color: $color-text;
 }
 </style>

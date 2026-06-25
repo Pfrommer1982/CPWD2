@@ -3,17 +3,8 @@ import { getFeaturedProjects } from '~/data/projects'
 
 const { t } = useI18n()
 const localePath = useLocalePath()
-const { setCursorState } = useCursor()
 const projects = getFeaturedProjects()
 const gridRef = ref<HTMLElement | null>(null)
-
-function onCardEnter() {
-  setCursorState('view')
-}
-
-function onCardLeave() {
-  setCursorState('default')
-}
 
 onMounted(async () => {
   if (!gridRef.value) return
@@ -39,24 +30,24 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section class="work-section">
-    <div class="work-section__header">
-      <span class="work-section__label font-mono">{{ t('work.label') }}</span>
-      <GsapSplitText tag="h2" class="work-section__heading font-display">
+  <section class="work-section section">
+    <div class="work-section__header container">
+      <p class="section-label">
+        {{ t('work.label') }}
+      </p>
+      <GsapSplitText tag="h2" class="work-section__heading">
         {{ t('work.heading') }}
       </GsapSplitText>
     </div>
 
-    <div ref="gridRef" class="work-section__grid">
+    <div ref="gridRef" class="work-section__grid container container--wide">
       <NuxtLink
         v-for="(project, index) in projects"
         :key="project.id"
         :to="localePath(`/work/${project.slug}`)"
-        class="work-card"
+        class="work-card project-link card"
         :class="{ 'work-card--large': index === 0 }"
         data-cursor="view"
-        @mouseenter="onCardEnter"
-        @mouseleave="onCardLeave"
       >
         <div class="work-card__image-wrap">
           <img
@@ -66,50 +57,48 @@ onMounted(async () => {
             class="work-card__image"
           >
         </div>
-        <div class="work-card__overlay">
-          <h3 class="work-card__title font-display">
-            {{ project.title }}
-          </h3>
-          <div class="work-card__meta font-mono">
-            <span>{{ project.category }}</span>
-            <span>{{ project.year }}</span>
+        <div class="project-overlay">
+          <div>
+            <h3 class="work-card__title">
+              {{ project.title }}
+            </h3>
+            <div class="work-card__meta label">
+              <span>{{ project.category }}</span>
+              <span>{{ project.year }}</span>
+            </div>
+            <span class="project-cta">{{ t('work.viewProject') }}</span>
           </div>
         </div>
       </NuxtLink>
     </div>
 
-    <div class="work-section__footer">
-      <GsapMagneticButton :to="localePath('/work')" variant="ghost">
+    <div class="work-section__footer container">
+      <NuxtLink :to="localePath('/work')" class="link-arrow" data-cursor="view">
         {{ t('work.viewAll') }}
-      </GsapMagneticButton>
+        <span class="arrow-icon">→</span>
+      </NuxtLink>
     </div>
   </section>
 </template>
 
 <style lang="scss" scoped>
 .work-section {
-  @include container;
-  padding-block: $space-4xl;
-
   &__header {
-    margin-bottom: $space-3xl;
-  }
-
-  &__label {
-    display: block;
-    color: $color-accent;
-    margin-bottom: $space-md;
+    margin-bottom: $space-10;
   }
 
   &__heading {
+    font-family: $font-display;
     font-size: $text-3xl;
-    max-width: 12ch;
+    font-weight: 300;
+    max-width: 14ch;
+    line-height: $leading-tight;
   }
 
   &__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: $grid-gutter;
+    gap: $grid-gap;
 
     @media (min-width: 768px) {
       grid-template-columns: repeat(2, 1fr);
@@ -117,17 +106,16 @@ onMounted(async () => {
   }
 
   &__footer {
-    margin-top: $space-2xl;
+    margin-top: $space-10;
     text-align: center;
   }
 }
 
 .work-card {
   position: relative;
-  overflow: hidden;
-  border-radius: $border-radius-md;
   height: 45vh;
   min-height: 280px;
+  border-radius: $radius-lg;
 
   &--large {
     @media (min-width: 768px) {
@@ -146,39 +134,28 @@ onMounted(async () => {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform $duration-xslow $ease-out-expo;
+    transition: transform $dur-xslow $ease-out-expo;
+    filter: brightness(0.85);
   }
 
   &:hover &__image {
     transform: scale(1.05);
-  }
-
-  &__overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: $space-xl;
-    background: linear-gradient(to top, rgba($color-bg, 0.85) 0%, transparent 60%);
-    transform: translateY(30%);
-    transition: transform $duration-med $ease-out-expo;
-  }
-
-  &:hover &__overlay {
-    transform: translateY(0);
+    filter: brightness(1);
   }
 
   &__title {
+    font-family: $font-display;
     font-size: $text-2xl;
-    margin-bottom: $space-sm;
+    font-weight: 300;
+    margin-bottom: $space-2;
+    color: $color-text;
   }
 
   &__meta {
     display: flex;
-    gap: $space-md;
+    gap: $space-4;
     color: $color-text-muted;
-    font-size: $text-xs;
+    margin-bottom: $space-4;
   }
 }
 </style>
