@@ -3,10 +3,6 @@ const pageTransition = {
   name: 'page',
   mode: 'out-in' as const,
 }
-
-onMounted(() => {
-  useLenis().init()
-})
 </script>
 
 <template>

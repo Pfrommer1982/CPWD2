@@ -55,11 +55,15 @@
     "built": "Gebouwd met Nuxt & liefde."
   },
   "project": {
-    "challenge": "Uitdaging",
-    "solution": "Oplossing",
+    "role": "ROL",
+    "technologies": "TECHNOLOGIEËN",
+    "live": "LIVE SITE",
+    "viewSite": "Bekijk website",
+    "challenge": "DE UITDAGING",
+    "solution": "DE OPLOSSING",
     "results": "Resultaten",
     "next": "Volgend project",
-    "role": "Rol",
-    "technologies": "Technologieën"
+    "nextProject": "VOLGEND PROJECT",
+    "moreScreens": "MEER SCHERMEN"
   }
 }

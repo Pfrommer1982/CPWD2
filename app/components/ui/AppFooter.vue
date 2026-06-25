@@ -10,8 +10,8 @@ const year = new Date().getFullYear()
       <div class="divider divider--gold app-footer__divider" />
 
       <div class="app-footer__top">
-        <NuxtLink :to="localePath('/')" class="app-footer__logo link-fill" data-text="CPWD">
-          <span>CPWD</span>
+        <NuxtLink :to="localePath('/')" class="app-footer__logo" aria-label="CPWD">
+          <UiAppLogo :height="40" />
         </NuxtLink>
         <p class="app-footer__tagline label">
           {{ t('footer.built') }}
@@ -52,10 +52,8 @@ const year = new Date().getFullYear()
   }
 
   &__logo {
-    font-family: $font-display;
-    font-size: $text-2xl;
-    font-weight: 300;
-    color: $color-text;
+    display: flex;
+    align-items: center;
   }
 
   &__tagline {

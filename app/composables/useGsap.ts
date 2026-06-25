@@ -93,7 +93,6 @@ export function useGsap() {
 
   onUnmounted(() => {
     ctx.value?.revert()
-    killScrollTriggers()
   })
 
   return {

@@ -55,11 +55,15 @@
     "built": "Built with Nuxt & love."
   },
   "project": {
-    "challenge": "Challenge",
-    "solution": "Solution",
+    "role": "ROLE",
+    "technologies": "TECHNOLOGIES",
+    "live": "LIVE SITE",
+    "viewSite": "View website",
+    "challenge": "THE CHALLENGE",
+    "solution": "THE SOLUTION",
     "results": "Results",
     "next": "Next project",
-    "role": "Role",
-    "technologies": "Technologies"
+    "nextProject": "NEXT PROJECT",
+    "moreScreens": "MORE SCREENS"
   }
 }

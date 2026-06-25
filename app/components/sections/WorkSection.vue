@@ -3,6 +3,7 @@ import { getFeaturedProjects } from '~/data/projects'
 
 const { t } = useI18n()
 const localePath = useLocalePath()
+const imageKit = useImageKit()
 const projects = getFeaturedProjects()
 const gridRef = ref<HTMLElement | null>(null)
 
@@ -43,7 +44,7 @@ onMounted(async () => {
     <div ref="gridRef" class="work-section__grid container container--wide">
       <NuxtLink
         v-for="(project, index) in projects"
-        :key="project.id"
+        :key="project.slug"
         :to="localePath(`/work/${project.slug}`)"
         class="work-card project-link card"
         :class="{ 'work-card--large': index === 0 }"
@@ -51,8 +52,10 @@ onMounted(async () => {
       >
         <div class="work-card__image-wrap">
           <img
-            :src="project.thumbnail"
+            :src="imageKit.thumbnail(project.thumbnail, 1200, 800)"
+            :srcset="imageKit.srcset(project.thumbnail)"
             :alt="project.title"
+            sizes="(max-width: 768px) 100vw, 50vw"
             loading="lazy"
             class="work-card__image"
           >

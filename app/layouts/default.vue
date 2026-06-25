@@ -4,10 +4,6 @@ const loaderDone = ref(false)
 function onLoaderComplete() {
   loaderDone.value = true
 }
-
-onMounted(() => {
-  useLenis().init()
-})
 </script>
 
 <template>

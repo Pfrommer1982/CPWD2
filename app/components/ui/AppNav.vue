@@ -14,12 +14,6 @@ const navItems = [
   { to: '/contact', label: 'nav.contact' },
 ]
 
-const otherLocale = computed(() => (locale.value === 'nl' ? 'en' : 'nl'))
-
-function switchLocale() {
-  navigateTo(switchLocalePath(otherLocale.value))
-}
-
 function isActive(path: string) {
   const localized = localePath(path)
   return route.path === localized || route.path.startsWith(`${localized}/`)
@@ -46,8 +40,8 @@ watch(menuOpen, (open) => {
 <template>
   <nav class="nav" :class="{ 'nav--scrolled': isScrolled, 'nav--open': menuOpen }">
     <div class="nav__inner container">
-      <NuxtLink :to="localePath('/')" class="nav__logo link-fill" data-text="CPWD">
-        <span>CPWD</span>
+      <NuxtLink :to="localePath('/')" class="nav__logo" aria-label="CPWD">
+        <UiAppLogo :height="48" />
       </NuxtLink>
 
       <ul class="nav__links" role="list">
@@ -63,13 +57,29 @@ watch(menuOpen, (open) => {
       </ul>
 
       <div class="nav__right">
-        <button
-          class="nav__lang"
-          :aria-label="`Switch to ${otherLocale}`"
-          @click="switchLocale"
-        >
-          <span class="label">{{ otherLocale.toUpperCase() }}</span>
-        </button>
+        <div class="nav__lang" role="group" aria-label="Taal">
+          <button
+            type="button"
+            class="nav__lang-btn"
+            :class="{ 'nav__lang-btn--active': locale === 'nl' }"
+            :aria-pressed="locale === 'nl'"
+            data-cursor="hover"
+            @click="locale !== 'nl' && navigateTo(switchLocalePath('nl'))"
+          >
+            NL
+          </button>
+          <span class="nav__lang-divider" aria-hidden="true" />
+          <button
+            type="button"
+            class="nav__lang-btn"
+            :class="{ 'nav__lang-btn--active': locale === 'en' }"
+            :aria-pressed="locale === 'en'"
+            data-cursor="hover"
+            @click="locale !== 'en' && navigateTo(switchLocalePath('en'))"
+          >
+            EN
+          </button>
+        </div>
 
         <button
           class="nav__hamburger"
@@ -78,8 +88,9 @@ watch(menuOpen, (open) => {
           :aria-expanded="menuOpen"
           @click="menuOpen = !menuOpen"
         >
-          <span class="hamburger-line" />
-          <span class="hamburger-line" />
+          <span class="hamburger-line hamburger-line--top" />
+          <span class="hamburger-line hamburger-line--mid" />
+          <span class="hamburger-line hamburger-line--bot" />
         </button>
       </div>
     </div>
@@ -142,12 +153,15 @@ watch(menuOpen, (open) => {
   }
 
   &__logo {
-    font-family: $font-display;
-    font-size: 1.4rem;
-    font-weight: 300;
-    letter-spacing: $tracking-wide;
-    color: $color-text;
+    display: flex;
+    align-items: center;
     z-index: 1;
+    opacity: 0.95;
+    transition: opacity $dur-fast $ease-gold;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 
   &__links {
@@ -168,36 +182,59 @@ watch(menuOpen, (open) => {
   }
 
   &__lang {
-    background: none;
-    border: 1px solid $color-border;
-    color: $color-text-muted;
-    padding: 6px 12px;
-    border-radius: $radius-full;
-    transition:
-      border-color $dur-fast $ease-gold,
-      color $dur-fast $ease-gold;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    font-family: $font-mono;
+    font-size: $text-xs;
+    letter-spacing: $tracking-wider;
 
-    &:hover {
-      border-color: $color-gold;
-      color: $color-gold;
+    @media (max-width: 768px) {
+      margin-right: $space-2;
     }
   }
 
-  &__hamburger {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+  &__lang-btn {
+    padding: 6px 8px;
     background: none;
     border: none;
-    padding: 4px;
-    width: 32px;
+    color: $color-text-faint;
+    cursor: none;
+    transition: color $dur-fast $ease-gold;
+
+    &--active {
+      color: $color-gold;
+    }
+
+    &:not(&--active):hover {
+      color: $color-text-muted;
+    }
+  }
+
+  &__lang-divider {
+    width: 1px;
+    height: 12px;
+    background: $color-border;
+  }
+
+  &__hamburger {
+    position: relative;
+    z-index: 2;
+    display: block;
+    background: none;
+    border: none;
+    padding: 0;
+    width: 26px;
+    height: 18px;
+    cursor: none;
 
     @media (min-width: 769px) {
       display: none;
     }
 
     .hamburger-line {
-      display: block;
+      position: absolute;
+      left: 0;
       width: 100%;
       height: 1px;
       background: $color-text;
@@ -205,17 +242,39 @@ watch(menuOpen, (open) => {
       transition:
         transform $dur-med $ease-out-expo,
         opacity $dur-fast $ease-gold,
+        top $dur-med $ease-out-expo,
         background-color $dur-fast $ease-gold;
+
+      &--top {
+        top: 0;
+      }
+
+      &--mid {
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      &--bot {
+        bottom: 0;
+      }
     }
 
     &.is-open {
-      .hamburger-line:first-child {
-        transform: rotate(45deg) translateY(3.5px);
+      .hamburger-line--top {
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
         background: $color-gold;
       }
 
-      .hamburger-line:last-child {
-        transform: rotate(-45deg) translateY(-3.5px);
+      .hamburger-line--mid {
+        opacity: 0;
+        transform: translateY(-50%) scaleX(0);
+      }
+
+      .hamburger-line--bot {
+        top: 50%;
+        bottom: auto;
+        transform: translateY(-50%) rotate(-45deg);
         background: $color-gold;
       }
     }
