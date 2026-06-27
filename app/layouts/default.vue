@@ -1,5 +1,12 @@
 <script setup lang="ts">
 const loaderDone = ref(false)
+const i18nHead = useLocaleHead()
+
+useHead(() => ({
+  htmlAttrs: {
+    lang: i18nHead.value.htmlAttrs?.lang ?? 'nl',
+  },
+}))
 
 function onLoaderComplete() {
   loaderDone.value = true
@@ -14,7 +21,7 @@ function onLoaderComplete() {
     <main class="layout__main">
       <slot />
     </main>
-    <UiAppFooter />
+    <SectionsFinaleSection />
     <GsapScrollProgress />
   </div>
 </template>

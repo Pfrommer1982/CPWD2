@@ -7,7 +7,7 @@ const work = useSectionTranslations('work')
 const localePath = useLocalePath()
 const imageKit = useImageKit()
 
-useHead({ title: 'Work — CPWD' })
+useHead({ title: 'Work, CPWD' })
 
 const sortedProjects = computed(() =>
   [...projects].sort((a, b) => a.order - b.order),

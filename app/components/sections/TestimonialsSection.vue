@@ -1,27 +1,27 @@
 <script setup lang="ts">
+import { localeList, resolveLocaleMessage } from '~/utils/i18n'
+
 defineProps<{
   testimonials?: Array<{ quote: string, author: string, role: string }>
 }>()
 
-const items = [
-  {
-    quote: 'An exceptional creative partner who transforms ideas into immersive digital experiences.',
-    author: 'Sarah Chen',
-    role: 'Creative Director, Aurora',
-  },
-  {
-    quote: 'The attention to detail in animation and interaction is unmatched. Our conversion rates speak for themselves.',
-    author: 'Marcus Webb',
-    role: 'CEO, Vertex Brand',
-  },
-]
+const common = useSectionTranslations('common.testimonials')
+
+const items = computed(() => {
+  const raw = common.tm('items')
+  return localeList<Record<string, unknown>>(raw).map(item => ({
+    quote: resolveLocaleMessage(item.quote, common.rt),
+    author: resolveLocaleMessage(item.author, common.rt),
+    role: resolveLocaleMessage(item.role, common.rt),
+  }))
+})
 </script>
 
 <template>
   <section class="testimonials-section">
     <div class="testimonials-section__inner">
       <div
-        v-for="item in (testimonials || items)"
+        v-for="item in items"
         :key="item.author"
         class="testimonials-section__item"
       >
@@ -29,7 +29,7 @@ const items = [
           "{{ item.quote }}"
         </blockquote>
         <cite class="testimonials-section__author font-mono">
-          {{ item.author }} — {{ item.role }}
+          {{ item.author }}{{ common.t('authorSeparator') }}{{ item.role }}
         </cite>
       </div>
     </div>

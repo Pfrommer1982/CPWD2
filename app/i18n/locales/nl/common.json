@@ -4,13 +4,41 @@
       "copy": "© {year} CPWD. Alle rechten voorbehouden.",
       "built": "Gebouwd met Nuxt & liefde."
     },
+    "finale": {
+      "label": "LOCK IN",
+      "location": "Nederland, wereldwijd in scope",
+      "copy": "© {year} CPWD. Alle rechten voorbehouden.",
+      "rows": [
+        { "text": "Crosshair on", "reveal": "Target locked" },
+        { "text": "jouw volgende bullseye", "reveal": "Recht op doel" },
+        { "text": "Start een project", "reveal": "Lock in →", "action": "contact" },
+        { "text": "info{'@'}cpwd.nl", "reveal": "Stuur intel →", "action": "email" },
+        { "text": "LinkedIn", "reveal": "Connect →", "action": "linkedin" },
+        { "text": "GitHub", "reveal": "Bekijk code →", "action": "github" }
+      ]
+    },
     "marquee": {
-      "items": "CREATIVE DEVELOPMENT — MOTION DESIGN — 3D WEB — BRAND EXPERIENCES — NUXT — THREE.JS — GSAP —"
+      "items": "CROSSHAIR UX · LOCKED-IN DEV · INSIGHTS · ON-TARGET MOTION · NUXT · THREE.JS · GSAP ·"
     },
     "motion": {
       "label": "MOTION",
-      "heading": "Beweging met intentie — nooit als decor.",
-      "body": "Abstracte dot-systemen, scroll-gedreven typografie en loops die naadloos lopen. Motion die je merk draagt en de ervaring verdiept."
+      "heading": "Motion on target, nooit decor.",
+      "body": "Abstracte dot-systemen, scroll-gedreven typografie en loops die naadloos lopen. Gekalibreerde motion die je merk draagt en de ervaring scherper maakt."
+    },
+    "testimonials": {
+      "items": [
+        {
+          "quote": "CPWD locked in op ons merk en leverde een digitale bullseye die direct raak was.",
+          "author": "Sarah Chen",
+          "role": "Creative Director, Aurora"
+        },
+        {
+          "quote": "Elke interactie voelt gekalibreerd. Onze conversie bewees dat dit geen decor was.",
+          "author": "Marcus Webb",
+          "role": "CEO, Vertex Brand"
+        }
+      ],
+      "authorSeparator": ", "
     }
   }
 }

@@ -83,8 +83,8 @@ export const projects: Project[] = [
     heroImage: `${ACC}/Acc Macbook.png`,
     accentColor: '#D4AF53',
     challenge: {
-      nl: 'Accurate Black wilde online net zo onderscheidend zijn als hun releases: donker, krachtig en authentiek. De uitdaging? Een digitale ervaring die het karakter van het label voelbaar maakt — en fans, artiesten en partners direct het merk in trekt.',
-      en: 'Accurate Black wanted to stand out online the way their releases do — dark, powerful and unmistakably authentic. The challenge: create a digital experience that captures the label\'s character and pulls fans, artists and partners straight into the brand.',
+      nl: 'Accurate Black wilde online net zo onderscheidend zijn als hun releases: donker, krachtig en authentiek. De uitdaging? Een digitale ervaring die het karakter van het label voelbaar maakt, en fans, artiesten en partners direct het merk in trekt.',
+      en: 'Accurate Black wanted to stand out online the way their releases do, dark, powerful and unmistakably authentic. The challenge: create a digital experience that captures the label\'s character and pulls fans, artists and partners straight into the brand.',
     },
     solution: {
       nl: 'CPWD ontwierp en bouwde een volledig custom platform met dedicated pagina\'s per artiest en release, Spotify-embeds, vloeiende animaties en een schaalbaar CMS. Het resultaat: een website die er premium uitziet, snel laadt en het label zelfstandig kan laten publiceren.',
@@ -101,18 +101,18 @@ export const projects: Project[] = [
         en: ['DEEP. DARK.', 'AUTHENTIC. PROFOUND.', 'Where sound meets design.'],
       },
       intro: {
-        nl: 'Accurate Black vroeg om meer dan een website — om een digitaal podium dat de intensiteit van hun techno-sound vertaalt naar pixels. CPWD ontwikkelde een donker, premium platform waar artiesten, releases en merkidentiteit samensmelten tot één meeslepende ervaring, op elk scherm.',
-        en: 'Accurate Black needed more than a website — they needed a digital stage that matches the intensity of their techno sound. We developed a dark, premium platform where artists, releases and brand identity merge into one immersive experience on every screen.',
+        nl: 'Accurate Black vroeg om meer dan een website, om een digitaal podium dat de intensiteit van hun techno-sound vertaalt naar pixels. CPWD ontwikkelde een donker, premium platform waar artiesten, releases en merkidentiteit samensmelten tot één meeslepende ervaring, op elk scherm.',
+        en: 'Accurate Black needed more than a website, they needed a digital stage that matches the intensity of their techno sound. We developed a dark, premium platform where artists, releases and brand identity merge into one immersive experience on every screen.',
       },
       devices: [
-        { src: `${ACC}/screenshot iphone acc.png`, alt: 'Accurate Black — mobiele homepage' },
-        { src: `${ACC}/phone_mockup_3 ACC.png`, alt: 'Accurate Black — responsive device mockup' },
+        { src: `${ACC}/screenshot iphone acc.png`, alt: 'Accurate Black, mobiele homepage' },
+        { src: `${ACC}/phone_mockup_3 ACC.png`, alt: 'Accurate Black, responsive device mockup' },
       ],
       custom: {
         title: { nl: 'Details die het verschil maken', en: 'Details that make the difference' },
         body: {
           nl: 'Van geanimeerde logo-reveals tot hover-interacties en naadloze page transitions: elk detail versterkt het donkere karakter van het merk en houdt bezoekers langer in de flow.',
-          en: 'From animated logo reveals to hover interactions and seamless page transitions — every detail reinforces the brand\'s dark character and keeps visitors in the flow longer.',
+          en: 'From animated logo reveals to hover interactions and seamless page transitions, every detail reinforces the brand\'s dark character and keeps visitors in the flow longer.',
         },
       },
       video: {
@@ -125,8 +125,8 @@ export const projects: Project[] = [
           id: 'artists',
           title: { nl: 'Artists & Releases', en: 'Artists & Releases' },
           body: {
-            nl: 'Elke artiest krijgt een eigen verhaal. Biografie, socials, discografie en embedded players — alles op één plek, ontworpen om fans direct dieper het label in te trekken.',
-            en: 'Every artist gets their own story. Bio, social links, discography and embedded players — all in one place, designed to pull fans deeper into the label from the first click.',
+            nl: 'Elke artiest krijgt een eigen verhaal. Biografie, socials, discografie en embedded players, alles op één plek, ontworpen om fans direct dieper het label in te trekken.',
+            en: 'Every artist gets their own story. Bio, social links, discography and embedded players, all in one place, designed to pull fans deeper into the label from the first click.',
           },
           images: [
             { src: `${ACC}/Screenshot 2025-02-11 at 15.23.00.png`, alt: 'Artiestenoverzicht' },
@@ -139,8 +139,8 @@ export const projects: Project[] = [
           id: 'releases',
           title: { nl: 'Dynamic Releases', en: 'Dynamic Releases' },
           body: {
-            nl: 'Nieuwe tracks, nieuwe visuals — zonder gedoe. Met een custom CMS op Firebase Firestore en ImageKit publiceert Accurate Black releases snel, consistent en visueel sterk.',
-            en: 'New tracks, new visuals — without the friction. With a custom CMS on Firebase Firestore and ImageKit, Accurate Black publishes releases fast, consistently and with real visual impact.',
+            nl: 'Nieuwe tracks, nieuwe visuals, zonder gedoe. Met een custom CMS op Firebase Firestore en ImageKit publiceert Accurate Black releases snel, consistent en visueel sterk.',
+            en: 'New tracks, new visuals, without the friction. With a custom CMS on Firebase Firestore and ImageKit, Accurate Black publishes releases fast, consistently and with real visual impact.',
           },
           images: [
             { src: `${ACC}/Screenshot 2025-02-11 at 15.18.46.png`, alt: 'Releasepagina met artwork' },
@@ -201,7 +201,7 @@ export const projects: Project[] = [
   {
     slug: 'maison-vandenbergh',
     title: 'Maison Vandenbergh',
-    subtitle: 'Luxe interior design studio — digitale identiteit en portfolio',
+    subtitle: 'Luxe interior design studio, digitale identiteit en portfolio',
     category: 'Branding & Web Development',
     year: 2024,
     role: ['Art Direction', 'Web Development'],

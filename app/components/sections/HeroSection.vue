@@ -75,8 +75,22 @@ onMounted(async () => {
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
 
+    const circleSize = 64
+    const circleCanvas = document.createElement('canvas')
+    circleCanvas.width = circleSize
+    circleCanvas.height = circleSize
+    const circleCtx = circleCanvas.getContext('2d')
+    if (circleCtx) {
+      circleCtx.beginPath()
+      circleCtx.arc(circleSize / 2, circleSize / 2, circleSize / 2, 0, Math.PI * 2)
+      circleCtx.fillStyle = '#ffffff'
+      circleCtx.fill()
+    }
+    const circleTexture = new THREE.CanvasTexture(circleCanvas)
+
     const material = new THREE.PointsMaterial({
       size: 0.015,
+      map: circleTexture,
       vertexColors: true,
       transparent: true,
       opacity: 0.6,
@@ -107,6 +121,7 @@ onMounted(async () => {
       renderer.dispose()
       geometry.dispose()
       material.dispose()
+      circleTexture.dispose()
     })
   } catch (e) {
     console.warn('Three.js could not load:', e)
@@ -140,8 +155,9 @@ onMounted(async () => {
         </NuxtLink>
 
         <p class="hero__sub">
-          Based in <span class="text-gold">The Netherlands</span> —
-          Available worldwide
+          {{ hero.t('locationBefore') }}
+          <span class="text-gold">{{ hero.t('locationPlace') }}</span>,
+          {{ hero.t('locationAfter') }}
         </p>
       </div>
     </div>

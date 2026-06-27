@@ -1,43 +1,50 @@
 {
   "services": {
-    "label": "SERVICES",
-    "heading": "What we do",
-    "intro": "Design, code, cloud and sound — under one roof, tailored for brands that want to stand out online.",
+    "label": "IN SCOPE",
+    "heading": "What we hit",
+    "intro": "Design, code, cloud and sound, one crosshair. Built for brands that want every shot to land online.",
+    "scrollHint": "Scroll for intel",
+    "cta": {
+      "label": "NEXT TARGET",
+      "heading": "Ready to lock in?",
+      "subtext": "From briefing to launch, we keep the full journey in scope.",
+      "button": "Lock in on a project"
+    },
     "items": [
       {
         "number": "01",
         "title": "Web Design",
-        "desc": "Visual concepts, design systems and interfaces that feel premium — dark, sharp and considered down to the last detail.",
+        "desc": "Visual concepts, design systems and interfaces with crosshair precision. Dark, sharp and considered down to the last detail.",
         "tags": ["UI/UX", "Design systems", "Figma", "Art direction"]
       },
       {
         "number": "02",
         "title": "Web Development",
-        "desc": "Custom websites and web apps with Nuxt, Vue and modern tooling. Fast, scalable and built to last.",
+        "desc": "Custom websites and web apps with Nuxt, Vue and modern tooling. Fast, scalable, locked in on performance.",
         "tags": ["Nuxt", "Vue 3", "TypeScript", "Headless CMS"]
       },
       {
         "number": "03",
         "title": "Cloud & Hosting",
-        "desc": "Deploy, CDN, image optimisation and secure environments — so your site loads fast, anywhere in the world.",
+        "desc": "Deploy, CDN, image optimisation and secure environments, so your site loads on target anywhere in the world.",
         "tags": ["Vercel", "ImageKit", "Firebase", "CI/CD"]
       },
       {
         "number": "04",
         "title": "Sound Design",
-        "desc": "Audio identity for brands and labels — from subtle UI feedback to atmospheric soundscapes that bring your site to life.",
+        "desc": "Audio identity for brands and labels, from subtle UI feedback to soundscapes that bring your site on target.",
         "tags": ["Sound identity", "Web audio", "Labels", "Immersive UX"]
       },
       {
         "number": "05",
         "title": "Motion & Interaction",
-        "desc": "Scroll animations, page transitions and micro-interactions with GSAP — motion with intent, never decoration.",
+        "desc": "Scroll animations, page transitions and micro-interactions with GSAP. Motion with intent, never decoration.",
         "tags": ["GSAP", "ScrollTrigger", "Three.js", "Lenis"]
       },
       {
         "number": "06",
         "title": "Brand & Strategy",
-        "desc": "Visual identity, tone of voice and digital brand experience — consistent across website, socials and campaigns.",
+        "desc": "Visual identity, tone of voice and digital brand experience, consistent across website, socials and campaigns.",
         "tags": ["Branding", "Identity", "Copy", "Launch"]
       }
     ]

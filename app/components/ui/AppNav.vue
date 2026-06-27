@@ -1,9 +1,8 @@
 <script setup lang="ts">
 const nav = useSectionTranslations('nav')
-const { locale } = useI18n()
+const { locale, switchLocale } = useLocaleSwitch()
 const localePath = useLocalePath()
 const route = useRoute()
-const switchLocalePath = useSwitchLocalePath()
 
 const isScrolled = ref(false)
 const menuOpen = ref(false)
@@ -65,7 +64,7 @@ watch(menuOpen, (open) => {
             :class="{ 'nav__lang-btn--active': locale === 'nl' }"
             :aria-pressed="locale === 'nl'"
             data-cursor="hover"
-            @click="locale !== 'nl' && navigateTo(switchLocalePath('nl'))"
+            @click="switchLocale('nl')"
           >
             NL
           </button>
@@ -76,7 +75,7 @@ watch(menuOpen, (open) => {
             :class="{ 'nav__lang-btn--active': locale === 'en' }"
             :aria-pressed="locale === 'en'"
             data-cursor="hover"
-            @click="locale !== 'en' && navigateTo(switchLocalePath('en'))"
+            @click="switchLocale('en')"
           >
             EN
           </button>

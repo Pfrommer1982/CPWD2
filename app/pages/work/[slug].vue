@@ -19,7 +19,7 @@ if (!project) {
 }
 
 useHead({
-  title: `${project.title} — CPWD`,
+  title: `${project.title}, CPWD`,
   meta: [
     { name: 'description', content: project.subtitle },
     { property: 'og:title', content: project.title },

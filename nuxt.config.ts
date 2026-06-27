@@ -42,12 +42,12 @@ export default defineNuxtConfig({
     defaultLocale: 'nl',
     fallbackLocale: 'en',
     locales: createI18nLocaleConfig(),
-    strategy: 'prefix_except_default',
+    strategy: 'no_prefix',
     vueI18n: './i18n.config.ts',
     detectBrowserLanguage: {
       useCookie: true,
-      cookieKey: 'i18n_redirected',
-      redirectOn: 'root',
+      cookieKey: 'i18n_locale',
+      fallbackLocale: 'nl',
     },
   },
 
@@ -63,10 +63,10 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      htmlAttrs: { lang: 'nl' },
-      title: 'CPWD — Creative Web Development',
+      htmlAttrs: {},
+      title: 'CPWD, Creative Web Development',
       meta: [
-        { name: 'description', content: 'CPWD — immersive digital experiences, animation-driven websites and high-end web development.' },
+        { name: 'description', content: 'CPWD, locked-in digital experiences, crosshair-sharp websites and high-end web development.' },
         { property: 'og:image', content: '/og-image.jpg' },
       ],
       link: [

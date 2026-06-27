@@ -1,10 +1,10 @@
 {
   "contact": {
-    "label": "CONTACT",
-    "heading": "Let's build something.",
-    "subtext": "Got a project in mind? Drop a message and let's talk.",
+    "label": "LOCK IN",
+    "heading": "Line up your next target.",
+    "subtext": "Got a project in scope? Send a message, we'll zero in on the brief.",
     "email": "info{'@'}cpwd.nl",
-    "cta": "Send a message",
+    "cta": "Send intel",
     "form": {
       "name": "Name",
       "email": "Email",

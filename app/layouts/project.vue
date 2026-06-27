@@ -5,7 +5,7 @@
     <main>
       <slot />
     </main>
-    <UiAppFooter />
+    <SectionsFinaleSection />
   </div>
 </template>
 

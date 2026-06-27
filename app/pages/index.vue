@@ -11,6 +11,5 @@ definePageMeta({ layout: 'default' })
     <SectionsServicesSection />
     <SectionsMotionSection />
     <SectionsTestimonialsSection />
-    <SectionsContactSection />
   </div>
 </template>
