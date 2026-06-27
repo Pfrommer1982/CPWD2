@@ -7,7 +7,51 @@ interface ServicesScrollOptions {
   backgrounds: Ref<HTMLElement[]>
   progress: Ref<number>
   panelCount: Ref<number>
-  layout: Ref<'idle' | 'desktop' | 'mobile'>
+  layout: Ref<'desktop' | 'mobile'>
+}
+
+/** Share of each slide segment used for transition vs magnetic hold */
+const SLIDE_MOVE_RATIO = 0.58
+/** Extra vertical scroll per slide so each panel can dwell before the next */
+const SLIDE_SEGMENT_MULT = 1.28
+
+function mapSlideProgress(linear: number, steps: number) {
+  if (steps <= 0) return 0
+  const clamped = Math.min(1, Math.max(0, linear))
+  const pos = clamped * steps
+  const index = Math.min(steps - 1, Math.floor(pos))
+  const local = pos - index
+
+  if (local <= SLIDE_MOVE_RATIO) {
+    return (index + local / SLIDE_MOVE_RATIO) / steps
+  }
+  return (index + 1) / steps
+}
+
+function slideSnapPoints(steps: number) {
+  if (steps <= 0) return [0]
+
+  const points = [0]
+  for (let k = 1; k < steps; k++) {
+    points.push((k - 1 + SLIDE_MOVE_RATIO + (1 - SLIDE_MOVE_RATIO) * 0.5) / steps)
+  }
+  points.push(1)
+  return points
+}
+
+function nearestSnapPoint(linear: number, points: number[]) {
+  let closest = points[0] ?? 0
+  let minDist = Math.abs(linear - closest)
+
+  for (const point of points) {
+    const dist = Math.abs(linear - point)
+    if (dist < minDist) {
+      minDist = dist
+      closest = point
+    }
+  }
+
+  return closest
 }
 
 export function useServicesScroll(options: ServicesScrollOptions) {
@@ -25,28 +69,37 @@ export function useServicesScroll(options: ServicesScrollOptions) {
     await initLenis()
 
     const total = panelCount.value
-    const getScrollDistance = () => (total - 1) * window.innerHeight
+    const steps = total - 1
+    const snapPoints = slideSnapPoints(steps)
+    const getScrollDistance = () => steps * window.innerHeight * SLIDE_SEGMENT_MULT
 
     ctx = gsap.context(() => {
       gsap.set(track.value, { x: 0, force3D: true })
 
       const horizontalTween = gsap.to(track.value, {
-        x: () => -(total - 1) * window.innerWidth,
+        x: () => -steps * window.innerWidth,
         ease: 'none',
-        scrollTrigger: {
-          trigger: root.value,
-          start: 'top top',
-          end: () => `+=${getScrollDistance()}`,
-          pin: true,
-          scrub: 1,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            progress.value = Math.min(
-              total - 1,
-              Math.round(self.progress * (total - 1)),
-            )
-          },
+        paused: true,
+      })
+
+      ScrollTrigger.create({
+        trigger: root.value,
+        start: 'top top',
+        end: () => `+=${getScrollDistance()}`,
+        pin: true,
+        scrub: 0.78,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        snap: {
+          snapTo: (linear) => nearestSnapPoint(linear, snapPoints),
+          duration: { min: 0.28, max: 0.55 },
+          delay: 0.04,
+          ease: 'power3.out',
+        },
+        onUpdate: (self) => {
+          const mapped = mapSlideProgress(self.progress, steps)
+          horizontalTween.progress(mapped)
+          progress.value = Math.min(steps, Math.round(mapped * steps))
         },
       })
 
@@ -196,68 +249,7 @@ export function useServicesScroll(options: ServicesScrollOptions) {
   }
 
   async function setupMobile() {
-    const { init } = useGsap()
-    const gsap = await init()
-    if (!gsap || !root.value) return
-
-    ctx = gsap.context(() => {
-      panels.value.forEach((panel, index) => {
-        if (!panel) return
-
-        const titleWords = panel.querySelectorAll<HTMLElement>('.services-panel__title-inner')
-        const desc = panel.querySelector<HTMLElement>('.services-panel__desc')
-        const tags = panel.querySelectorAll<HTMLElement>('.services-panel__tag')
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: panel,
-            start: 'top 88%',
-            toggleActions: 'play none none reverse',
-          },
-        })
-
-        if (titleWords.length) {
-          tl.from(titleWords, {
-            yPercent: 80,
-            opacity: 0,
-            duration: 0.7,
-            stagger: 0.05,
-            ease: 'power3.out',
-          })
-        }
-
-        if (desc) {
-          tl.from(desc, { y: 32, opacity: 0, duration: 0.6, ease: 'power2.out' }, '-=0.35')
-        }
-
-        if (tags.length) {
-          tl.from(tags, {
-            y: 16,
-            opacity: 0,
-            duration: 0.45,
-            stagger: 0.04,
-            ease: 'power2.out',
-          }, '-=0.3')
-        }
-
-        const bg = backgrounds.value[index]
-        if (bg) {
-          gsap.fromTo(
-            bg,
-            { opacity: 0 },
-            {
-              opacity: 0.6,
-              duration: 0.8,
-              scrollTrigger: {
-                trigger: panel,
-                start: 'top 90%',
-                toggleActions: 'play none none reverse',
-              },
-            },
-          )
-        }
-      })
-    }, root.value)
+    await useLenis().refresh()
   }
 
   function setupMouseParallax(container: HTMLElement) {
@@ -282,7 +274,7 @@ export function useServicesScroll(options: ServicesScrollOptions) {
   }
 
   watch(layout, async (mode) => {
-    if (mode === 'idle' || !import.meta.client) return
+    if (!import.meta.client) return
 
     ctx?.revert()
     ctx = null
@@ -297,7 +289,7 @@ export function useServicesScroll(options: ServicesScrollOptions) {
     } else {
       await setupMobile()
     }
-  })
+  }, { immediate: true })
 
   onUnmounted(() => {
     ctx?.revert()

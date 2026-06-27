@@ -3,6 +3,7 @@ import type { Ref } from 'vue'
 interface DesignBrowserSceneOptions {
   root: Ref<HTMLElement | null>
   active?: Ref<boolean>
+  staticMode?: Ref<boolean>
 }
 
 interface ScenePiece {
@@ -19,10 +20,14 @@ function centerIn(parent: DOMRect, child: DOMRect) {
   }
 }
 
-export function useDesignBrowserScene({ root, active }: DesignBrowserSceneOptions) {
+export function useDesignBrowserScene({ root, active, staticMode }: DesignBrowserSceneOptions) {
   let ctx: ReturnType<typeof import('gsap').gsap.context> | null = null
   let timeline: import('gsap').gsap.core.Timeline | null = null
   let built = false
+  let observer: IntersectionObserver | null = null
+  let resizeObserver: ResizeObserver | null = null
+  let inView = false
+  let building = false
 
   const browserRef = ref<HTMLElement | null>(null)
   const guidesRef = ref<SVGElement | null>(null)
@@ -84,10 +89,25 @@ export function useDesignBrowserScene({ root, active }: DesignBrowserSceneOption
     )
   }
 
+  function shouldPlay() {
+    const activeOk = active?.value ?? true
+    return inView && activeOk
+  }
+
+  function syncPlayback() {
+    if (!built || !timeline) return
+    if (shouldPlay()) timeline.restart()
+    else timeline.pause()
+  }
+
   async function buildTimeline() {
+    if (building) return
     const scene = root.value
     const browser = browserRef.value
     if (!scene || !browser) return
+
+    const sceneRect = scene.getBoundingClientRect()
+    if (sceneRect.width < 48 || sceneRect.height < 48) return
 
     const pairs = [
       [pieceNav.value, slotNav.value],
@@ -100,14 +120,19 @@ export function useDesignBrowserScene({ root, active }: DesignBrowserSceneOption
 
     if (pairs.some(([piece, slot]) => !piece || !slot)) return
 
+    building = true
+
     const { init } = useGsap()
     const gsap = await init()
-    if (!gsap) return
+    if (!gsap) {
+      building = false
+      return
+    }
 
     ctx?.revert()
     timeline?.kill()
+    built = false
 
-    const sceneRect = scene.getBoundingClientRect()
     const pieces: ScenePiece[] = pairs.map(([el, slot], index) => {
       const piece = el as HTMLElement
       const slotEl = slot as HTMLElement
@@ -209,15 +234,51 @@ export function useDesignBrowserScene({ root, active }: DesignBrowserSceneOption
         gsap.set(measureLabels, { opacity: 0.6, y: 0 })
         gsap.set(browser, { '--assemble': 1 })
         built = false
+        building = false
         return
       }
 
       built = true
-      if (active?.value ?? true) timeline.restart()
+      building = false
+      syncPlayback()
     }, scene)
   }
 
+  function setupObserver(el: HTMLElement) {
+    observer?.disconnect()
+    observer = new IntersectionObserver(
+      async ([entry]) => {
+        inView = entry?.isIntersecting ?? false
+        if (inView) {
+          if (!built && !building) await buildTimeline()
+          else syncPlayback()
+        } else {
+          timeline?.pause()
+        }
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -5% 0px' },
+    )
+    observer.observe(el)
+
+    resizeObserver?.disconnect()
+    let resizeTimer: ReturnType<typeof setTimeout> | null = null
+    resizeObserver = new ResizeObserver(() => {
+      if (resizeTimer) clearTimeout(resizeTimer)
+      resizeTimer = setTimeout(async () => {
+        if (!inView) return
+        await buildTimeline()
+      }, 150)
+    })
+    resizeObserver.observe(el)
+  }
+
   function teardown() {
+    observer?.disconnect()
+    observer = null
+    resizeObserver?.disconnect()
+    resizeObserver = null
+    inView = false
+    building = false
     timeline?.kill()
     timeline = null
     built = false
@@ -227,9 +288,12 @@ export function useDesignBrowserScene({ root, active }: DesignBrowserSceneOption
 
   async function mount() {
     teardown()
-    if (!root.value || !import.meta.client) return
+    if (!root.value || !import.meta.client || staticMode?.value) return
 
-    await whenSceneReady(refsReady, () => buildTimeline())
+    await whenSceneReady(refsReady, () => {})
+    if (!root.value || !refsReady()) return
+
+    setupObserver(root.value)
   }
 
   watch(root, async (el) => {
@@ -237,14 +301,23 @@ export function useDesignBrowserScene({ root, active }: DesignBrowserSceneOption
       teardown()
       return
     }
+    if (staticMode?.value) {
+      teardown()
+      return
+    }
     await mount()
   }, { flush: 'post' })
 
+  if (staticMode) {
+    watch(staticMode, async (isStatic) => {
+      if (isStatic) teardown()
+      else if (root.value) await mount()
+    })
+  }
+
   if (active) {
-    watch(active, (isActive) => {
-      if (!built || !timeline) return
-      if (isActive) timeline.restart()
-      else timeline.pause()
+    watch(active, () => {
+      syncPlayback()
     }, { immediate: true })
   }
 

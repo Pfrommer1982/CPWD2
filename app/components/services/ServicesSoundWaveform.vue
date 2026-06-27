@@ -1,22 +1,28 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
   active?: boolean
+  mobile?: boolean
 }>(), {
   active: true,
+  mobile: false,
 })
 
 const rootRef = ref<HTMLElement | null>(null)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 
 const BAR_COUNT = 48
+const STATIC_BARS = Array.from({ length: 24 }, (_, i) => {
+  const wave = Math.sin(i * 0.55) * 0.35 + Math.sin(i * 1.2) * 0.2
+  return `${Math.round(28 + Math.abs(wave) * 52)}%`
+})
+
 let raf = 0
 let running = false
 let phase = 0
 
 function draw() {
   const canvas = canvasRef.value
-  const root = rootRef.value
-  if (!canvas || !root) return
+  if (!canvas) return
 
   const dpr = Math.min(window.devicePixelRatio || 1, 2)
   const rect = canvas.getBoundingClientRect()
@@ -60,7 +66,7 @@ function draw() {
 }
 
 function start() {
-  if (running) return
+  if (props.mobile || running) return
   running = true
   draw()
 }
@@ -71,47 +77,67 @@ function stop() {
 }
 
 watch(() => props.active, (isActive) => {
-  if (!import.meta.client) return
+  if (!import.meta.client || props.mobile) return
   if (isActive) start()
   else stop()
 }, { immediate: true })
 
+let resizeObserver: ResizeObserver | null = null
+
 onMounted(() => {
-  if (!import.meta.client) return
+  if (!import.meta.client || props.mobile) return
+
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   if (reduced) {
     phase = 1.2
     draw()
+    return
+  }
+
+  if (canvasRef.value) {
+    resizeObserver = new ResizeObserver(() => {
+      if (running || props.active) draw()
+    })
+    resizeObserver.observe(canvasRef.value)
   }
 })
 
-onUnmounted(stop)
+onUnmounted(() => {
+  stop()
+  resizeObserver?.disconnect()
+})
 </script>
 
 <template>
-  <div ref="rootRef" class="svc-scene svc-sound" aria-hidden="true">
-    <div class="svc-sound__panel">
+  <div
+    ref="rootRef"
+    class="svc-scene svc-sound"
+    :class="{
+      'svc-scene--stacked': mobile,
+      'svc-scene--static': mobile,
+    }"
+    aria-hidden="true"
+  >
+    <div class="svc-sound__panel svc-scene__stage">
       <div class="svc-sound__ring svc-sound__ring--outer" />
       <div class="svc-sound__ring svc-sound__ring--inner" />
-      <canvas ref="canvasRef" class="svc-sound__canvas" />
+      <div v-if="mobile" class="svc-sound__bars-static">
+        <span
+          v-for="(height, i) in STATIC_BARS"
+          :key="i"
+          class="svc-sound__bar"
+          :style="{ '--h': height }"
+        />
+      </div>
+      <canvas v-else ref="canvasRef" class="svc-sound__canvas" />
       <span class="svc-sound__label font-mono">48kHz · stereo</span>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.svc-scene {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
 .svc-sound {
   &__panel {
-    position: absolute;
-    top: 50%;
-    left: 52%;
-    transform: translateY(-50%);
     width: clamp(240px, 32vw, 380px);
     aspect-ratio: 1.15;
     display: flex;
@@ -155,14 +181,6 @@ onUnmounted(stop)
 
 @keyframes sound-spin {
   to { transform: rotate(360deg); }
-}
-
-@media (max-width: 767px) {
-  .svc-sound__panel {
-    left: 50%;
-    right: auto;
-    transform: translate(-50%, -50%);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

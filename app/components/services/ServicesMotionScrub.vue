@@ -1,13 +1,16 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
   active?: boolean
+  mobile?: boolean
 }>(), {
   active: true,
+  mobile: false,
 })
 
 const rootRef = ref<HTMLElement | null>(null)
 const previewRef = ref<HTMLElement | null>(null)
 const activeRef = toRef(props, 'active')
+const staticMode = toRef(props, 'mobile')
 
 const layers = [
   { label: 'bg', speed: 0.15, y: 0 },
@@ -18,6 +21,7 @@ const layers = [
 useVisibleTimeline({
   root: rootRef,
   active: activeRef,
+  staticMode,
   factory: ({ gsap, reduced }) => {
   const playhead = rootRef.value?.querySelector<HTMLElement>('[data-playhead]')
   const layerEls = previewRef.value?.querySelectorAll<HTMLElement>('[data-layer]') ?? []
@@ -68,8 +72,16 @@ useVisibleTimeline({
 </script>
 
 <template>
-  <div ref="rootRef" class="svc-scene svc-motion" aria-hidden="true">
-    <div class="svc-motion__panel">
+  <div
+    ref="rootRef"
+    class="svc-scene svc-motion"
+    :class="{
+      'svc-scene--stacked': mobile,
+      'svc-scene--static': mobile,
+    }"
+    aria-hidden="true"
+  >
+    <div class="svc-motion__panel svc-scene__stage">
       <div ref="previewRef" class="svc-motion__preview">
         <div
           v-for="layer in layers"
@@ -103,18 +115,8 @@ useVisibleTimeline({
 </template>
 
 <style lang="scss" scoped>
-.svc-scene {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
 .svc-motion {
   &__panel {
-    position: absolute;
-    top: 50%;
-    left: 52%;
-    transform: translateY(-50%);
     width: clamp(240px, 32vw, 380px);
     padding: clamp(14px, 2vw, 20px);
     border: 1px solid rgba(212, 175, 83, 0.16);
@@ -209,14 +211,6 @@ useVisibleTimeline({
     font-size: 8px;
     letter-spacing: 0.08em;
     color: rgba(138, 128, 112, 0.75);
-  }
-}
-
-@media (max-width: 767px) {
-  .svc-motion__panel {
-    left: 50%;
-    right: auto;
-    transform: translate(-50%, -50%);
   }
 }
 </style>

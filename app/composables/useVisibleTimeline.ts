@@ -8,6 +8,7 @@ interface VisibleTimelineContext {
 interface VisibleTimelineOptions {
   root: Ref<HTMLElement | null>
   active?: Ref<boolean>
+  staticMode?: Ref<boolean>
   factory: (ctx: VisibleTimelineContext) => import('gsap').gsap.core.Timeline | null | void
 }
 
@@ -23,10 +24,12 @@ export async function whenSceneReady(check: () => boolean, run: () => void, atte
   return false
 }
 
-export function useVisibleTimeline({ root, active, factory }: VisibleTimelineOptions) {
+export function useVisibleTimeline({ root, active, staticMode, factory }: VisibleTimelineOptions) {
   let gsapCtx: ReturnType<typeof import('gsap').gsap.context> | null = null
   let timeline: import('gsap').gsap.core.Timeline | null = null
   let built = false
+  let observer: IntersectionObserver | null = null
+  let inView = false
 
   function playTimeline() {
     if (!timeline) return
@@ -37,14 +40,32 @@ export function useVisibleTimeline({ root, active, factory }: VisibleTimelineOpt
     timeline?.pause()
   }
 
-  function syncActive(isActive: boolean) {
-    if (isActive) playTimeline()
+  function shouldPlay() {
+    const activeOk = active?.value ?? true
+    return inView && activeOk
+  }
+
+  function syncPlayback() {
+    if (!built || !timeline) return
+    if (shouldPlay()) playTimeline()
     else pauseTimeline()
+  }
+
+  function setupObserver(el: HTMLElement) {
+    observer?.disconnect()
+    observer = new IntersectionObserver(
+      ([entry]) => {
+        inView = entry?.isIntersecting ?? false
+        syncPlayback()
+      },
+      { threshold: 0.2, rootMargin: '0px 0px -8% 0px' },
+    )
+    observer.observe(el)
   }
 
   async function mount() {
     const el = root.value
-    if (!el || !import.meta.client) return
+    if (!el || !import.meta.client || staticMode?.value) return
 
     const ready = await whenSceneReady(() => !!root.value, () => {})
     if (!ready || !root.value) return
@@ -72,11 +93,15 @@ export function useVisibleTimeline({ root, active, factory }: VisibleTimelineOpt
         return
       }
 
-      if (active?.value ?? true) playTimeline()
+      setupObserver(root.value!)
+      syncPlayback()
     }, root.value)
   }
 
   function teardown() {
+    observer?.disconnect()
+    observer = null
+    inView = false
     timeline?.kill()
     timeline = null
     built = false
@@ -86,14 +111,21 @@ export function useVisibleTimeline({ root, active, factory }: VisibleTimelineOpt
 
   watch(root, async (el) => {
     teardown()
-    if (!el) return
+    if (!el || staticMode?.value) return
     await mount()
   }, { flush: 'post' })
 
+  if (staticMode) {
+    watch(staticMode, async (isStatic) => {
+      if (isStatic) teardown()
+      else await mount()
+    })
+  }
+
   if (active) {
-    watch(active, (isActive) => {
+    watch(active, () => {
       if (!built) return
-      syncActive(isActive)
+      syncPlayback()
     }, { immediate: true })
   }
 

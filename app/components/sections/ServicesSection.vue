@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import ServiceScene from '~/components/ServiceScene.vue'
+import { useMediaQuery } from '@vueuse/core'
 import { localeList, localeTags, resolveLocaleMessage, type ServiceLocaleItem } from '~/utils/i18n'
 
 const services = useSectionTranslations('services')
 const localePath = useLocalePath()
 
-const layout = ref<'idle' | 'desktop' | 'mobile'>('idle')
+const isMobile = useMediaQuery('(max-width: 767px)', { ssrWidth: 768 })
+const layout = computed(() => (isMobile.value ? 'mobile' : 'desktop'))
 const rootRef = ref<HTMLElement | null>(null)
 const trackRef = ref<HTMLElement | null>(null)
 const panelRefs = ref<HTMLElement[]>([])
@@ -52,7 +54,6 @@ function titleWords(title: string) {
 }
 
 function isSceneActive(panelIndex: number) {
-  if (layout.value === 'mobile') return true
   return progress.value === panelIndex
 }
 
@@ -67,18 +68,10 @@ useServicesScroll({
 })
 
 useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
-
-onMounted(() => {
-  if (!import.meta.client) return
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const mobile = window.matchMedia('(max-width: 767px)').matches
-  layout.value = reduced || mobile ? 'mobile' : 'desktop'
-})
 </script>
 
 <template>
   <section
-    v-if="layout !== 'idle'"
     ref="rootRef"
     class="services-xp"
     aria-labelledby="services-xp-heading"
@@ -254,12 +247,6 @@ onMounted(() => {
           aria-hidden="true"
         />
         <span class="services-panel__index services-panel__index--mobile font-display">{{ item.number }}</span>
-        <div
-          class="services-panel__deco services-panel__deco--scene services-panel__deco--mobile-scene"
-          aria-hidden="true"
-        >
-          <ServiceScene :number="item.number" :active="true" />
-        </div>
         <div class="services-panel__content">
           <span class="services-panel__number label">{{ item.number }}</span>
           <h3 class="services-panel__title services-panel__title--mobile font-display">
@@ -316,7 +303,9 @@ onMounted(() => {
 
   &__stage--mobile {
     display: block;
-    padding: clamp(64px, 12vh, 120px) clamp(20px, 4vw, 48px);
+    padding: clamp(48px, 10vh, 96px) clamp(16px, 4vw, 32px);
+    max-width: 100%;
+    overflow-x: clip;
   }
 
   &__viewport {
@@ -450,7 +439,7 @@ onMounted(() => {
   &__mobile-bg {
     position: absolute;
     inset: 0;
-    opacity: 0;
+    opacity: 0.45;
     pointer-events: none;
     border-radius: inherit;
   }
@@ -499,7 +488,7 @@ onMounted(() => {
     border: 1px solid $color-border;
     border-radius: $radius-lg;
     background: rgba(15, 15, 15, 0.5);
-    overflow: hidden;
+    overflow: visible;
   }
 
   &--finale-mobile {
@@ -678,13 +667,6 @@ onMounted(() => {
       z-index: 3;
     }
 
-    &--mobile-scene {
-      position: relative;
-      inset: auto;
-      height: clamp(220px, 48vw, 280px);
-      margin-bottom: $space-6;
-    }
-
     &--finale {
       display: flex;
       align-items: center;
@@ -840,9 +822,9 @@ onMounted(() => {
 
 @media (prefers-reduced-motion: reduce) {
   .services-xp__track,
-  .services-panel__title-inner,
-  .services-panel__desc,
-  .services-panel__tag,
+  .services-xp__stage--desktop .services-panel__title-inner,
+  .services-xp__stage--desktop .services-panel__desc,
+  .services-xp__stage--desktop .services-panel__tag,
   .services-xp__bg-slide {
     will-change: auto;
     transform: none !important;

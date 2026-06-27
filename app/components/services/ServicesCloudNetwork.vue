@@ -1,12 +1,15 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
   active?: boolean
+  mobile?: boolean
 }>(), {
   active: true,
+  mobile: false,
 })
 
 const rootRef = ref<HTMLElement | null>(null)
 const activeRef = toRef(props, 'active')
+const staticMode = toRef(props, 'mobile')
 
 const nodes = [
   { id: 'ams', label: 'AMS', x: 50, y: 50, origin: true },
@@ -36,6 +39,7 @@ function edgePath(from: string, to: string) {
 useVisibleTimeline({
   root: rootRef,
   active: activeRef,
+  staticMode,
   factory: ({ gsap, reduced }) => {
   const pulses = rootRef.value?.querySelectorAll<HTMLElement>('[data-pulse]') ?? []
   const lines = rootRef.value?.querySelectorAll<SVGPathElement>('[data-edge]') ?? []
@@ -77,8 +81,16 @@ useVisibleTimeline({
 </script>
 
 <template>
-  <div ref="rootRef" class="svc-scene svc-cloud" aria-hidden="true">
-    <div class="svc-cloud__panel">
+  <div
+    ref="rootRef"
+    class="svc-scene svc-cloud"
+    :class="{
+      'svc-scene--stacked': mobile,
+      'svc-scene--static': mobile,
+    }"
+    aria-hidden="true"
+  >
+    <div class="svc-cloud__panel svc-scene__stage">
       <span class="svc-cloud__title font-mono">Edge network</span>
       <svg class="svc-cloud__map" viewBox="0 0 100 100" aria-hidden="true">
         <circle cx="50" cy="50" r="38" class="svc-cloud__globe" />
@@ -127,18 +139,8 @@ useVisibleTimeline({
 </template>
 
 <style lang="scss" scoped>
-.svc-scene {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
 .svc-cloud {
   &__panel {
-    position: absolute;
-    top: 50%;
-    left: 52%;
-    transform: translateY(-50%);
     width: clamp(240px, 30vw, 360px);
     padding: clamp(16px, 2vw, 22px);
     border: 1px solid rgba(212, 175, 83, 0.16);
@@ -150,6 +152,10 @@ useVisibleTimeline({
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    .svc-scene--stacked & {
+      width: min(100%, 280px);
+    }
   }
 
   &__title {
@@ -222,14 +228,6 @@ useVisibleTimeline({
       color: rgba(212, 175, 83, 0.75);
       margin-right: 4px;
     }
-  }
-}
-
-@media (max-width: 767px) {
-  .svc-cloud__panel {
-    left: 50%;
-    right: auto;
-    transform: translate(-50%, -50%);
   }
 }
 </style>

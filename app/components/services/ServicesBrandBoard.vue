@@ -1,12 +1,15 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
   active?: boolean
+  mobile?: boolean
 }>(), {
   active: true,
+  mobile: false,
 })
 
 const rootRef = ref<HTMLElement | null>(null)
 const activeRef = toRef(props, 'active')
+const staticMode = toRef(props, 'mobile')
 
 const tiles = [
   { id: 'type', label: 'Type', content: 'Aa' },
@@ -20,6 +23,7 @@ const tiles = [
 useVisibleTimeline({
   root: rootRef,
   active: activeRef,
+  staticMode,
   factory: ({ gsap, reduced }) => {
   const tileEls = rootRef.value?.querySelectorAll<HTMLElement>('[data-tile]') ?? []
   const ruler = rootRef.value?.querySelector<HTMLElement>('[data-ruler]')
@@ -61,8 +65,16 @@ useVisibleTimeline({
 </script>
 
 <template>
-  <div ref="rootRef" class="svc-scene svc-brand" aria-hidden="true">
-    <div class="svc-brand__panel">
+  <div
+    ref="rootRef"
+    class="svc-scene svc-brand"
+    :class="{
+      'svc-scene--stacked': mobile,
+      'svc-scene--static': mobile,
+    }"
+    aria-hidden="true"
+  >
+    <div class="svc-brand__panel svc-scene__stage">
       <span data-ruler class="svc-brand__ruler font-mono">Identity system</span>
       <div class="svc-brand__grid">
         <article
@@ -85,18 +97,8 @@ useVisibleTimeline({
 </template>
 
 <style lang="scss" scoped>
-.svc-scene {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
 .svc-brand {
   &__panel {
-    position: absolute;
-    top: 50%;
-    left: 52%;
-    transform: translateY(-50%);
     width: clamp(240px, 32vw, 380px);
     padding: clamp(16px, 2vw, 22px);
     perspective: 800px;
@@ -154,14 +156,6 @@ useVisibleTimeline({
     height: 28px;
     border-radius: 50%;
     box-shadow: 0 0 16px rgba(212, 175, 83, 0.35);
-  }
-}
-
-@media (max-width: 767px) {
-  .svc-brand__panel {
-    left: 50%;
-    right: auto;
-    transform: translate(-50%, -50%);
   }
 }
 </style>

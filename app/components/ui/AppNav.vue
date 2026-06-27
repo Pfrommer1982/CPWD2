@@ -19,6 +19,10 @@ function isActive(path: string) {
   return route.path === localized || route.path.startsWith(`${localized}/`)
 }
 
+function closeMenu() {
+  menuOpen.value = false
+}
+
 onMounted(() => {
   const onScroll = () => {
     isScrolled.value = window.scrollY > 60
@@ -40,7 +44,7 @@ watch(menuOpen, (open) => {
 <template>
   <nav class="nav" :class="{ 'nav--scrolled': isScrolled, 'nav--open': menuOpen }">
     <div class="nav__inner container">
-      <NuxtLink :to="localePath('/')" class="nav__logo" aria-label="CPWD">
+      <NuxtLink :to="localePath('/')" class="nav__logo" aria-label="CPWD" @click="closeMenu">
         <UiAppLogo :height="48" />
       </NuxtLink>
 
@@ -95,33 +99,56 @@ watch(menuOpen, (open) => {
       </div>
     </div>
 
-    <Transition name="menu">
-      <div v-if="menuOpen" class="nav__menu">
-        <ul class="nav__menu-links" role="list">
-          <li
-            v-for="(item, index) in navItems"
-            :key="item.to"
-            :style="{ '--delay': `${index * 0.07}s` }"
-          >
-            <NuxtLink
-              :to="localePath(item.to)"
-              class="nav__menu-link"
-              @click="menuOpen = false"
-            >
-              <span class="menu-link__number label">0{{ index + 1 }}</span>
-              <span class="menu-link__text link-split">
-                <span class="split-top">{{ nav.t(item.label) }}</span>
-                <span class="split-bottom">{{ nav.t(item.label) }}</span>
-              </span>
-            </NuxtLink>
-          </li>
-        </ul>
+    <Teleport to="body">
+      <Transition name="menu">
+        <div v-if="menuOpen" class="nav__overlay" role="dialog" aria-modal="true">
+          <div class="nav__menu">
+            <ul class="nav__menu-links" role="list">
+              <li
+                v-for="(item, index) in navItems"
+                :key="item.to"
+                :style="{ '--delay': `${index * 0.08 + 0.12}s` }"
+              >
+                <NuxtLink
+                  :to="localePath(item.to)"
+                  class="nav__menu-link"
+                  :class="{ 'nav__menu-link--active': isActive(item.to) }"
+                  @click="closeMenu"
+                >
+                  <span class="menu-link__number label">0{{ index + 1 }}</span>
+                  <span class="menu-link__text">{{ nav.t(item.label) }}</span>
+                </NuxtLink>
+              </li>
+            </ul>
 
-        <div class="nav__menu-footer">
-          <a href="mailto:info@cpwd.nl" class="link-slide">info@cpwd.nl</a>
+            <div class="nav__menu-footer">
+              <a href="mailto:info@cpwd.nl" class="nav__menu-email link-slide">info@cpwd.nl</a>
+              <div class="nav__menu-lang" role="group" aria-label="Taal">
+                <button
+                  type="button"
+                  class="nav__menu-lang-btn"
+                  :class="{ 'nav__menu-lang-btn--active': locale === 'nl' }"
+                  :aria-pressed="locale === 'nl'"
+                  @click="switchLocale('nl')"
+                >
+                  NL
+                </button>
+                <span class="nav__menu-lang-divider" aria-hidden="true" />
+                <button
+                  type="button"
+                  class="nav__menu-lang-btn"
+                  :class="{ 'nav__menu-lang-btn--active': locale === 'en' }"
+                  :aria-pressed="locale === 'en'"
+                  @click="switchLocale('en')"
+                >
+                  EN
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </Transition>
+      </Transition>
+    </Teleport>
   </nav>
 </template>
 
@@ -131,7 +158,7 @@ watch(menuOpen, (open) => {
   top: 0;
   left: 0;
   right: 0;
-  z-index: $z-nav;
+  z-index: $z-nav + 1;
   padding: 24px 0;
   transition:
     padding $dur-med $ease-gold,
@@ -145,6 +172,12 @@ watch(menuOpen, (open) => {
     border-bottom: 1px solid $color-border;
   }
 
+  &--open {
+    background-color: transparent;
+    backdrop-filter: none;
+    border-bottom-color: transparent;
+  }
+
   &__inner {
     display: flex;
     align-items: center;
@@ -155,7 +188,6 @@ watch(menuOpen, (open) => {
   &__logo {
     display: flex;
     align-items: center;
-    z-index: 1;
     opacity: 0.95;
     transition: opacity $dur-fast $ease-gold;
 
@@ -190,7 +222,7 @@ watch(menuOpen, (open) => {
     letter-spacing: $tracking-wider;
 
     @media (max-width: 768px) {
-      margin-right: $space-2;
+      display: none;
     }
   }
 
@@ -219,7 +251,6 @@ watch(menuOpen, (open) => {
 
   &__hamburger {
     position: relative;
-    z-index: 2;
     display: block;
     background: none;
     border: none;
@@ -279,83 +310,146 @@ watch(menuOpen, (open) => {
       }
     }
   }
+}
 
-  &__menu {
-    position: fixed;
-    inset: 0;
-    background: $color-bg;
-    z-index: -1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: $space-24 clamp(20px, 4vw, 60px);
-    border-top: 1px solid $color-border;
-  }
+.nav__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: $z-nav;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212, 175, 83, 0.08) 0%, transparent 55%),
+    $color-bg;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
-  &__menu-links {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: $space-4;
-  }
+.nav__menu {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  min-height: 100dvh;
+  padding:
+    calc(96px + env(safe-area-inset-top, 0px))
+    clamp(24px, 6vw, 48px)
+    calc(32px + env(safe-area-inset-bottom, 0px));
+}
 
-  &__menu-link {
-    display: flex;
-    align-items: center;
-    gap: $space-5;
-    font-family: $font-display;
-    font-size: $text-3xl;
-    font-weight: 300;
-    color: $color-text-muted;
-    padding: $space-4 0;
-    border-bottom: 1px solid $color-border;
-    transition: color $dur-fast $ease-gold;
+.nav__menu-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  gap: clamp(8px, 2vh, 20px);
+  margin: 0;
+  padding: 0;
 
-    &:hover {
-      color: $color-text;
-    }
-
-    .menu-link__number {
-      color: $color-gold;
-      font-family: $font-mono;
-      font-size: $text-xs;
-      margin-top: 4px;
-    }
-  }
-
-  &__menu-footer {
-    margin-top: auto;
-    padding-top: $space-8;
+  li {
+    animation: nav-menu-link-in $dur-med $ease-out-expo both;
+    animation-delay: var(--delay);
   }
 }
 
-.menu-enter-active {
-  transition: clip-path $dur-slow $ease-out-expo;
+.nav__menu-link {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 4vw, 28px);
+  font-family: $font-display;
+  font-size: clamp(2.5rem, 10vw, 4rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: $tracking-tight;
+  color: $color-text-muted;
+  padding: clamp(12px, 2.5vh, 20px) 0;
+  border-bottom: 1px solid rgba(212, 175, 83, 0.12);
+  transition: color $dur-fast $ease-gold;
+
+  &:hover,
+  &--active {
+    color: $color-text;
+  }
+
+  &--active .menu-link__number {
+    color: $color-gold-light;
+  }
+
+  .menu-link__number {
+    color: $color-gold;
+    font-family: $font-mono;
+    font-size: $text-xs;
+    letter-spacing: $tracking-wider;
+    margin-top: 0.35em;
+  }
+
+  .menu-link__text {
+    display: block;
+  }
 }
 
+.nav__menu-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-6;
+  padding-top: $space-8;
+  border-top: 1px solid $color-border;
+}
+
+.nav__menu-email {
+  font-family: $font-mono;
+  font-size: $text-sm;
+  letter-spacing: $tracking-wide;
+  color: $color-text-muted;
+}
+
+.nav__menu-lang {
+  display: flex;
+  align-items: center;
+  font-family: $font-mono;
+  font-size: $text-xs;
+  letter-spacing: $tracking-wider;
+}
+
+.nav__menu-lang-btn {
+  padding: 8px 10px;
+  background: none;
+  border: none;
+  color: $color-text-faint;
+  cursor: none;
+  transition: color $dur-fast $ease-gold;
+
+  &--active {
+    color: $color-gold;
+  }
+}
+
+.nav__menu-lang-divider {
+  width: 1px;
+  height: 14px;
+  background: $color-border;
+}
+
+.menu-enter-active,
 .menu-leave-active {
-  transition: clip-path $dur-med $ease-in-expo;
+  transition: opacity $dur-slow $ease-out-expo;
 }
 
 .menu-enter-from,
 .menu-leave-to {
-  clip-path: inset(0 0 100% 0);
-}
-
-.menu-enter-to {
-  clip-path: inset(0 0 0% 0);
-}
-
-.nav--open .nav__menu-links li {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.nav__menu-links li {
   opacity: 0;
-  transform: translateX(-20px);
-  transition:
-    opacity $dur-med $ease-out-expo var(--delay),
-    transform $dur-med $ease-out-expo var(--delay);
+}
+
+@keyframes nav-menu-link-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

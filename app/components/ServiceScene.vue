@@ -9,8 +9,10 @@ import ServicesSoundWaveform from '~/components/services/ServicesSoundWaveform.v
 const props = withDefaults(defineProps<{
   number: string
   active?: boolean
+  mobile?: boolean
 }>(), {
-  active: true,
+  active: false,
+  mobile: false,
 })
 
 const SCENES = {
@@ -28,9 +30,30 @@ function sceneFor(number: string) {
 </script>
 
 <template>
-  <component
-    :is="sceneFor(number)"
-    v-if="sceneFor(number)"
-    :active="active"
-  />
+  <div
+    class="service-scene-host"
+    :class="{ 'service-scene-host--mobile': mobile }"
+  >
+    <component
+      :is="sceneFor(number)"
+      v-if="sceneFor(number)"
+      :active="mobile ? false : active"
+      :mobile="mobile"
+    />
+  </div>
 </template>
+
+<style lang="scss" scoped>
+.service-scene-host {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  &--mobile {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

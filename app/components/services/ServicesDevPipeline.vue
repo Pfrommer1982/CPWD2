@@ -1,13 +1,16 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
   active?: boolean
+  mobile?: boolean
 }>(), {
   active: true,
+  mobile: false,
 })
 
 const rootRef = ref<HTMLElement | null>(null)
 const terminalRef = ref<HTMLElement | null>(null)
 const activeRef = toRef(props, 'active')
+const staticMode = toRef(props, 'mobile')
 
 const steps = ['commit', 'build', 'test', 'deploy']
 const lines = [
@@ -20,6 +23,7 @@ const lines = [
 useVisibleTimeline({
   root: rootRef,
   active: activeRef,
+  staticMode,
   factory: ({ gsap, reduced }) => {
   const stepEls = rootRef.value?.querySelectorAll<HTMLElement>('[data-step]') ?? []
   const connectors = rootRef.value?.querySelectorAll<SVGElement>('[data-connector]') ?? []
@@ -62,8 +66,16 @@ useVisibleTimeline({
 </script>
 
 <template>
-  <div ref="rootRef" class="svc-scene svc-pipeline" aria-hidden="true">
-    <div class="svc-pipeline__layout">
+  <div
+    ref="rootRef"
+    class="svc-scene svc-pipeline"
+    :class="{
+      'svc-scene--stacked': mobile,
+      'svc-scene--static': mobile,
+    }"
+    aria-hidden="true"
+  >
+    <div class="svc-pipeline__layout svc-scene__stage">
       <ol class="svc-pipeline__steps">
         <li
           v-for="step in steps"
@@ -102,18 +114,8 @@ useVisibleTimeline({
 </template>
 
 <style lang="scss" scoped>
-.svc-scene {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
 .svc-pipeline {
   &__layout {
-    position: absolute;
-    top: 50%;
-    left: 52%;
-    transform: translateY(-50%);
     display: grid;
     grid-template-columns: auto 12px minmax(160px, 1fr);
     gap: $space-5;
@@ -190,15 +192,6 @@ useVisibleTimeline({
     line-height: 1.4;
     color: rgba(242, 238, 232, 0.82);
     opacity: 0.35;
-  }
-}
-
-@media (max-width: 767px) {
-  .svc-pipeline__layout {
-    left: 50%;
-    right: auto;
-    transform: translate(-50%, -50%);
-    width: min(92%, 340px);
   }
 }
 </style>

@@ -1,12 +1,15 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
   active?: boolean
+  mobile?: boolean
 }>(), {
   active: true,
+  mobile: false,
 })
 
 const sceneRef = ref<HTMLElement | null>(null)
 const activeRef = toRef(props, 'active')
+const staticMode = toRef(props, 'mobile')
 
 const {
   browserRef,
@@ -24,11 +27,19 @@ const {
   slotCardA,
   slotCardB,
   slotDot,
-} = useDesignBrowserScene({ root: sceneRef, active: activeRef })
+} = useDesignBrowserScene({ root: sceneRef, active: activeRef, staticMode })
 </script>
 
 <template>
-  <div ref="sceneRef" class="design-browser" aria-hidden="true">
+  <div
+    ref="sceneRef"
+    class="design-browser"
+    :class="{
+      'design-browser--stacked': mobile,
+      'design-browser--static': mobile,
+    }"
+    aria-hidden="true"
+  >
     <div ref="browserRef" class="design-browser__frame">
       <div class="design-browser__chrome">
         <span class="design-browser__dot design-browser__dot--red" />
@@ -311,15 +322,6 @@ const {
 @keyframes design-shimmer {
   0%, 100% { transform: translateX(-120%); }
   50% { transform: translateX(120%); }
-}
-
-@media (max-width: 767px) {
-  .design-browser__frame {
-    left: 50%;
-    right: auto;
-    width: min(88%, 320px);
-    transform: translate(-50%, -50%);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

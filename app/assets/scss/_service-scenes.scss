@@ -1,0 +1,249 @@
+@use 'variables' as *;
+
+.svc-scene {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  &--stacked {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+  }
+}
+
+.svc-scene__stage {
+  position: absolute;
+  top: 50%;
+  left: 52%;
+  transform: translateY(-50%);
+
+  .svc-scene--stacked & {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: min(100%, 340px);
+    max-width: 100%;
+    margin-inline: auto;
+  }
+}
+
+.svc-scene--stacked.svc-pipeline {
+  .svc-pipeline__layout {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+    width: 100%;
+    max-width: 300px;
+    padding: 16px;
+  }
+
+  .svc-pipeline__connectors {
+    display: none;
+  }
+
+  .svc-pipeline__steps {
+    flex-flow: row wrap;
+    gap: 10px 14px;
+    margin: 0;
+  }
+
+  .svc-pipeline__step {
+    font-size: 9px;
+  }
+
+  .svc-pipeline__terminal {
+    padding-top: 0;
+    border-top: 1px solid rgba(212, 175, 83, 0.12);
+    padding-top: $space-4;
+  }
+}
+
+.design-browser {
+  &--stacked {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    min-height: 200px;
+
+    .design-browser__frame {
+      position: relative;
+      top: auto;
+      left: auto;
+      transform: none;
+      width: min(100%, 300px);
+    }
+  }
+
+  &--static {
+    .design-browser__piece {
+      display: none;
+    }
+
+    .design-browser__frame {
+      --assemble: 1;
+    }
+
+    .design-browser__slot {
+      opacity: 1;
+      border: 1px solid rgba(212, 175, 83, 0.22);
+      background: rgba(22, 22, 22, 0.95);
+
+      &--nav {
+        background: linear-gradient(90deg, rgba(212, 175, 83, 0.22), rgba(22, 22, 22, 0.95) 65%);
+        border-radius: 999px;
+      }
+
+      &--hero {
+        background: linear-gradient(135deg, rgba(212, 175, 83, 0.16), rgba(15, 15, 15, 0.98));
+      }
+
+      &--side {
+        background: rgba(22, 22, 22, 0.95);
+      }
+
+      &--card-a,
+      &--card-b {
+        background: rgba(22, 22, 22, 0.95);
+      }
+
+      &--card-b {
+        border-color: rgba(232, 201, 122, 0.35);
+        background: linear-gradient(180deg, rgba(212, 175, 83, 0.08), rgba(15, 15, 15, 0.98));
+      }
+
+      &--dot {
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(232, 201, 122, 0.85) 0%, rgba(212, 175, 83, 0.45) 100%);
+        border-color: rgba(232, 201, 122, 0.5);
+      }
+    }
+
+    .design-browser__guides line {
+      opacity: 0.35;
+      stroke-dashoffset: 0;
+    }
+
+    .design-browser__measure {
+      opacity: 0.6;
+      transform: none;
+    }
+
+    .design-browser__measure--h {
+      transform: translateY(-50%) rotate(-90deg);
+    }
+
+    .design-browser__measure--w {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+.svc-scene--static {
+  &.svc-pipeline {
+    [data-step] {
+      --step: 1;
+    }
+
+    [data-line] {
+      opacity: 1;
+      transform: none;
+    }
+
+    [data-connector] {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+  }
+
+  &.svc-cloud {
+    [data-edge] {
+      opacity: 0.8;
+      stroke-dashoffset: 0;
+    }
+
+    [data-node] {
+      opacity: 1;
+    }
+  }
+
+  &.svc-motion {
+    [data-playhead] {
+      left: 55%;
+    }
+
+    [data-layer] {
+      transform: translateY(var(--layer-y, 0));
+    }
+
+    .svc-motion__layer--bg {
+      --layer-y: -6px;
+    }
+
+    .svc-motion__layer--mid {
+      --layer-y: -14px;
+    }
+
+    .svc-motion__layer--fg {
+      --layer-y: -22px;
+    }
+
+    [data-key] {
+      opacity: 1;
+      transform: translate(-50%, -50%) rotate(45deg) scale(1);
+    }
+  }
+
+  &.svc-brand {
+    [data-tile] {
+      opacity: 1;
+      transform: none;
+    }
+
+    [data-ruler] {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+
+  &.svc-sound {
+    .svc-sound__ring {
+      animation: none;
+    }
+  }
+}
+
+.svc-sound__bars-static {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: 78%;
+  height: 42%;
+}
+
+.svc-sound__bar {
+  flex: 1;
+  height: var(--h, 40%);
+  min-height: 8px;
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    rgba(232, 201, 122, 0.9) 0%,
+    rgba(212, 175, 83, 0.55) 50%,
+    rgba(160, 133, 48, 0.25) 100%
+  );
+}
