@@ -27,11 +27,12 @@ interface SectionTarget {
   telemetry: string[]
 }
 
-interface OrbitalSatellite {
+interface OrbitalPath {
   radius: number
   speed: number
-  tilt: number
   phase: number
+  rotX: number
+  rotY: number
   size: number
   trail: number
 }
@@ -55,10 +56,10 @@ const SECTION_META: SectionTarget[] = [
   { globeX: 0, globeY: 0, label: 'TARGET LOCK', code: 'ARR-07', telemetry: ['LOCK: ACQUIRED', 'RANGE: 0.0km', 'STATUS: GO'] },
 ]
 
-const ORBITAL_SATELLITES: OrbitalSatellite[] = [
-  { radius: 2.35, speed: 0.028, tilt: 0.55, phase: 0.2, size: 3.5, trail: 0.35 },
-  { radius: 2.62, speed: -0.022, tilt: 1.15, phase: 2.1, size: 3, trail: 0.28 },
-  { radius: 2.48, speed: 0.019, tilt: 1.85, phase: 4.4, size: 2.8, trail: 0.22 },
+const ORBITAL_PATHS: OrbitalPath[] = [
+  { radius: 2.05, speed: 0.028, phase: 0.2, rotX: Math.PI / 2 - 0.35, rotY: 0, size: 3.5, trail: 0.35 },
+  { radius: 2.27, speed: -0.022, phase: 2.1, rotX: Math.PI / 2, rotY: 0.6, size: 3, trail: 0.28 },
+  { radius: 2.49, speed: 0.019, phase: 4.4, rotX: Math.PI / 2 + 0.35, rotY: 1.2, size: 2.8, trail: 0.22 },
 ]
 
 const [NL_LAT, NL_LON] = NL_OUTLINE_CENTROID
@@ -145,7 +146,7 @@ let starDepthNorm: Float32Array | null = null
 let starBaseRotY = 0
 let starBaseRotX = 0
 let satelliteGroups: Group[] = []
-let orbitRings: Line[] = []
+let orbitGroups: Group[] = []
 let globeRotation = 0
 let scrollProgress = 0
 let scrollProgressTarget = 0
@@ -398,6 +399,44 @@ function finaleElement() {
   return unwrapEl(props.finale)
     ?? chaptersList().find(el => el.classList.contains('journey-chapter--finale'))
     ?? null
+}
+
+function rotatePointXYZ(
+  x: number,
+  y: number,
+  z: number,
+  rotX: number,
+  rotY: number,
+  rotZ: number,
+) {
+  let x1 = x
+  let y1 = y * Math.cos(rotX) - z * Math.sin(rotX)
+  let z1 = y * Math.sin(rotX) + z * Math.cos(rotX)
+
+  let x2 = x1 * Math.cos(rotY) + z1 * Math.sin(rotY)
+  let z2 = -x1 * Math.sin(rotY) + z1 * Math.cos(rotY)
+  let y2 = y1
+
+  let x3 = x2 * Math.cos(rotZ) - y2 * Math.sin(rotZ)
+  let y3 = x2 * Math.sin(rotZ) + y2 * Math.cos(rotZ)
+
+  return { x: x3, y: y3, z: z2 }
+}
+
+function orbitProject2D(
+  path: OrbitalPath,
+  angle: number,
+  rotZ = 0,
+  scale = 38,
+) {
+  const localX = Math.cos(angle) * path.radius
+  const localY = Math.sin(angle) * path.radius
+  const { x, y, z } = rotatePointXYZ(localX, localY, 0, path.rotX, path.rotY, rotZ)
+
+  return {
+    x: x * scale,
+    y: y * scale * 0.68 + z * scale * 0.32,
+  }
 }
 
 function updateFinaleBlendFromScroll() {
@@ -664,19 +703,18 @@ async function initThree() {
     nlMarkerGroup.visible = false
     globeGroup.add(nlMarkerGroup)
 
-    for (let i = 0; i < 3; i++) {
-      const ringGeo = new THREE.RingGeometry(2.05 + i * 0.22, 2.06 + i * 0.22, 128)
+    ORBITAL_PATHS.forEach((path, i) => {
+      const orbitGroup = new THREE.Group()
+      orbitGroup.rotation.x = path.rotX
+      orbitGroup.rotation.y = path.rotY
+
+      const ringGeo = new THREE.RingGeometry(path.radius - 0.005, path.radius + 0.005, 128)
       const ring = new THREE.LineLoop(
         ringGeo,
         new THREE.LineBasicMaterial({ color: 0xd4af53, transparent: true, opacity: 0.06 - i * 0.012 }),
       )
-      ring.rotation.x = Math.PI / 2 + (i - 1) * 0.35
-      ring.rotation.y = i * 0.6
-      globeGroup.add(ring)
-      orbitRings.push(ring)
-    }
+      orbitGroup.add(ring)
 
-    ORBITAL_SATELLITES.forEach((sat) => {
       const satGroup = new THREE.Group()
       const body = new THREE.Mesh(
         new THREE.BoxGeometry(0.06, 0.04, 0.04),
@@ -690,8 +728,11 @@ async function initThree() {
       const panelR = panelL.clone()
       panelR.position.x = 0.08
       satGroup.add(body, panelL, panelR)
-      satGroup.userData.orbit = sat
-      globeGroup.add(satGroup)
+      satGroup.userData.orbit = path
+      orbitGroup.add(satGroup)
+
+      globeGroup.add(orbitGroup)
+      orbitGroups.push(orbitGroup)
       satelliteGroups.push(satGroup)
     })
 
@@ -728,12 +769,8 @@ async function initThree() {
       ;(globePoints?.material as import('three').Material)?.dispose()
       nlOutlineLines.forEach(line => (line.material as import('three').Material).dispose())
       nlOutlineGlowLines.forEach(line => (line.material as import('three').Material).dispose())
-      orbitRings.forEach((ring) => {
-        ring.geometry.dispose()
-        ;(ring.material as import('three').Material).dispose()
-      })
-      satelliteGroups.forEach((g) => {
-        g.traverse((child) => {
+      orbitGroups.forEach((group) => {
+        group.traverse((child) => {
           if ('geometry' in child && child.geometry) (child.geometry as import('three').BufferGeometry).dispose()
           if ('material' in child && child.material) {
             const mat = child.material as import('three').Material | import('three').Material[]
@@ -763,7 +800,7 @@ async function initThree() {
       nlLockQuat = null
       freeGlobeQuat = null
       satelliteGroups = []
-      orbitRings = []
+      orbitGroups = []
     }
   } catch (error) {
     console.warn('[ServicesJourneyBackdrop] Three.js init failed:', error)
@@ -773,12 +810,12 @@ async function initThree() {
 function updateSatellites(timeMs: number) {
   const t = timeMs * 0.001
   satelliteGroups.forEach((group) => {
-    const sat = group.userData.orbit as OrbitalSatellite
-    const angle = t * sat.speed + sat.phase
+    const orbit = group.userData.orbit as OrbitalPath
+    const angle = t * orbit.speed + orbit.phase
     group.position.set(
-      Math.cos(angle) * sat.radius,
-      Math.sin(angle * 0.85 + sat.tilt) * sat.radius * 0.38,
-      Math.sin(angle) * sat.radius * 0.55,
+      Math.cos(angle) * orbit.radius,
+      Math.sin(angle) * orbit.radius,
+      0,
     )
     group.lookAt(0, 0, 0)
   })
@@ -876,31 +913,37 @@ function drawOrbitalSatellite2D(
   ctx: CanvasRenderingContext2D,
   cx: number,
   cy: number,
-  sat: OrbitalSatellite,
+  path: OrbitalPath,
+  index: number,
   time: number,
   alpha: number,
 ) {
-  const angle = time * sat.speed + sat.phase
-  const ox = Math.cos(angle) * sat.radius * 38
-  const oy = Math.sin(angle * 0.85 + sat.tilt) * sat.radius * 22
+  const rotZ = time * 0.00005 * (index % 2 === 0 ? 1 : -1)
+  const angle = time * path.speed + path.phase
+  const pos = orbitProject2D(path, angle, rotZ)
 
   ctx.save()
   ctx.globalAlpha = alpha * 0.35
   ctx.strokeStyle = `rgba(${GOLD}, 0.15)`
   ctx.lineWidth = 0.5
   ctx.beginPath()
-  ctx.ellipse(cx, cy, sat.radius * 38, sat.radius * 22, sat.tilt * 0.15, 0, Math.PI * 2)
+  for (let i = 0; i <= 64; i++) {
+    const a = (i / 64) * Math.PI * 2
+    const p = orbitProject2D(path, a, rotZ)
+    if (i === 0) ctx.moveTo(cx + p.x, cy + p.y)
+    else ctx.lineTo(cx + p.x, cy + p.y)
+  }
   ctx.stroke()
 
   ctx.globalAlpha = alpha * 0.55
   ctx.fillStyle = `rgba(${GOLD_LIGHT}, 0.7)`
-  ctx.fillRect(cx + ox - 2, cy + oy - 2, 4, 4)
+  ctx.fillRect(cx + pos.x - 2, cy + pos.y - 2, 4, 4)
   ctx.strokeStyle = `rgba(${GOLD}, 0.4)`
-  ctx.strokeRect(cx + ox - 6, cy + oy - 3, 12, 6)
+  ctx.strokeRect(cx + pos.x - 6, cy + pos.y - 3, 12, 6)
 
-  ctx.globalAlpha = alpha * sat.trail * 0.4
+  ctx.globalAlpha = alpha * path.trail * 0.4
   ctx.beginPath()
-  ctx.arc(cx + ox, cy + oy, 3, 0, Math.PI * 2)
+  ctx.arc(cx + pos.x, cy + pos.y, 3, 0, Math.PI * 2)
   ctx.stroke()
   ctx.restore()
 }
@@ -1218,8 +1261,8 @@ function drawOverlay(time: number) {
     : w * (0.5 + lerp(globePos.x * 0.18, 0.08, zoomAmt))
   const cy = h * 0.46
   const satAlpha = tier === 'narrow' ? 0.25 : 0.45
-  ORBITAL_SATELLITES.forEach(sat => drawOrbitalSatellite2D(
-    ctx, globeCx, cy, sat, time, satAlpha * (1 - zoomAmt * 0.85),
+  ORBITAL_PATHS.forEach((path, i) => drawOrbitalSatellite2D(
+    ctx, globeCx, cy, path, i, time, satAlpha * (1 - zoomAmt * 0.85),
   ))
 
   if (w >= 640) {
@@ -1296,11 +1339,9 @@ function renderFrame(time: number) {
       line.visible = finaleRotate > 0.05
     })
 
-    satelliteGroups.forEach(g => { g.visible = zoomAmt < 0.12 })
-    orbitRings.forEach(r => { r.visible = zoomAmt < 0.14 })
-
-    orbitRings.forEach((ring, i) => {
-      ring.rotation.z = time * 0.00005 * (i % 2 === 0 ? 1 : -1)
+    orbitGroups.forEach((group, i) => {
+      group.visible = zoomAmt < 0.14
+      group.rotation.z = time * 0.00005 * (i % 2 === 0 ? 1 : -1)
     })
 
     updateSatellites(time)
