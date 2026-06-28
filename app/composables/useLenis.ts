@@ -1,8 +1,10 @@
 import type Lenis from 'lenis'
+import 'lenis/dist/lenis.css'
 
 let lenisInstance: Lenis | null = null
 let tickerCallback: ((time: number) => void) | null = null
-let proxyConfigured = false
+let resizeObserver: ResizeObserver | null = null
+let resizeRaf = 0
 
 export function useLenis() {
   async function init() {
@@ -26,30 +28,19 @@ export function useLenis() {
       smoothWheel: true,
     })
 
-    if (!proxyConfigured) {
-      ScrollTrigger.scrollerProxy(document.documentElement, {
-        scrollTop(value) {
-          if (arguments.length && lenisInstance) {
-            lenisInstance.scrollTo(value, { immediate: true })
-          }
-          return lenisInstance?.scroll ?? window.scrollY
-        },
-        getBoundingClientRect() {
-          return {
-            top: 0,
-            left: 0,
-            width: window.innerWidth,
-            height: window.innerHeight,
-          }
-        },
-        pinType: document.documentElement.style.transform ? 'transform' : 'fixed',
-      })
-
-      ScrollTrigger.addEventListener('refresh', () => lenisInstance?.resize())
-      proxyConfigured = true
-    }
-
     lenisInstance.on('scroll', ScrollTrigger.update)
+    ScrollTrigger.addEventListener('refresh', () => lenisInstance?.resize())
+
+    if (!resizeObserver) {
+      resizeObserver = new ResizeObserver(() => {
+        cancelAnimationFrame(resizeRaf)
+        resizeRaf = requestAnimationFrame(() => {
+          lenisInstance?.resize()
+          ScrollTrigger.refresh()
+        })
+      })
+      resizeObserver.observe(document.body)
+    }
 
     tickerCallback = (time: number) => {
       lenisInstance?.raf(time * 1000)

@@ -98,12 +98,12 @@ useFinaleScene({ scrollLayers: textRefs })
 <style lang="scss" scoped>
 .finale {
   position: relative;
-  padding: $space-12 0 $space-6;
+  padding: $space-12 0 clamp($space-10, 22vh, $space-16);
   background: $color-bg;
-  overflow: hidden;
+  overflow-x: clip;
 
   @media (max-width: 767px) {
-    padding: $space-10 0 $space-5;
+    padding: $space-10 0 clamp($space-8, 18vh, $space-12);
   }
 }
 

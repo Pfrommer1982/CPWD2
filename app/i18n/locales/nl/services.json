@@ -4,6 +4,15 @@
     "heading": "Wat we raken",
     "intro": "Design, code, cloud en sound, één crosshair. Voor merken die online elke shot willen landen.",
     "scrollHint": "Scroll voor intel",
+    "journey": {
+      "label": "DE REIS",
+      "heading": "Van briefing tot bullseye",
+      "intro": "Zes hoofdstukken, één route. Elke discipline is een waypoint — design, build, deploy, sound, motion, brand — tot jouw project op target landt.",
+      "scrollHint": "Begin de reis",
+      "departure": "Vertrek",
+      "chapter": "Hoofdstuk",
+      "arrival": "Aankomst"
+    },
     "cta": {
       "label": "VOLGENDE TARGET",
       "heading": "Klaar om te locken?",

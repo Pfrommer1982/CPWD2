@@ -4,6 +4,15 @@
     "heading": "What we hit",
     "intro": "Design, code, cloud and sound, one crosshair. Built for brands that want every shot to land online.",
     "scrollHint": "Scroll for intel",
+    "journey": {
+      "label": "THE JOURNEY",
+      "heading": "From brief to bullseye",
+      "intro": "Six chapters on one route. Every discipline is a waypoint — design, build, deploy, sound, motion, brand — until your project lands on target.",
+      "scrollHint": "Begin the journey",
+      "departure": "Departure",
+      "chapter": "Chapter",
+      "arrival": "Arrival"
+    },
     "cta": {
       "label": "NEXT TARGET",
       "heading": "Ready to lock in?",

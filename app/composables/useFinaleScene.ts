@@ -35,8 +35,8 @@ export function useFinaleScene(options: FinaleSceneOptions) {
           ease: 'none',
           scrollTrigger: {
             trigger: text,
-            start: 'top 88%',
-            end: 'top 62%',
+            start: 'top 92%',
+            end: 'top 78%',
             scrub: true,
           },
         })
@@ -44,6 +44,8 @@ export function useFinaleScene(options: FinaleSceneOptions) {
 
       ScrollTrigger.refresh()
     })
+
+    await useLenis().refresh()
   })
 
   onUnmounted(() => {

@@ -10,9 +10,11 @@ const props = withDefaults(defineProps<{
   number: string
   active?: boolean
   mobile?: boolean
+  embedded?: boolean
 }>(), {
   active: false,
   mobile: false,
+  embedded: false,
 })
 
 const SCENES = {
@@ -32,7 +34,10 @@ function sceneFor(number: string) {
 <template>
   <div
     class="service-scene-host"
-    :class="{ 'service-scene-host--mobile': mobile }"
+    :class="{
+      'service-scene-host--mobile': mobile,
+      'service-scene-host--embedded': embedded,
+    }"
   >
     <component
       :is="sceneFor(number)"
@@ -54,6 +59,16 @@ function sceneFor(number: string) {
     inset: auto;
     width: 100%;
     height: 100%;
+  }
+
+  &--embedded {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: inherit;
   }
 }
 </style>
