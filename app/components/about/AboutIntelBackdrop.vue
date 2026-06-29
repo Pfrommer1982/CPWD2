@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { COMMS_RGB, COMMS_RGB_LIGHT } from '~/constants/brand'
+
 const props = defineProps<{
   root?: HTMLElement | null
   ready?: boolean
@@ -8,8 +10,8 @@ const wrapRef = ref<HTMLElement | null>(null)
 const webglRef = ref<HTMLCanvasElement | null>(null)
 const overlayRef = ref<HTMLCanvasElement | null>(null)
 
-const GOLD = '69, 232, 138'
-const GOLD_LIGHT = '122, 245, 176'
+const GOLD = COMMS_RGB
+const GOLD_LIGHT = COMMS_RGB_LIGHT
 const DIM = '100, 118, 110'
 
 let raf = 0

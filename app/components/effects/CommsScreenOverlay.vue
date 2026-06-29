@@ -170,8 +170,8 @@ onUnmounted(() => {
     inset: 0;
     opacity: 0.039;
     background:
-      radial-gradient(ellipse 120% 90% at 50% 45%, rgba(69, 232, 138, 0.121), transparent 62%),
-      linear-gradient(180deg, rgba(69, 232, 138, 0.028), rgba(8, 20, 12, 0.066));
+      radial-gradient(ellipse 120% 90% at 50% 45%, rgba(56, 150, 90, 0.121), transparent 62%),
+      linear-gradient(180deg, rgba(56, 150, 90, 0.028), rgba(8, 20, 12, 0.066));
     mix-blend-mode: screen;
   }
 
@@ -190,7 +190,7 @@ onUnmounted(() => {
       transparent 0,
       transparent 18px,
       rgba(0, 0, 0, 0.55) 19px,
-      rgba(69, 232, 138, 0.12) 20px,
+      rgba(56, 150, 90, 0.12) 20px,
       transparent 21px
     );
     mix-blend-mode: overlay;
@@ -199,10 +199,10 @@ onUnmounted(() => {
   &__glitch-chroma {
     background: linear-gradient(
       90deg,
-      rgba(69, 232, 138, 0.14) 0,
+      rgba(56, 150, 90, 0.14) 0,
       transparent 32%,
       transparent 68%,
-      rgba(0, 255, 200, 0.1) 100%
+      rgba(80, 168, 114, 0.08) 100%
     );
     mix-blend-mode: screen;
   }
@@ -211,9 +211,9 @@ onUnmounted(() => {
     background: linear-gradient(
       180deg,
       transparent 0%,
-      rgba(69, 232, 138, 0.22) 48%,
+      rgba(56, 150, 90, 0.22) 48%,
       rgba(255, 255, 255, 0.08) 50%,
-      rgba(69, 232, 138, 0.18) 52%,
+      rgba(56, 150, 90, 0.18) 52%,
       transparent 100%
     );
     background-size: 100% 220%;

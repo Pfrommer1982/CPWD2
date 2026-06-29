@@ -5,14 +5,14 @@ $color-bg:           #050807;
 $color-bg-alt:       #0a100c;
 $color-surface:      #161616;
 $color-surface-alt:  #1E1E1E;
-$color-border:       rgba(69, 232, 138, 0.12);
-$color-border-hover: rgba(69, 232, 138, 0.35);
+$color-border:       rgba(56, 150, 90, 0.12);
+$color-border-hover: rgba(56, 150, 90, 0.32);
 
-$color-gold:         #45E88A;
-$color-gold-light:   #7AF5B0;
-$color-gold-dark:    #1E9956;
-$color-gold-muted:   rgba(69, 232, 138, 0.18);
-$color-gold-glow:    rgba(69, 232, 138, 0.08);
+$color-gold:         #38965A;
+$color-gold-light:   #50A872;
+$color-gold-dark:    #1E6640;
+$color-gold-muted:   rgba(56, 150, 90, 0.16);
+$color-gold-glow:    rgba(56, 150, 90, 0.07);
 
 // Aliases — comms green is the site accent
 $color-comms:         $color-gold;
@@ -110,8 +110,8 @@ $dur-reveal:   1400ms;
 $shadow-sm:      0 1px 3px rgba(0, 0, 0, 0.5);
 $shadow-md:      0 4px 16px rgba(0, 0, 0, 0.6);
 $shadow-lg:      0 8px 32px rgba(0, 0, 0, 0.7);
-$shadow-gold:    0 0 40px rgba(69, 232, 138, 0.18);
-$shadow-gold-sm: 0 0 12px rgba(69, 232, 138, 0.24);
+$shadow-gold:    0 0 40px rgba(56, 150, 90, 0.14);
+$shadow-gold-sm: 0 0 12px rgba(56, 150, 90, 0.2);
 $shadow-comms:   $shadow-gold;
 $shadow-comms-sm: $shadow-gold-sm;
 

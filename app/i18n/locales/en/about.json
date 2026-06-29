@@ -31,7 +31,7 @@
         "feedConnecting": "Establishing connection",
         "feedDownloading": "Downloading operator file",
         "feedLive": "Feed live",
-        "bio": "Web developer focused on Nuxt, Vue 3 and cloud-native delivery. Four times AWS certified. Builds dark, sharp interfaces with motion that lands on target — never decoration.",
+        "bio": "Web developer focused on Nuxt, Vue 3 and cloud-native delivery. Four times AWS certified. Builds dark, sharp interfaces with motion that lands on target, never decoration.",
         "fields": [
           { "key": "LOC", "value": "The Netherlands" },
           { "key": "STATUS", "value": "ACTIVE / DEPLOY READY" },
@@ -44,7 +44,7 @@
         "code": "INTEL-02",
         "label": "MISSION INTEL",
         "heading": "No spray and pray",
-        "body": "From *insights* to execution, we build websites that don't just look sharp, they *hit*. Every animation, every interaction is *calibrated* and aimed at the goal — like a weapons system that only fires when the crosshair is on target.",
+        "body": "From *insights* to execution, we build websites that don't just look sharp, they *hit*. Every animation, every interaction is *calibrated* and aimed at the goal, like a weapons system that only fires when the crosshair is on target.",
         "directives": [
           "Every shot counts — no filler UI",
           "Motion with intent, never decoration",
@@ -56,12 +56,12 @@
         "code": "WPN-03",
         "label": "LOADOUT",
         "heading": "Calibrated arsenal",
-        "intro": "Primary systems and support tooling — locked in on modern web delivery.",
+        "intro": "Primary systems and support tooling, locked in on modern web delivery.",
         "items": [
           {
             "name": "NUXT 3",
             "type": "PRIMARY",
-            "desc": "SSR, edge deploy, app router — heavy artillery for fast sites."
+            "desc": "SSR, edge deploy, app router, heavy artillery for fast sites."
           },
           {
             "name": "VUE 3",
@@ -71,12 +71,12 @@
           {
             "name": "AWS",
             "type": "SUPPORT",
-            "desc": "4× certified — cloud infra, CI/CD pipelines, scalable environments."
+            "desc": "4× certified, cloud infra, CI/CD pipelines, scalable environments."
           },
           {
             "name": "GSAP / THREE",
             "type": "SPECIAL",
-            "desc": "Scroll-linked motion and WebGL — precision strikes in the viewport."
+            "desc": "Scroll-linked motion and WebGL, precision strikes in the viewport."
           }
         ]
       },
@@ -84,7 +84,7 @@
         "code": "REC-04",
         "label": "COMBAT RECORD",
         "heading": "On target since day one",
-        "intro": "Hard numbers from the field — projects, brands and years locked in.",
+        "intro": "Hard numbers from the field: projects, brands and years locked in.",
         "stats": {
           "years": "years on target",
           "projects": "bullseyes delivered",
@@ -96,7 +96,7 @@
         "code": "CLR-05",
         "label": "CLEARANCE",
         "heading": "Ready for briefing?",
-        "subtext": "Lock in on a project — we'll send the full scope and timeline.",
+        "subtext": "Lock in on a project, we'll send the full scope and timeline.",
         "button": "Start a project"
       }
     }

@@ -31,7 +31,7 @@
         "feedConnecting": "Verbinding opzetten",
         "feedDownloading": "Operatorbestand ophalen",
         "feedLive": "Feed actief",
-        "bio": "Web developer met focus op Nuxt, Vue 3 en cloud-native delivery. Vier keer AWS certified. Bouwt donkere, scherpe interfaces met motion die op target landt — nooit decoratie.",
+        "bio": "Web developer met focus op Nuxt, Vue 3 en cloud-native delivery. Vier keer AWS certified. Bouwt donkere, scherpe interfaces met motion die op target landt, nooit decoratie.",
         "fields": [
           { "key": "LOC", "value": "Nederland" },
           { "key": "STATUS", "value": "ACTIVE / DEPLOY READY" },
@@ -44,7 +44,7 @@
         "code": "INTEL-02",
         "label": "MISSION INTEL",
         "heading": "Geen spray and pray",
-        "body": "Van *inzicht* tot uitvoering bouwen we websites die niet alleen scherp ogen, maar ook *raak* zijn. Elke animatie, elke interactie is *gekalibreerd* en gericht op het doel — als een wapensystem dat alleen vuurt wanneer de crosshair op target staat.",
+        "body": "Van *inzicht* tot uitvoering bouwen we websites die niet alleen scherp ogen, maar ook *raak* zijn. Elke animatie, elke interactie is *gekalibreerd* en gericht op het doel, als een wapensystem dat alleen vuurt wanneer de crosshair op target staat.",
         "directives": [
           "Elk schot telt — geen filler UI",
           "Motion met intent, nooit decoratie",
@@ -56,12 +56,12 @@
         "code": "WPN-03",
         "label": "LOADOUT",
         "heading": "Gekalibreerd arsenaal",
-        "intro": "Primary systems en support tooling — locked in op moderne web delivery.",
+        "intro": "Primary systems en support tooling, locked in op moderne web delivery.",
         "items": [
           {
             "name": "NUXT 3",
             "type": "PRIMARY",
-            "desc": "SSR, edge deploy, app router — het zware geschut voor snelle sites."
+            "desc": "SSR, edge deploy, app router, het zware geschut voor snelle sites."
           },
           {
             "name": "VUE 3",
@@ -71,12 +71,12 @@
           {
             "name": "AWS",
             "type": "SUPPORT",
-            "desc": "4× certified — cloud infra, CI/CD pipelines, schaalbare omgevingen."
+            "desc": "4× certified, cloud infra, CI/CD pipelines, schaalbare omgevingen."
           },
           {
             "name": "GSAP / THREE",
             "type": "SPECIAL",
-            "desc": "Scroll-linked motion en WebGL — precision strikes in de viewport."
+            "desc": "Scroll-linked motion en WebGL, precision strikes in de viewport."
           }
         ]
       },
@@ -84,7 +84,7 @@
         "code": "REC-04",
         "label": "COMBAT RECORD",
         "heading": "Op target sinds dag één",
-        "intro": "Hard numbers uit het veld — projecten, merken en jaren locked in.",
+        "intro": "Hard numbers uit het veld: projecten, merken en jaren locked in.",
         "stats": {
           "years": "jaar op target",
           "projects": "bullseyes opgeleverd",
@@ -96,7 +96,7 @@
         "code": "CLR-05",
         "label": "CLEARANCE",
         "heading": "Klaar voor briefing?",
-        "subtext": "Lock in op een project — we sturen de volledige scope en timeline.",
+        "subtext": "Lock in op een project, we sturen de volledige scope en timeline.",
         "button": "Start een project"
       }
     }

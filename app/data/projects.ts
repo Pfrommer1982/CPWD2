@@ -81,7 +81,7 @@ export const projects: Project[] = [
     technologies: ['Nuxt', 'Vue 3', 'SCSS', 'Firebase', 'ImageKit', 'GSAP'],
     thumbnail: `${ACC}/phone_mockup_3 ACC.png`,
     heroImage: `${ACC}/Acc Macbook.png`,
-    accentColor: '#45E88A',
+    accentColor: '#38965A',
     challenge: {
       nl: 'Accurate Black wilde online net zo onderscheidend zijn als hun releases: donker, krachtig en authentiek. De uitdaging? Een digitale ervaring die het karakter van het label voelbaar maakt, en fans, artiesten en partners direct het merk in trekt.',
       en: 'Accurate Black wanted to stand out online the way their releases do, dark, powerful and unmistakably authentic. The challenge: create a digital experience that captures the label\'s character and pulls fans, artists and partners straight into the brand.',

@@ -395,7 +395,7 @@ onMounted(async () => {
         </div>
 
         <div class="project-next__content container">
-          <span class="label project-next__label">{{ projectI18n.t('nextProject') }}</span>
+          <span class="section-label project-next__label">{{ projectI18n.t('nextProject') }}</span>
           <h2 class="project-next__title">
             {{ nextProject.title }}
           </h2>

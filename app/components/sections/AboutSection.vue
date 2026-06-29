@@ -46,7 +46,7 @@ onMounted(async () => {
   <section ref="sectionRef" class="about-section">
     <div class="about-section__grid">
       <div class="about-section__text">
-        <span class="about-section__label font-mono">{{ about.t('label') }}</span>
+        <span class="section-label">{{ about.t('label') }}</span>
         <ProjectOutlineText
           :text="about.t('heading')"
           tag="h2"
@@ -97,12 +97,6 @@ onMounted(async () => {
       grid-template-columns: 1fr 1fr;
       align-items: center;
     }
-  }
-
-  &__label {
-    display: block;
-    color: $color-accent;
-    margin-bottom: $space-md;
   }
 
   &__heading {

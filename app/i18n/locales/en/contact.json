@@ -18,7 +18,7 @@
       "hero": {
         "label": "COMMS UPLINK",
         "heading": "Open the channel",
-        "intro": "Satellite relays, ground stations, and encrypted uplinks — CPWD is standing by for incoming intel. Scroll to establish the link.",
+        "intro": "Satellite relays, ground stations, and encrypted uplinks. CPWD is standing by for incoming intel. Scroll to establish the link.",
         "scrollHint": "Initialize uplink",
         "classification": "SECURE CHANNEL // TX READY",
         "fileId": "COMMS-CPWD-007"
@@ -31,7 +31,7 @@
         "code": "SAT-01",
         "label": "ORBITAL RELAY",
         "heading": "Satellite uplink active",
-        "body": "Three LEO relays orbit above the network. Downlink to the CPWD uplink gate — signal strength green, latency within spec.",
+        "body": "Three LEO relays orbit above the network. Downlink to the CPWD uplink gate, signal strength green, latency within spec.",
         "telemetry": [
           "ORBIT: LEO-042 / LEO-118 / LEO-203",
           "DOWNLINK: KA-BAND ACTIVE",
@@ -42,7 +42,7 @@
         "code": "GND-02",
         "label": "GROUND ARRAY",
         "heading": "Ground stations online",
-        "body": "Modems, Wi-Fi 6, LTE, 5G NR, and fiber — every node in the array is tied to the uplink gate. Your message can route in on any path.",
+        "body": "Modems, Wi-Fi 6, LTE, 5G NR, and fiber: every node in the array is tied to the uplink gate. Your message can route in on any path.",
         "nodes": [
           { "code": "MDM", "name": "Modem / DSL", "status": "LINK OK" },
           { "code": "W6", "name": "Wi-Fi 6", "status": "BEACON ON" },
@@ -56,23 +56,23 @@
         "code": "ENC-03",
         "label": "SECURE HANDSHAKE",
         "heading": "Encrypted channel",
-        "body": "TLS 1.3 end-to-end. Payload hashed, route verified. No plaintext on the line — only targeted intel to info{'@'}cpwd.nl.",
+        "body": "TLS 1.3 end-to-end. Payload hashed, route verified. No plaintext on the line, only targeted intel to info{'@'}cpwd.nl.",
         "directives": [
           "End-to-end encryption on all uplinks",
           "No tracking pixels in comms",
           "Reply within 24 hours on business days",
-          "Direct contact — no call center"
+          "Direct contact, no call center"
         ]
       },
       "transmit": {
         "code": "TX-04",
         "label": "UPLINK TERMINAL",
         "heading": "Send your intel",
-        "subtext": "Fill in the form. Your message routes straight to our uplink gate — no middle stations.",
+        "subtext": "Fill in the form. Your message routes straight to our uplink gate, no middle stations.",
         "statusIdle": "CHANNEL: STANDBY",
         "statusLoading": "TX: ENCODING PAYLOAD...",
-        "statusSuccess": "TX: ACK RECEIVED — INTEL FORWARDED",
-        "statusError": "TX: FAILED — RETRY UPLINK",
+        "statusSuccess": "TX: ACK RECEIVED // INTEL FORWARDED",
+        "statusError": "TX: FAILED // RETRY UPLINK",
         "terminalPrompt": "CPWD UPLINK v2.4 // AWAITING INPUT",
         "prepareLabel": "TLS 1.3 // INIT SECURE CHANNEL",
         "sessionLabel": "SESSION ID",

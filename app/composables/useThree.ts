@@ -1,4 +1,5 @@
 import type { Ref } from 'vue'
+import { COMMS_THREE } from '~/constants/brand'
 
 interface ThreeContext {
   scene: import('three').Scene
@@ -58,7 +59,7 @@ export function useThree(canvasRef: Ref<HTMLCanvasElement | null>) {
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
 
     const material = new THREE.PointsMaterial({
-      color: 0x45E88A,
+      color: COMMS_THREE,
       size: 0.02,
       transparent: true,
       opacity: 0.6,

@@ -59,7 +59,6 @@ const common = useSectionTranslations('common')
   }
 
   &__label {
-    display: block;
     margin-bottom: $space-6;
   }
 

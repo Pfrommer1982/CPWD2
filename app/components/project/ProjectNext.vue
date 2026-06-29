@@ -15,7 +15,7 @@ const { setCursorState } = useCursor()
     @mouseenter="setCursorState('view')"
     @mouseleave="setCursorState('default')"
   >
-    <span class="project-next__label font-mono">{{ project.t('next') }}</span>
+    <span class="section-label project-next__label">{{ project.t('next') }}</span>
     <h3 class="project-next__title font-display">
       {{ project.title }}
     </h3>
@@ -36,8 +36,6 @@ const { setCursorState } = useCursor()
   overflow: hidden;
 
   &__label {
-    display: block;
-    color: $color-accent;
     margin-bottom: $space-md;
   }
 

@@ -13,7 +13,7 @@ const staticMode = toRef(props, 'mobile')
 
 const tiles = [
   { id: 'type', label: 'Type', content: 'Aa' },
-  { id: 'color', label: 'Color', content: '', swatch: '#45E88A' },
+  { id: 'color', label: 'Color', content: '', swatch: '#38965A' },
   { id: 'logo', label: 'Mark', content: '＋' },
   { id: 'space', label: 'Space', content: '8' },
   { id: 'voice', label: 'Voice', content: 'Locked' },
@@ -110,7 +110,7 @@ useVisibleTimeline({
     font-size: 9px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: rgba(69, 232, 138, 0.65);
+    color: rgba(56, 150, 90, 0.65);
     transform-origin: left center;
     opacity: 0;
   }
@@ -130,7 +130,7 @@ useVisibleTimeline({
     gap: 6px;
     padding: 10px;
     border-radius: 8px;
-    border: 1px solid rgba(69, 232, 138, 0.18);
+    border: 1px solid rgba(56, 150, 90, 0.18);
     background: rgba(16, 16, 16, 0.92);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
     transform-style: preserve-3d;
@@ -155,7 +155,7 @@ useVisibleTimeline({
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    box-shadow: 0 0 16px rgba(69, 232, 138, 0.35);
+    box-shadow: 0 0 16px rgba(56, 150, 90, 0.35);
   }
 }
 </style>

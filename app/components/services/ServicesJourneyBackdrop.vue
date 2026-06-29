@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Group, Line, Mesh, PerspectiveCamera, Scene, WebGLRenderer } from 'three'
+import { COMMS_RGB, COMMS_RGB_LIGHT, COMMS_THREE, COMMS_THREE_LIGHT } from '~/constants/brand'
 import { NL_OUTLINE_CENTROID, NL_OUTLINE_RINGS } from '~/data/nl-outline'
 
 const props = defineProps<{
@@ -14,8 +15,8 @@ const wrapRef = ref<HTMLElement | null>(null)
 const webglRef = ref<HTMLCanvasElement | null>(null)
 const overlayRef = ref<HTMLCanvasElement | null>(null)
 
-const GOLD = '69, 232, 138'
-const GOLD_LIGHT = '122, 245, 176'
+const GOLD = COMMS_RGB
+const GOLD_LIGHT = COMMS_RGB_LIGHT
 const DIM = '100, 118, 110'
 const MASTER_OPACITY = 0.38
 
@@ -318,8 +319,8 @@ function createGlobePixelTexture(THREE: typeof import('three'), size = 32) {
   const halo = ctx.createRadialGradient(c, c, 0, c, c, size / 2)
   halo.addColorStop(0, 'rgba(255,255,255,1)')
   halo.addColorStop(0.12, 'rgba(255,255,255,1)')
-  halo.addColorStop(0.26, 'rgba(160,255,200,0.72)')
-  halo.addColorStop(0.48, 'rgba(0,255,140,0.18)')
+  halo.addColorStop(0.26, 'rgba(80, 168, 114, 0.65)')
+  halo.addColorStop(0.48, 'rgba(56, 150, 90, 0.16)')
   halo.addColorStop(1, 'rgba(0,0,0,0)')
   ctx.fillStyle = halo
   ctx.fillRect(0, 0, size, size)
@@ -340,9 +341,9 @@ function createGlobeHaloTexture(THREE: typeof import('three'), size = 64) {
 
   const c = size / 2
   const g = ctx.createRadialGradient(c, c, 0, c, c, size / 2)
-  g.addColorStop(0, 'rgba(0,255,160,0.95)')
-  g.addColorStop(0.22, 'rgba(0,255,130,0.45)')
-  g.addColorStop(0.55, 'rgba(0,220,110,0.12)')
+  g.addColorStop(0, 'rgba(80, 168, 114, 0.82)')
+  g.addColorStop(0.22, 'rgba(56, 150, 90, 0.4)')
+  g.addColorStop(0.55, 'rgba(56, 150, 90, 0.1)')
   g.addColorStop(1, 'rgba(0,0,0,0)')
   ctx.fillStyle = g
   ctx.fillRect(0, 0, size, size)
@@ -668,7 +669,7 @@ async function initThree() {
       new THREE.SphereGeometry(1.61, 72, 72),
       new THREE.ShaderMaterial({
         uniforms: {
-          glowColor: { value: new THREE.Color(0x00ff88) },
+          glowColor: { value: new THREE.Color(COMMS_THREE) },
           intensity: { value: 0.58 },
           power: { value: 3.6 },
         },
@@ -702,14 +703,14 @@ async function initThree() {
     NL_OUTLINE_RINGS.forEach((ring) => {
       nlOutlineGlowLines.push(
         addNlRingLine(ring, 1.603, new THREE.LineBasicMaterial({
-          color: 0x45e88a,
+          color: COMMS_THREE,
           transparent: true,
           opacity: 0,
           depthWrite: false,
           blending: THREE.AdditiveBlending,
         })),
         addNlRingLine(ring, 1.599, new THREE.LineBasicMaterial({
-          color: 0x7af5b0,
+          color: COMMS_THREE_LIGHT,
           transparent: true,
           opacity: 0,
           depthWrite: false,
@@ -718,7 +719,7 @@ async function initThree() {
       )
       nlOutlineLines.push(
         addNlRingLine(ring, 1.595, new THREE.LineBasicMaterial({
-          color: 0x7af5b0,
+          color: COMMS_THREE_LIGHT,
           transparent: true,
           opacity: 0,
           depthWrite: false,
@@ -734,12 +735,12 @@ async function initThree() {
     nlMarkerGroup = new THREE.Group()
     const nlCore = new THREE.Mesh(
       new THREE.SphereGeometry(0.028, 10, 10),
-      new THREE.MeshBasicMaterial({ color: 0x7af5b0, transparent: true, opacity: 0.95 }),
+      new THREE.MeshBasicMaterial({ color: COMMS_THREE_LIGHT, transparent: true, opacity: 0.95 }),
     )
     nlCore.position.set(nlPos.x, nlPos.y, nlPos.z)
     const nlRing = new THREE.Mesh(
       new THREE.RingGeometry(0.045, 0.055, 24),
-      new THREE.MeshBasicMaterial({ color: 0x45e88a, transparent: true, opacity: 0.65, side: THREE.DoubleSide }),
+      new THREE.MeshBasicMaterial({ color: COMMS_THREE, transparent: true, opacity: 0.65, side: THREE.DoubleSide }),
     )
     nlRing.position.copy(nlCore.position)
     nlRing.lookAt(0, 0, 0)
@@ -755,18 +756,18 @@ async function initThree() {
       const ringGeo = new THREE.RingGeometry(path.radius - 0.005, path.radius + 0.005, 128)
       const ring = new THREE.LineLoop(
         ringGeo,
-        new THREE.LineBasicMaterial({ color: 0x45e88a, transparent: true, opacity: 0.06 - i * 0.012 }),
+        new THREE.LineBasicMaterial({ color: COMMS_THREE, transparent: true, opacity: 0.06 - i * 0.012 }),
       )
       orbitGroup.add(ring)
 
       const satGroup = new THREE.Group()
       const body = new THREE.Mesh(
         new THREE.BoxGeometry(0.06, 0.04, 0.04),
-        new THREE.MeshBasicMaterial({ color: 0x7af5b0, transparent: true, opacity: 0.55 }),
+        new THREE.MeshBasicMaterial({ color: COMMS_THREE_LIGHT, transparent: true, opacity: 0.55 }),
       )
       const panelL = new THREE.Mesh(
         new THREE.BoxGeometry(0.08, 0.02, 0.06),
-        new THREE.MeshBasicMaterial({ color: 0x45e88a, transparent: true, opacity: 0.35 }),
+        new THREE.MeshBasicMaterial({ color: COMMS_THREE, transparent: true, opacity: 0.35 }),
       )
       panelL.position.x = -0.08
       const panelR = panelL.clone()

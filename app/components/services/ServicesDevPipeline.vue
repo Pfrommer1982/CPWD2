@@ -122,7 +122,7 @@ useVisibleTimeline({
     align-items: start;
     width: clamp(260px, 34vw, 400px);
     padding: clamp(16px, 2vw, 24px);
-    border: 1px solid rgba(69, 232, 138, 0.16);
+    border: 1px solid rgba(56, 150, 90, 0.16);
     border-radius: 12px;
     background: rgba(12, 12, 12, 0.92);
     box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
@@ -153,9 +153,9 @@ useVisibleTimeline({
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    border: 1px solid rgba(69, 232, 138, calc(0.25 + var(--step) * 0.55));
-    background: rgba(69, 232, 138, calc(var(--step) * 0.85));
-    box-shadow: 0 0 calc(var(--step) * 12px) rgba(69, 232, 138, calc(var(--step) * 0.45));
+    border: 1px solid rgba(56, 150, 90, calc(0.25 + var(--step) * 0.55));
+    background: rgba(56, 150, 90, calc(var(--step) * 0.85));
+    box-shadow: 0 0 calc(var(--step) * 12px) rgba(56, 150, 90, calc(var(--step) * 0.45));
   }
 
   &__connectors {
@@ -164,7 +164,7 @@ useVisibleTimeline({
     margin-top: 18px;
 
     line {
-      stroke: rgba(122, 245, 176, 0.65);
+      stroke: rgba(80, 168, 114, 0.65);
       stroke-width: 2;
       stroke-dasharray: 40;
       vector-effect: non-scaling-stroke;
@@ -182,7 +182,7 @@ useVisibleTimeline({
     font-size: 9px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(69, 232, 138, 0.65);
+    color: rgba(56, 150, 90, 0.65);
     margin-bottom: 4px;
   }
 

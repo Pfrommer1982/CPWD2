@@ -317,7 +317,7 @@ watch(menuOpen, (open) => {
   inset: 0;
   z-index: $z-nav;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(69, 232, 138, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(56, 150, 90, 0.08) 0%, transparent 55%),
     $color-bg;
   display: flex;
   flex-direction: column;
@@ -364,7 +364,7 @@ watch(menuOpen, (open) => {
   text-transform: uppercase;
   color: $color-text-muted;
   padding: clamp(12px, 2.5vh, 20px) 0;
-  border-bottom: 1px solid rgba(69, 232, 138, 0.12);
+  border-bottom: 1px solid rgba(56, 150, 90, 0.12);
   transition: color $dur-fast $ease-gold;
 
   &:hover,

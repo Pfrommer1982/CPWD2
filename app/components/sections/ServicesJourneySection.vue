@@ -148,7 +148,7 @@ onMounted(async () => {
             class="journey-chapter__content"
             :data-chapter-side="index % 2 === 0 ? 'left' : 'right'"
           >
-            <span class="journey-chapter__label font-mono" data-chapter-fade>
+            <span class="section-label" data-chapter-fade>
               {{ services.t('journey.chapter') }} {{ item.number }}
             </span>
             <h2 class="journey-chapter__title font-display">
@@ -329,7 +329,7 @@ onMounted(async () => {
     width: 1px;
     align-self: stretch;
     min-height: 280px;
-    background: rgba(69, 232, 138, 0.12);
+    background: rgba(56, 150, 90, 0.12);
   }
 
   &__spine-fill {
@@ -367,7 +367,7 @@ onMounted(async () => {
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    border: 1px solid rgba(69, 232, 138, 0.45);
+    border: 1px solid rgba(56, 150, 90, 0.45);
     background: $color-bg;
     transition:
       background-color $dur-med $ease-gold,
@@ -377,7 +377,7 @@ onMounted(async () => {
     .services-journey__spine-point--active & {
       background: $color-gold;
       border-color: $color-gold-light;
-      box-shadow: 0 0 12px rgba(69, 232, 138, 0.45);
+      box-shadow: 0 0 12px rgba(56, 150, 90, 0.45);
     }
   }
 
@@ -462,6 +462,7 @@ onMounted(async () => {
     flex-direction: row;
     align-items: center;
     gap: clamp(48px, 6vw, 96px);
+    padding-block: clamp(32px, 5vh, 56px);
 
     &--reverse {
       flex-direction: row-reverse;
@@ -499,7 +500,10 @@ onMounted(async () => {
     &__scene {
       flex: 0 0 auto;
       width: 100%;
-      height: clamp(220px, 32vh, 340px);
+      min-height: clamp(280px, 40vh, 420px);
+      height: auto;
+      padding-block: clamp(28px, 5vh, 48px);
+      overflow: visible;
     }
   }
 
@@ -535,15 +539,6 @@ onMounted(async () => {
       z-index: 4;
       isolation: isolate;
     }
-  }
-
-  &__label {
-    display: block;
-    margin-bottom: $space-5;
-    font-size: $text-xs;
-    letter-spacing: $tracking-wider;
-    text-transform: uppercase;
-    color: $color-gold;
   }
 
   &__title {
@@ -606,18 +601,20 @@ onMounted(async () => {
     z-index: 1;
     flex: 1 1 0;
     min-width: 0;
-    height: clamp(280px, 42vh, 460px);
+    min-height: clamp(340px, 52vh, 560px);
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
     align-self: center;
-    overflow: hidden;
+    padding-block: clamp(40px, 6vh, 72px);
+    padding-inline: clamp(12px, 2vw, 28px);
+    overflow: visible;
     isolation: isolate;
 
     &--spacious {
-      height: clamp(340px, 50vh, 540px);
-      padding-block: clamp(28px, 5vh, 44px);
-      box-sizing: border-box;
+      min-height: clamp(400px, 58vh, 620px);
+      padding-block: clamp(48px, 7vh, 80px);
     }
 
     &--leading {
@@ -631,7 +628,7 @@ onMounted(async () => {
         justify-content: flex-start;
       }
 
-      :deep(.design-browser__frame),
+      :deep(.svc-design__panel),
       :deep(.svc-cloud__panel),
       :deep(.svc-scene__stage),
       :deep(.svc-pipeline__layout),
@@ -653,7 +650,7 @@ onMounted(async () => {
         justify-content: flex-end;
       }
 
-      :deep(.design-browser__frame),
+      :deep(.svc-design__panel),
       :deep(.svc-cloud__panel),
       :deep(.svc-scene__stage),
       :deep(.svc-pipeline__layout),

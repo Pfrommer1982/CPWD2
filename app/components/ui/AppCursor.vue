@@ -5,7 +5,7 @@ const svgEl = ref<SVGSVGElement>()
 const labelEl = ref<HTMLElement>()
 
 const STROKE_DEFAULT = 'rgba(200, 200, 200, 0.92)'
-const STROKE_HOVER = '#45E88A'
+const STROKE_HOVER = '#38965A'
 
 onMounted(async () => {
   if (!import.meta.client) return
@@ -135,11 +135,11 @@ onMounted(async () => {
 
 .cursor__dot {
   z-index: 2;
-  width: 4px;
-  height: 4px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: $color-gold;
-  box-shadow: 0 0 6px rgba(69, 232, 138, 0.45);
+  box-shadow: 0 0 8px rgba(56, 150, 90, 0.45);
 }
 
 .cursor__mark {

@@ -44,7 +44,7 @@ const imageKit = useImageKit()
   min-height: 3px;
   border-radius: 50%;
   background: $color-gold;
-  box-shadow: 0 0 calc(var(--logo-h) * 0.12) rgba(69, 232, 138, 0.5);
+  box-shadow: 0 0 calc(var(--logo-h) * 0.12) rgba(56, 150, 90, 0.5);
   transform: translate(-50%, -50%);
   pointer-events: none;
 }

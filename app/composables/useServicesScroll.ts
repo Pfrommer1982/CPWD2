@@ -58,6 +58,21 @@ export function useServicesScroll(options: ServicesScrollOptions) {
   const { root, track, panels, backgrounds, progress, panelCount, layout } = options
   let ctx: ReturnType<typeof import('gsap').gsap.context> | null = null
   let parallaxCleanup: (() => void) | null = null
+  let mountToken = 0
+  const sceneReady = ref(false)
+
+  function panelsReady() {
+    const count = panelCount.value
+    if (count <= 0) return false
+    return panels.value.filter(Boolean).length >= count
+  }
+
+  function teardown() {
+    ctx?.revert()
+    ctx = null
+    parallaxCleanup?.()
+    parallaxCleanup = null
+  }
 
   async function setupDesktop() {
     const { init } = useGsap()
@@ -177,10 +192,11 @@ export function useServicesScroll(options: ServicesScrollOptions) {
         if (indexEl) {
           gsap.fromTo(
             indexEl,
-            { scale: 0.6, opacity: 0 },
+            { scale: 0.6, opacity: 0, transformOrigin: 'right center' },
             {
               scale: 1,
               opacity: 0.12,
+              transformOrigin: 'right center',
               ease: 'power2.out',
               scrollTrigger: {
                 trigger: panel,
@@ -273,26 +289,47 @@ export function useServicesScroll(options: ServicesScrollOptions) {
     return () => window.removeEventListener('mousemove', onMove)
   }
 
-  watch(layout, async (mode) => {
+  async function mount(mode: 'desktop' | 'mobile') {
     if (!import.meta.client) return
 
-    ctx?.revert()
-    ctx = null
-    parallaxCleanup?.()
-    parallaxCleanup = null
+    const token = ++mountToken
+    teardown()
     progress.value = 0
 
     await nextTick()
 
-    if (mode === 'desktop') {
-      await setupDesktop()
-    } else {
-      await setupMobile()
+    const ready = await whenSceneReady(
+      () => !!root.value && !!track.value && (mode === 'mobile' || panelsReady()),
+      () => {},
+      24,
+    )
+
+    if (!ready || token !== mountToken) return
+
+    try {
+      if (mode === 'desktop') await setupDesktop()
+      else await setupMobile()
+    } catch (error) {
+      console.warn('[useServicesScroll] Setup failed:', error)
     }
-  }, { immediate: true })
+  }
+
+  watch([layout, sceneReady], async ([mode, ready]) => {
+    if (!ready) return
+    await mount(mode)
+  })
+
+  onMounted(async () => {
+    if (!import.meta.client) return
+    await nextTick()
+    requestAnimationFrame(() => {
+      sceneReady.value = true
+    })
+  })
 
   onUnmounted(() => {
-    ctx?.revert()
-    parallaxCleanup?.()
+    mountToken++
+    sceneReady.value = false
+    teardown()
   })
 }

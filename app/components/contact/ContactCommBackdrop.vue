@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { COMMS_RGB, COMMS_RGB_LIGHT } from '~/constants/brand'
+
 const props = defineProps<{
   root?: HTMLElement | null
   finale?: HTMLElement | null
@@ -10,8 +12,8 @@ const props = defineProps<{
 const wrapRef = ref<HTMLElement | null>(null)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 
-const COMMS = '69, 232, 138'
-const COMMS_LIGHT = '122, 245, 176'
+const COMMS = COMMS_RGB
+const COMMS_LIGHT = COMMS_RGB_LIGHT
 const DIM = '92, 130, 108'
 
 interface NetNode {
@@ -419,7 +421,7 @@ function drawFrame(time: number) {
 
   stars.forEach((s) => {
     const tw = 0.55 + Math.sin(time * 0.001 * s.s + s.p) * 0.35
-    ctx.fillStyle = `rgba(140, 220, 170, ${s.b * tw * (0.28 + scroll * 0.32)})`
+    ctx.fillStyle = `rgba(${COMMS_LIGHT}, ${s.b * tw * (0.28 + scroll * 0.32)})`
     ctx.fillRect(s.x * w, s.y * h, 1.2, 1.2)
   })
 

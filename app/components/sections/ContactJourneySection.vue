@@ -689,13 +689,19 @@ onMounted(async () => {
   }
 
   &__stamp {
-    display: inline-block;
+    display: block;
+    width: fit-content;
     font-size: 9px;
     letter-spacing: $tracking-wider;
     color: rgba($color-gold, 0.55);
     border: 1px solid rgba($color-gold, 0.25);
     padding: 4px 10px;
     margin-bottom: $space-5;
+  }
+
+  &__hero-inner > .section-label {
+    display: flex;
+    width: fit-content;
   }
 
   &__file-id {

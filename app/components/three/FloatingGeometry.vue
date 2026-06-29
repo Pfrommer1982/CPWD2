@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { COMMS_THREE } from '~/constants/brand'
+
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 
 onMounted(async () => {
@@ -25,7 +27,7 @@ onMounted(async () => {
   ]
 
   const material = new THREE.MeshBasicMaterial({
-    color: 0x45E88A,
+    color: COMMS_THREE,
     wireframe: true,
     transparent: true,
     opacity: 0.2,

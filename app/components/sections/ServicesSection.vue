@@ -31,14 +31,14 @@ const progressLabel = computed(() => String(progress.value + 1).padStart(2, '0')
 const totalLabel = computed(() => String(panelCount.value).padStart(2, '0'))
 
 const sceneAccents = [
-  'radial-gradient(ellipse 90% 70% at 20% 30%, rgba(69, 232, 138, 0.14) 0%, transparent 55%)',
-  'radial-gradient(ellipse 80% 60% at 75% 25%, rgba(69, 232, 138, 0.11) 0%, transparent 50%)',
-  'radial-gradient(ellipse 70% 55% at 50% 80%, rgba(69, 232, 138, 0.09) 0%, transparent 45%)',
-  'radial-gradient(ellipse 85% 65% at 15% 70%, rgba(122, 245, 176, 0.1) 0%, transparent 50%)',
-  'radial-gradient(ellipse 75% 50% at 85% 50%, rgba(69, 232, 138, 0.12) 0%, transparent 48%)',
+  'radial-gradient(ellipse 90% 70% at 20% 30%, rgba(56, 150, 90, 0.14) 0%, transparent 55%)',
+  'radial-gradient(ellipse 80% 60% at 75% 25%, rgba(56, 150, 90, 0.11) 0%, transparent 50%)',
+  'radial-gradient(ellipse 70% 55% at 50% 80%, rgba(56, 150, 90, 0.09) 0%, transparent 45%)',
+  'radial-gradient(ellipse 85% 65% at 15% 70%, rgba(80, 168, 114, 0.1) 0%, transparent 50%)',
+  'radial-gradient(ellipse 75% 50% at 85% 50%, rgba(56, 150, 90, 0.12) 0%, transparent 48%)',
   'radial-gradient(ellipse 65% 45% at 40% 20%, rgba(160, 133, 48, 0.08) 0%, transparent 42%)',
-  'radial-gradient(ellipse 95% 75% at 60% 40%, rgba(69, 232, 138, 0.15) 0%, transparent 55%)',
-  'radial-gradient(ellipse 100% 80% at 50% 50%, rgba(69, 232, 138, 0.18) 0%, transparent 60%)',
+  'radial-gradient(ellipse 95% 75% at 60% 40%, rgba(56, 150, 90, 0.15) 0%, transparent 55%)',
+  'radial-gradient(ellipse 100% 80% at 50% 50%, rgba(56, 150, 90, 0.18) 0%, transparent 60%)',
 ]
 
 function setPanelRef(el: Element | null, index: number) {
@@ -359,7 +359,7 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
     background: linear-gradient(
       105deg,
       transparent 40%,
-      rgba(69, 232, 138, 0.04) 50%,
+      rgba(56, 150, 90, 0.04) 50%,
       transparent 60%
     );
     transform: rotate(-8deg);
@@ -472,8 +472,62 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
   }
 
   &:not(&--intro):not(&--finale):not(&--mobile) {
+    --panel-scene-gap: clamp(20px, 2.5vw, 40px);
+    --panel-index-zone: clamp(6.5rem, 12vw, 10rem);
+    --panel-index-inset: clamp(16px, 3vw, 48px);
+
     .services-panel__content {
       max-width: min(480px, 44vw);
+    }
+
+    .services-panel__index {
+      right: var(--panel-index-inset);
+      transform: translateY(-50%);
+      transform-origin: right center;
+      font-size: clamp(6.5rem, 14vw, 17rem);
+      line-height: 0.88;
+    }
+
+    .services-panel__deco--scene {
+      left: clamp(44%, 40vw, 50%);
+      right: calc(var(--panel-index-inset) + var(--panel-index-zone) + var(--panel-scene-gap));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      :deep(.service-scene-host),
+      :deep(.svc-scene) {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      :deep(.svc-scene__stage),
+      :deep(.svc-design__panel),
+      :deep(.svc-cloud__panel),
+      :deep(.svc-pipeline__layout),
+      :deep(.svc-sound__panel),
+      :deep(.svc-motion__panel),
+      :deep(.svc-brand__panel) {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        width: clamp(248px, 24vw, 312px);
+        max-width: 100%;
+        margin: 0;
+      }
+
+      :deep(.svc-design__panel) {
+        width: clamp(228px, 22vw, 288px);
+      }
+
+      :deep(.svc-cloud__panel) {
+        width: clamp(248px, 24vw, 312px);
+        max-height: min(312px, 46vh);
+      }
     }
   }
 
@@ -494,7 +548,7 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
   &--finale-mobile {
     margin-bottom: 0;
     padding-block: clamp(64px, 12vh, 96px);
-    border-color: rgba(69, 232, 138, 0.2);
+    border-color: rgba(56, 150, 90, 0.2);
   }
 
   &__content {
@@ -514,7 +568,6 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
   }
 
   &__eyebrow {
-    display: block;
     margin-bottom: $space-6;
   }
 
@@ -709,23 +762,23 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
     background:
       conic-gradient(
         from var(--shimmer-angle),
-        rgba(69, 232, 138, 0.14) 0deg,
+        rgba(56, 150, 90, 0.14) 0deg,
         rgba(242, 238, 232, 0.38) 55deg,
-        rgba(122, 245, 176, 0.52) 110deg,
+        rgba(80, 168, 114, 0.52) 110deg,
         rgba(100, 118, 110, 0.14) 180deg,
         rgba(242, 238, 232, 0.3) 250deg,
-        rgba(69, 232, 138, 0.22) 320deg,
-        rgba(69, 232, 138, 0.12) 360deg
+        rgba(56, 150, 90, 0.22) 320deg,
+        rgba(56, 150, 90, 0.12) 360deg
       ),
-      linear-gradient(135deg, rgba(69, 232, 138, 0.22), rgba(122, 245, 176, 0.1)),
+      linear-gradient(135deg, rgba(56, 150, 90, 0.22), rgba(80, 168, 114, 0.1)),
       url('https://assets.codepen.io/13471/noise-top.png'),
       url('https://assets.codepen.io/13471/noise-top.png'),
       radial-gradient(
         farthest-corner circle at var(--ring-pointerx) var(--ring-pointery),
         rgba(242, 238, 232, 0.88) 0,
-        rgba(122, 245, 176, 0.48) 52px,
-        rgba(69, 232, 138, 0.22) 96px,
-        rgba(69, 232, 138, 0.12) 100%
+        rgba(80, 168, 114, 0.48) 52px,
+        rgba(56, 150, 90, 0.22) 96px,
+        rgba(56, 150, 90, 0.12) 100%
       );
     background-position:
       center,
@@ -743,20 +796,20 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
       linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
     mask-composite: exclude;
-    filter: drop-shadow(0 0 20px rgba(69, 232, 138, 0.22)) brightness(calc(1.08 + var(--shimmer-pulse) * 0.14));
+    filter: drop-shadow(0 0 20px rgba(56, 150, 90, 0.22)) brightness(calc(1.08 + var(--shimmer-pulse) * 0.14));
 
     &--mid {
       inset: 38%;
       padding: var(--ring-thickness-mid);
       opacity: calc(0.62 + var(--shimmer-pulse) * 0.24);
-      filter: drop-shadow(0 0 14px rgba(122, 245, 176, 0.16)) brightness(calc(1.06 + var(--shimmer-pulse) * 0.1));
+      filter: drop-shadow(0 0 14px rgba(80, 168, 114, 0.16)) brightness(calc(1.06 + var(--shimmer-pulse) * 0.1));
     }
 
     &--inner {
       inset: 15%;
       padding: var(--ring-thickness-inner);
       opacity: calc(0.68 + var(--shimmer-pulse) * 0.26);
-      filter: drop-shadow(0 0 16px rgba(69, 232, 138, 0.16)) brightness(calc(1.05 + var(--shimmer-pulse) * 0.1));
+      filter: drop-shadow(0 0 16px rgba(56, 150, 90, 0.16)) brightness(calc(1.05 + var(--shimmer-pulse) * 0.1));
     }
   }
 
@@ -787,11 +840,11 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
     background: radial-gradient(
       circle,
       rgba(242, 238, 232, 1) 0%,
-      rgba(122, 245, 176, 0.92) 42%,
-      rgba(69, 232, 138, 0.78) 100%
+      rgba(80, 168, 114, 0.92) 42%,
+      rgba(56, 150, 90, 0.78) 100%
     );
     box-shadow:
-      0 0 calc(6px + var(--shimmer-pulse) * 8px) rgba(69, 232, 138, calc(0.28 + var(--shimmer-pulse) * 0.18)),
+      0 0 calc(6px + var(--shimmer-pulse) * 8px) rgba(56, 150, 90, calc(0.28 + var(--shimmer-pulse) * 0.18)),
       0 0 calc(2px + var(--shimmer-pulse) * 3px) rgba(242, 238, 232, 0.55);
     filter: brightness(calc(1.02 + var(--shimmer-pulse) * 0.12));
   }

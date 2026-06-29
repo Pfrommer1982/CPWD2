@@ -7,207 +7,213 @@ const props = withDefaults(defineProps<{
   mobile: false,
 })
 
-const sceneRef = ref<HTMLElement | null>(null)
+const rootRef = ref<HTMLElement | null>(null)
 const activeRef = toRef(props, 'active')
 const staticMode = toRef(props, 'mobile')
 
-const {
-  browserRef,
-  guidesRef,
-  measureRef,
-  pieceNav,
-  pieceHero,
-  pieceSide,
-  pieceCardA,
-  pieceCardB,
-  pieceDot,
-  slotNav,
-  slotHero,
-  slotSide,
-  slotCardA,
-  slotCardB,
-  slotDot,
-} = useDesignBrowserScene({ root: sceneRef, active: activeRef, staticMode })
+useVisibleTimeline({
+  root: rootRef,
+  active: activeRef,
+  staticMode,
+  factory: ({ gsap, reduced }) => {
+    const ring = rootRef.value?.querySelector<SVGElement>('[data-ring]')
+    const grid = rootRef.value?.querySelector<HTMLElement>('[data-grid]')
+    const phi = rootRef.value?.querySelectorAll<SVGGeometryElement>('[data-phi]') ?? []
+    const specimen = rootRef.value?.querySelector<HTMLElement>('[data-specimen]')
+    const baselines = rootRef.value?.querySelectorAll<HTMLElement>('[data-baseline]') ?? []
+    const chips = rootRef.value?.querySelectorAll<HTMLElement>('[data-chip]') ?? []
+    const crosshair = rootRef.value?.querySelector<HTMLElement>('[data-crosshair]')
+    const lock = rootRef.value?.querySelector<HTMLElement>('[data-lock]')
+    const readouts = rootRef.value?.querySelectorAll<HTMLElement>('[data-readout]') ?? []
+
+    if (!ring || !specimen) return null
+
+    if (reduced) {
+      gsap.set(ring, { strokeDashoffset: 0, opacity: 0.7 })
+      gsap.set(grid, { opacity: 0.45 })
+      gsap.set(phi, { strokeDashoffset: 0, opacity: 0.5 })
+      gsap.set(specimen, { opacity: 1, scale: 1, filter: 'blur(0px)' })
+      gsap.set(baselines, { scaleX: 1, opacity: 0.55 })
+      gsap.set(chips, { opacity: 1, scale: 1 })
+      gsap.set(crosshair, { opacity: 0.85 })
+      gsap.set(crosshair?.querySelector('.svc-design__crosshair-dot'), { scale: 1 })
+      gsap.set(lock, { opacity: 1, y: 0 })
+      gsap.set(readouts, { opacity: 0.7, y: 0 })
+      return null
+    }
+
+    gsap.set(ring, { strokeDashoffset: 420, opacity: 0 })
+    gsap.set(grid, { opacity: 0 })
+    gsap.set(phi, { strokeDashoffset: 120, opacity: 0 })
+    gsap.set(specimen, { opacity: 0, scale: 0.88, filter: 'blur(6px)' })
+    gsap.set(baselines, { scaleX: 0, opacity: 0, transformOrigin: 'left center' })
+    gsap.set(chips, { opacity: 0, scale: 0.6 })
+    gsap.set(crosshair, { opacity: 0 })
+    gsap.set(crosshair?.querySelector('.svc-design__crosshair-dot'), { scale: 0.4 })
+    gsap.set(lock, { opacity: 0, y: 8 })
+    gsap.set(readouts, { opacity: 0, y: 6 })
+
+    const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.85 })
+
+    tl.to(ring, { strokeDashoffset: 0, opacity: 0.75, duration: 0.7, ease: 'power2.out' })
+    tl.to(grid, { opacity: 0.5, duration: 0.45, ease: 'power1.out' }, 0.15)
+    tl.to(phi, {
+      strokeDashoffset: 0,
+      opacity: 0.55,
+      duration: 0.55,
+      stagger: 0.1,
+      ease: 'power2.out',
+    }, 0.25)
+    tl.to(specimen, {
+      opacity: 1,
+      scale: 1,
+      filter: 'blur(0px)',
+      duration: 0.65,
+      ease: 'power3.out',
+    }, 0.35)
+    tl.to(baselines, {
+      scaleX: 1,
+      opacity: 0.6,
+      duration: 0.4,
+      stagger: 0.06,
+      ease: 'power2.out',
+    }, 0.55)
+    tl.to(chips, {
+      opacity: 1,
+      scale: 1,
+      duration: 0.45,
+      stagger: 0.08,
+      ease: 'back.out(1.6)',
+    }, 0.65)
+    tl.to(readouts, {
+      opacity: 0.75,
+      y: 0,
+      duration: 0.35,
+      stagger: 0.05,
+      ease: 'power2.out',
+    }, 0.75)
+    tl.to(crosshair, { opacity: 1, duration: 0.35, ease: 'power2.out' }, 0.9)
+    tl.fromTo(crosshair?.querySelector('.svc-design__crosshair-dot'), {
+      scale: 0.4,
+    }, {
+      scale: 1,
+      duration: 0.35,
+      ease: 'back.out(2)',
+    }, 0.9)
+    tl.to(lock, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }, 1)
+    tl.to({}, { duration: 1.4 })
+    tl.to([lock, crosshair, readouts], {
+      opacity: 0,
+      duration: 0.25,
+      stagger: 0.03,
+      ease: 'power1.in',
+    }, 2.55)
+    tl.to(chips, { opacity: 0, scale: 0.85, duration: 0.3, stagger: 0.03 }, 2.55)
+    tl.to(baselines, { opacity: 0, duration: 0.25 }, 2.6)
+    tl.to(specimen, { opacity: 0, scale: 0.94, filter: 'blur(4px)', duration: 0.35 }, 2.65)
+    tl.to(phi, { opacity: 0, duration: 0.25, stagger: 0.03 }, 2.65)
+    tl.to(grid, { opacity: 0, duration: 0.25 }, 2.7)
+    tl.to(ring, { strokeDashoffset: 420, opacity: 0, duration: 0.45, ease: 'power2.in' }, 2.7)
+
+    return tl
+  },
+})
 </script>
 
 <template>
   <div
-    ref="sceneRef"
-    class="design-browser"
+    ref="rootRef"
+    class="svc-scene svc-design"
     :class="{
-      'design-browser--stacked': mobile,
-      'design-browser--static': mobile,
+      'svc-scene--stacked': mobile,
+      'svc-scene--static': mobile,
     }"
     aria-hidden="true"
   >
-    <div ref="browserRef" class="design-browser__frame">
-      <div class="design-browser__chrome">
-        <span class="design-browser__dot design-browser__dot--red" />
-        <span class="design-browser__dot design-browser__dot--gold" />
-        <span class="design-browser__dot design-browser__dot--muted" />
-        <span class="design-browser__url font-mono">layout.cpwd</span>
-      </div>
+    <div class="svc-design__panel svc-scene__stage">
+      <div class="svc-design__viewport">
+        <span data-readout class="svc-design__readout svc-design__readout--type font-mono">TYPE</span>
+        <span data-readout class="svc-design__readout svc-design__readout--grid font-mono">GRID 12</span>
+        <span data-readout class="svc-design__readout svc-design__readout--phi font-mono">φ 1.618</span>
 
-      <div class="design-browser__viewport">
-        <div ref="slotNav" class="design-browser__slot design-browser__slot--nav" />
-        <div ref="slotHero" class="design-browser__slot design-browser__slot--hero" />
-        <div ref="slotSide" class="design-browser__slot design-browser__slot--side" />
-        <div ref="slotCardA" class="design-browser__slot design-browser__slot--card-a" />
-        <div ref="slotCardB" class="design-browser__slot design-browser__slot--card-b" />
-        <div ref="slotDot" class="design-browser__slot design-browser__slot--dot" />
+        <div data-grid class="svc-design__grid" aria-hidden="true" />
 
-        <svg
-          ref="guidesRef"
-          class="design-browser__guides"
-          viewBox="0 0 320 220"
-          preserveAspectRatio="none"
-        >
-          <line data-guide x1="24" y1="198" x2="296" y2="198" />
-          <line data-guide x1="18" y1="52" x2="18" y2="198" />
-          <line data-guide x1="24" y1="52" x2="120" y2="52" />
+        <svg class="svc-design__phi" viewBox="0 0 280 280" aria-hidden="true">
+          <line data-phi x1="28" y1="252" x2="252" y2="252" />
+          <line data-phi x1="28" y1="252" x2="28" y2="28" />
+          <line data-phi x1="28" y1="98" x2="252" y2="98" />
+          <line data-phi x1="173" y1="28" x2="173" y2="252" />
+          <circle data-ring cx="140" cy="140" r="118" fill="none" />
         </svg>
 
-        <div ref="measureRef" class="design-browser__measures font-mono">
-          <span data-measure class="design-browser__measure design-browser__measure--w">847</span>
-          <span data-measure class="design-browser__measure design-browser__measure--h">24</span>
-          <span data-measure class="design-browser__measure design-browser__measure--nav">96</span>
+        <div data-specimen class="svc-design__specimen font-display">
+          <span class="svc-design__glyph">Aa</span>
+          <div class="svc-design__baselines">
+            <span data-baseline class="svc-design__baseline" />
+            <span data-baseline class="svc-design__baseline svc-design__baseline--short" />
+            <span data-baseline class="svc-design__baseline svc-design__baseline--shorter" />
+          </div>
         </div>
+
+        <span
+          data-chip
+          class="svc-design__chip svc-design__chip--primary"
+          :style="{ background: '#38965A' }"
+        />
+        <span
+          data-chip
+          class="svc-design__chip svc-design__chip--muted"
+          :style="{ background: '#1E6640' }"
+        />
+        <span data-chip class="svc-design__chip svc-design__chip--light" />
+
+        <div data-crosshair class="svc-design__crosshair" aria-hidden="true">
+          <span class="svc-design__crosshair-h" />
+          <span class="svc-design__crosshair-v" />
+          <span class="svc-design__crosshair-dot" />
+        </div>
+
+        <span data-lock class="svc-design__lock font-mono">COMP LOCK</span>
       </div>
     </div>
-
-    <div ref="pieceNav" class="design-browser__piece design-browser__piece--nav" />
-    <div ref="pieceHero" class="design-browser__piece design-browser__piece--hero">
-      <span class="design-browser__piece-shimmer" />
-    </div>
-    <div ref="pieceSide" class="design-browser__piece design-browser__piece--side" />
-    <div ref="pieceCardA" class="design-browser__piece design-browser__piece--card" />
-    <div ref="pieceCardB" class="design-browser__piece design-browser__piece--card design-browser__piece--card-alt" />
-    <div ref="pieceDot" class="design-browser__piece design-browser__piece--dot" />
   </div>
 </template>
 
 <style lang="scss" scoped>
-.design-browser {
-  --assemble: 0;
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-
-  &__frame {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: clamp(240px, 28vw, 380px);
-    transform: translate(-50%, -50%);
-    border: 1px solid rgba(69, 232, 138, calc(0.18 + var(--assemble) * 0.22));
-    border-radius: 14px;
-    background:
-      linear-gradient(180deg, rgba(22, 22, 22, 0.96) 0%, rgba(12, 12, 12, 0.98) 100%);
-    box-shadow:
-      0 0 0 1px rgba(69, 232, 138, 0.04) inset,
-      0 24px 80px rgba(0, 0, 0, 0.45),
-      0 0 calc(24px + var(--assemble) * 32px) rgba(69, 232, 138, calc(0.06 + var(--assemble) * 0.1));
-    overflow: hidden;
-    transition: border-color 0.4s ease, box-shadow 0.4s ease;
-  }
-
-  &__chrome {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 10px 12px;
-    border-bottom: 1px solid rgba(69, 232, 138, 0.1);
-    background: rgba(15, 15, 15, 0.85);
-  }
-
-  &__dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-
-    &--red {
-      background: rgba(196, 75, 58, 0.75);
-    }
-
-    &--gold {
-      background: rgba(69, 232, 138, 0.85);
-    }
-
-    &--muted {
-      background: rgba(100, 118, 110, 0.45);
-    }
-  }
-
-  &__url {
-    margin-left: auto;
-    padding: 4px 10px;
-    border-radius: 999px;
-    border: 1px solid rgba(69, 232, 138, 0.12);
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(100, 118, 110, 0.9);
+.svc-design {
+  &__panel {
+    width: clamp(220px, 28vw, 340px);
+    padding-block: 4px;
   }
 
   &__viewport {
     position: relative;
-    aspect-ratio: 320 / 220;
+    aspect-ratio: 1;
+    border: 1px solid rgba(56, 150, 90, 0.16);
+    border-radius: 50%;
     background:
-      radial-gradient(circle at 50% 0%, rgba(69, 232, 138, 0.05) 0%, transparent 55%),
-      linear-gradient(rgba(69, 232, 138, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(69, 232, 138, 0.04) 1px, transparent 1px);
-    background-size: auto, 16px 16px, 16px 16px;
+      radial-gradient(circle at 50% 42%, rgba(56, 150, 90, 0.07) 0%, transparent 55%),
+      radial-gradient(circle at 50% 50%, rgba(8, 12, 10, 0.95) 0%, rgba(5, 8, 7, 0.99) 100%);
+    box-shadow:
+      0 0 0 1px rgba(56, 150, 90, 0.05) inset,
+      0 16px 48px rgba(0, 0, 0, 0.4),
+      0 0 32px rgba(56, 150, 90, 0.05);
+    overflow: hidden;
   }
 
-  &__slot {
+  &__grid {
     position: absolute;
+    inset: 12%;
+    border-radius: 50%;
     opacity: 0;
-    pointer-events: none;
-
-    &--nav {
-      top: 14%;
-      left: 7.5%;
-      width: 86%;
-      height: 11%;
-    }
-
-    &--hero {
-      top: 30%;
-      left: 7.5%;
-      width: 56%;
-      height: 28%;
-    }
-
-    &--side {
-      top: 30%;
-      right: 7.5%;
-      width: 22%;
-      height: 28%;
-    }
-
-    &--card-a {
-      bottom: 12%;
-      left: 7.5%;
-      width: 38%;
-      height: 18%;
-    }
-
-    &--card-b {
-      bottom: 12%;
-      right: 7.5%;
-      width: 38%;
-      height: 18%;
-    }
-
-    &--dot {
-      top: 34%;
-      left: 11%;
-      width: 8%;
-      aspect-ratio: 1;
-    }
+    background:
+      linear-gradient(rgba(56, 150, 90, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56, 150, 90, 0.06) 1px, transparent 1px);
+    background-size: 14px 14px;
+    mask-image: radial-gradient(circle at 50% 50%, #000 35%, transparent 72%);
   }
 
-  &__guides {
+  &__phi {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -215,119 +221,165 @@ const {
     pointer-events: none;
 
     line {
-      stroke: rgba(122, 245, 176, 0.55);
+      stroke: rgba(80, 168, 114, 0.4);
       stroke-width: 1;
-      stroke-dasharray: 48;
+      stroke-dasharray: 120;
+      vector-effect: non-scaling-stroke;
+    }
+
+    circle[data-ring] {
+      stroke: rgba(80, 168, 114, 0.55);
+      stroke-width: 1;
+      stroke-dasharray: 420;
       vector-effect: non-scaling-stroke;
     }
   }
 
-  &__measures {
+  &__specimen {
     position: absolute;
     inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding-top: 6%;
+  }
+
+  &__glyph {
+    font-size: clamp(3.5rem, 8vw, 5rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: rgba(232, 241, 236, 0.92);
+    text-shadow: 0 0 32px rgba(56, 150, 90, 0.25);
+  }
+
+  &__baselines {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: min(52%, 140px);
+  }
+
+  &__baseline {
+    display: block;
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, rgba(80, 168, 114, 0.65), rgba(56, 150, 90, 0.15));
+    transform-origin: left center;
+
+    &--short { width: 78%; }
+    &--shorter { width: 52%; opacity: 0.7; }
+  }
+
+  &__chip {
+    position: absolute;
+    width: clamp(22px, 3vw, 28px);
+    height: clamp(22px, 3vw, 28px);
+    border-radius: 4px;
+    border: 1px solid rgba(232, 241, 236, 0.12);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+
+    &--primary {
+      top: 18%;
+      right: 16%;
+    }
+
+    &--muted {
+      bottom: 22%;
+      left: 14%;
+      background: rgba(100, 118, 110, 0.35) !important;
+    }
+
+    &--light {
+      bottom: 18%;
+      right: 20%;
+      background: linear-gradient(135deg, rgba(232, 241, 236, 0.85), rgba(123, 143, 134, 0.45));
+    }
+  }
+
+  &__crosshair {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 48%;
+    height: 48%;
+    transform: translate(-50%, -50%);
     pointer-events: none;
   }
 
-  &__measure {
+  &__crosshair-h,
+  &__crosshair-v {
+    position: absolute;
+    background: rgba(80, 168, 114, 0.55);
+  }
+
+  &__crosshair-h {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    transform: translateY(-50%);
+  }
+
+  &__crosshair-v {
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    transform: translateX(-50%);
+  }
+
+  &__crosshair-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(232, 241, 236, 0.9);
+    box-shadow: 0 0 10px rgba(80, 168, 114, 0.65);
+  }
+
+  &__lock {
+    position: absolute;
+    bottom: 14%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    color: rgba(80, 168, 114, 0.85);
+    padding: 4px 10px;
+    border: 1px solid rgba(56, 150, 90, 0.25);
+    border-radius: 999px;
+    background: rgba(6, 10, 8, 0.75);
+  }
+
+  &__readout {
     position: absolute;
     font-size: 8px;
-    letter-spacing: 0.08em;
-    color: rgba(122, 245, 176, 0.75);
-    padding: 2px 4px;
-    border-radius: 3px;
-    background: rgba(8, 8, 8, 0.72);
+    letter-spacing: 0.14em;
+    color: rgba(56, 150, 90, 0.55);
+    opacity: 0;
+    z-index: 2;
 
-    &--w {
+    &--type {
+      top: 10%;
+      left: 16%;
+    }
+
+    &--grid {
+      top: 10%;
+      right: 14%;
+    }
+
+    &--phi {
+      bottom: 11%;
       left: 50%;
-      bottom: 4%;
       transform: translateX(-50%);
     }
-
-    &--h {
-      left: 2%;
-      top: 52%;
-      transform: translateY(-50%) rotate(-90deg);
-    }
-
-    &--nav {
-      left: 34%;
-      top: 18%;
-    }
-  }
-
-  &__piece {
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-    will-change: transform, opacity;
-    border-radius: 3px;
-    border: 1px solid rgba(69, 232, 138, calc(0.22 + var(--assemble) * 0.18));
-    background: rgba(10, 16, 13, 0.94);
-    box-shadow:
-      0 0 calc(8px + var(--assemble) * 12px) rgba(69, 232, 138, calc(0.04 + var(--assemble) * 0.08)),
-      0 0 0 1px rgba(69, 232, 138, calc(0.06 + var(--assemble) * 0.1)) inset;
-
-    &--nav {
-      width: clamp(120px, 14vw, 180px);
-      height: clamp(14px, 1.6vw, 20px);
-      border-radius: 999px;
-      background: linear-gradient(90deg, rgba(69, 232, 138, 0.22), rgba(22, 22, 22, 0.95) 65%);
-    }
-
-    &--hero {
-      width: clamp(88px, 10vw, 130px);
-      height: clamp(52px, 6vw, 72px);
-      overflow: hidden;
-      background: linear-gradient(135deg, rgba(69, 232, 138, 0.16), rgba(15, 15, 15, 0.98));
-    }
-
-    &--side {
-      width: clamp(34px, 4vw, 48px);
-      height: clamp(52px, 6vw, 72px);
-    }
-
-    &--card {
-      width: clamp(56px, 6.5vw, 78px);
-      height: clamp(28px, 3.2vw, 38px);
-    }
-
-    &--card-alt {
-      border-color: rgba(122, 245, 176, 0.35);
-      background: linear-gradient(180deg, rgba(69, 232, 138, 0.08), rgba(15, 15, 15, 0.98));
-    }
-
-    &--dot {
-      width: clamp(16px, 2vw, 22px);
-      height: clamp(16px, 2vw, 22px);
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(122, 245, 176, 0.85) 0%, rgba(69, 232, 138, 0.45) 100%);
-      border-color: rgba(122, 245, 176, 0.5);
-    }
-  }
-
-  &__piece-shimmer {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    background: linear-gradient(
-      105deg,
-      transparent 35%,
-      rgba(122, 245, 176, 0.16) 50%,
-      transparent 65%
-    );
-    animation: design-shimmer 3.2s ease-in-out infinite;
-  }
-}
-
-@keyframes design-shimmer {
-  0%, 100% { transform: translateX(-120%); }
-  50% { transform: translateX(120%); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .design-browser__piece-shimmer {
-    animation: none;
   }
 }
 </style>

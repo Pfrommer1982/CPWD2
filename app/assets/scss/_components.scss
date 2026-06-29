@@ -25,7 +25,7 @@
 }
 
 .section-label {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: $space-4;
   margin-bottom: $space-6;
@@ -38,11 +38,18 @@
 
   &::before {
     content: '';
+    flex: 0 0 auto;
     display: block;
     width: 24px;
     height: 1px;
     background: $color-gold;
   }
+}
+
+// Centered stacks: keep bar + label grouped
+[class*='__content--center'] > .section-label,
+.contact-section__inner > .section-label {
+  justify-content: center;
 }
 
 .divider {

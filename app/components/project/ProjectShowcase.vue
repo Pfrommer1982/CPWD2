@@ -236,7 +236,7 @@ onMounted(async () => {
 
     <section class="showcase-overview section">
       <div class="container">
-        <p class="showcase-overview__eyebrow overview-reveal label">
+        <p class="showcase-overview__eyebrow overview-reveal section-label">
           {{ projectI18n.t('overview') }}
         </p>
         <h2 class="showcase-overview__title overview-reveal">
@@ -540,7 +540,6 @@ onMounted(async () => {
   padding-block: clamp(64px, 10vh, 120px);
 
   &__eyebrow {
-    color: $color-gold;
     margin-bottom: $space-5;
   }
 
@@ -627,11 +626,6 @@ onMounted(async () => {
   &__head {
     margin-bottom: clamp(40px, 6vh, 64px);
     max-width: 900px;
-
-    .section-label {
-      display: block;
-      margin-bottom: $space-6;
-    }
   }
 
   &__grid {
@@ -693,11 +687,6 @@ onMounted(async () => {
   &__head {
     max-width: 900px;
     margin-bottom: clamp(40px, 6vh, 56px);
-
-    .section-label {
-      display: block;
-      margin-bottom: $space-6;
-    }
   }
 
   &__frame {
