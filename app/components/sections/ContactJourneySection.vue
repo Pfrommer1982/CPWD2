@@ -24,6 +24,8 @@ const form = reactive({
   message: '',
 })
 
+const honeypot = ref('')
+
 const status = ref<'idle' | 'loading' | 'success' | 'error'>('idle')
 const feedback = ref<'success' | 'error' | null>(null)
 
@@ -112,11 +114,16 @@ function spinePointActive(index: number) {
 }
 
 async function submitForm() {
-  if (isTransmitting.value) return
+  if (isTransmitting.value || honeypot.value) return
 
   feedback.value = null
   status.value = 'loading'
-  const payload = { name: form.name, email: form.email, message: form.message }
+  const payload = {
+    name: form.name,
+    email: form.email,
+    message: form.message,
+    website: honeypot.value,
+  }
 
   try {
     await runPreparePhase()
@@ -203,6 +210,9 @@ onMounted(async () => {
         <p class="contact-journey__intro" data-hero-fade>
           {{ contact.t('page.hero.intro') }}
         </p>
+        <div class="contact-journey__hero-meta" data-hero-fade>
+          <span class="contact-journey__hero-available label">{{ contact.t('page.hero.available') }}</span>
+        </div>
         <span class="contact-journey__hint font-mono" data-hero-fade>
           {{ contact.t('page.hero.scrollHint') }}
         </span>
@@ -413,6 +423,31 @@ onMounted(async () => {
                     {{ contact.t('page.transmit.subtext') }}
                   </p>
 
+                  <div class="contact-terminal__direct">
+                    <span class="label">{{ contact.t('page.direct.label') }}</span>
+                    <a
+                      :href="`mailto:${contact.t('email')}`"
+                      class="contact-terminal__email link-slide"
+                    >
+                      {{ contact.t('email') }}
+                    </a>
+                    <p class="contact-terminal__response label">
+                      {{ contact.t('page.direct.responseTime') }}
+                    </p>
+                  </div>
+
+                  <div class="contact-terminal__availability">
+                    <span class="contact-terminal__availability-dot" aria-hidden="true" />
+                    <div>
+                      <p class="contact-terminal__availability-status label">
+                        {{ contact.t('page.direct.availableStatus') }}
+                      </p>
+                      <p class="contact-terminal__availability-detail label">
+                        {{ contact.t('page.direct.availableDetail') }}
+                      </p>
+                    </div>
+                  </div>
+
                   <div class="contact-terminal__social font-mono">
                     <span class="contact-terminal__social-label">{{ contact.t('page.social.label') }}</span>
                     <div class="contact-terminal__social-links">
@@ -481,6 +516,15 @@ onMounted(async () => {
                       :disabled="isTransmitting"
                     />
                   </div>
+                  <input
+                    v-model="honeypot"
+                    type="text"
+                    name="website"
+                    tabindex="-1"
+                    autocomplete="off"
+                    class="contact-terminal__honeypot"
+                    aria-hidden="true"
+                  >
                   <GsapMagneticButton type="submit" class="contact-terminal__submit" :disabled="isTransmitting">
                     {{ isTransmitting ? contact.t('form.loading') : contact.t('form.submit') }}
                     <span aria-hidden="true">→</span>
@@ -736,7 +780,19 @@ onMounted(async () => {
     line-height: $leading-relaxed;
     color: $color-text-muted;
     max-width: 52ch;
+    margin-bottom: $space-5;
+  }
+
+  &__hero-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $space-4;
     margin-bottom: $space-8;
+  }
+
+  &__hero-available {
+    color: #4caf50;
   }
 
   &__hint {
@@ -1148,6 +1204,68 @@ onMounted(async () => {
     color: $color-text-muted;
     line-height: $leading-relaxed;
     max-width: 36ch;
+    margin-bottom: $space-5;
+  }
+
+  &__direct {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    margin-bottom: $space-5;
+
+    .label {
+      color: $color-text-faint;
+    }
+  }
+
+  &__email {
+    font-family: $font-display;
+    font-size: $text-xl;
+    font-weight: 300;
+    color: $color-text;
+  }
+
+  &__response {
+    color: $color-text-faint;
+  }
+
+  &__availability {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+    padding: $space-4 $space-5;
+    margin-bottom: $space-5;
+    border: 1px solid rgba(76, 175, 80, 0.28);
+    border-radius: $radius-lg;
+    background: rgba(76, 175, 80, 0.05);
+  }
+
+  &__availability-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #4caf50;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
+    animation: availability-ping 2s ease-out infinite;
+  }
+
+  &__availability-status {
+    color: #4caf50;
+    margin-bottom: 2px;
+  }
+
+  &__availability-detail {
+    color: $color-text-faint;
+  }
+
+  &__honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
   }
 
   &__form {
@@ -1623,5 +1741,11 @@ onMounted(async () => {
 @keyframes contact-bar-shimmer {
   from { transform: translateX(-120%); }
   to { transform: translateX(220%); }
+}
+
+@keyframes availability-ping {
+  0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.45); }
+  70% { box-shadow: 0 0 0 8px rgba(76, 175, 80, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
 }
 </style>

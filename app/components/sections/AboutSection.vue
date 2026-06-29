@@ -6,9 +6,9 @@ const sectionRef = ref<HTMLElement | null>(null)
 const outlineBody = computed(() => about.t('body').replace(/\*/g, ''))
 
 const stats = [
-  { value: 5, suffix: '+', key: 'years' },
-  { value: 30, suffix: '+', key: 'projects' },
-  { value: 12, suffix: '', key: 'clients' },
+  { value: 4, suffix: '×', key: 'aws' },
+  { value: 18, suffix: '', key: 'repos' },
+  { value: 1, suffix: '', key: 'cases' },
 ]
 
 const statRefs = ref<HTMLElement[]>([])

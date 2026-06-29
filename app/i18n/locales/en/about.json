@@ -5,9 +5,9 @@
     "body": "From *insights* to execution, we build websites that don't just look sharp, they *hit*. Every animation, every interaction is *calibrated* and aimed at the goal.",
     "cta": "More about our scope",
     "stats": {
-      "years": "years on target",
-      "projects": "bullseyes delivered",
-      "clients": "brands locked in"
+      "aws": "AWS certifications",
+      "repos": "public GitHub repos",
+      "cases": "case study live"
     },
     "page": {
       "hero": {
@@ -16,7 +16,8 @@
         "intro": "Classified briefing on who CPWD is, what we hit, and which systems we deploy. Scroll for full clearance.",
         "scrollHint": "Open intel",
         "classification": "RESTRICTED // EYES ONLY",
-        "fileId": "OPR-CPWD-001"
+        "fileId": "OPR-CPWD-001",
+        "available": "● Available for projects"
       },
       "spine": {
         "departure": "BRIEFING",
@@ -84,12 +85,11 @@
         "code": "REC-04",
         "label": "COMBAT RECORD",
         "heading": "On target since day one",
-        "intro": "Hard numbers from the field: projects, brands and years locked in.",
+        "intro": "Measurable numbers: AWS certifications, open source on GitHub, and published work.",
         "stats": {
-          "years": "years on target",
-          "projects": "bullseyes delivered",
-          "clients": "brands locked in",
-          "repos": "public repos"
+          "aws": "AWS certifications",
+          "repos": "public GitHub repos",
+          "cases": "case study live"
         }
       },
       "cta": {

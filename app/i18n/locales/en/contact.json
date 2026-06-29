@@ -21,7 +21,8 @@
         "intro": "Satellite relays, ground stations, and encrypted uplinks. CPWD is standing by for incoming intel. Scroll to establish the link.",
         "scrollHint": "Initialize uplink",
         "classification": "SECURE CHANNEL // TX READY",
-        "fileId": "COMMS-CPWD-007"
+        "fileId": "COMMS-CPWD-007",
+        "available": "● Available for projects"
       },
       "spine": {
         "departure": "SIGNAL",
@@ -105,6 +106,12 @@
         "label": "External channels",
         "linkedin": "LinkedIn",
         "github": "GitHub"
+      },
+      "direct": {
+        "label": "Or email directly",
+        "responseTime": "Reply within 24 hours on business days",
+        "availableStatus": "Available",
+        "availableDetail": "for new projects"
       },
       "hud": {
         "scope": "COMMS // SCOPE",

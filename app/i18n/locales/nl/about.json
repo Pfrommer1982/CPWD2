@@ -5,9 +5,9 @@
     "body": "Van *inzicht* tot uitvoering bouwen we websites die niet alleen scherp ogen, maar ook *raak* zijn. Elke animatie, elke interactie is *gekalibreerd* en gericht op het doel.",
     "cta": "Meer over onze scope",
     "stats": {
-      "years": "jaar op target",
-      "projects": "bullseyes opgeleverd",
-      "clients": "merken locked in"
+      "aws": "AWS certificeringen",
+      "repos": "public GitHub repos",
+      "cases": "case study online"
     },
     "page": {
       "hero": {
@@ -16,7 +16,8 @@
         "intro": "Classified briefing over wie CPWD is, wat we raken, en welke systemen we inzetten. Scroll voor volledige clearance.",
         "scrollHint": "Open intel",
         "classification": "RESTRICTED // EYES ONLY",
-        "fileId": "OPR-CPWD-001"
+        "fileId": "OPR-CPWD-001",
+        "available": "● Beschikbaar voor projecten"
       },
       "spine": {
         "departure": "BRIEFING",
@@ -84,12 +85,11 @@
         "code": "REC-04",
         "label": "COMBAT RECORD",
         "heading": "Op target sinds dag één",
-        "intro": "Hard numbers uit het veld: projecten, merken en jaren locked in.",
+        "intro": "Meetbare cijfers: AWS certificeringen, open source op GitHub en gepubliceerd werk.",
         "stats": {
-          "years": "jaar op target",
-          "projects": "bullseyes opgeleverd",
-          "clients": "merken locked in",
-          "repos": "public repos"
+          "aws": "AWS certificeringen",
+          "repos": "public GitHub repos",
+          "cases": "case study online"
         }
       },
       "cta": {

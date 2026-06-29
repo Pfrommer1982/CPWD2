@@ -3,6 +3,13 @@ definePageMeta({
   layout: 'default',
   hideFooter: true,
 })
+
+const seo = useSectionTranslations('seo')
+
+useSeo(computed(() => ({
+  title: seo.t('contact.title'),
+  description: seo.t('contact.description'),
+})))
 </script>
 
 <template>

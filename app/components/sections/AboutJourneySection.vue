@@ -48,10 +48,9 @@ const loadoutItems = computed(() => {
 const missionBodyHtml = computed(() => parseHighlightedBody(about.t('page.mission.body')))
 
 const stats = [
-  { value: 5, suffix: '+', key: 'years' },
-  { value: 30, suffix: '+', key: 'projects' },
-  { value: 12, suffix: '', key: 'clients' },
+  { value: 4, suffix: '×', key: 'aws' },
   { value: 18, suffix: '', key: 'repos' },
+  { value: 1, suffix: '', key: 'cases' },
 ]
 
 function setChapterRef(el: Element | null, index: number) {
@@ -131,6 +130,9 @@ onMounted(async () => {
         <p class="about-journey__intro" data-hero-fade>
           {{ about.t('page.hero.intro') }}
         </p>
+        <div class="about-journey__hero-meta" data-hero-fade>
+          <span class="about-journey__hero-available label">{{ about.t('page.hero.available') }}</span>
+        </div>
         <span class="about-journey__hint font-mono" data-hero-fade>
           {{ about.t('page.hero.scrollHint') }}
         </span>
@@ -489,6 +491,18 @@ onMounted(async () => {
     color: $color-text-muted;
     max-width: 52ch;
     margin-bottom: $space-8;
+  }
+
+  &__hero-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $space-4;
+    margin-bottom: $space-8;
+  }
+
+  &__hero-available {
+    color: #4caf50;
   }
 
   &__hint {

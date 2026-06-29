@@ -4,10 +4,14 @@ import { projects } from '~/data/projects'
 definePageMeta({ layout: 'default' })
 
 const work = useSectionTranslations('work')
+const seo = useSectionTranslations('seo')
 const localePath = useLocalePath()
 const imageKit = useImageKit()
 
-useHead({ title: 'Work, CPWD' })
+useSeo(computed(() => ({
+  title: seo.t('work.title'),
+  description: seo.t('work.description'),
+})))
 
 const sortedProjects = computed(() =>
   [...projects].sort((a, b) => a.order - b.order),
@@ -23,9 +27,9 @@ const cards = ref<HTMLElement[]>([])
 onMounted(async () => {
   if (!import.meta.client) return
 
-  const { gsap } = await import('gsap')
-  const { ScrollTrigger } = await import('gsap/ScrollTrigger')
-  gsap.registerPlugin(ScrollTrigger)
+  const { init } = useGsap()
+  const gsap = await init()
+  if (!gsap) return
 
   cards.value?.forEach((card, i) => {
     gsap.from(card, {
@@ -41,8 +45,6 @@ onMounted(async () => {
       },
     })
   })
-
-  onUnmounted(() => ScrollTrigger.getAll().forEach(st => st.kill()))
 })
 </script>
 

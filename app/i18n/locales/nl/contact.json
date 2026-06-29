@@ -21,7 +21,8 @@
         "intro": "Satellietrelays, grondstations en versleutelde uplinks. CPWD staat paraat voor inkomende intel. Scroll om de verbinding op te bouwen.",
         "scrollHint": "Initialiseer uplink",
         "classification": "SECURE CHANNEL // TX READY",
-        "fileId": "COMMS-CPWD-007"
+        "fileId": "COMMS-CPWD-007",
+        "available": "● Beschikbaar voor projecten"
       },
       "spine": {
         "departure": "SIGNAL",
@@ -105,6 +106,12 @@
         "label": "Externe kanalen",
         "linkedin": "LinkedIn",
         "github": "GitHub"
+      },
+      "direct": {
+        "label": "Of mail direct",
+        "responseTime": "Reactie binnen 24 uur op werkdagen",
+        "availableStatus": "Beschikbaar",
+        "availableDetail": "voor nieuwe projecten"
       },
       "hud": {
         "scope": "COMMS // SCOPE",

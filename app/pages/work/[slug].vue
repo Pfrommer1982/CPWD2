@@ -18,14 +18,12 @@ if (!project) {
   throw createError({ statusCode: 404, statusMessage: 'Project niet gevonden' })
 }
 
-useHead({
-  title: `${project.title}, CPWD`,
-  meta: [
-    { name: 'description', content: project.subtitle },
-    { property: 'og:title', content: project.title },
-    { property: 'og:description', content: project.subtitle },
-    { property: 'og:image', content: imageKit.hero(project.heroImage) },
-  ],
+useSeo({
+  title: project.title,
+  description: project.subtitle,
+  image: imageKit.hero(project.heroImage),
+  type: 'article',
+  canonicalPath: `/work/${project.slug}`,
 })
 
 const nonDuoItems = computed(() =>
@@ -179,6 +177,7 @@ onMounted(async () => {
 
 <template>
   <div ref="pageRef" class="project-page" :style="{ '--project-accent': project.accentColor }">
+    <SeoProjectSchema :project="project" />
     <ProjectShowcase
       v-if="project.showcase"
       :project="project"

@@ -162,108 +162,6 @@ export const projects: Project[] = [
     featured: true,
     order: 1,
   },
-  {
-    slug: 'restaurant-de-nieuwe-wereld',
-    title: 'Restaurant De Nieuwe Wereld',
-    subtitle: 'Brand identity & website voor een fine dining restaurant in Amsterdam',
-    category: 'Web Design & Development',
-    year: 2024,
-    role: ['Design', 'Development', 'CMS integratie'],
-    technologies: ['Nuxt 3', 'GSAP', 'Sanity CMS', 'SCSS'],
-    thumbnail: '/cpwd/projects/nieuwe-wereld/thumb.jpg',
-    heroImage: '/cpwd/projects/nieuwe-wereld/hero.jpg',
-    accentColor: '#C4A882',
-    challenge: {
-      nl: 'Een fine dining restaurant dat zijn verfijnde wereld wilde vertalen naar een digitale ervaring die net zo meeslepend aanvoelt als een avond in het restaurant zelf. De website moest reserveringen stimuleren zonder de elegantie van het merk aan te tasten.',
-      en: 'A fine dining restaurant wanted to translate its refined world into a digital experience as immersive as an evening at the restaurant itself. The website needed to drive reservations without compromising the elegance of the brand.',
-    },
-    solution: {
-      nl: 'We ontwierpen een cinematische scroll-ervaring met zwarte achtergronden, goudkleurige typografie en parallax-beelden die de ambiance van het restaurant overbrengen. GSAP ScrollTrigger stuurt elke animatie zodat de bezoeker meegesleurd wordt in het verhaal.',
-      en: 'We designed a cinematic scroll experience with dark backgrounds, gold typography and parallax imagery that conveys the ambiance of the restaurant. GSAP ScrollTrigger drives every animation, pulling the visitor into the story.',
-    },
-    results: [
-      { value: '+68%', label: 'Reserveringen online' },
-      { value: '2.4×', label: 'Langere sessieduur' },
-      { value: '97', label: 'Lighthouse score' },
-    ],
-    gallery: [
-      { src: '/cpwd/projects/nieuwe-wereld/img-01.jpg', alt: 'Homepage hero', layout: 'full' },
-      { src: '/cpwd/projects/nieuwe-wereld/img-02.jpg', alt: 'Menu sectie', layout: 'half-left' },
-      { src: '/cpwd/projects/nieuwe-wereld/img-03.jpg', alt: 'Over de chef', layout: 'half-right' },
-      { src: '/cpwd/projects/nieuwe-wereld/img-04.jpg', alt: 'Reserveringen', layout: 'full' },
-      { src: '/cpwd/projects/nieuwe-wereld/img-05.jpg', alt: 'Mobile view', layout: 'duo' },
-      { src: '/cpwd/projects/nieuwe-wereld/img-06.jpg', alt: 'Detailpagina', layout: 'duo' },
-    ],
-    liveUrl: 'https://example.com',
-    featured: true,
-    order: 2,
-  },
-  {
-    slug: 'maison-vandenbergh',
-    title: 'Maison Vandenbergh',
-    subtitle: 'Luxe interior design studio, digitale identiteit en portfolio',
-    category: 'Branding & Web Development',
-    year: 2024,
-    role: ['Art Direction', 'Web Development'],
-    technologies: ['Nuxt 3', 'Three.js', 'GSAP', 'ImageKit'],
-    thumbnail: '/cpwd/projects/vandenbergh/thumb.jpg',
-    heroImage: '/cpwd/projects/vandenbergh/hero.jpg',
-    accentColor: '#B8A090',
-    challenge: {
-      nl: 'Een gevestigde interior design studio in Rotterdam wilde haar papieren portfolio omzetten naar een digitale showroom die recht doet aan de kwaliteit van haar werk. De uitdaging: luxe uitstraling zonder clichés.',
-      en: 'An established interior design studio in Rotterdam wanted to transform its printed portfolio into a digital showroom that does justice to the quality of its work. The challenge: luxury feel without clichés.',
-    },
-    solution: {
-      nl: 'Een minimalistische, beeldgedreven website waarbij de projecten het woord voeren. Grote foto\'s, subtiele hover-interacties en een custom gallery-viewer zorgen dat het werk centraal staat. Three.js geeft de hero een rustige, sfeervolle achtergrond.',
-      en: 'A minimalist, image-driven website where the projects do the talking. Large photos, subtle hover interactions and a custom gallery viewer keep the work front and centre. Three.js gives the hero a calm, atmospheric background.',
-    },
-    results: [
-      { value: '4×', label: 'Meer aanvragen' },
-      { value: '100%', label: 'Mobiel geoptimaliseerd' },
-    ],
-    gallery: [
-      { src: '/cpwd/projects/vandenbergh/img-01.jpg', alt: 'Studio overview', layout: 'full' },
-      { src: '/cpwd/projects/vandenbergh/img-02.jpg', alt: 'Project cards', layout: 'duo' },
-      { src: '/cpwd/projects/vandenbergh/img-03.jpg', alt: 'Gallery viewer', layout: 'duo' },
-      { src: '/cpwd/projects/vandenbergh/img-04.jpg', alt: 'Contact pagina', layout: 'full' },
-    ],
-    featured: true,
-    order: 3,
-  },
-  {
-    slug: 'atelier-bloom',
-    title: 'Atelier Bloom',
-    subtitle: 'E-commerce platform voor een premium bloemenatelier',
-    category: 'E-commerce Development',
-    year: 2023,
-    role: ['Full-stack Development', 'UX Design'],
-    technologies: ['Nuxt 3', 'Shopify API', 'GSAP', 'SCSS'],
-    thumbnail: '/cpwd/projects/atelier-bloom/thumb.jpg',
-    heroImage: '/cpwd/projects/atelier-bloom/hero.jpg',
-    accentColor: '#9CAF88',
-    challenge: {
-      nl: 'Een premium bloemenatelier wilde hun bestelproces digitaliseren zonder de persoonlijke, handgemaakte sfeer te verliezen die hun merk definieert. Standaard e-commerce templates voelden te koud aan.',
-      en: 'A premium floral atelier wanted to digitalise their ordering process without losing the personal, handcrafted atmosphere that defines their brand. Standard e-commerce templates felt too cold.',
-    },
-    solution: {
-      nl: 'Een op maat gemaakte Shopify frontend in Nuxt met vloeiende productpresentaties, een stap-voor-stap samensteltool voor boeketten en een checkout die aanvoelt als een persoonlijk gesprek. Warme kleuren en organische vormen reflecteren het merk.',
-      en: 'A bespoke Shopify frontend in Nuxt with smooth product presentations, a step-by-step bouquet builder and a checkout that feels like a personal conversation. Warm colours and organic shapes reflect the brand.',
-    },
-    results: [
-      { value: '+140%', label: 'Online omzet' },
-      { value: '3.8%', label: 'Conversieratio' },
-      { value: '4.9★', label: 'Klantbeoordeling' },
-    ],
-    gallery: [
-      { src: '/cpwd/projects/atelier-bloom/img-01.jpg', alt: 'Homepage', layout: 'full' },
-      { src: '/cpwd/projects/atelier-bloom/img-02.jpg', alt: 'Product pagina', layout: 'half-left' },
-      { src: '/cpwd/projects/atelier-bloom/img-03.jpg', alt: 'Boeket builder', layout: 'half-right' },
-      { src: '/cpwd/projects/atelier-bloom/img-04.jpg', alt: 'Checkout flow', layout: 'full' },
-    ],
-    liveUrl: 'https://example.com',
-    featured: false,
-    order: 4,
-  },
 ]
 
 export function getProjectBySlug(slug: string): Project | undefined {
@@ -274,7 +172,7 @@ export function getNextProject(currentSlug: string): Project | undefined {
   const sorted = [...projects].sort((a, b) => a.order - b.order)
   const idx = sorted.findIndex(p => p.slug === currentSlug)
   if (idx === -1) return undefined
-  return sorted[(idx + 1) % sorted.length]
+  return sorted[idx + 1]
 }
 
 export function getAllSlugs(): string[] {

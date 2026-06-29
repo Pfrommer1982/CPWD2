@@ -1,5 +1,12 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'default' })
+
+const seo = useSectionTranslations('seo')
+
+useSeo(computed(() => ({
+  title: seo.t('services.title'),
+  description: seo.t('services.description'),
+})))
 </script>
 
 <template>
