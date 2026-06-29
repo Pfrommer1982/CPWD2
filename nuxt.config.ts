@@ -76,6 +76,7 @@ export default defineNuxtConfig({
     imagekitPublicKey: process.env.IMAGEKIT_PUBLIC_KEY,
     resendApiKey: process.env.RESEND_API_KEY,
     contactToEmail: process.env.CONTACT_TO_EMAIL || 'info@cpwd.nl',
+    contactFromEmail: process.env.CONTACT_FROM_EMAIL || 'CPWD Contact <noreply@cpwd.nl>',
     public: {
       imagekitUrlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',

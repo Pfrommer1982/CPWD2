@@ -1,13 +1,21 @@
 import { Resend } from 'resend'
 
+interface ContactBody {
+  name?: string
+  email?: string
+  message?: string
+  website?: string
+}
+
+interface ResendErrorShape {
+  message?: string
+  name?: string
+  statusCode?: number
+}
+
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
-  const body = await readBody<{
-    name?: string
-    email?: string
-    message?: string
-    website?: string
-  }>(event)
+  const body = await readBody<ContactBody>(event)
 
   if (body.website) {
     return { success: true }
@@ -24,36 +32,62 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Ongeldig e-mailadres' })
   }
 
+  const payload = {
+    name: name.trim(),
+    email: email.trim(),
+    message: message.trim(),
+  }
+
   const toAddress = config.contactToEmail || 'info@cpwd.nl'
-  const safeName = escapeHtml(name.trim())
-  const safeEmail = escapeHtml(email.trim())
-  const safeMessage = escapeHtml(message.trim()).replace(/\n/g, '<br>')
+  const fromAddress = config.contactFromEmail || 'CPWD Contact <noreply@cpwd.nl>'
+  const safeName = escapeHtml(payload.name)
+  const safeEmail = escapeHtml(payload.email)
+  const safeMessage = escapeHtml(payload.message).replace(/\n/g, '<br>')
 
-  if (config.resendApiKey) {
-    const resend = new Resend(config.resendApiKey)
-
-    const { error } = await resend.emails.send({
-      from: 'CPWD Contact <noreply@cpwd.nl>',
-      to: toAddress,
-      replyTo: email.trim(),
-      subject: `Nieuw bericht van ${name.trim()}`,
-      html: `
-        <h2>Nieuw contactbericht</h2>
-        <p><strong>Naam:</strong> ${safeName}</p>
-        <p><strong>Email:</strong> ${safeEmail}</p>
-        <p><strong>Bericht:</strong></p>
-        <p>${safeMessage}</p>
-      `,
-    })
-
-    if (error) {
-      console.error('[contact] Resend error:', error)
-      throw createError({ statusCode: 500, statusMessage: 'Verzenden mislukt' })
+  if (!config.resendApiKey || config.resendApiKey.includes('xxxx')) {
+    if (import.meta.dev) {
+      console.info('[contact] dev mode — no Resend key, logged message:', payload)
+      return { success: true }
     }
-  } else if (import.meta.dev) {
-    console.info('[contact]', { name: name.trim(), email: email.trim(), message: message.trim() })
-  } else {
     throw createError({ statusCode: 503, statusMessage: 'Contactformulier is tijdelijk niet beschikbaar' })
+  }
+
+  const resend = new Resend(config.resendApiKey)
+
+  const { error } = await resend.emails.send({
+    from: fromAddress,
+    to: toAddress,
+    replyTo: payload.email,
+    subject: `Nieuw bericht van ${payload.name}`,
+    html: `
+      <h2>Nieuw contactbericht</h2>
+      <p><strong>Naam:</strong> ${safeName}</p>
+      <p><strong>Email:</strong> ${safeEmail}</p>
+      <p><strong>Bericht:</strong></p>
+      <p>${safeMessage}</p>
+    `,
+  })
+
+  if (error) {
+    const resendError = error as ResendErrorShape
+    console.error('[contact] Resend error:', resendError)
+
+    const domainUnverified = resendError.message?.includes('domain is not verified')
+
+    if (import.meta.dev && domainUnverified) {
+      console.warn('[contact] Resend domain not verified — logged message in dev instead of email')
+      console.info('[contact]', payload)
+      return { success: true }
+    }
+
+    if (domainUnverified) {
+      throw createError({
+        statusCode: 503,
+        statusMessage: 'E-mail verzenden is nog niet geconfigureerd. Probeer het later opnieuw of mail direct naar info@cpwd.nl',
+      })
+    }
+
+    throw createError({ statusCode: 502, statusMessage: 'Verzenden mislukt. Probeer het later opnieuw.' })
   }
 
   return { success: true }
