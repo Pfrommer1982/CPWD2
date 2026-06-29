@@ -10,9 +10,9 @@ const props = defineProps<{
 const wrapRef = ref<HTMLElement | null>(null)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 
-const GOLD = '212, 175, 83'
-const GOLD_LIGHT = '232, 201, 122'
-const DIM = '138, 128, 112'
+const COMMS = '69, 232, 138'
+const COMMS_LIGHT = '122, 245, 176'
+const DIM = '92, 130, 108'
 
 interface NetNode {
   id: string
@@ -182,8 +182,8 @@ function drawLink(
   ctx.save()
   ctx.globalAlpha = alpha
   ctx.strokeStyle = lit
-    ? `rgba(${GOLD_LIGHT}, ${0.38 + progress * 0.22})`
-    : `rgba(${GOLD}, ${0.18 + progress * 0.2})`
+    ? `rgba(${COMMS_LIGHT}, ${0.38 + progress * 0.22})`
+    : `rgba(${COMMS}, ${0.18 + progress * 0.2})`
   ctx.lineWidth = lit ? 1.15 : 0.85
   ctx.setLineDash(lit ? [] : [5, 7])
   if (!lit) ctx.lineDashOffset = -time * 0.045
@@ -197,7 +197,7 @@ function drawLink(
     const travel = pulseT * progress
     const p = quadPoint(ax, ay, cx, cy, bx, by, travel)
     ctx.globalAlpha = alpha * (0.45 + progress * 0.5)
-    ctx.fillStyle = `rgba(${GOLD_LIGHT}, ${0.85})`
+    ctx.fillStyle = `rgba(${COMMS_LIGHT}, ${0.85})`
     ctx.beginPath()
     ctx.arc(p.x, p.y, lit ? 2.6 : 2, 0, Math.PI * 2)
     ctx.fill()
@@ -207,7 +207,7 @@ function drawLink(
     const flash = 0.5 + Math.sin(time * 0.004 + link.scrollStart * 20) * 0.5
     const end = quadPoint(ax, ay, cx, cy, bx, by, 1)
     ctx.globalAlpha = flash * 0.35
-    ctx.strokeStyle = `rgba(${GOLD_LIGHT}, 0.9)`
+    ctx.strokeStyle = `rgba(${COMMS_LIGHT}, 0.9)`
     ctx.lineWidth = 4
     ctx.beginPath()
     ctx.arc(end.x, end.y, 5, 0, Math.PI * 2)
@@ -237,7 +237,7 @@ function drawSatelliteOrbit(
   ctx.translate(cx, cy)
   ctx.rotate(rot)
   ctx.globalAlpha = orbitAlpha * 0.4
-  ctx.strokeStyle = `rgba(${GOLD}, 0.22)`
+  ctx.strokeStyle = `rgba(${COMMS}, 0.22)`
   ctx.lineWidth = 0.6
   ctx.beginPath()
   ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2)
@@ -276,7 +276,7 @@ function drawNode(
 
   if (tier === 'hub') {
     const hubRing = smoothstep((scroll - 0.18) / 0.12)
-    ctx.strokeStyle = `rgba(${GOLD_LIGHT}, ${(0.25 + hubRing * 0.45) * pulse})`
+    ctx.strokeStyle = `rgba(${COMMS_LIGHT}, ${(0.25 + hubRing * 0.45) * pulse})`
     ctx.lineWidth = 1
     ctx.beginPath()
     ctx.arc(cx, cy, 42 + pulse * 4 * hubRing, 0, Math.PI * 2)
@@ -290,20 +290,20 @@ function drawNode(
 
   ctx.fillStyle = `rgba(8, 8, 10, ${0.55 + alpha * 0.3})`
   ctx.fillRect(bx, by, boxW, boxH)
-  ctx.strokeStyle = `rgba(${GOLD}, ${(connected ? 0.55 : 0.22) * pulse})`
+  ctx.strokeStyle = `rgba(${COMMS}, ${(connected ? 0.55 : 0.22) * pulse})`
   ctx.lineWidth = 1
   ctx.strokeRect(bx, by, boxW, boxH)
 
   if (tier === 'satellite') {
-    ctx.fillStyle = `rgba(${GOLD_LIGHT}, ${(0.35 + alpha * 0.5) * pulse})`
+    ctx.fillStyle = `rgba(${COMMS_LIGHT}, ${(0.35 + alpha * 0.5) * pulse})`
     ctx.fillRect(cx - 4, cy - 3, 8, 6)
-    ctx.fillStyle = `rgba(${GOLD}, ${0.35 * pulse})`
+    ctx.fillStyle = `rgba(${COMMS}, ${0.35 * pulse})`
     ctx.fillRect(cx - 10, cy - 1, 6, 2)
     ctx.fillRect(cx + 4, cy - 1, 6, 2)
   }
 
   if (tier === 'ground') {
-    ctx.strokeStyle = `rgba(${GOLD}, ${(0.2 + alpha * 0.35) * pulse})`
+    ctx.strokeStyle = `rgba(${COMMS}, ${(0.2 + alpha * 0.35) * pulse})`
     ctx.beginPath()
     ctx.moveTo(cx - 8, cy + 6)
     ctx.lineTo(cx, cy - 6)
@@ -315,7 +315,7 @@ function drawNode(
   ctx.font = `${tier === 'hub' ? 10 : 8}px monospace`
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
-  ctx.fillStyle = `rgba(${GOLD_LIGHT}, ${(0.35 + alpha * 0.6) * pulse})`
+  ctx.fillStyle = `rgba(${COMMS_LIGHT}, ${(0.35 + alpha * 0.6) * pulse})`
   ctx.fillText(node.label, cx, cy - (node.sub ? 3 : 0))
   if (node.sub) {
     ctx.font = '7px monospace'
@@ -341,7 +341,7 @@ function drawHud(ctx: CanvasRenderingContext2D, w: number, h: number, time: numb
   const sigBase = 42 + scroll * 52 + routes * 2.8
 
   ctx.save()
-  ctx.strokeStyle = `rgba(${GOLD}, ${0.06 + scroll * 0.06})`
+  ctx.strokeStyle = `rgba(${COMMS}, ${0.06 + scroll * 0.06})`
   ctx.lineWidth = 1
   ctx.strokeRect(
     insets.side,
@@ -357,7 +357,7 @@ function drawHud(ctx: CanvasRenderingContext2D, w: number, h: number, time: numb
     [w - insets.side, h - insets.bottom],
   ]
   corners.forEach(([x, y], i) => {
-    ctx.strokeStyle = `rgba(${GOLD}, ${0.18 + scroll * 0.14})`
+    ctx.strokeStyle = `rgba(${COMMS}, ${0.18 + scroll * 0.14})`
     ctx.beginPath()
     const s = 16
     if (i === 0) { ctx.moveTo(x, y + s); ctx.lineTo(x, y); ctx.lineTo(x + s, y) }
@@ -414,12 +414,12 @@ function drawFrame(time: number) {
   scrollProgress = lerp(scrollProgress, scrollProgressTarget, 0.028)
   const scroll = props.transmitActive ? Math.max(scrollProgress, 0.88) : scrollProgress
 
-  ctx.fillStyle = '#080808'
+  ctx.fillStyle = '#060a08'
   ctx.fillRect(0, 0, w, h)
 
   stars.forEach((s) => {
     const tw = 0.55 + Math.sin(time * 0.001 * s.s + s.p) * 0.35
-    ctx.fillStyle = `rgba(220, 210, 190, ${s.b * tw * (0.35 + scroll * 0.35)})`
+    ctx.fillStyle = `rgba(140, 220, 170, ${s.b * tw * (0.28 + scroll * 0.32)})`
     ctx.fillRect(s.x * w, s.y * h, 1.2, 1.2)
   })
 
@@ -443,7 +443,7 @@ function drawFrame(time: number) {
     const frameAlpha = props.transmitActive ? 0.14 : 0.08 * secureFrame
     ctx.save()
     ctx.globalAlpha = frameAlpha + Math.sin(time * 0.003) * 0.025
-    ctx.strokeStyle = `rgba(${GOLD}, 0.55)`
+    ctx.strokeStyle = `rgba(${COMMS}, 0.55)`
     ctx.setLineDash([2, 10])
     ctx.lineWidth = 0.5
     ctx.strokeRect(w * 0.08, h * 0.22, w * 0.84, h * 0.58)
@@ -457,7 +457,7 @@ function drawFrame(time: number) {
     const lockPulse = 0.5 + Math.sin(time * 0.0025) * 0.5
     ctx.save()
     ctx.globalAlpha = (0.06 + lockPulse * 0.08) * smoothstep((scroll - 0.72) / 0.1)
-    ctx.strokeStyle = `rgba(${GOLD_LIGHT}, 0.7)`
+    ctx.strokeStyle = `rgba(${COMMS_LIGHT}, 0.7)`
     ctx.beginPath()
     ctx.arc(hx, hy, 58 + lockPulse * 8, 0, Math.PI * 2)
     ctx.stroke()
@@ -579,8 +579,8 @@ onUnmounted(() => {
   z-index: 1;
   pointer-events: none;
   overflow: hidden;
-  opacity: 0.82;
-  background: $color-bg;
+  opacity: 0.84;
+  background: radial-gradient(ellipse at 50% 38%, #0a1410 0%, #060908 55%, #050706 100%);
 
   &__canvas {
     position: absolute;

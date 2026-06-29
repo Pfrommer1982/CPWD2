@@ -1,31 +1,38 @@
 // ============================================================
-// KLEURENPALET — Obsidian & Gold
+// KLEURENPALET — Obsidian & Comms Green
 // ============================================================
-$color-bg:           #080808;
-$color-bg-alt:       #0F0F0F;
+$color-bg:           #050807;
+$color-bg-alt:       #0a100c;
 $color-surface:      #161616;
 $color-surface-alt:  #1E1E1E;
-$color-border:       rgba(212, 175, 83, 0.12);
-$color-border-hover: rgba(212, 175, 83, 0.35);
+$color-border:       rgba(69, 232, 138, 0.12);
+$color-border-hover: rgba(69, 232, 138, 0.35);
 
-$color-gold:         #D4AF53;
-$color-gold-light:   #E8C97A;
-$color-gold-dark:    #A08530;
-$color-gold-muted:   rgba(212, 175, 83, 0.18);
-$color-gold-glow:    rgba(212, 175, 83, 0.06);
+$color-gold:         #45E88A;
+$color-gold-light:   #7AF5B0;
+$color-gold-dark:    #1E9956;
+$color-gold-muted:   rgba(69, 232, 138, 0.18);
+$color-gold-glow:    rgba(69, 232, 138, 0.08);
 
-$color-text:         #F2EEE8;
-$color-text-muted:   #8A8070;
-$color-text-faint:   #4A4540;
+// Aliases — comms green is the site accent
+$color-comms:         $color-gold;
+$color-comms-light:   $color-gold-light;
+$color-comms-dark:    $color-gold-dark;
+$color-comms-muted:   $color-gold-muted;
+$color-comms-glow:    $color-gold-glow;
+
+$color-text:         #E8F1EC;
+$color-text-muted:   #7B8F86;
+$color-text-faint:   #445751;
 
 $color-error:        #C44B3A;
 
 // ============================================================
 // TYPOGRAFIE
 // ============================================================
-$font-display:  'Cormorant Garamond', 'Georgia', serif;
-$font-body:     'Inter', system-ui, sans-serif;
-$font-mono:     'Space Mono', 'Courier New', monospace;
+$font-display:  'Rajdhani', 'Segoe UI', sans-serif;
+$font-body:     'IBM Plex Sans', system-ui, sans-serif;
+$font-mono:     'Share Tech Mono', 'Courier New', monospace;
 
 $text-xs:    clamp(0.65rem,  0.6rem  + 0.2vw,  0.75rem);
 $text-sm:    clamp(0.8rem,   0.75rem + 0.2vw,  0.9rem);
@@ -103,8 +110,10 @@ $dur-reveal:   1400ms;
 $shadow-sm:      0 1px 3px rgba(0, 0, 0, 0.5);
 $shadow-md:      0 4px 16px rgba(0, 0, 0, 0.6);
 $shadow-lg:      0 8px 32px rgba(0, 0, 0, 0.7);
-$shadow-gold:    0 0 40px rgba(212, 175, 83, 0.15);
-$shadow-gold-sm: 0 0 12px rgba(212, 175, 83, 0.2);
+$shadow-gold:    0 0 40px rgba(69, 232, 138, 0.18);
+$shadow-gold-sm: 0 0 12px rgba(69, 232, 138, 0.24);
+$shadow-comms:   $shadow-gold;
+$shadow-comms-sm: $shadow-gold-sm;
 
 // ============================================================
 // Z-INDEX LAGEN
@@ -115,6 +124,7 @@ $z-nav:     100;
 $z-overlay: 500;
 $z-loader:  900;
 $z-lightbox: 9990;
+$z-comms-screen: 9995;
 $z-cursor:  10000;
 
 // Legacy aliases — bestaande componenten

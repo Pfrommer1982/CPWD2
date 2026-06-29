@@ -317,7 +317,7 @@ watch(menuOpen, (open) => {
   inset: 0;
   z-index: $z-nav;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212, 175, 83, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(69, 232, 138, 0.08) 0%, transparent 55%),
     $color-bg;
   display: flex;
   flex-direction: column;
@@ -358,12 +358,13 @@ watch(menuOpen, (open) => {
   gap: clamp(16px, 4vw, 28px);
   font-family: $font-display;
   font-size: clamp(2.5rem, 10vw, 4rem);
-  font-weight: 300;
+  font-weight: 600;
   line-height: 1;
-  letter-spacing: $tracking-tight;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: $color-text-muted;
   padding: clamp(12px, 2.5vh, 20px) 0;
-  border-bottom: 1px solid rgba(212, 175, 83, 0.12);
+  border-bottom: 1px solid rgba(69, 232, 138, 0.12);
   transition: color $dur-fast $ease-gold;
 
   &:hover,

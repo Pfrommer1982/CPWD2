@@ -80,7 +80,7 @@ function draw(ctx: CanvasRenderingContext2D, width: number, height: number, dpr:
       ctx.beginPath()
       ctx.arc(x, y, size, 0, Math.PI * 2)
       ctx.fillStyle = isGold
-        ? `rgba(212, 175, 83, ${alpha * 1.15})`
+        ? `rgba(69, 232, 138, ${alpha * 1.15})`
         : `rgba(235, 230, 220, ${alpha})`
       ctx.fill()
     }

@@ -119,7 +119,7 @@ useVisibleTimeline({
   &__panel {
     width: clamp(240px, 32vw, 380px);
     padding: clamp(14px, 2vw, 20px);
-    border: 1px solid rgba(212, 175, 83, 0.16);
+    border: 1px solid rgba(69, 232, 138, 0.16);
     border-radius: 12px;
     background: rgba(12, 12, 12, 0.92);
     box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
@@ -130,7 +130,7 @@ useVisibleTimeline({
     height: clamp(120px, 16vw, 180px);
     border-radius: 8px;
     overflow: hidden;
-    border: 1px solid rgba(212, 175, 83, 0.1);
+    border: 1px solid rgba(69, 232, 138, 0.1);
     background: rgba(8, 8, 8, 0.8);
     margin-bottom: $space-5;
   }
@@ -145,18 +145,18 @@ useVisibleTimeline({
 
     &--bg {
       top: 18%;
-      background: linear-gradient(90deg, rgba(212, 175, 83, 0.08), rgba(212, 175, 83, 0.02));
+      background: linear-gradient(90deg, rgba(69, 232, 138, 0.08), rgba(69, 232, 138, 0.02));
     }
 
     &--mid {
       top: 38%;
-      background: linear-gradient(90deg, rgba(232, 201, 122, 0.14), rgba(212, 175, 83, 0.06));
+      background: linear-gradient(90deg, rgba(122, 245, 176, 0.14), rgba(69, 232, 138, 0.06));
     }
 
     &--fg {
       top: 58%;
-      background: linear-gradient(90deg, rgba(242, 238, 232, 0.12), rgba(212, 175, 83, 0.08));
-      border: 1px solid rgba(212, 175, 83, 0.15);
+      background: linear-gradient(90deg, rgba(242, 238, 232, 0.12), rgba(69, 232, 138, 0.08));
+      border: 1px solid rgba(69, 232, 138, 0.15);
     }
   }
 
@@ -167,7 +167,7 @@ useVisibleTimeline({
     font-size: 8px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgba(138, 128, 112, 0.75);
+    color: rgba(100, 118, 110, 0.75);
   }
 
   &__timeline {
@@ -178,8 +178,8 @@ useVisibleTimeline({
     position: relative;
     height: 28px;
     border-radius: 6px;
-    background: rgba(212, 175, 83, 0.06);
-    border: 1px solid rgba(212, 175, 83, 0.12);
+    background: rgba(69, 232, 138, 0.06);
+    border: 1px solid rgba(69, 232, 138, 0.12);
   }
 
   &__key {
@@ -189,8 +189,8 @@ useVisibleTimeline({
     height: 8px;
     border-radius: 2px;
     transform: translate(-50%, -50%) rotate(45deg);
-    background: rgba(212, 175, 83, 0.35);
-    border: 1px solid rgba(232, 201, 122, 0.45);
+    background: rgba(69, 232, 138, 0.35);
+    border: 1px solid rgba(122, 245, 176, 0.45);
     opacity: 0.35;
   }
 
@@ -200,8 +200,8 @@ useVisibleTimeline({
     bottom: 2px;
     left: 0;
     width: 2px;
-    background: rgba(232, 201, 122, 0.95);
-    box-shadow: 0 0 10px rgba(212, 175, 83, 0.5);
+    background: rgba(122, 245, 176, 0.95);
+    box-shadow: 0 0 10px rgba(69, 232, 138, 0.5);
   }
 
   &__labels {
@@ -210,7 +210,7 @@ useVisibleTimeline({
     margin-top: 8px;
     font-size: 8px;
     letter-spacing: 0.08em;
-    color: rgba(138, 128, 112, 0.75);
+    color: rgba(100, 118, 110, 0.75);
   }
 }
 </style>

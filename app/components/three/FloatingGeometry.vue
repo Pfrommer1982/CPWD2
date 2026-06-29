@@ -25,7 +25,7 @@ onMounted(async () => {
   ]
 
   const material = new THREE.MeshBasicMaterial({
-    color: 0xD4AF53,
+    color: 0x45E88A,
     wireframe: true,
     transparent: true,
     opacity: 0.2,

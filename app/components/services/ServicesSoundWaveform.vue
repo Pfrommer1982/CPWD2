@@ -53,8 +53,8 @@ function draw() {
     const amp = (0.25 + Math.abs(wave)) * h * 0.42
     const x = i * (barW + gap)
     const grad = ctx.createLinearGradient(0, mid - amp, 0, mid + amp)
-    grad.addColorStop(0, 'rgba(232, 201, 122, 0.9)')
-    grad.addColorStop(0.5, 'rgba(212, 175, 83, 0.55)')
+    grad.addColorStop(0, 'rgba(122, 245, 176, 0.9)')
+    grad.addColorStop(0.5, 'rgba(69, 232, 138, 0.55)')
     grad.addColorStop(1, 'rgba(160, 133, 48, 0.25)')
     ctx.fillStyle = grad
     ctx.beginPath()
@@ -148,7 +148,7 @@ onUnmounted(() => {
   &__ring {
     position: absolute;
     border-radius: 50%;
-    border: 1px solid rgba(212, 175, 83, 0.15);
+    border: 1px solid rgba(69, 232, 138, 0.15);
 
     &--outer {
       inset: 0;
@@ -157,7 +157,7 @@ onUnmounted(() => {
 
     &--inner {
       inset: 14%;
-      border-color: rgba(232, 201, 122, 0.12);
+      border-color: rgba(122, 245, 176, 0.12);
       animation: sound-spin 18s linear infinite reverse;
     }
   }
@@ -175,7 +175,7 @@ onUnmounted(() => {
     font-size: 9px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(138, 128, 112, 0.85);
+    color: rgba(100, 118, 110, 0.85);
   }
 }
 

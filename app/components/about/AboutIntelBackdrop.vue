@@ -8,9 +8,9 @@ const wrapRef = ref<HTMLElement | null>(null)
 const webglRef = ref<HTMLCanvasElement | null>(null)
 const overlayRef = ref<HTMLCanvasElement | null>(null)
 
-const GOLD = '212, 175, 83'
-const GOLD_LIGHT = '232, 201, 122'
-const DIM = '138, 128, 112'
+const GOLD = '69, 232, 138'
+const GOLD_LIGHT = '122, 245, 176'
+const DIM = '100, 118, 110'
 
 let raf = 0
 let running = false
@@ -45,9 +45,9 @@ interface RadarBlip {
 }
 
 const radarBlips: RadarBlip[] = []
-const MAX_BLIPS = 3
-const SWEEP_ARC = 0.5
-const BLIP_PERSIST = 0.85
+const MAX_BLIPS = 5
+const SWEEP_ARC = 0.62
+const BLIP_PERSIST = 1.15
 
 function hudFrameInsets(w: number, h: number) {
   const side = Math.max(14, Math.min(32, w * 0.022))
@@ -206,7 +206,7 @@ function updateRadarBlips(time: number) {
     }
   }
 
-  if (radarBlips.length < MAX_BLIPS && Math.random() < 0.0022) {
+  if (radarBlips.length < MAX_BLIPS && Math.random() < 0.0038) {
     const angle = Math.random() * Math.PI * 2
     const tooClose = radarBlips.some((b) => {
       let d = Math.abs(b.angle - angle)
@@ -244,7 +244,7 @@ function blipSweepIntensity(blip: RadarBlip, sweep: number, time: number) {
   if (blip.lastHit > 0) {
     const since = time - blip.lastHit
     if (since < BLIP_PERSIST) {
-      return (1 - since / BLIP_PERSIST) * 0.32
+      return (1 - since / BLIP_PERSIST) * 0.48
     }
   }
 
@@ -350,25 +350,32 @@ function drawRadarHud(
   progress: number,
   lock: number,
 ) {
-  const cx = w * (0.52 - progress * 0.08)
-  const cy = h * 0.48
-  const baseR = Math.min(w, h) * (0.28 + progress * 0.06)
+  const cx = w * (0.5 - progress * 0.04)
+  const cy = h * 0.5
+  const baseR = Math.min(w, h) * (0.34 + progress * 0.08)
   const sweep = time * 0.55
-  const alpha = 0.12 + lock * 0.18
+  const alpha = 0.24 + lock * 0.32
   const frame = hudFrameInsets(w, h)
 
   ctx.save()
+
+  ctx.globalAlpha = 0.05 + lock * 0.06
+  ctx.fillStyle = `rgba(${GOLD}, 0.12)`
+  ctx.beginPath()
+  ctx.arc(cx, cy, baseR, 0, Math.PI * 2)
+  ctx.fill()
+
   ctx.strokeStyle = `rgba(${GOLD}, ${alpha})`
   ctx.lineWidth = 1
 
   for (let i = 1; i <= 4; i++) {
-    ctx.globalAlpha = 0.08 + (5 - i) * 0.02
+    ctx.globalAlpha = 0.14 + (5 - i) * 0.045
     ctx.beginPath()
     ctx.arc(cx, cy, baseR * (i / 4), 0, Math.PI * 2)
     ctx.stroke()
   }
 
-  ctx.globalAlpha = 0.06
+  ctx.globalAlpha = 0.12
   ctx.beginPath()
   ctx.moveTo(cx - baseR, cy)
   ctx.lineTo(cx + baseR, cy)
@@ -376,23 +383,24 @@ function drawRadarHud(
   ctx.lineTo(cx, cy + baseR)
   ctx.stroke()
 
-  ctx.globalAlpha = 0.14 + lock * 0.2
+  ctx.globalAlpha = 0.22 + lock * 0.28
   ctx.beginPath()
   ctx.moveTo(cx, cy)
   ctx.arc(cx, cy, baseR, sweep - SWEEP_ARC, sweep)
   ctx.closePath()
-  ctx.fillStyle = `rgba(${GOLD}, 0.06)`
+  ctx.fillStyle = `rgba(${GOLD}, 0.14)`
   ctx.fill()
-  ctx.strokeStyle = `rgba(${GOLD}, ${0.25 + lock * 0.35})`
+  ctx.strokeStyle = `rgba(${GOLD_LIGHT}, ${0.42 + lock * 0.45})`
+  ctx.lineWidth = 1.2
   ctx.stroke()
 
   drawRadarBlips(ctx, cx, cy, baseR, time, sweep)
 
   const trackedContacts = radarBlips.filter((b) => b.lastHit > 0 && time - b.lastHit < 4).length
 
-  const blink = Math.sin(time * 4) > 0.85 ? 1 : 0.35
-  ctx.globalAlpha = (0.35 + lock * 0.45) * blink
-  ctx.strokeStyle = `rgba(${GOLD}, 0.8)`
+  const blink = Math.sin(time * 4) > 0.85 ? 1 : 0.45
+  ctx.globalAlpha = (0.5 + lock * 0.45) * blink
+  ctx.strokeStyle = `rgba(${GOLD_LIGHT}, 0.9)`
   ctx.lineWidth = 1.2
   const ch = baseR * 0.12
   ctx.beginPath()
@@ -402,8 +410,8 @@ function drawRadarHud(
   ctx.lineTo(cx, cy + ch)
   ctx.stroke()
 
-  ctx.globalAlpha = 0.5 + lock * 0.3
-  ctx.strokeStyle = `rgba(${GOLD}, 0.35)`
+  ctx.globalAlpha = 0.62 + lock * 0.3
+  ctx.strokeStyle = `rgba(${GOLD}, 0.55)`
   ctx.lineWidth = 0.5
   const bracket = 18
   const corners = [
@@ -427,7 +435,7 @@ function drawRadarHud(
   const labelRightX = w - frame.side - frame.labelPadX
 
   ctx.font = '9px monospace'
-  ctx.fillStyle = `rgba(${DIM}, ${0.45 + lock * 0.2})`
+  ctx.fillStyle = `rgba(${DIM}, ${0.55 + lock * 0.25})`
   ctx.textAlign = 'left'
   ctx.textBaseline = 'alphabetic'
   ctx.fillText(`RADAR // SCOPE ${(progress * 100).toFixed(0)}%`, labelLeftX, labelY)
@@ -560,7 +568,7 @@ onUnmounted(() => {
   z-index: 1;
   pointer-events: none;
   overflow: hidden;
-  opacity: 0.72;
+  opacity: 0.84;
   background: $color-bg;
 
   &__webgl,

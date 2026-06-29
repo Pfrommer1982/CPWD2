@@ -143,10 +143,10 @@ useVisibleTimeline({
   &__panel {
     width: clamp(240px, 30vw, 360px);
     padding: clamp(16px, 2vw, 22px);
-    border: 1px solid rgba(212, 175, 83, 0.16);
+    border: 1px solid rgba(69, 232, 138, 0.16);
     border-radius: 50%;
     aspect-ratio: 1;
-    background: radial-gradient(circle at 50% 40%, rgba(212, 175, 83, 0.08), rgba(10, 10, 10, 0.95) 65%);
+    background: radial-gradient(circle at 50% 40%, rgba(69, 232, 138, 0.08), rgba(10, 10, 10, 0.95) 65%);
     box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
     display: flex;
     flex-direction: column;
@@ -164,7 +164,7 @@ useVisibleTimeline({
     font-size: 9px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(212, 175, 83, 0.65);
+    color: rgba(69, 232, 138, 0.65);
   }
 
   &__map {
@@ -175,32 +175,32 @@ useVisibleTimeline({
 
   &__globe {
     fill: none;
-    stroke: rgba(212, 175, 83, 0.12);
+    stroke: rgba(69, 232, 138, 0.12);
     stroke-width: 0.5;
   }
 
   &__edge {
     fill: none;
-    stroke: rgba(232, 201, 122, 0.55);
+    stroke: rgba(122, 245, 176, 0.55);
     stroke-width: 0.6;
     stroke-dasharray: 100;
     vector-effect: non-scaling-stroke;
   }
 
   &__hub {
-    fill: rgba(212, 175, 83, 0.95);
+    fill: rgba(69, 232, 138, 0.95);
   }
 
   &__pulse {
     fill: none;
-    stroke: rgba(212, 175, 83, 0.5);
+    stroke: rgba(69, 232, 138, 0.5);
     stroke-width: 0.8;
     transform-origin: 50px 50px;
     transform-box: fill-box;
   }
 
   &__node-dot {
-    fill: rgba(232, 201, 122, 0.85);
+    fill: rgba(122, 245, 176, 0.85);
   }
 
   &__node-label {
@@ -221,11 +221,11 @@ useVisibleTimeline({
     gap: 4px;
     font-size: 8px;
     letter-spacing: 0.06em;
-    color: rgba(138, 128, 112, 0.85);
+    color: rgba(100, 118, 110, 0.85);
 
     em {
       font-style: normal;
-      color: rgba(212, 175, 83, 0.75);
+      color: rgba(69, 232, 138, 0.75);
       margin-right: 4px;
     }
   }

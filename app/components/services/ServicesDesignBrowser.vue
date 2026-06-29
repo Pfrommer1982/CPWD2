@@ -96,17 +96,17 @@ const {
   &__frame {
     position: absolute;
     top: 50%;
-    left: 52%;
+    left: 50%;
     width: clamp(240px, 28vw, 380px);
-    transform: translateY(-50%);
-    border: 1px solid rgba(212, 175, 83, calc(0.18 + var(--assemble) * 0.22));
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(69, 232, 138, calc(0.18 + var(--assemble) * 0.22));
     border-radius: 14px;
     background:
       linear-gradient(180deg, rgba(22, 22, 22, 0.96) 0%, rgba(12, 12, 12, 0.98) 100%);
     box-shadow:
-      0 0 0 1px rgba(242, 238, 232, 0.03) inset,
+      0 0 0 1px rgba(69, 232, 138, 0.04) inset,
       0 24px 80px rgba(0, 0, 0, 0.45),
-      0 0 calc(24px + var(--assemble) * 32px) rgba(212, 175, 83, calc(0.06 + var(--assemble) * 0.1));
+      0 0 calc(24px + var(--assemble) * 32px) rgba(69, 232, 138, calc(0.06 + var(--assemble) * 0.1));
     overflow: hidden;
     transition: border-color 0.4s ease, box-shadow 0.4s ease;
   }
@@ -116,7 +116,7 @@ const {
     align-items: center;
     gap: 6px;
     padding: 10px 12px;
-    border-bottom: 1px solid rgba(212, 175, 83, 0.1);
+    border-bottom: 1px solid rgba(69, 232, 138, 0.1);
     background: rgba(15, 15, 15, 0.85);
   }
 
@@ -130,11 +130,11 @@ const {
     }
 
     &--gold {
-      background: rgba(212, 175, 83, 0.85);
+      background: rgba(69, 232, 138, 0.85);
     }
 
     &--muted {
-      background: rgba(138, 128, 112, 0.45);
+      background: rgba(100, 118, 110, 0.45);
     }
   }
 
@@ -142,20 +142,20 @@ const {
     margin-left: auto;
     padding: 4px 10px;
     border-radius: 999px;
-    border: 1px solid rgba(212, 175, 83, 0.12);
+    border: 1px solid rgba(69, 232, 138, 0.12);
     font-size: 9px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(138, 128, 112, 0.9);
+    color: rgba(100, 118, 110, 0.9);
   }
 
   &__viewport {
     position: relative;
     aspect-ratio: 320 / 220;
     background:
-      radial-gradient(circle at 50% 0%, rgba(212, 175, 83, 0.05) 0%, transparent 55%),
-      linear-gradient(rgba(212, 175, 83, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(212, 175, 83, 0.04) 1px, transparent 1px);
+      radial-gradient(circle at 50% 0%, rgba(69, 232, 138, 0.05) 0%, transparent 55%),
+      linear-gradient(rgba(69, 232, 138, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(69, 232, 138, 0.04) 1px, transparent 1px);
     background-size: auto, 16px 16px, 16px 16px;
   }
 
@@ -215,7 +215,7 @@ const {
     pointer-events: none;
 
     line {
-      stroke: rgba(232, 201, 122, 0.55);
+      stroke: rgba(122, 245, 176, 0.55);
       stroke-width: 1;
       stroke-dasharray: 48;
       vector-effect: non-scaling-stroke;
@@ -232,7 +232,7 @@ const {
     position: absolute;
     font-size: 8px;
     letter-spacing: 0.08em;
-    color: rgba(232, 201, 122, 0.75);
+    color: rgba(122, 245, 176, 0.75);
     padding: 2px 4px;
     border-radius: 3px;
     background: rgba(8, 8, 8, 0.72);
@@ -259,27 +259,27 @@ const {
     position: absolute;
     left: 0;
     top: 0;
-    opacity: 0.35;
-    will-change: transform;
-    border-radius: 4px;
-    border: 1px solid rgba(212, 175, 83, 0.28);
-    background: rgba(22, 22, 22, 0.92);
+    opacity: 0;
+    will-change: transform, opacity;
+    border-radius: 3px;
+    border: 1px solid rgba(69, 232, 138, calc(0.22 + var(--assemble) * 0.18));
+    background: rgba(10, 16, 13, 0.94);
     box-shadow:
-      0 8px 24px rgba(0, 0, 0, 0.35),
-      0 0 0 1px rgba(242, 238, 232, 0.03) inset;
+      0 0 calc(8px + var(--assemble) * 12px) rgba(69, 232, 138, calc(0.04 + var(--assemble) * 0.08)),
+      0 0 0 1px rgba(69, 232, 138, calc(0.06 + var(--assemble) * 0.1)) inset;
 
     &--nav {
       width: clamp(120px, 14vw, 180px);
       height: clamp(14px, 1.6vw, 20px);
       border-radius: 999px;
-      background: linear-gradient(90deg, rgba(212, 175, 83, 0.22), rgba(22, 22, 22, 0.95) 65%);
+      background: linear-gradient(90deg, rgba(69, 232, 138, 0.22), rgba(22, 22, 22, 0.95) 65%);
     }
 
     &--hero {
       width: clamp(88px, 10vw, 130px);
       height: clamp(52px, 6vw, 72px);
       overflow: hidden;
-      background: linear-gradient(135deg, rgba(212, 175, 83, 0.16), rgba(15, 15, 15, 0.98));
+      background: linear-gradient(135deg, rgba(69, 232, 138, 0.16), rgba(15, 15, 15, 0.98));
     }
 
     &--side {
@@ -293,29 +293,30 @@ const {
     }
 
     &--card-alt {
-      border-color: rgba(232, 201, 122, 0.35);
-      background: linear-gradient(180deg, rgba(212, 175, 83, 0.08), rgba(15, 15, 15, 0.98));
+      border-color: rgba(122, 245, 176, 0.35);
+      background: linear-gradient(180deg, rgba(69, 232, 138, 0.08), rgba(15, 15, 15, 0.98));
     }
 
     &--dot {
       width: clamp(16px, 2vw, 22px);
       height: clamp(16px, 2vw, 22px);
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(232, 201, 122, 0.85) 0%, rgba(212, 175, 83, 0.45) 100%);
-      border-color: rgba(232, 201, 122, 0.5);
+      background: radial-gradient(circle, rgba(122, 245, 176, 0.85) 0%, rgba(69, 232, 138, 0.45) 100%);
+      border-color: rgba(122, 245, 176, 0.5);
     }
   }
 
   &__piece-shimmer {
     position: absolute;
     inset: 0;
+    opacity: 0;
     background: linear-gradient(
       105deg,
       transparent 35%,
-      rgba(242, 238, 232, 0.12) 50%,
+      rgba(122, 245, 176, 0.16) 50%,
       transparent 65%
     );
-    animation: design-shimmer 2.8s ease-in-out infinite;
+    animation: design-shimmer 3.2s ease-in-out infinite;
   }
 }
 

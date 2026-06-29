@@ -9,7 +9,6 @@ interface DesignBrowserSceneOptions {
 interface ScenePiece {
   el: HTMLElement
   slot: HTMLElement
-  scatter: { x: number; y: number; rotate: number; scale: number }
   target: { x: number; y: number }
 }
 
@@ -47,32 +46,21 @@ export function useDesignBrowserScene({ root, active, staticMode }: DesignBrowse
   const slotCardB = ref<HTMLElement | null>(null)
   const slotDot = ref<HTMLElement | null>(null)
 
-  function scatterFor(index: number, w: number, h: number) {
-    const spots = [
-      { x: w * 0.9, y: h * 0.16, rotate: 11, scale: 0.88 },
-      { x: w * 0.1, y: h * 0.22, rotate: -13, scale: 0.9 },
-      { x: w * 0.93, y: h * 0.5, rotate: 9, scale: 0.86 },
-      { x: w * 0.07, y: h * 0.6, rotate: -9, scale: 0.84 },
-      { x: w * 0.86, y: h * 0.76, rotate: 14, scale: 0.82 },
-      { x: w * 0.14, y: h * 0.8, rotate: -5, scale: 0.8 },
-    ]
-    return spots[index] ?? spots[0]
-  }
-
   function placePiece(
     gsap: typeof import('gsap').gsap,
     piece: HTMLElement,
     x: number,
     y: number,
-    rotate: number,
+    opacity: number,
     scale: number,
+    yOffset = 0,
   ) {
     gsap.set(piece, {
       x: x - piece.offsetWidth / 2,
-      y: y - piece.offsetHeight / 2,
-      rotation: rotate,
+      y: y - piece.offsetHeight / 2 + yOffset,
+      rotation: 0,
       scale,
-      opacity: 1,
+      opacity,
       transformOrigin: '50% 50%',
       force3D: true,
     })
@@ -133,105 +121,120 @@ export function useDesignBrowserScene({ root, active, staticMode }: DesignBrowse
     timeline?.kill()
     built = false
 
-    const pieces: ScenePiece[] = pairs.map(([el, slot], index) => {
+    const pieces: ScenePiece[] = pairs.map(([el, slot]) => {
       const piece = el as HTMLElement
       const slotEl = slot as HTMLElement
-      const target = centerIn(sceneRect, slotEl.getBoundingClientRect())
       return {
         el: piece,
         slot: slotEl,
-        scatter: scatterFor(index, sceneRect.width, sceneRect.height),
-        target,
+        target: centerIn(sceneRect, slotEl.getBoundingClientRect()),
       }
-    })
-
-    pieces.forEach(({ el, scatter }) => {
-      placePiece(gsap, el, scatter.x, scatter.y, scatter.rotate, scatter.scale)
     })
 
     const guideLines = guidesRef.value?.querySelectorAll<SVGGeometryElement>('[data-guide]') ?? []
     const measureLabels = measureRef.value?.querySelectorAll<HTMLElement>('[data-measure]') ?? []
+    const heroShimmer = pieceHero.value?.querySelector<HTMLElement>('.design-browser__piece-shimmer')
+
+    pieces.forEach(({ el, target }) => {
+      placePiece(gsap, el, target.x, target.y, 0, 0.94, 10)
+    })
+
+    gsap.set(browser, { '--assemble': 0 })
+    gsap.set(guideLines, { strokeDashoffset: 48, opacity: 0 })
+    gsap.set(measureLabels, { opacity: 0, y: 4 })
+    if (heroShimmer) gsap.set(heroShimmer, { opacity: 0 })
 
     ctx = gsap.context(() => {
-      timeline = gsap.timeline({ repeat: -1, repeatDelay: 0.4, paused: true })
+      timeline = gsap.timeline({ repeat: -1, repeatDelay: 0.65, paused: true })
 
-      timeline.set(browser, { '--assemble': 0 })
-      timeline.set(guideLines, { strokeDashoffset: 48, opacity: 0 })
-      timeline.set(measureLabels, { opacity: 0, y: 4 })
-
-      timeline.to(guideLines, {
-        strokeDashoffset: 0,
-        opacity: 1,
-        duration: 0.55,
-        stagger: 0.08,
+      timeline.to(browser, {
+        '--assemble': 0.35,
+        duration: 0.35,
         ease: 'power2.out',
-      }, 0.25)
-
-      timeline.to(measureLabels, {
-        opacity: 1,
-        y: 0,
-        duration: 0.4,
-        stagger: 0.06,
-        ease: 'power2.out',
-      }, 0.45)
+      }, 0)
 
       pieces.forEach(({ el, target }, i) => {
         timeline!.to(el, {
           x: target.x - el.offsetWidth / 2,
           y: target.y - el.offsetHeight / 2,
-          rotation: 0,
+          opacity: 1,
           scale: 1,
-          duration: 0.85,
-          ease: 'power3.inOut',
-        }, 0.55 + i * 0.1)
+          duration: 0.5,
+          ease: 'power2.out',
+        }, 0.15 + i * 0.07)
       })
+
+      timeline.to(guideLines, {
+        strokeDashoffset: 0,
+        opacity: 0.85,
+        duration: 0.45,
+        stagger: 0.07,
+        ease: 'power2.out',
+      }, 0.55)
+
+      timeline.to(measureLabels, {
+        opacity: 0.9,
+        y: 0,
+        duration: 0.35,
+        stagger: 0.05,
+        ease: 'power2.out',
+      }, 0.65)
 
       timeline.to(browser, {
         '--assemble': 1,
-        duration: 0.6,
+        duration: 0.4,
         ease: 'power2.out',
-      }, 1.15)
+      }, 0.75)
 
-      timeline.to({}, { duration: 1.1 })
+      if (heroShimmer) {
+        timeline.to(heroShimmer, { opacity: 1, duration: 0.25 }, 0.9)
+      }
+
+      timeline.to({}, { duration: 1.6 })
 
       timeline.to(guideLines, {
         opacity: 0,
-        duration: 0.35,
-        stagger: 0.04,
+        duration: 0.25,
+        stagger: 0.03,
         ease: 'power1.in',
-      }, 2.6)
+      }, 2.35)
 
       timeline.to(measureLabels, {
         opacity: 0,
-        duration: 0.3,
+        y: 4,
+        duration: 0.25,
         ease: 'power1.in',
-      }, 2.55)
+      }, 2.35)
+
+      if (heroShimmer) {
+        timeline.to(heroShimmer, { opacity: 0, duration: 0.2 }, 2.35)
+      }
 
       timeline.to(browser, {
         '--assemble': 0,
-        duration: 0.45,
+        duration: 0.35,
         ease: 'power2.in',
-      }, 2.65)
+      }, 2.4)
 
-      pieces.forEach(({ el, scatter }, i) => {
+      pieces.forEach(({ el, target }, i) => {
         timeline!.to(el, {
-          x: scatter.x - el.offsetWidth / 2,
-          y: scatter.y - el.offsetHeight / 2,
-          rotation: scatter.rotate,
-          scale: scatter.scale,
-          duration: 0.7,
-          ease: 'power2.inOut',
-        }, 2.75 + i * 0.06)
+          opacity: 0,
+          scale: 0.96,
+          y: target.y - el.offsetHeight / 2 + 6,
+          duration: 0.35,
+          ease: 'power2.in',
+        }, 2.45 + i * 0.04)
       })
 
       timeline.set(guideLines, { strokeDashoffset: 48 })
+      timeline.set(measureLabels, { y: 4 })
 
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
       if (reduced) {
         timeline.kill()
-        pieces.forEach(({ el, target }) => placePiece(gsap, el, target.x, target.y, 0, 1))
-        gsap.set(guideLines, { opacity: 0.35, strokeDashoffset: 0 })
-        gsap.set(measureLabels, { opacity: 0.6, y: 0 })
+        pieces.forEach(({ el, target }) => placePiece(gsap, el, target.x, target.y, 1, 1))
+        gsap.set(guideLines, { opacity: 0.4, strokeDashoffset: 0 })
+        gsap.set(measureLabels, { opacity: 0.65, y: 0 })
         gsap.set(browser, { '--assemble': 1 })
         built = false
         building = false

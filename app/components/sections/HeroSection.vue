@@ -66,9 +66,9 @@ onMounted(async () => {
       positions[i * 3 + 2] = (Math.random() - 0.5) * 10
 
       const isGold = Math.random() > 0.7
-      colors[i * 3] = isGold ? 0.83 : 0.95
-      colors[i * 3 + 1] = isGold ? 0.69 : 0.93
-      colors[i * 3 + 2] = isGold ? 0.33 : 0.91
+      colors[i * 3] = isGold ? 0.27 : 0.95
+      colors[i * 3 + 1] = isGold ? 0.91 : 0.93
+      colors[i * 3 + 2] = isGold ? 0.54 : 0.91
     }
 
     const geometry = new THREE.BufferGeometry()
@@ -220,23 +220,23 @@ onMounted(async () => {
 
     &--body {
       font-family: $font-body;
-      font-size: $text-4xl;
-      font-weight: 300;
-      letter-spacing: $tracking-tight;
+      font-size: clamp(1.35rem, 1.1rem + 1.4vw, 2.25rem);
+      font-weight: 400;
+      letter-spacing: 0.02em;
       color: $color-text-muted;
-      line-height: 1.1;
+      line-height: 1.15;
     }
 
     &--display {
       font-family: $font-display;
-      font-size: $text-hero;
-      font-weight: 300;
-      line-height: 0.95;
-      letter-spacing: -0.04em;
+      font-size: clamp(2.4rem, 1.85rem + 3.2vw, 4.75rem);
+      font-weight: 600;
+      line-height: 0.98;
+      letter-spacing: 0.04em;
       color: $color-text;
 
       em {
-        font-style: italic;
+        font-style: normal;
         color: $color-gold-light;
       }
     }

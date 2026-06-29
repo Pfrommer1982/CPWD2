@@ -13,7 +13,7 @@ const staticMode = toRef(props, 'mobile')
 
 const tiles = [
   { id: 'type', label: 'Type', content: 'Aa' },
-  { id: 'color', label: 'Color', content: '', swatch: '#D4AF53' },
+  { id: 'color', label: 'Color', content: '', swatch: '#45E88A' },
   { id: 'logo', label: 'Mark', content: '＋' },
   { id: 'space', label: 'Space', content: '8' },
   { id: 'voice', label: 'Voice', content: 'Locked' },
@@ -110,7 +110,7 @@ useVisibleTimeline({
     font-size: 9px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: rgba(212, 175, 83, 0.65);
+    color: rgba(69, 232, 138, 0.65);
     transform-origin: left center;
     opacity: 0;
   }
@@ -130,7 +130,7 @@ useVisibleTimeline({
     gap: 6px;
     padding: 10px;
     border-radius: 8px;
-    border: 1px solid rgba(212, 175, 83, 0.18);
+    border: 1px solid rgba(69, 232, 138, 0.18);
     background: rgba(16, 16, 16, 0.92);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
     transform-style: preserve-3d;
@@ -141,7 +141,7 @@ useVisibleTimeline({
     font-size: 7px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(138, 128, 112, 0.8);
+    color: rgba(100, 118, 110, 0.8);
   }
 
   &__tile-content {
@@ -155,7 +155,7 @@ useVisibleTimeline({
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    box-shadow: 0 0 16px rgba(212, 175, 83, 0.35);
+    box-shadow: 0 0 16px rgba(69, 232, 138, 0.35);
   }
 }
 </style>

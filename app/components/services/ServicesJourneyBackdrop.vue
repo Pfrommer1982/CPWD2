@@ -14,9 +14,9 @@ const wrapRef = ref<HTMLElement | null>(null)
 const webglRef = ref<HTMLCanvasElement | null>(null)
 const overlayRef = ref<HTMLCanvasElement | null>(null)
 
-const GOLD = '212, 175, 83'
-const GOLD_LIGHT = '232, 201, 122'
-const DIM = '138, 128, 112'
+const GOLD = '69, 232, 138'
+const GOLD_LIGHT = '122, 245, 176'
+const DIM = '100, 118, 110'
 const MASTER_OPACITY = 0.38
 
 interface SectionTarget {
@@ -34,7 +34,7 @@ const SECTION_META: SectionTarget[] = [
   { globeX: 0.06, globeY: 0.02, label: 'CLOUD NODES', code: 'SEC-03', telemetry: ['NODES: 14/14', 'CDN: EDGE-OK', 'LAT: 12ms'] },
   { globeX: -0.2, globeY: 0, label: 'SIGNAL ARRAY', code: 'SEC-04', telemetry: ['FREQ: 44.1kHz', 'CH: STEREO', 'GAIN: -3dB'] },
   { globeX: -0.44, globeY: -0.02, label: 'MOTION VECTORS', code: 'SEC-05', telemetry: ['GSAP: ACTIVE', 'SCRUB: 0.65', 'FPS: 60'] },
-  { globeX: -0.26, globeY: 0.02, label: 'BRAND MATRIX', code: 'SEC-06', telemetry: ['IDENT: CPWD', 'TONE: GOLD', 'SYNC: OK'] },
+  { globeX: -0.26, globeY: 0.02, label: 'BRAND MATRIX', code: 'SEC-06', telemetry: ['IDENT: CPWD', 'TONE: COMMS', 'SYNC: OK'] },
   { globeX: 0, globeY: 0, label: 'TARGET LOCK', code: 'ARR-07', telemetry: ['LOCK: ACQUIRED', 'RANGE: 0.0km', 'STATUS: GO'] },
 ]
 
@@ -76,10 +76,10 @@ function finaleZoomAmount(zoom: number) {
 const FINALE_INDEX = SECTION_META.length - 1
 
 const LAND_MASK_URL = '/globe/land-texture.png'
-const MAP_SAMPLES = 22000
-const MAP_BRIGHTNESS = 6
+const MAP_SAMPLES = 44000
+const MAP_BRIGHTNESS = 8.5
 const LIGHT_DIR = { x: 0.55, y: 0.35, z: 0.75 }
-const COBE_DIFFUSE = 1.2
+const COBE_DIFFUSE = 1.15
 
 function fract(x: number) {
   return x - Math.floor(x)
@@ -106,6 +106,7 @@ let camera: PerspectiveCamera | null = null
 let renderer: WebGLRenderer | null = null
 let globeGroup: Group | null = null
 let globePoints: import('three').Points | null = null
+let globeGlowPoints: import('three').Points | null = null
 let atmosphereGlow: Mesh | null = null
 
 const ATMOSPHERE_VERT = /* glsl */`
@@ -303,7 +304,52 @@ function landDiffuse(x: number, y: number, z: number, radius: number) {
   const ny = y / radius
   const nz = z / radius
   const dot = nx * LIGHT_DIR.x + ny * LIGHT_DIR.y + nz * LIGHT_DIR.z
-  return Math.max(0.55, Math.min(1, Math.pow(Math.max(0, dot), 0.75) * COBE_DIFFUSE * 0.65 + 0.45))
+  return Math.max(0.76, Math.min(1, Math.pow(Math.max(0, dot), 0.45) * COBE_DIFFUSE * 0.48 + 0.76))
+}
+
+function createGlobePixelTexture(THREE: typeof import('three'), size = 32) {
+  const canvas = document.createElement('canvas')
+  canvas.width = size
+  canvas.height = size
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return new THREE.CanvasTexture(canvas)
+
+  const c = size / 2
+  const halo = ctx.createRadialGradient(c, c, 0, c, c, size / 2)
+  halo.addColorStop(0, 'rgba(255,255,255,1)')
+  halo.addColorStop(0.12, 'rgba(255,255,255,1)')
+  halo.addColorStop(0.26, 'rgba(160,255,200,0.72)')
+  halo.addColorStop(0.48, 'rgba(0,255,140,0.18)')
+  halo.addColorStop(1, 'rgba(0,0,0,0)')
+  ctx.fillStyle = halo
+  ctx.fillRect(0, 0, size, size)
+  ctx.fillStyle = '#ffffff'
+  ctx.fillRect(c - 1.5, c - 1.5, 3, 3)
+
+  const tex = new THREE.CanvasTexture(canvas)
+  tex.needsUpdate = true
+  return tex
+}
+
+function createGlobeHaloTexture(THREE: typeof import('three'), size = 64) {
+  const canvas = document.createElement('canvas')
+  canvas.width = size
+  canvas.height = size
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return new THREE.CanvasTexture(canvas)
+
+  const c = size / 2
+  const g = ctx.createRadialGradient(c, c, 0, c, c, size / 2)
+  g.addColorStop(0, 'rgba(0,255,160,0.95)')
+  g.addColorStop(0.22, 'rgba(0,255,130,0.45)')
+  g.addColorStop(0.55, 'rgba(0,220,110,0.12)')
+  g.addColorStop(1, 'rgba(0,0,0,0)')
+  ctx.fillStyle = g
+  ctx.fillRect(0, 0, size, size)
+
+  const tex = new THREE.CanvasTexture(canvas)
+  tex.needsUpdate = true
+  return tex
 }
 
 function buildGlobePoints(radius: number) {
@@ -320,19 +366,20 @@ function buildGlobePoints(radius: number) {
 
     const mapColor = landMapSample(latRad, lonDeg)
     const nl = isNetherlands(latDeg, lonDeg)
-    if (mapColor < 0.1 && !nl) continue
+    if (mapColor < 0.06 && !nl) continue
 
     const p = cobeLatLonTo3D(latDeg, lonDeg, radius)
     positions.push(p.x, p.y, p.z)
 
     const diffuse = landDiffuse(p.x, p.y, p.z, radius)
-    const sample = Math.min(1, mapColor * MAP_BRIGHTNESS) * diffuse
-    const twinkle = 0.96 + seeded(i * 3.1) * 0.04
+    const sample = Math.min(1, Math.pow(mapColor * MAP_BRIGHTNESS, 0.82) * diffuse)
+    const twinkle = 0.9 + seeded(i * 3.1) * 0.1
+    const matrix = 0.92 + seeded(i * 5.7 + latDeg) * 0.08
 
     if (nl) {
-      colors.push(1 * sample * twinkle, 0.98 * sample * twinkle, 0.9 * sample * twinkle)
+      colors.push(0.18 * sample * twinkle * matrix, 1 * sample * twinkle * matrix, 0.58 * sample * twinkle * matrix)
     } else {
-      colors.push(1 * sample * twinkle, 0.99 * sample * twinkle, 0.94 * sample * twinkle)
+      colors.push(0.04 * sample * twinkle * matrix, 1 * sample * twinkle * matrix, 0.46 * sample * twinkle * matrix)
     }
   }
 
@@ -464,9 +511,9 @@ function updateStarTwinkle(timeMs: number) {
     const depth = 0.58 + starDepthNorm[i] * 0.42
     const gold = starIsGold[i] > 0.5
 
-    colors[i * 3] = (gold ? 0.83 : 0.95) * twinkle * depth
-    colors[i * 3 + 1] = (gold ? 0.69 : 0.93) * twinkle * depth
-    colors[i * 3 + 2] = (gold ? 0.33 : 0.91) * twinkle * depth
+    colors[i * 3] = (gold ? 0.27 : 0.95) * twinkle * depth
+    colors[i * 3 + 1] = (gold ? 0.91 : 0.93) * twinkle * depth
+    colors[i * 3 + 2] = (gold ? 0.54 : 0.91) * twinkle * depth
   }
 
   colorAttr.needsUpdate = true
@@ -515,9 +562,9 @@ async function initThree() {
       const gold = starIsGold[i] > 0.5
       const depth = 0.58 + starDepthNorm[i] * 0.42
       const b = starBaseBright[i] * depth
-      starColors[i * 3] = (gold ? 0.83 : 0.95) * b
-      starColors[i * 3 + 1] = (gold ? 0.69 : 0.93) * b
-      starColors[i * 3 + 2] = (gold ? 0.33 : 0.91) * b
+      starColors[i * 3] = (gold ? 0.27 : 0.95) * b
+      starColors[i * 3 + 1] = (gold ? 0.91 : 0.93) * b
+      starColors[i * 3 + 2] = (gold ? 0.54 : 0.91) * b
     }
 
     const starCircleSize = 64
@@ -552,66 +599,78 @@ async function initThree() {
 
     globeGroup = new THREE.Group()
 
-    const dotSize = 64
-    const dotCanvas = document.createElement('canvas')
-    dotCanvas.width = dotSize
-    dotCanvas.height = dotSize
-    const dotCtx = dotCanvas.getContext('2d')
-    if (dotCtx) {
-      const g = dotCtx.createRadialGradient(dotSize / 2, dotSize / 2, 0, dotSize / 2, dotSize / 2, dotSize / 2)
-      g.addColorStop(0, 'rgba(255,255,255,1)')
-      g.addColorStop(0.18, 'rgba(255,255,255,1)')
-      g.addColorStop(0.38, 'rgba(255,252,240,0.55)')
-      g.addColorStop(1, 'rgba(255,255,255,0)')
-      dotCtx.fillStyle = g
-      dotCtx.fillRect(0, 0, dotSize, dotSize)
-    }
-    const dotTexture = new THREE.CanvasTexture(dotCanvas)
+    const dotTexture = createGlobePixelTexture(THREE)
+    const haloTexture = createGlobeHaloTexture(THREE)
 
     const { positions, colors } = buildGlobePoints(1.55)
     const globeGeo = new THREE.BufferGeometry()
     globeGeo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3))
     globeGeo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3))
+
+    const attachGlobeFacingShader = (material: import('three').PointsMaterial, neonBoost = 1) => {
+      material.onBeforeCompile = (shader) => {
+        shader.vertexShader = `
+          varying float vFacing;
+          ${shader.vertexShader}
+        `.replace(
+          '#include <begin_vertex>',
+          `#include <begin_vertex>
+          vec4 globeMv = modelViewMatrix * vec4(transformed, 1.0);
+          vFacing = dot(normalize(normalMatrix * normalize(transformed)), normalize(-globeMv.xyz));`,
+        )
+        shader.fragmentShader = `
+          varying float vFacing;
+          ${shader.fragmentShader}
+        `.replace(
+          '#include <clipping_planes_fragment>',
+          `#include <clipping_planes_fragment>
+          if (vFacing < 0.015) discard;
+          #ifdef USE_COLOR
+          gl_FragColor.rgb *= vec3(0.72, ${(1.28 * neonBoost).toFixed(2)}, 0.98);
+          #endif`,
+        )
+      }
+    }
+
+    globeGlowPoints = new THREE.Points(
+      globeGeo,
+      new THREE.PointsMaterial({
+        size: 0.034,
+        map: haloTexture,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.16,
+        depthWrite: false,
+        sizeAttenuation: true,
+        blending: THREE.AdditiveBlending,
+      }),
+    )
+    attachGlobeFacingShader(globeGlowPoints.material as import('three').PointsMaterial, 0.85)
+    globeGroup.add(globeGlowPoints)
+
     globePoints = new THREE.Points(
       globeGeo,
       new THREE.PointsMaterial({
-        size: 0.0145,
+        size: 0.0105,
         map: dotTexture,
         vertexColors: true,
         transparent: true,
-        opacity: 1,
+        opacity: 0.94,
         depthWrite: false,
         sizeAttenuation: true,
+        blending: THREE.AdditiveBlending,
       }),
     )
-    globePoints.material.onBeforeCompile = (shader) => {
-      shader.vertexShader = `
-        varying float vFacing;
-        ${shader.vertexShader}
-      `.replace(
-        '#include <begin_vertex>',
-        `#include <begin_vertex>
-        vec4 globeMv = modelViewMatrix * vec4(transformed, 1.0);
-        vFacing = dot(normalize(normalMatrix * normalize(transformed)), normalize(-globeMv.xyz));`,
-      )
-      shader.fragmentShader = `
-        varying float vFacing;
-        ${shader.fragmentShader}
-      `.replace(
-        '#include <clipping_planes_fragment>',
-        `#include <clipping_planes_fragment>
-        if (vFacing < 0.02) discard;`,
-      )
-    }
+    attachGlobeFacingShader(globePoints.material as import('three').PointsMaterial)
     globeGroup.add(globePoints)
 
     atmosphereGlow = new THREE.Mesh(
       new THREE.SphereGeometry(1.61, 72, 72),
       new THREE.ShaderMaterial({
         uniforms: {
-          glowColor: { value: new THREE.Color(0xf0e6cc) },
-          intensity: { value: 0.42 },
-          power: { value: 4.8 },
+          glowColor: { value: new THREE.Color(0x00ff88) },
+          intensity: { value: 0.58 },
+          power: { value: 3.6 },
         },
         vertexShader: ATMOSPHERE_VERT,
         fragmentShader: ATMOSPHERE_FRAG,
@@ -643,14 +702,14 @@ async function initThree() {
     NL_OUTLINE_RINGS.forEach((ring) => {
       nlOutlineGlowLines.push(
         addNlRingLine(ring, 1.603, new THREE.LineBasicMaterial({
-          color: 0xd4af53,
+          color: 0x45e88a,
           transparent: true,
           opacity: 0,
           depthWrite: false,
           blending: THREE.AdditiveBlending,
         })),
         addNlRingLine(ring, 1.599, new THREE.LineBasicMaterial({
-          color: 0xe8c97a,
+          color: 0x7af5b0,
           transparent: true,
           opacity: 0,
           depthWrite: false,
@@ -659,7 +718,7 @@ async function initThree() {
       )
       nlOutlineLines.push(
         addNlRingLine(ring, 1.595, new THREE.LineBasicMaterial({
-          color: 0xf5e6b8,
+          color: 0x7af5b0,
           transparent: true,
           opacity: 0,
           depthWrite: false,
@@ -675,12 +734,12 @@ async function initThree() {
     nlMarkerGroup = new THREE.Group()
     const nlCore = new THREE.Mesh(
       new THREE.SphereGeometry(0.028, 10, 10),
-      new THREE.MeshBasicMaterial({ color: 0xe8c97a, transparent: true, opacity: 0.95 }),
+      new THREE.MeshBasicMaterial({ color: 0x7af5b0, transparent: true, opacity: 0.95 }),
     )
     nlCore.position.set(nlPos.x, nlPos.y, nlPos.z)
     const nlRing = new THREE.Mesh(
       new THREE.RingGeometry(0.045, 0.055, 24),
-      new THREE.MeshBasicMaterial({ color: 0xd4af53, transparent: true, opacity: 0.65, side: THREE.DoubleSide }),
+      new THREE.MeshBasicMaterial({ color: 0x45e88a, transparent: true, opacity: 0.65, side: THREE.DoubleSide }),
     )
     nlRing.position.copy(nlCore.position)
     nlRing.lookAt(0, 0, 0)
@@ -696,18 +755,18 @@ async function initThree() {
       const ringGeo = new THREE.RingGeometry(path.radius - 0.005, path.radius + 0.005, 128)
       const ring = new THREE.LineLoop(
         ringGeo,
-        new THREE.LineBasicMaterial({ color: 0xd4af53, transparent: true, opacity: 0.06 - i * 0.012 }),
+        new THREE.LineBasicMaterial({ color: 0x45e88a, transparent: true, opacity: 0.06 - i * 0.012 }),
       )
       orbitGroup.add(ring)
 
       const satGroup = new THREE.Group()
       const body = new THREE.Mesh(
         new THREE.BoxGeometry(0.06, 0.04, 0.04),
-        new THREE.MeshBasicMaterial({ color: 0xe8c97a, transparent: true, opacity: 0.55 }),
+        new THREE.MeshBasicMaterial({ color: 0x7af5b0, transparent: true, opacity: 0.55 }),
       )
       const panelL = new THREE.Mesh(
         new THREE.BoxGeometry(0.08, 0.02, 0.06),
-        new THREE.MeshBasicMaterial({ color: 0xd4af53, transparent: true, opacity: 0.35 }),
+        new THREE.MeshBasicMaterial({ color: 0x45e88a, transparent: true, opacity: 0.35 }),
       )
       panelL.position.x = -0.08
       const panelR = panelL.clone()
@@ -749,9 +808,11 @@ async function initThree() {
       nlOutlineLines.forEach(line => line.geometry.dispose())
       nlOutlineGlowLines.forEach(line => line.geometry.dispose())
       dotTexture.dispose()
+      haloTexture.dispose()
       atmosphereGlow?.geometry.dispose()
       ;(atmosphereGlow?.material as import('three').Material)?.dispose()
       ;(globePoints?.material as import('three').Material)?.dispose()
+      ;(globeGlowPoints?.material as import('three').Material)?.dispose()
       nlOutlineLines.forEach(line => (line.material as import('three').Material).dispose())
       nlOutlineGlowLines.forEach(line => (line.material as import('three').Material).dispose())
       orbitGroups.forEach((group) => {
@@ -778,6 +839,7 @@ async function initThree() {
       starDepthNorm = null
       globeGroup = null
       globePoints = null
+      globeGlowPoints = null
       atmosphereGlow = null
       nlMarkerGroup = null
       nlOutlineLines = []
@@ -1250,12 +1312,18 @@ function renderFrame(time: number) {
 
     if (globePoints) {
       const mat = globePoints.material as import('three').PointsMaterial
-      mat.size = lerp(0.0145, 0.016, zoomAmt)
+      mat.size = lerp(0.0105, 0.0115, zoomAmt)
+    }
+
+    if (globeGlowPoints) {
+      const mat = globeGlowPoints.material as import('three').PointsMaterial
+      mat.size = lerp(0.034, 0.038, zoomAmt)
+      mat.opacity = lerp(0.16, 0.2, zoomAmt)
     }
 
     if (atmosphereGlow) {
       const mat = atmosphereGlow.material as import('three').ShaderMaterial
-      mat.uniforms.intensity.value = lerp(0.42, 0.5, zoomAmt)
+      mat.uniforms.intensity.value = lerp(0.58, 0.68, zoomAmt)
     }
 
     if (nlMarkerGroup) {
@@ -1373,8 +1441,8 @@ onUnmounted(() => {
   z-index: 1;
   pointer-events: none;
   overflow: hidden;
-  opacity: 0.78;
-  background: $color-bg;
+  opacity: 0.88;
+  background: #030504;
 
   &__webgl,
   &__overlay {
@@ -1383,6 +1451,10 @@ onUnmounted(() => {
     width: 100%;
     height: 100%;
     display: block;
+  }
+
+  &__webgl {
+    filter: saturate(1.35) brightness(1.12);
   }
 
   &__overlay {

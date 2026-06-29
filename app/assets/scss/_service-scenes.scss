@@ -60,7 +60,7 @@
 
   .svc-pipeline__terminal {
     padding-top: 0;
-    border-top: 1px solid rgba(212, 175, 83, 0.12);
+    border-top: 1px solid rgba(69, 232, 138, 0.12);
     padding-top: $space-4;
   }
 }
@@ -97,16 +97,16 @@
 
     .design-browser__slot {
       opacity: 1;
-      border: 1px solid rgba(212, 175, 83, 0.22);
+      border: 1px solid rgba(69, 232, 138, 0.22);
       background: rgba(22, 22, 22, 0.95);
 
       &--nav {
-        background: linear-gradient(90deg, rgba(212, 175, 83, 0.22), rgba(22, 22, 22, 0.95) 65%);
+        background: linear-gradient(90deg, rgba(69, 232, 138, 0.22), rgba(22, 22, 22, 0.95) 65%);
         border-radius: 999px;
       }
 
       &--hero {
-        background: linear-gradient(135deg, rgba(212, 175, 83, 0.16), rgba(15, 15, 15, 0.98));
+        background: linear-gradient(135deg, rgba(69, 232, 138, 0.16), rgba(15, 15, 15, 0.98));
       }
 
       &--side {
@@ -119,14 +119,14 @@
       }
 
       &--card-b {
-        border-color: rgba(232, 201, 122, 0.35);
-        background: linear-gradient(180deg, rgba(212, 175, 83, 0.08), rgba(15, 15, 15, 0.98));
+        border-color: rgba(122, 245, 176, 0.35);
+        background: linear-gradient(180deg, rgba(69, 232, 138, 0.08), rgba(15, 15, 15, 0.98));
       }
 
       &--dot {
         border-radius: 50%;
-        background: radial-gradient(circle, rgba(232, 201, 122, 0.85) 0%, rgba(212, 175, 83, 0.45) 100%);
-        border-color: rgba(232, 201, 122, 0.5);
+        background: radial-gradient(circle, rgba(122, 245, 176, 0.85) 0%, rgba(69, 232, 138, 0.45) 100%);
+        border-color: rgba(122, 245, 176, 0.5);
       }
     }
 
@@ -242,8 +242,8 @@
   border-radius: 2px;
   background: linear-gradient(
     180deg,
-    rgba(232, 201, 122, 0.9) 0%,
-    rgba(212, 175, 83, 0.55) 50%,
+    rgba(122, 245, 176, 0.9) 0%,
+    rgba(69, 232, 138, 0.55) 50%,
     rgba(160, 133, 48, 0.25) 100%
   );
 }

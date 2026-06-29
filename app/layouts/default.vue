@@ -26,6 +26,7 @@ function onLoaderComplete() {
     </main>
     <SectionsFinaleSection v-if="showFooter" />
     <GsapScrollProgress />
+    <EffectsCommsScreenOverlay />
   </div>
 </template>
 

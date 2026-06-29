@@ -329,7 +329,7 @@ onMounted(async () => {
     width: 1px;
     align-self: stretch;
     min-height: 280px;
-    background: rgba(212, 175, 83, 0.12);
+    background: rgba(69, 232, 138, 0.12);
   }
 
   &__spine-fill {
@@ -367,7 +367,7 @@ onMounted(async () => {
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    border: 1px solid rgba(212, 175, 83, 0.45);
+    border: 1px solid rgba(69, 232, 138, 0.45);
     background: $color-bg;
     transition:
       background-color $dur-med $ease-gold,
@@ -377,7 +377,7 @@ onMounted(async () => {
     .services-journey__spine-point--active & {
       background: $color-gold;
       border-color: $color-gold-light;
-      box-shadow: 0 0 12px rgba(212, 175, 83, 0.45);
+      box-shadow: 0 0 12px rgba(69, 232, 138, 0.45);
     }
   }
 

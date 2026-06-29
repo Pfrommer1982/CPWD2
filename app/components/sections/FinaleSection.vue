@@ -152,7 +152,7 @@ useFinaleScene({ scrollLayers: textRefs })
   font-weight: 300;
   letter-spacing: -0.02em;
   line-height: 1.08;
-  color: rgba(138, 128, 112, 0.22);
+  color: rgba(100, 118, 110, 0.22);
   background: linear-gradient(to right, $color-text, $color-text) no-repeat;
   -webkit-background-clip: text;
   background-clip: text;
