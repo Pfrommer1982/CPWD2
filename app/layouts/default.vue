@@ -1,6 +1,9 @@
 <script setup lang="ts">
 const loaderDone = ref(false)
 const i18nHead = useLocaleHead()
+const route = useRoute()
+
+const showFooter = computed(() => !route.meta.hideFooter)
 
 useHead(() => ({
   htmlAttrs: {
@@ -21,7 +24,7 @@ function onLoaderComplete() {
     <main class="layout__main">
       <slot />
     </main>
-    <SectionsFinaleSection />
+    <SectionsFinaleSection v-if="showFooter" />
     <GsapScrollProgress />
   </div>
 </template>

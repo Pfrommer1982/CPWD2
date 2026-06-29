@@ -8,6 +8,97 @@
       "years": "years on target",
       "projects": "bullseyes delivered",
       "clients": "brands locked in"
+    },
+    "page": {
+      "hero": {
+        "label": "PERSONNEL DOSSIER",
+        "heading": "Operator intel",
+        "intro": "Classified briefing on who CPWD is, what we hit, and which systems we deploy. Scroll for full clearance.",
+        "scrollHint": "Open intel",
+        "classification": "RESTRICTED // EYES ONLY",
+        "fileId": "OPR-CPWD-001"
+      },
+      "spine": {
+        "departure": "BRIEFING",
+        "arrival": "CLEARANCE"
+      },
+      "operator": {
+        "code": "OP-01",
+        "label": "OPERATOR",
+        "heading": "Christoph Pfrommer",
+        "role": "Lead Developer // CPWD",
+        "photoPlaceholder": "Photo upload pending",
+        "feedConnecting": "Establishing connection",
+        "feedDownloading": "Downloading operator file",
+        "feedLive": "Feed live",
+        "bio": "Web developer focused on Nuxt, Vue 3 and cloud-native delivery. Four times AWS certified. Builds dark, sharp interfaces with motion that lands on target — never decoration.",
+        "fields": [
+          { "key": "LOC", "value": "The Netherlands" },
+          { "key": "STATUS", "value": "ACTIVE / DEPLOY READY" },
+          { "key": "CLEARANCE", "value": "NUXT · VUE · AWS" },
+          { "key": "COMMS", "value": "info{'@'}cpwd.nl" }
+        ],
+        "github": "github.com/Pfrommer1982"
+      },
+      "mission": {
+        "code": "INTEL-02",
+        "label": "MISSION INTEL",
+        "heading": "No spray and pray",
+        "body": "From *insights* to execution, we build websites that don't just look sharp, they *hit*. Every animation, every interaction is *calibrated* and aimed at the goal — like a weapons system that only fires when the crosshair is on target.",
+        "directives": [
+          "Every shot counts — no filler UI",
+          "Motion with intent, never decoration",
+          "Performance as a first-class target",
+          "Design and code in one scope"
+        ]
+      },
+      "loadout": {
+        "code": "WPN-03",
+        "label": "LOADOUT",
+        "heading": "Calibrated arsenal",
+        "intro": "Primary systems and support tooling — locked in on modern web delivery.",
+        "items": [
+          {
+            "name": "NUXT 3",
+            "type": "PRIMARY",
+            "desc": "SSR, edge deploy, app router — heavy artillery for fast sites."
+          },
+          {
+            "name": "VUE 3",
+            "type": "PRIMARY",
+            "desc": "Component architecture, composables, reactive UI on target."
+          },
+          {
+            "name": "AWS",
+            "type": "SUPPORT",
+            "desc": "4× certified — cloud infra, CI/CD pipelines, scalable environments."
+          },
+          {
+            "name": "GSAP / THREE",
+            "type": "SPECIAL",
+            "desc": "Scroll-linked motion and WebGL — precision strikes in the viewport."
+          }
+        ]
+      },
+      "record": {
+        "code": "REC-04",
+        "label": "COMBAT RECORD",
+        "heading": "On target since day one",
+        "intro": "Hard numbers from the field — projects, brands and years locked in.",
+        "stats": {
+          "years": "years on target",
+          "projects": "bullseyes delivered",
+          "clients": "brands locked in",
+          "repos": "public repos"
+        }
+      },
+      "cta": {
+        "code": "CLR-05",
+        "label": "CLEARANCE",
+        "heading": "Ready for briefing?",
+        "subtext": "Lock in on a project — we'll send the full scope and timeline.",
+        "button": "Start a project"
+      }
     }
   }
 }

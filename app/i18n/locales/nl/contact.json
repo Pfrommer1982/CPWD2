@@ -13,6 +13,104 @@
       "loading": "Versturen...",
       "success": "Bericht verzonden!",
       "error": "Er ging iets mis. Probeer het opnieuw."
+    },
+    "page": {
+      "hero": {
+        "label": "COMMS UPLINK",
+        "heading": "Open het kanaal",
+        "intro": "Satellietrelays, grondstations en versleutelde uplinks — CPWD staat paraat voor inkomende intel. Scroll om de verbinding op te bouwen.",
+        "scrollHint": "Initialiseer uplink",
+        "classification": "SECURE CHANNEL // TX READY",
+        "fileId": "COMMS-CPWD-007"
+      },
+      "spine": {
+        "departure": "SIGNAL",
+        "arrival": "TRANSMIT"
+      },
+      "orbital": {
+        "code": "SAT-01",
+        "label": "ORBITAL RELAY",
+        "heading": "Satelliet uplink actief",
+        "body": "Drie LEO-relays cirkelen boven het netwerk. Downlink naar het CPWD uplink-gate — signaalsterkte groen, latency binnen spec.",
+        "telemetry": [
+          "ORBIT: LEO-042 / LEO-118 / LEO-203",
+          "DOWNLINK: KA-BAND ACTIVE",
+          "SNR: 98.4 dB"
+        ]
+      },
+      "ground": {
+        "code": "GND-02",
+        "label": "GROUND ARRAY",
+        "heading": "Grondstations online",
+        "body": "Modems, Wi-Fi 6, LTE, 5G NR en glasvezel — elk node in het array is gekoppeld aan het uplink-gate. Jouw bericht kan via elk pad binnenkomen.",
+        "nodes": [
+          { "code": "MDM", "name": "Modem / DSL", "status": "LINK OK" },
+          { "code": "W6", "name": "Wi-Fi 6", "status": "BEACON ON" },
+          { "code": "LTE", "name": "LTE", "status": "CELL LOCK" },
+          { "code": "5G", "name": "5G NR", "status": "MMWAVE" },
+          { "code": "FBR", "name": "Glasvezel", "status": "CORE SYNC" },
+          { "code": "DSH", "name": "Sat-dish", "status": "AZ 247°" }
+        ]
+      },
+      "secure": {
+        "code": "ENC-03",
+        "label": "SECURE HANDSHAKE",
+        "heading": "Versleuteld kanaal",
+        "body": "TLS 1.3 end-to-end. Payload gehasht, route geverifieerd. Geen plaintext op de lijn — alleen doelgerichte intel naar info{'@'}cpwd.nl.",
+        "directives": [
+          "End-to-end encryptie op alle uplinks",
+          "Geen tracking pixels in comms",
+          "Antwoord binnen 24 uur op werkdagen",
+          "Direct contact — geen callcenter"
+        ]
+      },
+      "transmit": {
+        "code": "TX-04",
+        "label": "UPLINK TERMINAL",
+        "heading": "Verstuur je intel",
+        "subtext": "Vul het formulier in. Het bericht gaat direct naar ons uplink-gate — geen tussenstations.",
+        "statusIdle": "KANAAL: STANDBY",
+        "statusLoading": "TX: ENCODING PAYLOAD...",
+        "statusSuccess": "TX: ACK RECEIVED — INTEL DOORGESTUURD",
+        "statusError": "TX: FAILED — RETRY UPLINK",
+        "terminalPrompt": "CPWD UPLINK v2.4 // AWAITING INPUT",
+        "prepareLabel": "TLS 1.3 // INIT SECURE CHANNEL",
+        "sessionLabel": "SESSION ID",
+        "metadataLabel": "OPERATOR ID // MASKING",
+        "encryptLabel": "AES-256-GCM // SEALING PAYLOAD",
+        "keygenLabel": "KEY DERIVATION // PBKDF2-SHA256",
+        "keyIvLabel": "IV",
+        "keySessionLabel": "SESSION KEY",
+        "blocksLabel": "CIPHER BLOCKS",
+        "hashLabel": "SHA-256 CHECKSUM",
+        "hashVerifyLabel": "INTEGRITY VERIFY",
+        "transmitLabel": "UPLINK IN PROGRESS",
+        "route": "GND → UPLINK GATE → SAT-042 → CPWD HQ",
+        "hops": [
+          "GND // HANDSHAKE",
+          "UPLINK GATE // AUTH",
+          "SAT-042 // RELAY",
+          "CPWD HQ // DELIVERY"
+        ],
+        "telemetry": {
+          "snr": "SNR",
+          "latency": "LAT",
+          "bitrate": "TX"
+        },
+        "operatorField": "OPERATOR",
+        "addressField": "ADDR",
+        "packet": "PKT"
+      },
+      "social": {
+        "label": "Externe kanalen",
+        "linkedin": "LinkedIn",
+        "github": "GitHub"
+      },
+      "hud": {
+        "scope": "COMMS // SCOPE",
+        "routes": "ROUTES",
+        "signal": "SIG"
+      }
     }
   }
 }

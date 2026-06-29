@@ -27,6 +27,17 @@ interface SectionTarget {
   telemetry: string[]
 }
 
+const SECTION_META: SectionTarget[] = [
+  { globeX: 0.84, globeY: 0.06, label: 'ORBITAL OPS', code: 'DEP-00', telemetry: ['UPLINK: ACTIVE', 'ORBIT: LEO-042', 'SIG: 98.2%'] },
+  { globeX: 0.58, globeY: 0.03, label: 'DESIGN GRID', code: 'SEC-01', telemetry: ['GRID: 128x128', 'LAYER: UI/UX', 'LOCK: PENDING'] },
+  { globeX: 0.32, globeY: 0, label: 'BUILD UPLINK', code: 'SEC-02', telemetry: ['BUILD: NUXT 3', 'HASH: 8f2a1c', 'DEPLOY: QUEUED'] },
+  { globeX: 0.06, globeY: 0.02, label: 'CLOUD NODES', code: 'SEC-03', telemetry: ['NODES: 14/14', 'CDN: EDGE-OK', 'LAT: 12ms'] },
+  { globeX: -0.2, globeY: 0, label: 'SIGNAL ARRAY', code: 'SEC-04', telemetry: ['FREQ: 44.1kHz', 'CH: STEREO', 'GAIN: -3dB'] },
+  { globeX: -0.44, globeY: -0.02, label: 'MOTION VECTORS', code: 'SEC-05', telemetry: ['GSAP: ACTIVE', 'SCRUB: 0.65', 'FPS: 60'] },
+  { globeX: -0.26, globeY: 0.02, label: 'BRAND MATRIX', code: 'SEC-06', telemetry: ['IDENT: CPWD', 'TONE: GOLD', 'SYNC: OK'] },
+  { globeX: 0, globeY: 0, label: 'TARGET LOCK', code: 'ARR-07', telemetry: ['LOCK: ACQUIRED', 'RANGE: 0.0km', 'STATUS: GO'] },
+]
+
 interface OrbitalPath {
   radius: number
   speed: number
@@ -37,6 +48,12 @@ interface OrbitalPath {
   trail: number
 }
 
+const ORBITAL_PATHS: OrbitalPath[] = [
+  { radius: 2.05, speed: 0.028, phase: 0.2, rotX: Math.PI / 2 - 0.35, rotY: 0, size: 3.5, trail: 0.35 },
+  { radius: 2.27, speed: -0.022, phase: 2.1, rotX: Math.PI / 2, rotY: 0.6, size: 3, trail: 0.28 },
+  { radius: 2.49, speed: 0.019, phase: 4.4, rotX: Math.PI / 2 + 0.35, rotY: 1.2, size: 2.8, trail: 0.22 },
+]
+
 interface HudFeed {
   xRatio: number
   yRatio: number
@@ -45,23 +62,7 @@ interface HudFeed {
   lines: string[]
 }
 
-const SECTION_META: SectionTarget[] = [
-  { globeX: 0.68, globeY: 0.06, label: 'ORBITAL OPS', code: 'DEP-00', telemetry: ['UPLINK: ACTIVE', 'ORBIT: LEO-042', 'SIG: 98.2%'] },
-  { globeX: 0.52, globeY: 0.03, label: 'DESIGN GRID', code: 'SEC-01', telemetry: ['GRID: 128x128', 'LAYER: UI/UX', 'LOCK: PENDING'] },
-  { globeX: 0.34, globeY: 0, label: 'BUILD UPLINK', code: 'SEC-02', telemetry: ['BUILD: NUXT 3', 'HASH: 8f2a1c', 'DEPLOY: QUEUED'] },
-  { globeX: 0.16, globeY: 0.02, label: 'CLOUD NODES', code: 'SEC-03', telemetry: ['NODES: 14/14', 'CDN: EDGE-OK', 'LAT: 12ms'] },
-  { globeX: -0.02, globeY: 0, label: 'SIGNAL ARRAY', code: 'SEC-04', telemetry: ['FREQ: 44.1kHz', 'CH: STEREO', 'GAIN: -3dB'] },
-  { globeX: -0.18, globeY: -0.02, label: 'MOTION VECTORS', code: 'SEC-05', telemetry: ['GSAP: ACTIVE', 'SCRUB: 0.65', 'FPS: 60'] },
-  { globeX: -0.08, globeY: 0.02, label: 'BRAND MATRIX', code: 'SEC-06', telemetry: ['IDENT: CPWD', 'TONE: GOLD', 'SYNC: OK'] },
-  { globeX: 0, globeY: 0, label: 'TARGET LOCK', code: 'ARR-07', telemetry: ['LOCK: ACQUIRED', 'RANGE: 0.0km', 'STATUS: GO'] },
-]
-
-const ORBITAL_PATHS: OrbitalPath[] = [
-  { radius: 2.05, speed: 0.028, phase: 0.2, rotX: Math.PI / 2 - 0.35, rotY: 0, size: 3.5, trail: 0.35 },
-  { radius: 2.27, speed: -0.022, phase: 2.1, rotX: Math.PI / 2, rotY: 0.6, size: 3, trail: 0.28 },
-  { radius: 2.49, speed: 0.019, phase: 4.4, rotX: Math.PI / 2 + 0.35, rotY: 1.2, size: 2.8, trail: 0.22 },
-]
-
+const GLOBE_SCREEN_TRAVEL = 0.26
 const [NL_LAT, NL_LON] = NL_OUTLINE_CENTROID
 const NL_ZOOM_SCALE = 5.2
 const NL_CAMERA_Z = 2.15
@@ -215,7 +216,7 @@ function globePathAt(t: number) {
   }
 }
 
-const FINALE_ANIM_START_VIEWPORT = 0.88
+const FINALE_ANIM_START_VIEWPORT = 2.35
 const FINALE_ANIM_END_TOP = 0
 const FINALE_ANIM_SNAP_TOP = 12
 
@@ -363,7 +364,7 @@ function refreshSectionTargets() {
 
 function updateSmoothState() {
   const opacityEase = 0.028
-  const globeEase = 0.026
+  const globeEase = 0.024
   const scrollEase = 0.032
 
   for (let i = 0; i < sectionOpacities.length; i++) {
@@ -421,22 +422,6 @@ function rotatePointXYZ(
   let y3 = x2 * Math.sin(rotZ) + y2 * Math.cos(rotZ)
 
   return { x: x3, y: y3, z: z2 }
-}
-
-function orbitProject2D(
-  path: OrbitalPath,
-  angle: number,
-  rotZ = 0,
-  scale = 38,
-) {
-  const localX = Math.cos(angle) * path.radius
-  const localY = Math.sin(angle) * path.radius
-  const { x, y, z } = rotatePointXYZ(localX, localY, 0, path.rotX, path.rotY, rotZ)
-
-  return {
-    x: x * scale,
-    y: y * scale * 0.68 + z * scale * 0.32,
-  }
 }
 
 function updateFinaleBlendFromScroll() {
@@ -909,45 +894,6 @@ function drawTelemetryBlock(
   ctx.restore()
 }
 
-function drawOrbitalSatellite2D(
-  ctx: CanvasRenderingContext2D,
-  cx: number,
-  cy: number,
-  path: OrbitalPath,
-  index: number,
-  time: number,
-  alpha: number,
-) {
-  const rotZ = time * 0.00005 * (index % 2 === 0 ? 1 : -1)
-  const angle = time * path.speed + path.phase
-  const pos = orbitProject2D(path, angle, rotZ)
-
-  ctx.save()
-  ctx.globalAlpha = alpha * 0.35
-  ctx.strokeStyle = `rgba(${GOLD}, 0.15)`
-  ctx.lineWidth = 0.5
-  ctx.beginPath()
-  for (let i = 0; i <= 64; i++) {
-    const a = (i / 64) * Math.PI * 2
-    const p = orbitProject2D(path, a, rotZ)
-    if (i === 0) ctx.moveTo(cx + p.x, cy + p.y)
-    else ctx.lineTo(cx + p.x, cy + p.y)
-  }
-  ctx.stroke()
-
-  ctx.globalAlpha = alpha * 0.55
-  ctx.fillStyle = `rgba(${GOLD_LIGHT}, 0.7)`
-  ctx.fillRect(cx + pos.x - 2, cy + pos.y - 2, 4, 4)
-  ctx.strokeStyle = `rgba(${GOLD}, 0.4)`
-  ctx.strokeRect(cx + pos.x - 6, cy + pos.y - 3, 12, 6)
-
-  ctx.globalAlpha = alpha * path.trail * 0.4
-  ctx.beginPath()
-  ctx.arc(cx + pos.x, cy + pos.y, 3, 0, Math.PI * 2)
-  ctx.stroke()
-  ctx.restore()
-}
-
 function drawSectionOverlay(
   ctx: CanvasRenderingContext2D,
   w: number,
@@ -960,7 +906,7 @@ function drawSectionOverlay(
   if (index === FINALE_INDEX) return
   const meta = SECTION_META[index]
   const side = meta.globeX >= 0 ? 1 : -1
-  const anchorX = w * (0.5 + meta.globeX * 0.22)
+  const anchorX = w * (0.5 + meta.globeX * GLOBE_SCREEN_TRAVEL)
   const anchorY = h * (0.42 + meta.globeY * 0.12)
   const alpha = opacity * 0.55
 
@@ -1253,17 +1199,6 @@ function drawOverlay(time: number) {
     if (w < 720 && (feed.xRatio < 0.5 ? feed.yRatio > 0.5 : feed.yRatio < 0.55)) return
     drawTelemetryBlock(ctx, w, h, feed, time, MASTER_OPACITY * (1 - zoomAmt * 0.85))
   })
-
-  const tier = viewportTier(w)
-  const zoomAmt = finaleZoomAmount(finaleZoom)
-  const globeCx = tier === 'narrow'
-    ? w * 0.5
-    : w * (0.5 + lerp(globePos.x * 0.18, 0.08, zoomAmt))
-  const cy = h * 0.46
-  const satAlpha = tier === 'narrow' ? 0.25 : 0.45
-  ORBITAL_PATHS.forEach((path, i) => drawOrbitalSatellite2D(
-    ctx, globeCx, cy, path, i, time, satAlpha * (1 - zoomAmt * 0.85),
-  ))
 
   if (w >= 640) {
     for (let i = 0; i < SECTION_META.length; i++) {

@@ -1,6 +1,6 @@
 import type { Ref } from 'vue'
 
-interface ServicesJourneyOptions {
+interface ContactJourneyOptions {
   root: Ref<HTMLElement | null>
   chapters: Ref<HTMLElement[]>
   spineFill: Ref<HTMLElement | null>
@@ -11,22 +11,14 @@ interface ServicesJourneyOptions {
   ready: Ref<boolean>
 }
 
-function chapterContentSide(chapter: HTMLElement) {
-  return chapter.querySelector('.journey-chapter__content')?.getAttribute('data-chapter-side')
+function contentEnterX(chapter: HTMLElement) {
+  const side = chapter.querySelector('.contact-chapter__content')?.getAttribute('data-chapter-side')
+  if (side === 'left') return -72
+  if (side === 'right') return 72
+  return 0
 }
 
-function contentEnterX(chapter: HTMLElement, isFinale: boolean) {
-  if (isFinale) return 0
-  const side = chapterContentSide(chapter)
-  return side === 'left' ? -80 : side === 'right' ? 80 : 0
-}
-
-function sceneEnterX(chapter: HTMLElement) {
-  const side = chapterContentSide(chapter)
-  return side === 'left' ? 96 : side === 'right' ? -96 : 0
-}
-
-export function useServicesJourney({
+export function useContactJourney({
   root,
   chapters,
   spineFill,
@@ -35,7 +27,7 @@ export function useServicesJourney({
   activeChapter,
   layout,
   ready,
-}: ServicesJourneyOptions) {
+}: ContactJourneyOptions) {
   let ctx: ReturnType<typeof import('gsap').gsap.context> | null = null
 
   function teardown() {
@@ -62,25 +54,22 @@ export function useServicesJourney({
           onEnterBack: () => { activeChapter.value = -1 },
         })
 
-        const heroWords = hero.value.querySelectorAll<HTMLElement>('[data-hero-word]')
-        const heroFade = hero.value.querySelectorAll<HTMLElement>('[data-hero-fade]')
-
-        gsap.from(heroWords, {
+        gsap.from(hero.value.querySelectorAll('[data-hero-word]'), {
           yPercent: 100,
           opacity: 0,
-          stagger: 0.07,
+          stagger: 0.06,
           duration: 1,
           ease: 'power3.out',
-          delay: 0.1,
+          delay: 0.15,
         })
 
-        gsap.from(heroFade, {
-          y: 24,
+        gsap.from(hero.value.querySelectorAll('[data-hero-fade]'), {
+          y: 20,
           opacity: 0,
-          stagger: 0.08,
-          duration: 0.8,
+          stagger: 0.07,
+          duration: 0.75,
           ease: 'power2.out',
-          delay: 0.45,
+          delay: 0.35,
         })
       }
 
@@ -117,13 +106,11 @@ export function useServicesJourney({
       chapters.value.forEach((chapter, index) => {
         if (!chapter) return
 
-        const isFinale = chapter.classList.contains('journey-chapter--finale')
-        const enterX = contentEnterX(chapter, isFinale)
-        const scene = chapter.querySelector<HTMLElement>('.journey-chapter__scene')
+        const enterX = contentEnterX(chapter)
         const titleWords = chapter.querySelectorAll<HTMLElement>('[data-chapter-word]')
         const desc = chapter.querySelector<HTMLElement>('[data-chapter-desc]')
-        const tags = chapter.querySelectorAll<HTMLElement>('[data-chapter-tag]')
         const fadeEls = chapter.querySelectorAll<HTMLElement>('[data-chapter-fade]')
+        const items = chapter.querySelectorAll<HTMLElement>('[data-chapter-item]')
 
         ScrollTrigger.create({
           trigger: chapter,
@@ -132,24 +119,6 @@ export function useServicesJourney({
           onEnter: () => { activeChapter.value = index },
           onEnterBack: () => { activeChapter.value = index },
         })
-
-        if (scene && !isFinale) {
-          gsap.fromTo(
-            scene,
-            { x: sceneEnterX(chapter), opacity: 0 },
-            {
-              x: 0,
-              opacity: 1,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: chapter,
-                start: 'top 80%',
-                end: 'top 42%',
-                scrub: 0.55,
-              },
-            },
-          )
-        }
 
         if (titleWords.length) {
           gsap.fromTo(
@@ -163,7 +132,7 @@ export function useServicesJourney({
               scrollTrigger: {
                 trigger: chapter,
                 start: 'top 78%',
-                end: 'top 38%',
+                end: 'top 40%',
                 scrub: 0.55,
               },
             },
@@ -181,28 +150,8 @@ export function useServicesJourney({
               scrollTrigger: {
                 trigger: chapter,
                 start: 'top 72%',
-                end: 'top 34%',
-                scrub: 0.65,
-              },
-            },
-          )
-        }
-
-        if (tags.length) {
-          gsap.fromTo(
-            tags,
-            { x: enterX * 0.7, opacity: 0, scale: 0.96 },
-            {
-              x: 0,
-              opacity: 1,
-              scale: 1,
-              stagger: 0.04,
-              ease: 'power2.out',
-              scrollTrigger: {
-                trigger: chapter,
-                start: 'top 66%',
-                end: 'top 30%',
-                scrub: 0.5,
+                end: 'top 36%',
+                scrub: 0.6,
               },
             },
           )
@@ -215,13 +164,32 @@ export function useServicesJourney({
             {
               x: 0,
               opacity: 1,
-              stagger: 0.06,
+              stagger: 0.05,
               ease: 'power2.out',
               scrollTrigger: {
                 trigger: chapter,
-                start: isFinale ? 'top 75%' : 'top 82%',
-                end: isFinale ? 'top 48%' : 'top 58%',
-                scrub: 0.45,
+                start: 'top 70%',
+                end: 'top 38%',
+                scrub: 0.5,
+              },
+            },
+          )
+        }
+
+        if (items.length) {
+          gsap.fromTo(
+            items,
+            { y: 32, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              stagger: 0.08,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: chapter,
+                start: 'top 75%',
+                end: 'top 32%',
+                scrub: 0.55,
               },
             },
           )
@@ -244,7 +212,7 @@ export function useServicesJourney({
         ScrollTrigger.create({
           trigger: finale.value,
           start: 'top top',
-          end: '+=210%',
+          end: '+=45%',
           pin: true,
           pinSpacing: true,
           anticipatePin: 1,
@@ -270,11 +238,9 @@ export function useServicesJourney({
       chapters.value.forEach((chapter, index) => {
         if (!chapter) return
 
-        const isFinale = chapter.classList.contains('journey-chapter--finale')
-        const enterX = contentEnterX(chapter, isFinale)
+        const enterX = contentEnterX(chapter)
         const titleWords = chapter.querySelectorAll<HTMLElement>('[data-chapter-word]')
         const desc = chapter.querySelector<HTMLElement>('[data-chapter-desc]')
-        const tags = chapter.querySelectorAll<HTMLElement>('[data-chapter-tag]')
         const fadeEls = chapter.querySelectorAll<HTMLElement>('[data-chapter-fade]')
 
         ScrollTrigger.create({
@@ -291,11 +257,7 @@ export function useServicesJourney({
             stagger: 0.05,
             duration: 0.85,
             ease: 'power3.out',
-            scrollTrigger: {
-              trigger: chapter,
-              start: 'top 82%',
-              once: true,
-            },
+            scrollTrigger: { trigger: chapter, start: 'top 82%', once: true },
           })
         }
 
@@ -305,27 +267,7 @@ export function useServicesJourney({
             opacity: 0,
             duration: 0.75,
             ease: 'power2.out',
-            scrollTrigger: {
-              trigger: chapter,
-              start: 'top 78%',
-              once: true,
-            },
-          })
-        }
-
-        if (tags.length) {
-          gsap.from(tags, {
-            x: enterX * 0.7,
-            opacity: 0,
-            scale: 0.96,
-            stagger: 0.04,
-            duration: 0.65,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: chapter,
-              start: 'top 74%',
-              once: true,
-            },
+            scrollTrigger: { trigger: chapter, start: 'top 78%', once: true },
           })
         }
 
@@ -336,11 +278,7 @@ export function useServicesJourney({
             stagger: 0.06,
             duration: 0.7,
             ease: 'power2.out',
-            scrollTrigger: {
-              trigger: chapter,
-              start: 'top 85%',
-              once: true,
-            },
+            scrollTrigger: { trigger: chapter, start: 'top 85%', once: true },
           })
         }
       })
@@ -354,9 +292,12 @@ export function useServicesJourney({
   async function mount(mode: 'desktop' | 'mobile') {
     teardown()
     activeChapter.value = -1
-
-    if (mode === 'desktop') await setupDesktop()
-    else await setupMobile()
+    try {
+      if (mode === 'desktop') await setupDesktop()
+      else await setupMobile()
+    } catch (error) {
+      console.warn('[useContactJourney] Setup failed:', error)
+    }
   }
 
   watch([layout, ready], async ([mode, isReady]) => {

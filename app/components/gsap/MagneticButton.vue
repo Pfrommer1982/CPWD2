@@ -4,9 +4,11 @@ withDefaults(defineProps<{
   to?: string
   variant?: 'primary' | 'ghost'
   type?: 'button' | 'submit' | 'reset'
+  disabled?: boolean
 }>(), {
   variant: 'primary',
   type: 'button',
+  disabled: false,
 })
 
 const btnRef = ref<HTMLElement | null>(null)
@@ -44,6 +46,7 @@ onMounted(() => {
     :type="type"
     class="magnetic-btn"
     :class="variant === 'primary' ? 'btn-primary' : 'btn-ghost'"
+    :disabled="disabled"
     data-cursor="hover"
   >
     <span class="magnetic-btn__inner"><slot /></span>

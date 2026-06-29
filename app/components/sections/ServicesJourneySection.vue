@@ -176,7 +176,10 @@ onMounted(async () => {
           <div
             v-if="layout === 'desktop'"
             class="journey-chapter__scene"
-            :class="index % 2 === 0 ? 'journey-chapter__scene--trailing' : 'journey-chapter__scene--leading'"
+            :class="[
+              index % 2 === 0 ? 'journey-chapter__scene--trailing' : 'journey-chapter__scene--leading',
+              (index === 2 || index === 3) && 'journey-chapter__scene--spacious',
+            ]"
             aria-hidden="true"
           >
             <ServiceScene
@@ -610,6 +613,12 @@ onMounted(async () => {
     align-self: center;
     overflow: hidden;
     isolation: isolate;
+
+    &--spacious {
+      height: clamp(340px, 50vh, 540px);
+      padding-block: clamp(28px, 5vh, 44px);
+      box-sizing: border-box;
+    }
 
     &--leading {
       justify-content: flex-start;

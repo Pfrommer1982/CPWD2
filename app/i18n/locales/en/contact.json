@@ -13,6 +13,104 @@
       "loading": "Sending...",
       "success": "Message sent!",
       "error": "Something went wrong. Please try again."
+    },
+    "page": {
+      "hero": {
+        "label": "COMMS UPLINK",
+        "heading": "Open the channel",
+        "intro": "Satellite relays, ground stations, and encrypted uplinks — CPWD is standing by for incoming intel. Scroll to establish the link.",
+        "scrollHint": "Initialize uplink",
+        "classification": "SECURE CHANNEL // TX READY",
+        "fileId": "COMMS-CPWD-007"
+      },
+      "spine": {
+        "departure": "SIGNAL",
+        "arrival": "TRANSMIT"
+      },
+      "orbital": {
+        "code": "SAT-01",
+        "label": "ORBITAL RELAY",
+        "heading": "Satellite uplink active",
+        "body": "Three LEO relays orbit above the network. Downlink to the CPWD uplink gate — signal strength green, latency within spec.",
+        "telemetry": [
+          "ORBIT: LEO-042 / LEO-118 / LEO-203",
+          "DOWNLINK: KA-BAND ACTIVE",
+          "SNR: 98.4 dB"
+        ]
+      },
+      "ground": {
+        "code": "GND-02",
+        "label": "GROUND ARRAY",
+        "heading": "Ground stations online",
+        "body": "Modems, Wi-Fi 6, LTE, 5G NR, and fiber — every node in the array is tied to the uplink gate. Your message can route in on any path.",
+        "nodes": [
+          { "code": "MDM", "name": "Modem / DSL", "status": "LINK OK" },
+          { "code": "W6", "name": "Wi-Fi 6", "status": "BEACON ON" },
+          { "code": "LTE", "name": "LTE", "status": "CELL LOCK" },
+          { "code": "5G", "name": "5G NR", "status": "MMWAVE" },
+          { "code": "FBR", "name": "Fiber", "status": "CORE SYNC" },
+          { "code": "DSH", "name": "Sat dish", "status": "AZ 247°" }
+        ]
+      },
+      "secure": {
+        "code": "ENC-03",
+        "label": "SECURE HANDSHAKE",
+        "heading": "Encrypted channel",
+        "body": "TLS 1.3 end-to-end. Payload hashed, route verified. No plaintext on the line — only targeted intel to info{'@'}cpwd.nl.",
+        "directives": [
+          "End-to-end encryption on all uplinks",
+          "No tracking pixels in comms",
+          "Reply within 24 hours on business days",
+          "Direct contact — no call center"
+        ]
+      },
+      "transmit": {
+        "code": "TX-04",
+        "label": "UPLINK TERMINAL",
+        "heading": "Send your intel",
+        "subtext": "Fill in the form. Your message routes straight to our uplink gate — no middle stations.",
+        "statusIdle": "CHANNEL: STANDBY",
+        "statusLoading": "TX: ENCODING PAYLOAD...",
+        "statusSuccess": "TX: ACK RECEIVED — INTEL FORWARDED",
+        "statusError": "TX: FAILED — RETRY UPLINK",
+        "terminalPrompt": "CPWD UPLINK v2.4 // AWAITING INPUT",
+        "prepareLabel": "TLS 1.3 // INIT SECURE CHANNEL",
+        "sessionLabel": "SESSION ID",
+        "metadataLabel": "OPERATOR ID // MASKING",
+        "encryptLabel": "AES-256-GCM // SEALING PAYLOAD",
+        "keygenLabel": "KEY DERIVATION // PBKDF2-SHA256",
+        "keyIvLabel": "IV",
+        "keySessionLabel": "SESSION KEY",
+        "blocksLabel": "CIPHER BLOCKS",
+        "hashLabel": "SHA-256 CHECKSUM",
+        "hashVerifyLabel": "INTEGRITY VERIFY",
+        "transmitLabel": "UPLINK IN PROGRESS",
+        "route": "GND → UPLINK GATE → SAT-042 → CPWD HQ",
+        "hops": [
+          "GND // HANDSHAKE",
+          "UPLINK GATE // AUTH",
+          "SAT-042 // RELAY",
+          "CPWD HQ // DELIVERY"
+        ],
+        "telemetry": {
+          "snr": "SNR",
+          "latency": "LAT",
+          "bitrate": "TX"
+        },
+        "operatorField": "OPERATOR",
+        "addressField": "ADDR",
+        "packet": "PKT"
+      },
+      "social": {
+        "label": "External channels",
+        "linkedin": "LinkedIn",
+        "github": "GitHub"
+      },
+      "hud": {
+        "scope": "COMMS // SCOPE",
+        "routes": "ROUTES",
+        "signal": "SIG"
+      }
     }
   }
 }

@@ -8,6 +8,97 @@
       "years": "jaar op target",
       "projects": "bullseyes opgeleverd",
       "clients": "merken locked in"
+    },
+    "page": {
+      "hero": {
+        "label": "PERSONNEL DOSSIER",
+        "heading": "Intel over de operator",
+        "intro": "Classified briefing over wie CPWD is, wat we raken, en welke systemen we inzetten. Scroll voor volledige clearance.",
+        "scrollHint": "Open intel",
+        "classification": "RESTRICTED // EYES ONLY",
+        "fileId": "OPR-CPWD-001"
+      },
+      "spine": {
+        "departure": "BRIEFING",
+        "arrival": "CLEARANCE"
+      },
+      "operator": {
+        "code": "OP-01",
+        "label": "OPERATOR",
+        "heading": "Christoph Pfrommer",
+        "role": "Lead Developer // CPWD",
+        "photoPlaceholder": "Foto upload pending",
+        "feedConnecting": "Verbinding opzetten",
+        "feedDownloading": "Operatorbestand ophalen",
+        "feedLive": "Feed actief",
+        "bio": "Web developer met focus op Nuxt, Vue 3 en cloud-native delivery. Vier keer AWS certified. Bouwt donkere, scherpe interfaces met motion die op target landt — nooit decoratie.",
+        "fields": [
+          { "key": "LOC", "value": "Nederland" },
+          { "key": "STATUS", "value": "ACTIVE / DEPLOY READY" },
+          { "key": "CLEARANCE", "value": "NUXT · VUE · AWS" },
+          { "key": "COMMS", "value": "info{'@'}cpwd.nl" }
+        ],
+        "github": "github.com/Pfrommer1982"
+      },
+      "mission": {
+        "code": "INTEL-02",
+        "label": "MISSION INTEL",
+        "heading": "Geen spray and pray",
+        "body": "Van *inzicht* tot uitvoering bouwen we websites die niet alleen scherp ogen, maar ook *raak* zijn. Elke animatie, elke interactie is *gekalibreerd* en gericht op het doel — als een wapensystem dat alleen vuurt wanneer de crosshair op target staat.",
+        "directives": [
+          "Elk schot telt — geen filler UI",
+          "Motion met intent, nooit decoratie",
+          "Performance als first-class target",
+          "Design en code in één scope"
+        ]
+      },
+      "loadout": {
+        "code": "WPN-03",
+        "label": "LOADOUT",
+        "heading": "Gekalibreerd arsenaal",
+        "intro": "Primary systems en support tooling — locked in op moderne web delivery.",
+        "items": [
+          {
+            "name": "NUXT 3",
+            "type": "PRIMARY",
+            "desc": "SSR, edge deploy, app router — het zware geschut voor snelle sites."
+          },
+          {
+            "name": "VUE 3",
+            "type": "PRIMARY",
+            "desc": "Component architectuur, composables, reactive UI op target."
+          },
+          {
+            "name": "AWS",
+            "type": "SUPPORT",
+            "desc": "4× certified — cloud infra, CI/CD pipelines, schaalbare omgevingen."
+          },
+          {
+            "name": "GSAP / THREE",
+            "type": "SPECIAL",
+            "desc": "Scroll-linked motion en WebGL — precision strikes in de viewport."
+          }
+        ]
+      },
+      "record": {
+        "code": "REC-04",
+        "label": "COMBAT RECORD",
+        "heading": "Op target sinds dag één",
+        "intro": "Hard numbers uit het veld — projecten, merken en jaren locked in.",
+        "stats": {
+          "years": "jaar op target",
+          "projects": "bullseyes opgeleverd",
+          "clients": "merken locked in",
+          "repos": "public repos"
+        }
+      },
+      "cta": {
+        "code": "CLR-05",
+        "label": "CLEARANCE",
+        "heading": "Klaar voor briefing?",
+        "subtext": "Lock in op een project — we sturen de volledige scope en timeline.",
+        "button": "Start een project"
+      }
     }
   }
 }

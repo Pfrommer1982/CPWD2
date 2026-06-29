@@ -9,8 +9,8 @@ const menuOpen = ref(false)
 
 const navItems = [
   { to: '/work', label: 'work' },
-  { to: '/about', label: 'about' },
   { to: '/services', label: 'services' },
+  { to: '/about', label: 'about' },
   { to: '/contact', label: 'contact' },
 ]
 
