@@ -10,23 +10,25 @@ const common = useSectionTranslations('common')
 
     <div class="motion-section__vignette" aria-hidden="true" />
 
-    <div class="motion-section__content container">
-      <span class="section-label motion-section__label">{{ common.t('motion.label') }}</span>
-      <ProjectOutlineText
-        :text="common.t('motion.heading')"
-        tag="h2"
-        size="display"
-        scroll-start="top 85%"
-        scroll-end="top 25%"
-      />
-      <ProjectOutlineText
-        :text="common.t('motion.body')"
-        tag="p"
-        size="body"
-        scroll-start="top 80%"
-        scroll-end="top 35%"
-        class="motion-section__body"
-      />
+    <div class="container">
+      <div class="motion-section__content copy-width--wide">
+        <span class="section-label motion-section__label">{{ common.t('motion.label') }}</span>
+        <ProjectOutlineText
+          :text="common.t('motion.heading')"
+          tag="h2"
+          size="display"
+          scroll-start="top 85%"
+          scroll-end="top 25%"
+        />
+        <ProjectOutlineText
+          :text="common.t('motion.body')"
+          tag="p"
+          size="body"
+          scroll-start="top 80%"
+          scroll-end="top 35%"
+          class="motion-section__body"
+        />
+      </div>
     </div>
   </section>
 </template>
@@ -55,7 +57,6 @@ const common = useSectionTranslations('common')
     position: relative;
     z-index: 2;
     padding-block: clamp(64px, 10vh, 120px);
-    max-width: 900px;
   }
 
   &__label {

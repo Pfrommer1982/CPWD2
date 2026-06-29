@@ -85,7 +85,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: {},
-      title: 'CPWD, Creative Web Development',
+      title: 'CPWD',
       meta: [
         { name: 'description', content: 'CPWD, locked-in digital experiences, crosshair-sharp websites and high-end web development.' },
         { property: 'og:image', content: '/og-image.jpg' },

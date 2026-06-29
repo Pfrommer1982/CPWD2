@@ -77,6 +77,9 @@ $space-24:  200px;
 // ============================================================
 $max-width:     1440px;
 $content-width: 1200px;
+$page-gutter:   clamp(20px, 4vw, 60px);
+$copy-width:    720px;
+$copy-width-wide: 56rem;
 $grid-gap:      clamp(16px, 2vw, 32px);
 $grid-cols:     12;
 

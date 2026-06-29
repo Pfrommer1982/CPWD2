@@ -2,10 +2,22 @@
 const hero = useSectionTranslations('hero')
 const localePath = useLocalePath()
 
-const canvasEl = ref<HTMLCanvasElement>()
+const sectionRef = ref<HTMLElement | null>(null)
+const globeRef = ref<{ beginHudIntro: () => void } | null>(null)
 const labelEl = ref<HTMLElement>()
 const bottomEl = ref<HTMLElement>()
 const scrollEl = ref<HTMLElement>()
+const globeScrollProgress = ref(0)
+
+useHeroGlobeScroll(globeScrollProgress, sectionRef)
+
+function startHudIntro() {
+  if (globeRef.value) {
+    globeRef.value.beginHudIntro()
+    return
+  }
+  requestAnimationFrame(startHudIntro)
+}
 
 onMounted(async () => {
   if (!import.meta.client) return
@@ -38,127 +50,46 @@ onMounted(async () => {
       opacity: 0,
       duration: 0.6,
     }, '-=0.3')
-
-  try {
-    const THREE = await import('three')
-    const canvas = canvasEl.value
-    if (!canvas) return
-
-    const scene = new THREE.Scene()
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-    camera.position.z = 5
-
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      alpha: true,
-      antialias: true,
-    })
-    renderer.setSize(window.innerWidth, window.innerHeight)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-
-    const count = 1200
-    const positions = new Float32Array(count * 3)
-    const colors = new Float32Array(count * 3)
-
-    for (let i = 0; i < count; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 20
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 20
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 10
-
-      const isGold = Math.random() > 0.7
-      colors[i * 3] = isGold ? 0.27 : 0.95
-      colors[i * 3 + 1] = isGold ? 0.91 : 0.93
-      colors[i * 3 + 2] = isGold ? 0.54 : 0.91
-    }
-
-    const geometry = new THREE.BufferGeometry()
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
-
-    const circleSize = 64
-    const circleCanvas = document.createElement('canvas')
-    circleCanvas.width = circleSize
-    circleCanvas.height = circleSize
-    const circleCtx = circleCanvas.getContext('2d')
-    if (circleCtx) {
-      circleCtx.beginPath()
-      circleCtx.arc(circleSize / 2, circleSize / 2, circleSize / 2, 0, Math.PI * 2)
-      circleCtx.fillStyle = '#ffffff'
-      circleCtx.fill()
-    }
-    const circleTexture = new THREE.CanvasTexture(circleCanvas)
-
-    const material = new THREE.PointsMaterial({
-      size: 0.015,
-      map: circleTexture,
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.6,
-    })
-
-    const particles = new THREE.Points(geometry, material)
-    scene.add(particles)
-
-    let animFrame = 0
-    const animate = () => {
-      animFrame = requestAnimationFrame(animate)
-      particles.rotation.y += 0.0002
-      particles.rotation.x += 0.0001
-      renderer.render(scene, camera)
-    }
-    animate()
-
-    const onResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight
-      camera.updateProjectionMatrix()
-      renderer.setSize(window.innerWidth, window.innerHeight)
-    }
-    window.addEventListener('resize', onResize)
-
-    onUnmounted(() => {
-      cancelAnimationFrame(animFrame)
-      window.removeEventListener('resize', onResize)
-      renderer.dispose()
-      geometry.dispose()
-      material.dispose()
-      circleTexture.dispose()
-    })
-  } catch (e) {
-    console.warn('Three.js could not load:', e)
-  }
+    .from('.hero-globe', {
+      opacity: 0,
+      x: 48,
+      duration: 1.4,
+      ease: 'power3.out',
+      onStart: startHudIntro,
+    }, '-=1.1')
 })
 </script>
 
 <template>
-  <section class="hero section--hero">
-    <ClientOnly>
-      <canvas ref="canvasEl" class="hero__canvas" />
-    </ClientOnly>
+  <section ref="sectionRef" class="hero section--hero">
+    <HeroGlobe ref="globeRef" :scroll-progress="globeScrollProgress" />
 
     <div class="hero__noise" />
 
-    <div class="hero__content container">
-      <p ref="labelEl" class="hero__label section-label">
-        CPWD
-      </p>
-
-      <h1 class="hero__headline">
-        <span class="hero__line hero__line--body">{{ hero.t('line1') }}</span>
-        <span class="hero__line hero__line--display"><em>{{ hero.t('line2') }}</em></span>
-        <span class="hero__line hero__line--body">{{ hero.t('line3') }}</span>
-      </h1>
-
-      <div ref="bottomEl" class="hero__bottom">
-        <NuxtLink :to="localePath('/work')" class="link-arrow" data-cursor="view">
-          {{ hero.t('cta') }}
-          <span class="arrow-icon">→</span>
-        </NuxtLink>
-
-        <p class="hero__sub">
-          {{ hero.t('locationBefore') }}
-          <span class="text-gold">{{ hero.t('locationPlace') }}</span>,
-          {{ hero.t('locationAfter') }}
+    <div class="container hero__shell">
+      <div class="hero__content copy-width">
+        <p ref="labelEl" class="hero__label section-label">
+          CPWD
         </p>
+
+        <h1 class="hero__headline">
+          <span class="hero__line hero__line--body">{{ hero.t('line1') }}</span>
+          <span class="hero__line hero__line--display"><em>{{ hero.t('line2') }}</em></span>
+          <span class="hero__line hero__line--body">{{ hero.t('line3') }}</span>
+        </h1>
+
+        <div ref="bottomEl" class="hero__bottom">
+          <NuxtLink :to="localePath('/work')" class="link-arrow" data-cursor="view">
+            {{ hero.t('cta') }}
+            <span class="arrow-icon">→</span>
+          </NuxtLink>
+
+          <p class="hero__sub">
+            {{ hero.t('locationBefore') }}
+            <span class="text-gold">{{ hero.t('locationPlace') }}</span>,
+            {{ hero.t('locationAfter') }}
+          </p>
+        </div>
       </div>
     </div>
 
@@ -179,14 +110,6 @@ onMounted(async () => {
   overflow: hidden;
   background: $color-bg;
 
-  &__canvas {
-    position: absolute;
-    inset: 0;
-    z-index: $z-base;
-    width: 100%;
-    height: 100%;
-  }
-
   &__noise {
     position: absolute;
     inset: 0;
@@ -196,11 +119,23 @@ onMounted(async () => {
     opacity: 0.5;
   }
 
-  &__content {
+  &__shell {
     position: relative;
     z-index: $z-raised;
+  }
+
+  &__content {
+    position: relative;
     padding-top: 120px;
     padding-bottom: 80px;
+  }
+
+  &__headline,
+  &__bottom,
+  &__label {
+    text-shadow:
+      0 2px 18px rgba(0, 0, 0, 0.55),
+      0 0 32px rgba(8, 8, 8, 0.4);
   }
 
   &__label {

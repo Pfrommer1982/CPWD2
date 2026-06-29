@@ -9,6 +9,33 @@
       "repos": "public GitHub repos",
       "cases": "case study live"
     },
+    "hook": {
+      "label": "TARGET ANALYSIS",
+      "heading": "Your visitor decides faster than you think.",
+      "body": "In seconds they decide whether your site earns trust — or whether they keep scrolling. We measure that first stretch and calibrate everything to it.",
+      "cta": "Open the dossier",
+      "terminal": {
+        "scanTag": "LIVE SCAN",
+        "timerLabel": "TIME TO DECISION",
+        "scanTitle": "Viewport sweep",
+        "verdict": "MISALIGNMENT DETECTED",
+        "verdictSub": "Conversion path off target",
+        "dossierTag": "INTEL FEED",
+        "dossierTitle": "Partial clearance",
+        "clearanceNote": "Full intel requires clearance",
+        "scanItems": [
+          { "code": "SIG-01", "label": "Hero within viewport", "status": "pass" },
+          { "code": "SIG-02", "label": "Conversion path immediately visible", "status": "fail" },
+          { "code": "SIG-03", "label": "Load time below threshold", "status": "fail" }
+        ],
+        "dossierLines": [
+          { "key": "CONV PATH", "tease": "", "level": "redacted" },
+          { "key": "OPERATOR", "tease": "", "level": "redacted" },
+          { "key": "MOTION", "tease": "Intent-first calibration", "level": "partial" },
+          { "key": "PERFORMANCE", "tease": "First-class target lock", "level": "partial" }
+        ]
+      }
+    },
     "page": {
       "hero": {
         "label": "PERSONNEL DOSSIER",

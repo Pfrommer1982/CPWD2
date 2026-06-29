@@ -5,6 +5,7 @@ const props = withDefaults(defineProps<{
   size?: 'display' | 'body'
   scrollStart?: string
   scrollEnd?: string
+  trigger?: HTMLElement | null
 }>(), {
   tag: 'p',
   size: 'display',
@@ -17,10 +18,14 @@ let animationCtx: ReturnType<typeof import('gsap').gsap.context> | null = null
 
 const words = computed(() => props.text.split(/\s+/).filter(Boolean))
 
-onMounted(async () => {
+async function setupAnimation() {
+  animationCtx?.revert()
+  animationCtx = null
+
   if (!import.meta.client || !rootRef.value) return
 
   const fills = rootRef.value.querySelectorAll<HTMLElement>('.outline-text__fill')
+  const triggerEl = props.trigger ?? rootRef.value
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     fills.forEach(fill => { fill.style.clipPath = 'inset(0)' })
@@ -29,15 +34,15 @@ onMounted(async () => {
 
   const { init } = useGsap()
   const gsap = await init()
-  if (!gsap || !fills.length) return
+  if (!gsap || !fills.length || !triggerEl) return
 
   animationCtx = gsap.context(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: rootRef.value,
+        trigger: triggerEl,
         start: props.scrollStart,
         end: props.scrollEnd,
-        scrub: 0.55,
+        scrub: 0.45,
       },
     })
 
@@ -52,6 +57,12 @@ onMounted(async () => {
 
   await nextTick()
   await useLenis().refresh()
+}
+
+onMounted(setupAnimation)
+
+watch(() => props.trigger, () => {
+  setupAnimation()
 })
 
 onUnmounted(() => {

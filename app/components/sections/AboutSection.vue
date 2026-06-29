@@ -3,80 +3,49 @@ const about = useSectionTranslations('about')
 const localePath = useLocalePath()
 const sectionRef = ref<HTMLElement | null>(null)
 
-const outlineBody = computed(() => about.t('body').replace(/\*/g, ''))
-
-const stats = [
-  { value: 4, suffix: '×', key: 'aws' },
-  { value: 18, suffix: '', key: 'repos' },
-  { value: 1, suffix: '', key: 'cases' },
-]
-
-const statRefs = ref<HTMLElement[]>([])
-
-onMounted(async () => {
-  if (!sectionRef.value) return
-
-  const { init } = useGsap()
-  const gsap = await init()
-  if (!gsap) return
-
-  statRefs.value.forEach((el, i) => {
-    const target = stats[i]
-    if (!el || !target) return
-
-    const obj = { val: 0 }
-    gsap.to(obj, {
-      val: target.value,
-      duration: 2,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 85%',
-        toggleActions: 'play none none reverse',
-      },
-      onUpdate: () => {
-        el.textContent = `${Math.round(obj.val)}${target.suffix}`
-      },
-    })
-  })
-})
+const outlineBody = computed(() => about.t('hook.body').replace(/\*/g, ''))
 </script>
 
 <template>
   <section ref="sectionRef" class="about-section">
+    <div class="about-section__backdrop" aria-hidden="true">
+      <EffectsTacticalRadarHud />
+      <EffectsTacticalDataField />
+    </div>
+
     <div class="about-section__grid">
       <div class="about-section__text">
-        <span class="section-label">{{ about.t('label') }}</span>
+        <span class="section-label">{{ about.t('hook.label') }}</span>
         <ProjectOutlineText
-          :text="about.t('heading')"
+          :text="about.t('hook.heading')"
           tag="h2"
           size="display"
           class="about-section__heading"
+          :trigger="sectionRef"
+          scroll-start="top 92%"
+          scroll-end="top 48%"
         />
         <ProjectOutlineText
           :text="outlineBody"
           tag="p"
           size="body"
-          scroll-start="top 88%"
-          scroll-end="top 40%"
           class="about-section__body"
+          :trigger="sectionRef"
+          scroll-start="top 88%"
+          scroll-end="top 42%"
         />
         <GsapMagneticButton :to="localePath('/about')" variant="ghost" class="about-section__cta">
-          {{ about.t('cta') }}
+          {{ about.t('hook.cta') }}
         </GsapMagneticButton>
       </div>
 
       <div class="about-section__visual">
         <ClientOnly>
-          <ThreeFloatingGeometry />
+          <AboutHookTerminal :root="sectionRef" />
+          <template #fallback>
+            <div class="about-section__visual-fallback" aria-hidden="true" />
+          </template>
         </ClientOnly>
-      </div>
-    </div>
-
-    <div class="about-section__stats">
-      <div v-for="(stat, i) in stats" :key="stat.key" class="about-section__stat">
-        <span :ref="el => { if (el) statRefs[i] = el as HTMLElement }" class="about-section__stat-value font-display">0</span>
-        <span class="about-section__stat-label font-mono">{{ about.t(`stats.${stat.key}`) }}</span>
       </div>
     </div>
   </section>
@@ -84,18 +53,40 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .about-section {
-  @include container;
-  padding-block: $space-4xl;
+  position: relative;
+  padding-block: clamp(72px, 12vh, 120px);
+
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
 
   &__grid {
+    @include container;
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: 1fr;
-    gap: $space-3xl;
-    margin-bottom: $space-3xl;
+    gap: clamp(40px, 6vw, 64px);
 
     @media (min-width: 900px) {
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      align-items: stretch;
+      gap: clamp(32px, 4vw, 56px);
+    }
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @media (min-width: 900px) {
+      position: sticky;
+      top: clamp(96px, 14vh, 140px);
+      align-self: start;
     }
   }
 
@@ -109,35 +100,23 @@ onMounted(async () => {
 
   &__visual {
     position: relative;
-    min-height: 400px;
-    background: $color-surface;
-    border-radius: $border-radius-md;
+    min-height: clamp(420px, 52vh, 560px);
+    border-radius: $radius-lg;
     overflow: hidden;
-    border: 1px solid $color-border;
+    border: 1px solid rgba($color-gold, 0.18);
+    box-shadow:
+      0 24px 80px rgba(0, 0, 0, 0.45),
+      0 0 60px rgba(56, 150, 90, 0.06);
+
+    @media (min-width: 900px) {
+      min-height: clamp(460px, 56vh, 620px);
+    }
   }
 
-  &__stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: $grid-gutter;
-    padding-top: $space-2xl;
-    border-top: 1px solid $color-border;
-  }
-
-  &__stat {
-    text-align: center;
-  }
-
-  &__stat-value {
-    display: block;
-    font-size: $text-3xl;
-    color: $color-accent;
-    margin-bottom: $space-sm;
-  }
-
-  &__stat-label {
-    color: $color-text-muted;
-    font-size: $text-xs;
+  &__visual-fallback {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, rgba(10, 16, 12, 0.98) 0%, rgba(5, 8, 7, 1) 100%);
   }
 }
 </style>

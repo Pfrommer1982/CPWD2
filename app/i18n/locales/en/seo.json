@@ -1,23 +1,23 @@
 {
   "seo": {
     "home": {
-      "title": "Christoph Pfrommer — Creative Developer",
+      "title": "CPWD",
       "description": "Freelance creative developer based in the Netherlands. I build memorable websites with Nuxt, GSAP and Three.js. Available for projects locally and worldwide."
     },
     "about": {
-      "title": "About — Christoph Pfrommer",
+      "title": "About",
       "description": "Freelance creative developer in the Netherlands. 4× AWS certified, Nuxt, Vue 3, GSAP and Three.js. Expertise, GitHub and availability in one place."
     },
     "work": {
-      "title": "Work — Christoph Pfrommer",
+      "title": "Work",
       "description": "Selected projects by Christoph Pfrommer: websites and digital experiences built with Nuxt, GSAP and Three.js."
     },
     "services": {
-      "title": "Services — Christoph Pfrommer",
+      "title": "Services",
       "description": "Web design, development, cloud, motion and sound design. CPWD delivers bespoke websites and web apps from the Netherlands."
     },
     "contact": {
-      "title": "Contact — Christoph Pfrommer",
+      "title": "Contact",
       "description": "Get in touch with Christoph Pfrommer for your next web project. Freelance creative developer in the Netherlands, available internationally. Reply within 24 hours on business days."
     }
   }

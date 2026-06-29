@@ -113,21 +113,23 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
             :ref="el => setPanelRef(el, 0)"
             class="services-panel services-panel--intro"
           >
-            <div class="services-panel__content">
-              <span class="section-label services-panel__eyebrow">{{ services.t('label') }}</span>
-              <h2 id="services-xp-heading" class="services-panel__hero-title font-display">
-                <span
-                  v-for="(word, wi) in titleWords(services.t('heading'))"
-                  :key="`intro-${wi}`"
-                  class="services-panel__title-word"
-                >
-                  <span class="services-panel__title-inner">{{ word }}</span>
-                </span>
-              </h2>
-              <p class="services-panel__desc services-panel__desc--intro">
-                {{ services.t('intro') }}
-              </p>
-              <span class="services-panel__hint font-mono">{{ services.t('scrollHint') }}</span>
+            <div class="container services-panel__frame">
+              <div class="services-panel__content copy-width--wide">
+                <span class="section-label services-panel__eyebrow">{{ services.t('label') }}</span>
+                <h2 id="services-xp-heading" class="services-panel__hero-title font-display">
+                  <span
+                    v-for="(word, wi) in titleWords(services.t('heading'))"
+                    :key="`intro-${wi}`"
+                    class="services-panel__title-word"
+                  >
+                    <span class="services-panel__title-inner">{{ word }}</span>
+                  </span>
+                </h2>
+                <p class="services-panel__desc services-panel__desc--intro">
+                  {{ services.t('intro') }}
+                </p>
+                <span class="services-panel__hint font-mono">{{ services.t('scrollHint') }}</span>
+              </div>
             </div>
             <div
               ref="introDecoRef"
@@ -160,27 +162,29 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
             class="services-panel"
           >
             <span class="services-panel__index font-display" aria-hidden="true">{{ item.number }}</span>
-            <div class="services-panel__content">
-              <span class="services-panel__number label">{{ item.number }}</span>
-              <h3 class="services-panel__title font-display">
-                <span
-                  v-for="(word, wi) in titleWords(item.title)"
-                  :key="`${item.number}-${wi}`"
-                  class="services-panel__title-word"
-                >
-                  <span class="services-panel__title-inner">{{ word }}</span>
-                </span>
-              </h3>
-              <p class="services-panel__desc">{{ item.desc }}</p>
-              <ul v-if="item.tags.length" class="services-panel__tags">
-                <li
-                  v-for="tag in item.tags"
-                  :key="tag"
-                  class="services-panel__tag font-mono"
-                >
-                  {{ tag }}
-                </li>
-              </ul>
+            <div class="container services-panel__frame">
+              <div class="services-panel__content">
+                <span class="services-panel__number label">{{ item.number }}</span>
+                <h3 class="services-panel__title font-display">
+                  <span
+                    v-for="(word, wi) in titleWords(item.title)"
+                    :key="`${item.number}-${wi}`"
+                    class="services-panel__title-word"
+                  >
+                    <span class="services-panel__title-inner">{{ word }}</span>
+                  </span>
+                </h3>
+                <p class="services-panel__desc">{{ item.desc }}</p>
+                <ul v-if="item.tags.length" class="services-panel__tags">
+                  <li
+                    v-for="tag in item.tags"
+                    :key="tag"
+                    class="services-panel__tag font-mono"
+                  >
+                    {{ tag }}
+                  </li>
+                </ul>
+              </div>
             </div>
             <div
               class="services-panel__deco services-panel__deco--scene"
@@ -195,28 +199,30 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
             :ref="el => setPanelRef(el, items.length + 1)"
             class="services-panel services-panel--finale"
           >
-            <div class="services-panel__content services-panel__content--center">
-              <span class="section-label">{{ services.t('cta.label') }}</span>
-              <h3 class="services-panel__finale-title font-display">
-                <span
-                  v-for="(word, wi) in titleWords(services.t('cta.heading'))"
-                  :key="`cta-${wi}`"
-                  class="services-panel__title-word"
+            <div class="container services-panel__frame">
+              <div class="services-panel__content services-panel__content--center copy-width">
+                <span class="section-label">{{ services.t('cta.label') }}</span>
+                <h3 class="services-panel__finale-title font-display">
+                  <span
+                    v-for="(word, wi) in titleWords(services.t('cta.heading'))"
+                    :key="`cta-${wi}`"
+                    class="services-panel__title-word"
+                  >
+                    <span class="services-panel__title-inner">{{ word }}</span>
+                  </span>
+                </h3>
+                <p class="services-panel__desc services-panel__desc--finale">
+                  {{ services.t('cta.subtext') }}
+                </p>
+                <GsapMagneticButton
+                  :to="localePath('/contact')"
+                  variant="primary"
+                  class="services-panel__cta"
                 >
-                  <span class="services-panel__title-inner">{{ word }}</span>
-                </span>
-              </h3>
-              <p class="services-panel__desc services-panel__desc--finale">
-                {{ services.t('cta.subtext') }}
-              </p>
-              <GsapMagneticButton
-                :to="localePath('/contact')"
-                variant="primary"
-                class="services-panel__cta"
-              >
-                {{ services.t('cta.button') }}
-                <span class="services-panel__cta-arrow">→</span>
-              </GsapMagneticButton>
+                  {{ services.t('cta.button') }}
+                  <span class="services-panel__cta-arrow">→</span>
+                </GsapMagneticButton>
+              </div>
             </div>
             <div class="services-panel__deco services-panel__deco--finale" data-parallax="0.8" aria-hidden="true">
               <span class="services-panel__glow" />
@@ -303,8 +309,11 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
 
   &__stage--mobile {
     display: block;
-    padding: clamp(48px, 10vh, 96px) clamp(16px, 4vw, 32px);
-    max-width: 100%;
+    width: 100%;
+    max-width: $content-width;
+    margin-inline: auto;
+    padding-block: clamp(48px, 10vh, 96px);
+    padding-inline: $page-gutter;
     overflow-x: clip;
   }
 
@@ -369,7 +378,7 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
 
   &__rail {
     position: absolute;
-    left: clamp(24px, 4vw, 60px);
+    left: var(--site-inset);
     bottom: clamp(32px, 5vh, 56px);
     z-index: 20;
     display: flex;
@@ -452,10 +461,21 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
   height: 100vh;
   display: flex;
   align-items: center;
-  padding: clamp(48px, 8vh, 96px) clamp(24px, 6vw, 80px);
+  padding-block: clamp(48px, 8vh, 96px);
+  padding-inline: 0;
   overflow: hidden;
 
+  &__frame {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+
   &--intro {
+    .services-panel__content {
+      max-width: none;
+    }
+
     .services-panel__hero-title {
       font-size: clamp(3.5rem, 7vw + 1rem, 9rem);
       font-weight: 300;
@@ -474,7 +494,7 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
   &:not(&--intro):not(&--finale):not(&--mobile) {
     --panel-scene-gap: clamp(20px, 2.5vw, 40px);
     --panel-index-zone: clamp(6.5rem, 12vw, 10rem);
-    --panel-index-inset: clamp(16px, 3vw, 48px);
+    --panel-index-inset: var(--site-inset);
 
     .services-panel__content {
       max-width: min(480px, 44vw);
@@ -537,7 +557,7 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
     width: 100%;
     height: auto;
     min-height: auto;
-    padding: clamp(48px, 10vh, 72px) clamp(20px, 4vw, 32px);
+    padding: clamp(48px, 10vh, 72px) $page-gutter;
     margin-bottom: $space-6;
     border: 1px solid $color-border;
     border-radius: $radius-lg;
@@ -554,11 +574,11 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
   &__content {
     position: relative;
     z-index: 2;
-    max-width: min(680px, 90vw);
+    max-width: min(480px, 44vw);
     will-change: transform;
 
     &--center {
-      max-width: 720px;
+      max-width: none;
       margin-inline: auto;
       text-align: center;
       display: flex;
@@ -593,7 +613,7 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
   &__index {
     position: absolute;
     top: 50%;
-    right: clamp(16px, 4vw, 64px);
+    right: var(--site-inset);
     transform: translateY(-50%);
     z-index: 0;
     font-size: clamp(8rem, 18vw, 20rem);
@@ -745,7 +765,7 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
 
     position: absolute;
     top: 50%;
-    right: 10%;
+    right: max(10vw, calc(var(--site-inset) + clamp(24px, 4vw, 80px)));
     width: clamp(200px, 30vw, 480px);
     height: clamp(200px, 30vw, 480px);
     border-radius: 50%;

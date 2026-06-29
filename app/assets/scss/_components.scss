@@ -1,5 +1,11 @@
 @use 'variables' as *;
 
+// Matches .container content edge on wide viewports — use for full-bleed sections (e.g. horizontal slides).
+:root {
+  --site-gutter: #{$page-gutter};
+  --site-inset: max(var(--site-gutter), calc((100vw - #{$content-width}) / 2 + var(--site-gutter)));
+}
+
 .section {
   padding: $space-20 0;
 
@@ -16,12 +22,21 @@
 .container {
   width: 100%;
   max-width: $content-width;
-  margin: 0 auto;
-  padding: 0 clamp(20px, 4vw, 60px);
+  margin-inline: auto;
+  padding-inline: $page-gutter;
 }
 
 .container--wide {
   max-width: $max-width;
+}
+
+// Narrow text measure — always nest inside .container so the page gutter stays aligned.
+.copy-width {
+  max-width: $copy-width;
+}
+
+.copy-width--wide {
+  max-width: $copy-width-wide;
 }
 
 .section-label {

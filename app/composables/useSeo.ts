@@ -17,9 +17,10 @@ export function useSeo(options: MaybeRefOrGetter<SeoOptions>) {
 
   useHead(() => {
     const opts = toValue(options)
-    const fullTitle = opts.title.includes('CPWD')
+    const brand = 'CPWD'
+    const fullTitle = opts.title === brand || opts.title.endsWith(` | ${brand}`)
       ? opts.title
-      : `${opts.title} — CPWD`
+      : `${opts.title} | ${brand}`
 
     const canonical = `${siteUrl}${opts.canonicalPath ?? route.path}`
 
@@ -47,7 +48,7 @@ export function useSeo(options: MaybeRefOrGetter<SeoOptions>) {
         { property: 'og:url', content: canonical },
         { property: 'og:type', content: opts.type ?? 'website' },
         { property: 'og:locale', content: ogLocale },
-        { property: 'og:site_name', content: 'CPWD — Christoph Pfrommer' },
+        { property: 'og:site_name', content: 'CPWD' },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: fullTitle },
         { name: 'twitter:description', content: opts.description },

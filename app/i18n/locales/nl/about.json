@@ -9,6 +9,33 @@
       "repos": "public GitHub repos",
       "cases": "case study online"
     },
+    "hook": {
+      "label": "TARGET ANALYSIS",
+      "heading": "Je bezoeker beslist sneller dan jij denkt.",
+      "body": "In enkele seconden bepaalt iemand of jouw site vertrouwen wekt — of dat ze verder scrollen. Wij meten die eerste meters en kalibreren alles daarop.",
+      "cta": "Open het dossier",
+      "terminal": {
+        "scanTag": "LIVE SCAN",
+        "timerLabel": "TIME TO DECISION",
+        "scanTitle": "Viewport sweep",
+        "verdict": "MISALIGNMENT DETECTED",
+        "verdictSub": "Conversiepad niet op target",
+        "dossierTag": "INTEL FEED",
+        "dossierTitle": "Partial clearance",
+        "clearanceNote": "Full intel requires clearance",
+        "scanItems": [
+          { "code": "SIG-01", "label": "Hero binnen viewport", "status": "pass" },
+          { "code": "SIG-02", "label": "Conversiepad direct zichtbaar", "status": "fail" },
+          { "code": "SIG-03", "label": "Laadtijd onder drempel", "status": "fail" }
+        ],
+        "dossierLines": [
+          { "key": "CONV PATH", "tease": "", "level": "redacted" },
+          { "key": "OPERATOR", "tease": "", "level": "redacted" },
+          { "key": "MOTION", "tease": "Intent-first calibration", "level": "partial" },
+          { "key": "PERFORMANCE", "tease": "First-class target lock", "level": "partial" }
+        ]
+      }
+    },
     "page": {
       "hero": {
         "label": "PERSONNEL DOSSIER",
