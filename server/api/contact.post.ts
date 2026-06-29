@@ -47,6 +47,7 @@ export default defineEventHandler(async (event) => {
     })
 
     if (error) {
+      console.error('[contact] Resend error:', error)
       throw createError({ statusCode: 500, statusMessage: 'Verzenden mislukt' })
     }
   } else if (import.meta.dev) {
