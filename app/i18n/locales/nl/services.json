@@ -1,60 +1,60 @@
 {
   "services": {
-    "label": "IN SCOPE",
-    "heading": "Wat we raken",
-    "intro": "Design, code, cloud en sound, één crosshair. Voor merken die online elke shot willen landen.",
-    "scrollHint": "Scroll voor intel",
+    "label": "DIENSTEN",
+    "heading": "Full scope. Eén bureau.",
+    "intro": "Design, development, hosting en meer. Eén aanspreekpunt, van briefing tot live website.",
+    "scrollHint": "Scroll voor overzicht",
     "journey": {
-      "label": "DE REIS",
-      "heading": "Van briefing tot bullseye",
-      "intro": "Zes hoofdstukken, één route. Elke discipline is een waypoint: design, build, deploy, sound, motion, brand, tot jouw project op target landt.",
-      "scrollHint": "Begin de reis",
-      "departure": "Vertrek",
-      "chapter": "Hoofdstuk",
-      "arrival": "Aankomst"
+      "label": "AANPAK",
+      "heading": "Van briefing tot livegang",
+      "intro": "Zes disciplines, één team. Design, bouwen, hosting, geluid, beweging en merk. CPWD regelt het complete traject voor jou.",
+      "scrollHint": "Bekijk de diensten",
+      "departure": "Start",
+      "chapter": "Stap",
+      "arrival": "Live"
     },
     "cta": {
-      "label": "VOLGENDE TARGET",
-      "heading": "Klaar om te locken?",
-      "subtext": "Van briefing tot launch, wij houden het hele traject in scope.",
-      "button": "Lock in op een project"
+      "label": "VOLGENDE STAP",
+      "heading": "Ready to lock in?",
+      "subtext": "Vertel ons wat je nodig hebt. Wij sturen een concreet voorstel terug.",
+      "button": "Start een project"
     },
     "items": [
       {
         "number": "01",
         "title": "Webdesign",
-        "desc": "Visuele concepten, design systems en interfaces met crosshair-precision. Donker, scherp en doordacht tot in detail.",
-        "tags": ["UI/UX", "Design systems", "Figma", "Art direction"]
+        "desc": "Visuele concepten, design systems en interfaces die passen bij jouw merk. Donker, scherp en doordacht tot in detail.",
+        "tags": ["UI/UX", "Design systems", "Visuele identiteit", "Prototyping"]
       },
       {
         "number": "02",
         "title": "Webdevelopment",
-        "desc": "Custom websites en webapps met Nuxt, Vue en moderne tooling. Snel, schaalbaar, locked in op performance.",
-        "tags": ["Nuxt", "Vue 3", "TypeScript", "Headless CMS"]
+        "desc": "Maatwerk websites en webapps. Snel, schaalbaar en gebouwd om lang mee te gaan. Geen templates, alles op maat.",
+        "tags": ["Custom websites", "Webapps", "Snel & schaalbaar", "CMS"]
       },
       {
         "number": "03",
         "title": "Cloud & hosting",
-        "desc": "Deploy, CDN, beeldoptimalisatie en beveiligde omgevingen, zodat jouw site overal ter wereld raak laadt.",
-        "tags": ["Vercel", "ImageKit", "Firebase", "CI/CD"]
+        "desc": "Betrouwbare hosting, beveiliging en snelle laadtijden, zodat jouw site overal ter wereld soepel draait.",
+        "tags": ["Hosting", "Beveiliging", "Snelle laadtijden", "Onderhoud"]
       },
       {
         "number": "04",
         "title": "Sound design",
-        "desc": "Audio-identiteit voor merken en labels, van subtiele UI-feedback tot soundscapes die je site op target brengen.",
-        "tags": ["Sound identity", "Web audio", "Labels", "Immersive UX"]
+        "desc": "Audio-identiteit voor merken en labels, van subtiele UI-feedback tot soundscapes die je site onderscheidend maken.",
+        "tags": ["Sound identity", "Web audio", "Merken", "Immersive UX"]
       },
       {
         "number": "05",
         "title": "Motion & interactie",
-        "desc": "Scroll-animaties, page transitions en micro-interacties met GSAP. Motion met intentie, nooit decor.",
-        "tags": ["GSAP", "ScrollTrigger", "Three.js", "Lenis"]
+        "desc": "Scroll-animaties, page transitions en micro-interacties die je site levendig maken. Met een doel, niet als decor.",
+        "tags": ["Scroll-animatie", "Page transitions", "Micro-interacties", "UX"]
       },
       {
         "number": "06",
         "title": "Brand & strategie",
         "desc": "Visuele identiteit, tone of voice en digitale merkbeleving, consistent over website, socials en campagnes.",
-        "tags": ["Branding", "Identity", "Copy", "Launch"]
+        "tags": ["Branding", "Identiteit", "Copywriting", "Lancering"]
       }
     ]
   }

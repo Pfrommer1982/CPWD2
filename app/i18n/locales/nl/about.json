@@ -1,129 +1,129 @@
 {
   "about": {
     "label": "OVER ONS",
-    "heading": "Geen spray and pray. Elk schot telt.",
-    "body": "Van *inzicht* tot uitvoering bouwen we websites die niet alleen scherp ogen, maar ook *raak* zijn. Elke animatie, elke interactie is *gekalibreerd* en gericht op het doel.",
-    "cta": "Meer over onze scope",
+    "heading": "Hard gebouwd. Scherp afgewerkt.",
+    "body": "CPWD is een webdevelopment-bureau voor merken die online serieus genomen willen worden. Jij levert de briefing, wij leveren design, code en livegang.",
+    "cta": "Meer over CPWD",
     "stats": {
       "aws": "AWS certificeringen",
-      "repos": "public GitHub repos",
+      "repos": "open source projecten",
       "cases": "case study online"
     },
     "hook": {
-      "label": "TARGET ANALYSIS",
-      "heading": "Je bezoeker beslist sneller dan jij denkt.",
-      "body": "In enkele seconden bepaalt iemand of jouw site vertrouwen wekt — of dat ze verder scrollen. Wij meten die eerste meters en kalibreren alles daarop.",
+      "label": "EERSTE INDRUK",
+      "heading": "Je bezoeker beslist sneller dan je denkt.",
+      "body": "Binnen seconden weet iemand of jouw site vertrouwenwekt, of dat ze doorklikken. Wij leveren sites waar die eerste indruk telt.",
       "cta": "Open het dossier",
       "terminal": {
-        "scanTag": "LIVE SCAN",
-        "timerLabel": "TIME TO DECISION",
-        "scanTitle": "Viewport sweep",
-        "verdict": "MISALIGNMENT DETECTED",
-        "verdictSub": "Conversiepad niet op target",
-        "dossierTag": "INTEL FEED",
-        "dossierTitle": "Partial clearance",
-        "clearanceNote": "Full intel requires clearance",
+        "scanTag": "LIVE CHECK",
+        "timerLabel": "BESLISSINGSTIJD",
+        "scanTitle": "Homepage scan",
+        "verdict": "AANDACHTSPUNT",
+        "verdictSub": "Belangrijkste actie niet direct zichtbaar",
+        "dossierTag": "DOSSIER",
+        "dossierTitle": "Gedeeltelijke toegang",
+        "clearanceNote": "Volledig dossier na contact",
         "scanItems": [
-          { "code": "SIG-01", "label": "Hero binnen viewport", "status": "pass" },
-          { "code": "SIG-02", "label": "Conversiepad direct zichtbaar", "status": "fail" },
-          { "code": "SIG-03", "label": "Laadtijd onder drempel", "status": "fail" }
+          { "code": "CHK-01", "label": "Hero direct zichtbaar", "status": "pass" },
+          { "code": "CHK-02", "label": "Duidelijke call-to-action", "status": "fail" },
+          { "code": "CHK-03", "label": "Snelle laadtijd", "status": "fail" }
         ],
         "dossierLines": [
-          { "key": "CONV PATH", "tease": "", "level": "redacted" },
-          { "key": "OPERATOR", "tease": "", "level": "redacted" },
-          { "key": "MOTION", "tease": "Intent-first calibration", "level": "partial" },
-          { "key": "PERFORMANCE", "tease": "First-class target lock", "level": "partial" }
+          { "key": "CONVERSIE", "tease": "", "level": "redacted" },
+          { "key": "TEAM", "tease": "", "level": "redacted" },
+          { "key": "DESIGN", "tease": "Op maat, geen templates", "level": "partial" },
+          { "key": "SNELHEID", "tease": "Mobiel-first aanpak", "level": "partial" }
         ]
       }
     },
     "page": {
       "hero": {
-        "label": "PERSONNEL DOSSIER",
-        "heading": "Intel over de operator",
-        "intro": "Classified briefing over wie CPWD is, wat we raken, en welke systemen we inzetten. Scroll voor volledige clearance.",
-        "scrollHint": "Open intel",
-        "classification": "RESTRICTED // EYES ONLY",
-        "fileId": "OPR-CPWD-001",
-        "available": "● Beschikbaar voor projecten"
+        "label": "OVER CPWD",
+        "heading": "Het bureau achter de build",
+        "intro": "CPWD is webdevelopment uit Nederland. Maatwerk websites en webapps, van eerste schets tot livegang. Scroll voor het volledige dossier.",
+        "scrollHint": "Lees verder",
+        "classification": "INTERN // CPWD DOSSIER",
+        "fileId": "CPWD-001",
+        "available": "● Beschikbaar voor nieuwe projecten"
       },
       "spine": {
-        "departure": "BRIEFING",
-        "arrival": "CLEARANCE"
+        "departure": "START",
+        "arrival": "CONTACT"
       },
       "operator": {
-        "code": "OP-01",
-        "label": "OPERATOR",
+        "code": "01",
+        "label": "OPRICHTER",
         "heading": "Christoph Pfrommer",
         "role": "Lead Developer // CPWD",
-        "photoPlaceholder": "Foto upload pending",
+        "photoPlaceholder": "Foto volgt",
         "feedConnecting": "Verbinding opzetten",
-        "feedDownloading": "Operatorbestand ophalen",
-        "feedLive": "Feed actief",
-        "bio": "Web developer met focus op Nuxt, Vue 3 en cloud-native delivery. Vier keer AWS certified. Bouwt donkere, scherpe interfaces met motion die op target landt, nooit decoratie.",
+        "feedDownloading": "Profiel laden",
+        "feedLive": "Online",
+        "bio": "Oprichter van CPWD. Bouwt scherpe websites en webapps voor merken die online willen domineren. Vier keer AWS gecertificeerd. Werkt vanuit Nederland, voor klanten in binnen- en buitenland.",
         "fields": [
           { "key": "LOC", "value": "Nederland" },
-          { "key": "STATUS", "value": "ACTIVE / DEPLOY READY" },
-          { "key": "CLEARANCE", "value": "NUXT · VUE · AWS" },
+          { "key": "STATUS", "value": "Beschikbaar voor projecten" },
+          { "key": "SPECIALISATIE", "value": "Websites · Webapps · Cloud" },
           { "key": "COMMS", "value": "info{'@'}cpwd.nl" }
         ],
         "github": "github.com/Pfrommer1982"
       },
       "mission": {
-        "code": "INTEL-02",
-        "label": "MISSION INTEL",
-        "heading": "Geen spray and pray",
-        "body": "Van *inzicht* tot uitvoering bouwen we websites die niet alleen scherp ogen, maar ook *raak* zijn. Elke animatie, elke interactie is *gekalibreerd* en gericht op het doel, als een wapensystem dat alleen vuurt wanneer de crosshair op target staat.",
+        "code": "02",
+        "label": "AANPAK",
+        "heading": "Jij geeft de opdracht. Wij leveren.",
+        "body": "Geen templates, geen half werk. We ontwerpen en bouwen *sites die er premium uitzien*, snel laden en doen wat ze moeten doen: bezoekers overtuigen en conversie stimuleren.",
         "directives": [
-          "Elk schot telt — geen filler UI",
-          "Motion met intent, nooit decoratie",
-          "Performance als first-class target",
-          "Design en code in één scope"
+          "Elke pagina heeft een duidelijk doel",
+          "Animatie ondersteunt de boodschap, geen ruis",
+          "Snel op desktop én mobiel",
+          "Design en development uit één hand"
         ]
       },
       "loadout": {
-        "code": "WPN-03",
-        "label": "LOADOUT",
-        "heading": "Gekalibreerd arsenaal",
-        "intro": "Primary systems en support tooling, locked in op moderne web delivery.",
+        "code": "03",
+        "label": "EXPERTISE",
+        "heading": "Waarmee we werken",
+        "intro": "Modern webdevelopment, van visueel concept tot live website. Alles onder één dak bij CPWD.",
         "items": [
           {
-            "name": "NUXT 3",
-            "type": "PRIMARY",
-            "desc": "SSR, edge deploy, app router, het zware geschut voor snelle sites."
+            "name": "Design",
+            "type": "KERN",
+            "desc": "Visuele concepten, interfaces en design systems. Donker, scherp en doordacht."
           },
           {
-            "name": "VUE 3",
-            "type": "PRIMARY",
-            "desc": "Component architectuur, composables, reactive UI op target."
+            "name": "Development",
+            "type": "KERN",
+            "desc": "Maatwerk websites en webapps, snel, schaalbaar en makkelijk te beheren."
           },
           {
-            "name": "AWS",
+            "name": "Cloud & hosting",
             "type": "SUPPORT",
-            "desc": "4× certified, cloud infra, CI/CD pipelines, schaalbare omgevingen."
+            "desc": "Betrouwbare hosting, beveiliging en snelle laadtijden wereldwijd."
           },
           {
-            "name": "GSAP / THREE",
-            "type": "SPECIAL",
-            "desc": "Scroll-linked motion en WebGL, precision strikes in de viewport."
+            "name": "Motion & interactie",
+            "type": "EXTRA",
+            "desc": "Scroll-animaties en micro-interacties die je site levendig maken, met een doel."
           }
         ]
       },
       "record": {
-        "code": "REC-04",
-        "label": "COMBAT RECORD",
-        "heading": "Op target sinds dag één",
-        "intro": "Meetbare cijfers: AWS certificeringen, open source op GitHub en gepubliceerd werk.",
+        "code": "04",
+        "label": "TRACK RECORD",
+        "heading": "Cijfers die tellen",
+        "intro": "Ervaring, certificeringen en gepubliceerd werk. Meetbaar en transparant.",
         "stats": {
           "aws": "AWS certificeringen",
-          "repos": "public GitHub repos",
+          "repos": "open source projecten",
           "cases": "case study online"
         }
       },
       "cta": {
-        "code": "CLR-05",
-        "label": "CLEARANCE",
-        "heading": "Klaar voor briefing?",
-        "subtext": "Lock in op een project, we sturen de volledige scope en timeline.",
+        "code": "05",
+        "label": "VOLGENDE STAP",
+        "heading": "Ready to lock in?",
+        "subtext": "Vertel ons over je project. We reageren met een concreet voorstel en planning.",
         "button": "Start een project"
       }
     }

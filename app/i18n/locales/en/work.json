@@ -1,8 +1,8 @@
 {
   "work": {
-    "label": "CONFIRMED HITS",
-    "heading": "Projects that land",
-    "viewAll": "All bullseyes",
-    "viewProject": "View case"
+    "label": "PORTFOLIO",
+    "heading": "Recent work",
+    "viewAll": "All projects",
+    "viewProject": "View project"
   }
 }

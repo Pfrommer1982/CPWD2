@@ -88,7 +88,7 @@ export default defineNuxtConfig({
       htmlAttrs: {},
       title: 'CPWD',
       meta: [
-        { name: 'description', content: 'CPWD, locked-in digital experiences, crosshair-sharp websites and high-end web development.' },
+        { name: 'description', content: 'CPWD bouwt maatwerk websites en webapps vanuit Nederland. Webdesign, development en online lancering.' },
         { property: 'og:image', content: '/og-image.jpg' },
       ],
       link: [

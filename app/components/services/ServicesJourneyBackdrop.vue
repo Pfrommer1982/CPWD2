@@ -1130,7 +1130,7 @@ function drawNetherlandsLock(
   const padY = 12
 
   const lines = [
-    'TARGET/NL — LOCKED',
+    'CPWD/NL · LOCKED',
     `LAT: ${NL_LAT.toFixed(4)}° N`,
     `LON: ${NL_LON.toFixed(4)}° E`,
     'MGRS: 31U ED 51892',

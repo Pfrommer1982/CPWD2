@@ -1,129 +1,129 @@
 {
   "about": {
     "label": "ABOUT",
-    "heading": "No spray and pray. Every shot counts.",
-    "body": "From *insights* to execution, we build websites that don't just look sharp, they *hit*. Every animation, every interaction is *calibrated* and aimed at the goal.",
-    "cta": "More about our scope",
+    "heading": "Built hard. Finished sharp.",
+    "body": "CPWD is a web development agency for brands that want to be taken seriously online. You bring the brief, we deliver design, code and launch.",
+    "cta": "More about CPWD",
     "stats": {
       "aws": "AWS certifications",
-      "repos": "public GitHub repos",
+      "repos": "open source projects",
       "cases": "case study live"
     },
     "hook": {
-      "label": "TARGET ANALYSIS",
+      "label": "FIRST IMPRESSION",
       "heading": "Your visitor decides faster than you think.",
-      "body": "In seconds they decide whether your site earns trust — or whether they keep scrolling. We measure that first stretch and calibrate everything to it.",
+      "body": "Within seconds they know whether your site earns trust, or whether they move on. We deliver sites where that first impression counts.",
       "cta": "Open the dossier",
       "terminal": {
-        "scanTag": "LIVE SCAN",
-        "timerLabel": "TIME TO DECISION",
-        "scanTitle": "Viewport sweep",
-        "verdict": "MISALIGNMENT DETECTED",
-        "verdictSub": "Conversion path off target",
-        "dossierTag": "INTEL FEED",
-        "dossierTitle": "Partial clearance",
-        "clearanceNote": "Full intel requires clearance",
+        "scanTag": "LIVE CHECK",
+        "timerLabel": "DECISION TIME",
+        "scanTitle": "Homepage scan",
+        "verdict": "ATTENTION POINT",
+        "verdictSub": "Main action not immediately visible",
+        "dossierTag": "DOSSIER",
+        "dossierTitle": "Partial access",
+        "clearanceNote": "Full dossier on request",
         "scanItems": [
-          { "code": "SIG-01", "label": "Hero within viewport", "status": "pass" },
-          { "code": "SIG-02", "label": "Conversion path immediately visible", "status": "fail" },
-          { "code": "SIG-03", "label": "Load time below threshold", "status": "fail" }
+          { "code": "CHK-01", "label": "Hero visible on load", "status": "pass" },
+          { "code": "CHK-02", "label": "Clear call-to-action", "status": "fail" },
+          { "code": "CHK-03", "label": "Fast load time", "status": "fail" }
         ],
         "dossierLines": [
-          { "key": "CONV PATH", "tease": "", "level": "redacted" },
-          { "key": "OPERATOR", "tease": "", "level": "redacted" },
-          { "key": "MOTION", "tease": "Intent-first calibration", "level": "partial" },
-          { "key": "PERFORMANCE", "tease": "First-class target lock", "level": "partial" }
+          { "key": "CONVERSION", "tease": "", "level": "redacted" },
+          { "key": "TEAM", "tease": "", "level": "redacted" },
+          { "key": "DESIGN", "tease": "Custom, no templates", "level": "partial" },
+          { "key": "SPEED", "tease": "Mobile-first approach", "level": "partial" }
         ]
       }
     },
     "page": {
       "hero": {
-        "label": "PERSONNEL DOSSIER",
-        "heading": "Operator intel",
-        "intro": "Classified briefing on who CPWD is, what we hit, and which systems we deploy. Scroll for full clearance.",
-        "scrollHint": "Open intel",
-        "classification": "RESTRICTED // EYES ONLY",
-        "fileId": "OPR-CPWD-001",
-        "available": "● Available for projects"
+        "label": "ABOUT CPWD",
+        "heading": "The agency behind the build",
+        "intro": "CPWD is web development from the Netherlands. Bespoke websites and web apps, from first sketch to launch. Scroll for the full dossier.",
+        "scrollHint": "Read on",
+        "classification": "INTERNAL // CPWD DOSSIER",
+        "fileId": "CPWD-001",
+        "available": "● Available for new projects"
       },
       "spine": {
-        "departure": "BRIEFING",
-        "arrival": "CLEARANCE"
+        "departure": "START",
+        "arrival": "CONTACT"
       },
       "operator": {
-        "code": "OP-01",
-        "label": "OPERATOR",
+        "code": "01",
+        "label": "FOUNDER",
         "heading": "Christoph Pfrommer",
         "role": "Lead Developer // CPWD",
-        "photoPlaceholder": "Photo upload pending",
-        "feedConnecting": "Establishing connection",
-        "feedDownloading": "Downloading operator file",
-        "feedLive": "Feed live",
-        "bio": "Web developer focused on Nuxt, Vue 3 and cloud-native delivery. Four times AWS certified. Builds dark, sharp interfaces with motion that lands on target, never decoration.",
+        "photoPlaceholder": "Photo coming soon",
+        "feedConnecting": "Connecting",
+        "feedDownloading": "Loading profile",
+        "feedLive": "Online",
+        "bio": "Founder of CPWD. Builds sharp websites and web apps for brands that want to dominate online. Four times AWS certified. Based in the Netherlands, working with clients at home and abroad.",
         "fields": [
           { "key": "LOC", "value": "The Netherlands" },
-          { "key": "STATUS", "value": "ACTIVE / DEPLOY READY" },
-          { "key": "CLEARANCE", "value": "NUXT · VUE · AWS" },
+          { "key": "STATUS", "value": "Available for projects" },
+          { "key": "FOCUS", "value": "Websites · Web apps · Cloud" },
           { "key": "COMMS", "value": "info{'@'}cpwd.nl" }
         ],
         "github": "github.com/Pfrommer1982"
       },
       "mission": {
-        "code": "INTEL-02",
-        "label": "MISSION INTEL",
-        "heading": "No spray and pray",
-        "body": "From *insights* to execution, we build websites that don't just look sharp, they *hit*. Every animation, every interaction is *calibrated* and aimed at the goal, like a weapons system that only fires when the crosshair is on target.",
+        "code": "02",
+        "label": "APPROACH",
+        "heading": "You set the brief. We deliver.",
+        "body": "No templates, no half-finished work. We design and build *sites that look premium*, load fast and do what they should: convince visitors and drive conversion.",
         "directives": [
-          "Every shot counts — no filler UI",
-          "Motion with intent, never decoration",
-          "Performance as a first-class target",
-          "Design and code in one scope"
+          "Every page has a clear purpose",
+          "Animation supports the message, not noise",
+          "Fast on desktop and mobile",
+          "Design and development under one roof"
         ]
       },
       "loadout": {
-        "code": "WPN-03",
-        "label": "LOADOUT",
-        "heading": "Calibrated arsenal",
-        "intro": "Primary systems and support tooling, locked in on modern web delivery.",
+        "code": "03",
+        "label": "EXPERTISE",
+        "heading": "What we work with",
+        "intro": "Modern web development, from visual concept to live website. Everything under one roof at CPWD.",
         "items": [
           {
-            "name": "NUXT 3",
-            "type": "PRIMARY",
-            "desc": "SSR, edge deploy, app router, heavy artillery for fast sites."
+            "name": "Design",
+            "type": "CORE",
+            "desc": "Visual concepts, interfaces and design systems. Dark, sharp and considered."
           },
           {
-            "name": "VUE 3",
-            "type": "PRIMARY",
-            "desc": "Component architecture, composables, reactive UI on target."
+            "name": "Development",
+            "type": "CORE",
+            "desc": "Bespoke websites and web apps, fast, scalable and easy to manage."
           },
           {
-            "name": "AWS",
+            "name": "Cloud & hosting",
             "type": "SUPPORT",
-            "desc": "4× certified, cloud infra, CI/CD pipelines, scalable environments."
+            "desc": "Reliable hosting, security and fast load times worldwide."
           },
           {
-            "name": "GSAP / THREE",
-            "type": "SPECIAL",
-            "desc": "Scroll-linked motion and WebGL, precision strikes in the viewport."
+            "name": "Motion & interaction",
+            "type": "EXTRA",
+            "desc": "Scroll animations and micro-interactions that bring your site to life, with purpose."
           }
         ]
       },
       "record": {
-        "code": "REC-04",
-        "label": "COMBAT RECORD",
-        "heading": "On target since day one",
-        "intro": "Measurable numbers: AWS certifications, open source on GitHub, and published work.",
+        "code": "04",
+        "label": "TRACK RECORD",
+        "heading": "Numbers that matter",
+        "intro": "Experience, certifications and published work. Measurable and transparent.",
         "stats": {
           "aws": "AWS certifications",
-          "repos": "public GitHub repos",
+          "repos": "open source projects",
           "cases": "case study live"
         }
       },
       "cta": {
-        "code": "CLR-05",
-        "label": "CLEARANCE",
-        "heading": "Ready for briefing?",
-        "subtext": "Lock in on a project, we'll send the full scope and timeline.",
+        "code": "05",
+        "label": "NEXT STEP",
+        "heading": "Ready to lock in?",
+        "subtext": "Tell us about your project. We'll reply with a concrete proposal and timeline.",
         "button": "Start a project"
       }
     }

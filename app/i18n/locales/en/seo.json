@@ -2,23 +2,23 @@
   "seo": {
     "home": {
       "title": "CPWD",
-      "description": "Freelance creative developer based in the Netherlands. I build memorable websites with Nuxt, GSAP and Three.js. Available for projects locally and worldwide."
+      "description": "CPWD builds bespoke websites and web apps from the Netherlands. Web design, development and launch. Personal and results-driven."
     },
     "about": {
       "title": "About",
-      "description": "Freelance creative developer in the Netherlands. 4× AWS certified, Nuxt, Vue 3, GSAP and Three.js. Expertise, GitHub and availability in one place."
+      "description": "CPWD is a web development agency based in the Netherlands. Bespoke websites, web apps and cloud hosting. Meet the team and explore our expertise."
     },
     "work": {
       "title": "Work",
-      "description": "Selected projects by Christoph Pfrommer: websites and digital experiences built with Nuxt, GSAP and Three.js."
+      "description": "Selected projects by CPWD: bespoke websites and web apps for brands ready to dominate online."
     },
     "services": {
       "title": "Services",
-      "description": "Web design, development, cloud, motion and sound design. CPWD delivers bespoke websites and web apps from the Netherlands."
+      "description": "Web design, web development, cloud hosting, motion and sound design. CPWD handles the full scope from brief to launch."
     },
     "contact": {
       "title": "Contact",
-      "description": "Get in touch with Christoph Pfrommer for your next web project. Freelance creative developer in the Netherlands, available internationally. Reply within 24 hours on business days."
+      "description": "Get in touch with CPWD for your next website or web app project. Personal reply within 24 hours on business days."
     }
   }
 }

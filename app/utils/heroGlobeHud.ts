@@ -310,18 +310,18 @@ export function drawHeroGlobeHud(
   const uplink = Math.round(78 + Math.sin(t * 0.45) * 4)
   const hash = Math.floor(hudSeed(Math.floor(scrollOffset(t, 3)) * 13) * 0xffffff).toString(16).toUpperCase().padStart(6, '0')
 
-  ctx.fillText('ORBITAL SCAN // LEO-042', tx, ty)
+  ctx.fillText('CPWD // WEB DEVELOPMENT', tx, ty)
   ctx.fillStyle = `rgba(${COMMS_RGB}, 0.75)`
   ctx.font = '9px "Courier New", monospace'
-  ctx.fillText(`UPLINK ${'█'.repeat(Math.floor(uplink / 10))}${'░'.repeat(10 - Math.floor(uplink / 10))} ${uplink}%`, tx, ty + 16)
-  ctx.fillText(`SIG ${sig}%  ::  GRID SYNC OK`, tx, ty + 32)
-  ctx.fillText(`BEARING ${(247 + Math.sin(t * 0.3) * 2).toFixed(0)}°  RNG ${(1842 - scrollProgress * 420).toFixed(0)} KM`, tx, ty + 48)
-  ctx.fillText(`HASH 0x${hash}  NOISE ${(12 + Math.sin(t * 2.1) * 3).toFixed(0)}%`, tx, ty + 64)
+  ctx.fillText(`LOAD ${'█'.repeat(Math.floor(uplink / 10))}${'░'.repeat(10 - Math.floor(uplink / 10))} ${uplink}%`, tx, ty + 16)
+  ctx.fillText(`SIG ${sig}%  ::  ONLINE`, tx, ty + 32)
+  ctx.fillText(`NL BASE  ::  GLOBAL CLIENTS`, tx, ty + 48)
+  ctx.fillText(`ID 0x${hash}  STATUS OK`, tx, ty + 64)
 
   ctx.textAlign = 'right'
   ctx.fillStyle = `rgba(${COMMS_RGB_LIGHT}, 0.5)`
-  ctx.fillText('CPWD SAT-LINK', bx - 12, by + 8)
-  ctx.fillText('CLASS: UNRESTRICTED', bx - 12, by + 22)
+  ctx.fillText('CPWD.NL', bx - 12, by + 8)
+  ctx.fillText('STATUS: OPEN', bx - 12, by + 22)
 
   const sideScroll = scrollOffset(t, 5)
   ctx.font = '7px "Courier New", monospace'

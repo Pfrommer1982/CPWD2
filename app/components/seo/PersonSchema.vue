@@ -10,10 +10,10 @@ const schema = computed(() => ({
   '@type': 'Person',
   name: 'Christoph Pfrommer',
   url: siteUrl,
-  jobTitle: 'Creative Developer',
+  jobTitle: locale.value === 'nl' ? 'Web Developer // CPWD' : 'Web Developer // CPWD',
   description: locale.value === 'nl'
-    ? 'Freelance creative developer in Nederland, gespecialiseerd in Nuxt, GSAP en Three.js.'
-    : 'Freelance creative developer based in the Netherlands, specialized in Nuxt, GSAP and Three.js.',
+    ? 'Oprichter van CPWD. Webdevelopment-bureau uit Nederland. Maatwerk websites en webapps.'
+    : 'Founder of CPWD. Web development agency based in the Netherlands. Bespoke websites and web apps.',
   address: {
     '@type': 'PostalAddress',
     addressCountry: 'NL',
@@ -21,13 +21,11 @@ const schema = computed(() => ({
   sameAs: [CPWD_GITHUB_URL],
   knowsAbout: [
     'Web Development',
-    'Nuxt.js',
-    'Vue.js',
-    'GSAP',
-    'Three.js',
-    'Creative Development',
+    'Web Design',
     'Frontend Development',
+    'Cloud Hosting',
     'Motion Design',
+    'Sound Design',
   ],
 }))
 </script>

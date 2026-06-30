@@ -1,17 +1,17 @@
 {
   "project": {
-    "overview": "Mission intel",
+    "overview": "Over dit project",
     "year": "JAAR",
     "note": "NOTITIE",
     "role": "ROL",
     "technologies": "TECHNOLOGIEËN",
     "live": "LIVE SITE",
     "viewSite": "Bekijk website",
-    "challenge": "DE TARGET",
-    "solution": "DE BULLSEYE",
+    "challenge": "DE VRAAG",
+    "solution": "ONZE AANPAK",
     "results": "Resultaten",
-    "next": "Volgende target",
-    "nextProject": "VOLGENDE BULLSEYE",
+    "next": "Volgend project",
+    "nextProject": "VOLGEND PROJECT",
     "moreScreens": "MEER SCHERMEN"
   }
 }

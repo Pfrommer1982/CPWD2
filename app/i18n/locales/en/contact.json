@@ -1,10 +1,10 @@
 {
   "contact": {
-    "label": "LOCK IN",
-    "heading": "Line up your next target.",
-    "subtext": "Got a project in scope? Send a message, we'll zero in on the brief.",
+    "label": "CONTACT",
+    "heading": "Ready to lock in?",
+    "subtext": "Tell us about your project. Personal reply, no call centre, no detours.",
     "email": "info{'@'}cpwd.nl",
-    "cta": "Send intel",
+    "cta": "Get in touch",
     "form": {
       "name": "Name",
       "email": "Email",
@@ -16,94 +16,94 @@
     },
     "page": {
       "hero": {
-        "label": "COMMS UPLINK",
+        "label": "CONTACT",
         "heading": "Open the channel",
-        "intro": "Satellite relays, ground stations, and encrypted uplinks. CPWD is standing by for incoming intel. Scroll to establish the link.",
-        "scrollHint": "Initialize uplink",
-        "classification": "SECURE CHANNEL // TX READY",
-        "fileId": "COMMS-CPWD-007",
-        "available": "● Available for projects"
+        "intro": "New website or web app project? Send your brief. CPWD replies personally within 24 hours on business days.",
+        "scrollHint": "Go to the form",
+        "classification": "SECURE CHANNEL // OPEN",
+        "fileId": "CONTACT-CPWD",
+        "available": "● Available for new projects"
       },
       "spine": {
-        "departure": "SIGNAL",
-        "arrival": "TRANSMIT"
+        "departure": "START",
+        "arrival": "SEND"
       },
       "orbital": {
-        "code": "SAT-01",
-        "label": "ORBITAL RELAY",
-        "heading": "Satellite uplink active",
-        "body": "Three LEO relays orbit above the network. Downlink to the CPWD uplink gate, signal strength green, latency within spec.",
+        "code": "01",
+        "label": "AVAILABLE",
+        "heading": "We're online",
+        "body": "Whether you email from the office, home or on the go, your message reaches us directly. Fast, reliable and without middlemen.",
         "telemetry": [
-          "ORBIT: LEO-042 / LEO-118 / LEO-203",
-          "DOWNLINK: KA-BAND ACTIVE",
-          "SNR: 98.4 dB"
+          "STATUS: ONLINE",
+          "RESPONSE: < 24 HRS",
+          "CHANNEL: DIRECT"
         ]
       },
       "ground": {
-        "code": "GND-02",
-        "label": "GROUND ARRAY",
-        "heading": "Ground stations online",
-        "body": "Modems, Wi-Fi 6, LTE, 5G NR, and fiber: every node in the array is tied to the uplink gate. Your message can route in on any path.",
+        "code": "02",
+        "label": "CHANNELS",
+        "heading": "Several ways to reach us",
+        "body": "Form, email or LinkedIn. Choose what's easiest for you. Every channel goes straight to CPWD.",
         "nodes": [
-          { "code": "MDM", "name": "Modem / DSL", "status": "LINK OK" },
-          { "code": "W6", "name": "Wi-Fi 6", "status": "BEACON ON" },
-          { "code": "LTE", "name": "LTE", "status": "CELL LOCK" },
-          { "code": "5G", "name": "5G NR", "status": "MMWAVE" },
-          { "code": "FBR", "name": "Fiber", "status": "CORE SYNC" },
-          { "code": "DSH", "name": "Sat dish", "status": "AZ 247°" }
+          { "code": "FRM", "name": "Contact form", "status": "ACTIVE" },
+          { "code": "EML", "name": "Email", "status": "ACTIVE" },
+          { "code": "LNK", "name": "LinkedIn", "status": "ACTIVE" },
+          { "code": "GHT", "name": "GitHub", "status": "ACTIVE" },
+          { "code": "TEL", "name": "Phone", "status": "ON REQUEST" },
+          { "code": "MTG", "name": "Video call", "status": "ON REQUEST" }
         ]
       },
       "secure": {
-        "code": "ENC-03",
-        "label": "SECURE HANDSHAKE",
-        "heading": "Encrypted channel",
-        "body": "TLS 1.3 end-to-end. Payload hashed, route verified. No plaintext on the line, only targeted intel to info{'@'}cpwd.nl.",
+        "code": "03",
+        "label": "SECURE CONTACT",
+        "heading": "Your data stays private",
+        "body": "Messages are sent encrypted. No tracking pixels, no spam. Just a direct reply from CPWD to info{'@'}cpwd.nl.",
         "directives": [
-          "End-to-end encryption on all uplinks",
-          "No tracking pixels in comms",
+          "Encrypted connection on all channels",
+          "No tracking or data selling",
           "Reply within 24 hours on business days",
-          "Direct contact, no call center"
+          "Direct contact with CPWD, no call centre"
         ]
       },
       "transmit": {
-        "code": "TX-04",
-        "label": "UPLINK TERMINAL",
-        "heading": "Send your intel",
-        "subtext": "Fill in the form. Your message routes straight to our uplink gate, no middle stations.",
-        "statusIdle": "CHANNEL: STANDBY",
-        "statusLoading": "TX: ENCODING PAYLOAD...",
-        "statusSuccess": "TX: ACK RECEIVED // INTEL FORWARDED",
-        "statusError": "TX: FAILED // RETRY UPLINK",
-        "terminalPrompt": "CPWD UPLINK v2.4 // AWAITING INPUT",
-        "prepareLabel": "TLS 1.3 // INIT SECURE CHANNEL",
-        "sessionLabel": "SESSION ID",
-        "metadataLabel": "OPERATOR ID // MASKING",
-        "encryptLabel": "AES-256-GCM // SEALING PAYLOAD",
-        "keygenLabel": "KEY DERIVATION // PBKDF2-SHA256",
+        "code": "04",
+        "label": "FORM",
+        "heading": "Send your message",
+        "subtext": "Fill in the form. Your message goes straight to us, no middle stations.",
+        "statusIdle": "READY TO SEND",
+        "statusLoading": "SENDING MESSAGE...",
+        "statusSuccess": "RECEIVED // WE'LL BE IN TOUCH",
+        "statusError": "FAILED // TRY AGAIN",
+        "terminalPrompt": "CPWD CONTACT // AWAITING INPUT",
+        "prepareLabel": "SECURE CHANNEL // CONNECTING",
+        "sessionLabel": "SESSION",
+        "metadataLabel": "NAME // MASKING",
+        "encryptLabel": "MESSAGE // ENCRYPTING",
+        "keygenLabel": "KEY // GENERATING",
         "keyIvLabel": "IV",
         "keySessionLabel": "SESSION KEY",
-        "blocksLabel": "CIPHER BLOCKS",
-        "hashLabel": "SHA-256 CHECKSUM",
-        "hashVerifyLabel": "INTEGRITY VERIFY",
-        "transmitLabel": "UPLINK IN PROGRESS",
-        "route": "GND → UPLINK GATE → SAT-042 → CPWD HQ",
+        "blocksLabel": "DATA BLOCKS",
+        "hashLabel": "CHECKSUM",
+        "hashVerifyLabel": "INTEGRITY CHECK",
+        "transmitLabel": "SENDING...",
+        "route": "FORM → CPWD → CONFIRMATION",
         "hops": [
-          "GND // HANDSHAKE",
-          "UPLINK GATE // AUTH",
-          "SAT-042 // RELAY",
-          "CPWD HQ // DELIVERY"
+          "CONNECTION // OK",
+          "FORM // VALIDATED",
+          "MESSAGE // SENT",
+          "CPWD // RECEIVED"
         ],
         "telemetry": {
-          "snr": "SNR",
-          "latency": "LAT",
+          "snr": "SIG",
+          "latency": "TIME",
           "bitrate": "TX"
         },
-        "operatorField": "OPERATOR",
-        "addressField": "ADDR",
-        "packet": "PKT"
+        "operatorField": "NAME",
+        "addressField": "EMAIL",
+        "packet": "BLK"
       },
       "social": {
-        "label": "External channels",
+        "label": "Also find us on",
         "linkedin": "LinkedIn",
         "github": "GitHub"
       },
@@ -114,9 +114,9 @@
         "availableDetail": "for new projects"
       },
       "hud": {
-        "scope": "COMMS // SCOPE",
-        "routes": "ROUTES",
-        "signal": "SIG"
+        "scope": "CONTACT // CPWD",
+        "routes": "CHANNELS",
+        "signal": "STATUS"
       }
     }
   }

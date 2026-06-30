@@ -1,10 +1,10 @@
 {
   "contact": {
-    "label": "LOCK IN",
-    "heading": "Richt je op het volgende doel.",
-    "subtext": "Project in scope? Stuur een bericht, wij zero'en in op de briefing.",
+    "label": "CONTACT",
+    "heading": "Ready to lock in?",
+    "subtext": "Vertel ons over je project. Persoonlijk antwoord, geen callcenter, geen omwegen.",
     "email": "info{'@'}cpwd.nl",
-    "cta": "Stuur intel",
+    "cta": "Neem contact op",
     "form": {
       "name": "Naam",
       "email": "E-mail",
@@ -16,94 +16,94 @@
     },
     "page": {
       "hero": {
-        "label": "COMMS UPLINK",
+        "label": "CONTACT",
         "heading": "Open het kanaal",
-        "intro": "Satellietrelays, grondstations en versleutelde uplinks. CPWD staat paraat voor inkomende intel. Scroll om de verbinding op te bouwen.",
-        "scrollHint": "Initialiseer uplink",
-        "classification": "SECURE CHANNEL // TX READY",
-        "fileId": "COMMS-CPWD-007",
-        "available": "● Beschikbaar voor projecten"
+        "intro": "Nieuw website- of webapp-project? Stuur je briefing. CPWD reageert persoonlijk en binnen 24 uur op werkdagen.",
+        "scrollHint": "Naar het formulier",
+        "classification": "VEILIG KANAAL // OPEN",
+        "fileId": "CONTACT-CPWD",
+        "available": "● Beschikbaar voor nieuwe projecten"
       },
       "spine": {
-        "departure": "SIGNAL",
-        "arrival": "TRANSMIT"
+        "departure": "START",
+        "arrival": "VERSTUUR"
       },
       "orbital": {
-        "code": "SAT-01",
-        "label": "ORBITAL RELAY",
-        "heading": "Satelliet uplink actief",
-        "body": "Drie LEO-relays cirkelen boven het netwerk. Downlink naar het CPWD uplink-gate, signaalsterkte groen, latency binnen spec.",
+        "code": "01",
+        "label": "BEREIKBAAR",
+        "heading": "We zijn online",
+        "body": "Of je nu mailt vanuit kantoor, thuis of onderweg, je bericht komt direct bij ons aan. Snel, betrouwbaar en zonder tussenpersonen.",
         "telemetry": [
-          "ORBIT: LEO-042 / LEO-118 / LEO-203",
-          "DOWNLINK: KA-BAND ACTIVE",
-          "SNR: 98.4 dB"
+          "STATUS: ONLINE",
+          "RESPONS: < 24 UUR",
+          "KANAAL: DIRECT"
         ]
       },
       "ground": {
-        "code": "GND-02",
-        "label": "GROUND ARRAY",
-        "heading": "Grondstations online",
-        "body": "Modems, Wi-Fi 6, LTE, 5G NR en glasvezel: elk node in het array is gekoppeld aan het uplink-gate. Jouw bericht kan via elk pad binnenkomen.",
+        "code": "02",
+        "label": "KANALEN",
+        "heading": "Meerdere manieren om ons te bereiken",
+        "body": "Formulier, e-mail of LinkedIn. Kies wat voor jou het makkelijkst is. Elk kanaal komt direct bij CPWD terecht.",
         "nodes": [
-          { "code": "MDM", "name": "Modem / DSL", "status": "LINK OK" },
-          { "code": "W6", "name": "Wi-Fi 6", "status": "BEACON ON" },
-          { "code": "LTE", "name": "LTE", "status": "CELL LOCK" },
-          { "code": "5G", "name": "5G NR", "status": "MMWAVE" },
-          { "code": "FBR", "name": "Glasvezel", "status": "CORE SYNC" },
-          { "code": "DSH", "name": "Sat-dish", "status": "AZ 247°" }
+          { "code": "FRM", "name": "Contactformulier", "status": "ACTIEF" },
+          { "code": "EML", "name": "E-mail", "status": "ACTIEF" },
+          { "code": "LNK", "name": "LinkedIn", "status": "ACTIEF" },
+          { "code": "GHT", "name": "GitHub", "status": "ACTIEF" },
+          { "code": "TEL", "name": "Telefoon", "status": "OP AANVRAAG" },
+          { "code": "MTG", "name": "Video call", "status": "OP AANVRAAG" }
         ]
       },
       "secure": {
-        "code": "ENC-03",
-        "label": "SECURE HANDSHAKE",
-        "heading": "Versleuteld kanaal",
-        "body": "TLS 1.3 end-to-end. Payload gehasht, route geverifieerd. Geen plaintext op de lijn, alleen doelgerichte intel naar info{'@'}cpwd.nl.",
+        "code": "03",
+        "label": "VEILIG CONTACT",
+        "heading": "Jouw gegevens blijven privé",
+        "body": "Berichten worden versleuteld verstuurd. Geen tracking pixels, geen spam. Alleen een direct antwoord van CPWD naar info{'@'}cpwd.nl.",
         "directives": [
-          "End-to-end encryptie op alle uplinks",
-          "Geen tracking pixels in comms",
+          "Versleutelde verbinding op alle kanalen",
+          "Geen tracking of dataverkoop",
           "Antwoord binnen 24 uur op werkdagen",
-          "Direct contact, geen callcenter"
+          "Direct contact met CPWD, geen callcenter"
         ]
       },
       "transmit": {
-        "code": "TX-04",
-        "label": "UPLINK TERMINAL",
-        "heading": "Verstuur je intel",
-        "subtext": "Vul het formulier in. Het bericht gaat direct naar ons uplink-gate, geen tussenstations.",
-        "statusIdle": "KANAAL: STANDBY",
-        "statusLoading": "TX: ENCODING PAYLOAD...",
-        "statusSuccess": "TX: ACK RECEIVED // INTEL DOORGESTUURD",
-        "statusError": "TX: FAILED // RETRY UPLINK",
-        "terminalPrompt": "CPWD UPLINK v2.4 // AWAITING INPUT",
-        "prepareLabel": "TLS 1.3 // INIT SECURE CHANNEL",
-        "sessionLabel": "SESSION ID",
-        "metadataLabel": "OPERATOR ID // MASKING",
-        "encryptLabel": "AES-256-GCM // SEALING PAYLOAD",
-        "keygenLabel": "KEY DERIVATION // PBKDF2-SHA256",
+        "code": "04",
+        "label": "FORMULIER",
+        "heading": "Stuur je bericht",
+        "subtext": "Vul het formulier in. Je bericht gaat direct naar ons, geen tussenstations.",
+        "statusIdle": "KLAAR OM TE VERSTUREN",
+        "statusLoading": "BERICHT WORDT VERZONDEN...",
+        "statusSuccess": "ONTVANGEN // WE NEEMEN CONTACT OP",
+        "statusError": "MISLUKT // PROBEER OPNIEUW",
+        "terminalPrompt": "CPWD CONTACT // WACHT OP INPUT",
+        "prepareLabel": "VEILIG KANAAL // VERBINDING MAKEN",
+        "sessionLabel": "SESSIE",
+        "metadataLabel": "NAAM // MASKEREN",
+        "encryptLabel": "BERICHT // VERSLEUTELEN",
+        "keygenLabel": "SLEUTEL // GENEREREN",
         "keyIvLabel": "IV",
-        "keySessionLabel": "SESSION KEY",
-        "blocksLabel": "CIPHER BLOCKS",
-        "hashLabel": "SHA-256 CHECKSUM",
-        "hashVerifyLabel": "INTEGRITY VERIFY",
-        "transmitLabel": "UPLINK IN PROGRESS",
-        "route": "GND → UPLINK GATE → SAT-042 → CPWD HQ",
+        "keySessionLabel": "SESSIESLEUTEL",
+        "blocksLabel": "DATABLOKKEN",
+        "hashLabel": "CONTROLESUM",
+        "hashVerifyLabel": "INTEGRITEIT CHECK",
+        "transmitLabel": "VERZENDEN...",
+        "route": "FORMULIER → CPWD → BEVESTIGING",
         "hops": [
-          "GND // HANDSHAKE",
-          "UPLINK GATE // AUTH",
-          "SAT-042 // RELAY",
-          "CPWD HQ // DELIVERY"
+          "VERBINDING // OK",
+          "FORMULIER // GEVALIDEERD",
+          "BERICHT // VERZONDEN",
+          "CPWD // ONTVANGEN"
         ],
         "telemetry": {
-          "snr": "SNR",
-          "latency": "LAT",
+          "snr": "SIG",
+          "latency": "TIJD",
           "bitrate": "TX"
         },
-        "operatorField": "OPERATOR",
-        "addressField": "ADDR",
-        "packet": "PKT"
+        "operatorField": "NAAM",
+        "addressField": "E-MAIL",
+        "packet": "BLD"
       },
       "social": {
-        "label": "Externe kanalen",
+        "label": "Ook bereikbaar via",
         "linkedin": "LinkedIn",
         "github": "GitHub"
       },
@@ -114,9 +114,9 @@
         "availableDetail": "voor nieuwe projecten"
       },
       "hud": {
-        "scope": "COMMS // SCOPE",
-        "routes": "ROUTES",
-        "signal": "SIG"
+        "scope": "CONTACT // CPWD",
+        "routes": "KANALEN",
+        "signal": "STATUS"
       }
     }
   }

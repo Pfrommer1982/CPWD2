@@ -2,38 +2,38 @@
   "common": {
     "footer": {
       "copy": "© {year} CPWD. All rights reserved.",
-      "built": "Built with Nuxt & love."
+      "built": "Web development from the Netherlands."
     },
     "finale": {
       "label": "LOCK IN",
-      "location": "The Netherlands, available worldwide",
+      "location": "The Netherlands, working worldwide",
       "copy": "© {year} CPWD. All rights reserved.",
       "rows": [
-        { "text": "Crosshair on", "reveal": "Target locked" },
-        { "text": "your next bullseye", "reveal": "On target" },
-        { "text": "Start a project", "reveal": "Lock in →", "action": "contact" },
-        { "text": "info{'@'}cpwd.nl", "reveal": "Send intel →", "action": "email" },
+        { "text": "Ready to lock in?", "reveal": "Lock in →", "action": "contact" },
+        { "text": "New website project?", "reveal": "Tell us your plan →", "action": "contact" },
+        { "text": "Start a project", "reveal": "Get in touch →", "action": "contact" },
+        { "text": "info{'@'}cpwd.nl", "reveal": "Email us →", "action": "email" },
         { "text": "LinkedIn", "reveal": "Connect →", "action": "linkedin" },
         { "text": "GitHub", "reveal": "View code →", "action": "github" }
       ]
     },
     "marquee": {
-      "items": "CROSSHAIR UX · LOCKED-IN DEV · INSIGHTS · ON-TARGET MOTION · NUXT · THREE.JS · GSAP ·"
+      "items": "CUSTOM BUILDS · WEB DEVELOPMENT · BESPOKE · NETHERLANDS · CPWD · LOCKED IN · CONVERSION ·"
     },
     "motion": {
       "label": "MOTION",
-      "heading": "Motion on target, never decoration.",
-      "body": "Abstract dot systems, scroll-driven typography and seamlessly looping motion. Calibrated movement that carries your brand and sharpens the experience."
+      "heading": "Movement with intent.",
+      "body": "Subtle animation that strengthens your brand, not decoration that distracts. Scroll and transitions that bring the site to life without noise."
     },
     "testimonials": {
       "items": [
         {
-          "quote": "CPWD locked in on our brand and delivered a digital bullseye that hit straight away.",
+          "quote": "CPWD understood exactly what we needed and delivered a site that looks premium and converts well.",
           "author": "Sarah Chen",
           "role": "Creative Director, Aurora"
         },
         {
-          "quote": "Every interaction feels calibrated. Our conversion numbers proved this was never decoration.",
+          "quote": "Everything feels considered. Our conversion rate rose noticeably after launch. No cosmetic update.",
           "author": "Marcus Webb",
           "role": "CEO, Vertex Brand"
         }

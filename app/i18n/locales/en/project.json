@@ -1,17 +1,17 @@
 {
   "project": {
-    "overview": "Mission intel",
+    "overview": "About this project",
     "year": "YEAR",
     "note": "NOTE",
     "role": "ROLE",
     "technologies": "TECHNOLOGIES",
     "live": "LIVE SITE",
     "viewSite": "View website",
-    "challenge": "THE TARGET",
-    "solution": "THE BULLSEYE",
+    "challenge": "THE BRIEF",
+    "solution": "OUR APPROACH",
     "results": "Results",
-    "next": "Next target",
-    "nextProject": "NEXT BULLSEYE",
+    "next": "Next project",
+    "nextProject": "NEXT PROJECT",
     "moreScreens": "MORE SCREENS"
   }
 }
