@@ -12,6 +12,16 @@
     "results": "Results",
     "next": "Next project",
     "nextProject": "NEXT PROJECT",
-    "moreScreens": "MORE SCREENS"
+    "moreScreens": "MORE SCREENS",
+    "video": {
+      "expand": "Enlarge",
+      "close": "Close",
+      "mute": "Mute",
+      "unmute": "Unmute",
+      "play": "Play",
+      "pause": "Pause",
+      "label": "VIDEO // DEMO",
+      "error": "Video could not load. Please try again."
+    }
   }
 }

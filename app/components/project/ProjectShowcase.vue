@@ -14,7 +14,6 @@ const pageRef = ref<HTMLElement>()
 const heroMedia = ref<HTMLElement>()
 const heroClip = ref<HTMLElement>()
 const heroInner = ref<HTMLElement>()
-const videoRef = ref<HTMLVideoElement>()
 
 const lightboxOpen = ref(false)
 const lightboxIndex = ref(0)
@@ -26,6 +25,24 @@ const taglineLines = computed(() =>
 const introText = computed(() =>
   locale.value === 'nl' ? props.showcase.intro.nl : props.showcase.intro.en,
 )
+
+const videoTitle = computed(() => {
+  const video = props.showcase.video
+  if (video.title) return locale.value === 'nl' ? video.title.nl : video.title.en
+  return locale.value === 'nl' ? props.showcase.custom.title.nl : props.showcase.custom.title.en
+})
+
+const videoBody = computed(() => {
+  const video = props.showcase.video
+  if (video.body) return locale.value === 'nl' ? video.body.nl : video.body.en
+  return locale.value === 'nl' ? props.showcase.custom.body.nl : props.showcase.custom.body.en
+})
+
+const videoCaption = computed(() => {
+  const caption = props.showcase.video.caption
+  if (!caption) return undefined
+  return locale.value === 'nl' ? caption.nl : caption.en
+})
 
 const lightboxImages = computed(() => {
   const fromGroups = props.showcase.imageGroups.flatMap(g => g.images)
@@ -144,17 +161,17 @@ onMounted(async () => {
       )
     })
 
-    const videoFrame = pageRef.value.querySelector('.showcase-video__frame')
-    if (videoFrame) {
+    const videoMedia = pageRef.value.querySelector('.project-video__media')
+    if (videoMedia) {
       gsap.fromTo(
-        videoFrame,
+        videoMedia,
         { clipPath: 'inset(100% 0 0 0)' },
         {
           clipPath: 'inset(0% 0 0 0)',
           duration: 1.2,
           ease: 'power4.out',
           scrollTrigger: {
-            trigger: videoFrame,
+            trigger: videoMedia,
             start: 'top 90%',
             toggleActions: 'play none none none',
           },
@@ -176,14 +193,6 @@ onMounted(async () => {
         },
       })
     })
-
-    if (videoRef.value) {
-      ScrollTrigger.create({
-        trigger: videoRef.value,
-        start: 'top 80%',
-        onEnter: () => { videoRef.value?.play().catch(() => {}) },
-      })
-    }
 
     await nextTick()
     await useLenis().refresh()
@@ -231,6 +240,27 @@ onMounted(async () => {
       <div class="showcase-hero__scroll">
         <div class="showcase-hero__scroll-line" />
         <span class="label">Scroll</span>
+      </div>
+    </section>
+
+    <section class="showcase-video showcase-video--hero section">
+      <div class="container showcase-video__head-wrap">
+        <div class="showcase-video__head">
+          <span class="section-label">{{ videoTitle }}</span>
+          <ProjectOutlineText
+            :text="videoBody"
+            size="display"
+          />
+        </div>
+      </div>
+
+      <div class="showcase-video__stage">
+        <ProjectVideoPlayer
+          :src="showcase.video.src"
+          :poster="showcase.video.poster"
+          :caption="videoCaption"
+          :accent-color="project.accentColor"
+        />
       </div>
     </section>
 
@@ -336,37 +366,6 @@ onMounted(async () => {
             <span class="gallery-tile__label">{{ image.alt }}</span>
           </button>
         </div>
-      </div>
-    </section>
-
-    <section class="showcase-video section">
-      <div class="container">
-        <div class="showcase-video__head">
-          <span class="section-label">
-            {{ locale === 'nl' ? showcase.custom.title.nl : showcase.custom.title.en }}
-          </span>
-          <ProjectOutlineText
-            :text="locale === 'nl' ? showcase.custom.body.nl : showcase.custom.body.en"
-            size="display"
-          />
-        </div>
-
-        <div class="showcase-video__frame">
-          <video
-            ref="videoRef"
-            :src="imageKit.video(showcase.video.src)"
-            :poster="showcase.video.poster ? imageKit.responsive(showcase.video.poster, 1200) : undefined"
-            class="showcase-video__player"
-            muted
-            loop
-            playsinline
-            preload="metadata"
-          />
-        </div>
-
-        <p v-if="showcase.video.caption" class="showcase-video__caption">
-          {{ locale === 'nl' ? showcase.video.caption.nl : showcase.video.caption.en }}
-        </p>
       </div>
     </section>
 
@@ -684,34 +683,42 @@ onMounted(async () => {
 }
 
 .showcase-video {
+  &__head-wrap {
+    margin-bottom: clamp(24px, 4vw, 40px);
+  }
+
   &__head {
-    max-width: 900px;
-    margin-bottom: clamp(40px, 6vh, 56px);
+    max-width: min(100%, 900px);
   }
 
-  &__frame {
-    overflow: hidden;
-    border-radius: $radius-md;
-    border: 1px solid $color-border;
-    background: $color-surface;
-    aspect-ratio: 16 / 9;
-    will-change: clip-path;
-  }
-
-  &__player {
+  &__stage {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+    max-width: none;
+    margin-inline: 0;
+    padding-inline: 0;
   }
 
-  &__caption {
-    margin-top: $space-4;
-    text-align: center;
-    font-family: $font-mono;
-    font-size: $text-xs;
-    letter-spacing: $tracking-wide;
-    color: $color-text-faint;
+  &--hero {
+    position: relative;
+    z-index: 2;
+    padding-top: clamp(24px, 4vw, 64px);
+    padding-bottom: clamp(32px, 5vw, 64px);
+    background: linear-gradient(180deg, rgba($color-bg, 0.72), $color-bg 48%);
+    border-top: 1px solid $color-border;
+
+    :deep(.project-video__media) {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      min-height: clamp(260px, 62vw, min(78vh, 920px));
+      border-block: 1px solid $color-border;
+    }
+
+    :deep(.project-video__controls),
+    :deep(.project-video__caption) {
+      width: min(100%, $content-width);
+      margin-inline: auto;
+      padding-inline: $page-gutter;
+    }
   }
 }
 

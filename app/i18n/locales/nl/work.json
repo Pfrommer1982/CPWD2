@@ -2,6 +2,22 @@
   "work": {
     "label": "PORTFOLIO",
     "heading": "Recent werk",
+    "intro": "Twee recente cases. Klik op een dossier voor het volledige verhaal, screenshots en video.",
+    "stats": {
+      "projects": "Projecten",
+      "live": "Live sites",
+      "years": "Periode"
+    },
+    "index": {
+      "label": "CASE DOSSIERS",
+      "open": "Open dossier",
+      "live": "Live"
+    },
+    "cta": {
+      "heading": "Volgend project?",
+      "body": "Ready to lock in? Vertel ons over je plan.",
+      "button": "Start een project"
+    },
     "viewAll": "Alle projecten",
     "viewProject": "Bekijk project"
   }

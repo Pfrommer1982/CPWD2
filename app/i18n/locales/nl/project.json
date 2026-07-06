@@ -12,6 +12,16 @@
     "results": "Resultaten",
     "next": "Volgend project",
     "nextProject": "VOLGEND PROJECT",
-    "moreScreens": "MEER SCHERMEN"
+    "moreScreens": "MEER SCHERMEN",
+    "video": {
+      "expand": "Vergroot",
+      "close": "Sluiten",
+      "mute": "Dempen",
+      "unmute": "Geluid aan",
+      "play": "Afspelen",
+      "pause": "Pauze",
+      "label": "VIDEO // DEMO",
+      "error": "Video kon niet laden. Probeer opnieuw."
+    }
   }
 }

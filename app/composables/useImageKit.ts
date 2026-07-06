@@ -26,8 +26,40 @@ export function useImageKit() {
     return `${base}${encodedPath}`
   }
 
-  function video(path: string): string {
-    return buildUrl(path)
+  function parseAssetPath(path: string): { assetPath: string; search: string } {
+    if (!path.startsWith('http')) {
+      return { assetPath: path, search: '' }
+    }
+
+    const url = new URL(path)
+    return {
+      assetPath: url.pathname,
+      search: url.search.replace(/^\?/, ''),
+    }
+  }
+
+  function appendSearch(baseUrl: string, search: string) {
+    if (!search) return baseUrl
+    const joiner = baseUrl.includes('?') ? '&' : '?'
+    return `${baseUrl}${joiner}${search}`
+  }
+
+  /** ImageKit video URL — orig-true bypasses transformation quota and serves the source mp4. */
+  function video(path: string) {
+    if (!path) return ''
+
+    if (path.startsWith('http')) {
+      const url = new URL(path)
+      url.searchParams.set('tr', 'orig-true')
+      return url.toString()
+    }
+
+    const base = buildUrl(path)
+    if (!base) return ''
+
+    const url = new URL(base)
+    url.searchParams.set('tr', 'orig-true')
+    return url.toString()
   }
 
   function isVideoPath(path: string): boolean {

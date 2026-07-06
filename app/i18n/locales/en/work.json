@@ -2,6 +2,22 @@
   "work": {
     "label": "PORTFOLIO",
     "heading": "Recent work",
+    "intro": "Two recent cases. Open a dossier for the full story, screenshots and video.",
+    "stats": {
+      "projects": "Projects",
+      "live": "Live sites",
+      "years": "Period"
+    },
+    "index": {
+      "label": "CASE DOSSIERS",
+      "open": "Open dossier",
+      "live": "Live"
+    },
+    "cta": {
+      "heading": "Next project?",
+      "body": "Ready to lock in? Tell us about your plan.",
+      "button": "Start a project"
+    },
     "viewAll": "All projects",
     "viewProject": "View project"
   }

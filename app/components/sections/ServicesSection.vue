@@ -310,7 +310,7 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
   &__stage--mobile {
     display: block;
     width: 100%;
-    max-width: $content-width;
+    max-width: none;
     margin-inline: auto;
     padding-block: clamp(48px, 10vh, 96px);
     padding-inline: $page-gutter;
@@ -427,22 +427,22 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
 
   &__mobile-header {
     margin-bottom: clamp(48px, 10vh, 80px);
-    max-width: 640px;
   }
 
   &__mobile-heading {
-    font-size: $text-3xl;
+    font-size: clamp(2rem, 8vw, $text-3xl);
     font-weight: 300;
     line-height: $leading-tight;
     margin-block: $space-5;
     color: $color-text;
+    max-width: 18ch;
   }
 
   &__mobile-intro {
-    font-size: $text-lg;
+    font-size: clamp($text-base, 3.8vw, $text-lg);
     line-height: $leading-relaxed;
     color: $color-text-muted;
-    max-width: 42ch;
+    max-width: none;
   }
 
   &__mobile-bg {
@@ -497,7 +497,11 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
     --panel-index-inset: var(--site-inset);
 
     .services-panel__content {
-      max-width: min(480px, 44vw);
+      max-width: clamp(22rem, 42vw, 38rem);
+    }
+
+    .services-panel__desc {
+      max-width: none;
     }
 
     .services-panel__index {
@@ -509,7 +513,7 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
     }
 
     .services-panel__deco--scene {
-      left: clamp(44%, 40vw, 50%);
+      left: clamp(50%, 44vw, 56%);
       right: calc(var(--panel-index-inset) + var(--panel-index-zone) + var(--panel-scene-gap));
       display: flex;
       align-items: center;
@@ -557,24 +561,75 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
     width: 100%;
     height: auto;
     min-height: auto;
-    padding: clamp(48px, 10vh, 72px) $page-gutter;
+    padding:
+      clamp(32px, 7vh, 56px)
+      clamp(20px, 5vw, 28px)
+      clamp(48px, 12vw, 72px);
     margin-bottom: $space-6;
     border: 1px solid $color-border;
     border-radius: $radius-lg;
     background: rgba(15, 15, 15, 0.5);
-    overflow: visible;
+    overflow: hidden;
+
+    .services-panel__content {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      column-gap: clamp(12px, 4vw, 20px);
+      row-gap: clamp(16px, 4vw, 22px);
+      width: 100%;
+      max-width: none;
+      padding-right: 0;
+    }
+
+    .services-panel__number {
+      grid-column: 1;
+      grid-row: 1;
+      margin-bottom: 0;
+      align-self: start;
+      padding-top: 0.2em;
+    }
+
+    .services-panel__title--mobile {
+      grid-column: 2;
+      grid-row: 1;
+      max-width: none;
+      margin-bottom: 0;
+      align-self: start;
+    }
+
+    .services-panel__desc {
+      grid-column: 1 / -1;
+      max-width: none;
+      width: 100%;
+      text-wrap: pretty;
+      font-size: clamp($text-base, 3.6vw, $text-lg);
+    }
+
+    .services-panel__tags {
+      grid-column: 1 / -1;
+      width: 100%;
+      margin-top: 0;
+      gap: clamp(6px, 2vw, 10px);
+    }
+
+    .services-panel__tag {
+      font-size: clamp(0.62rem, 2.8vw, 0.72rem);
+    }
   }
 
   &--finale-mobile {
     margin-bottom: 0;
     padding-block: clamp(64px, 12vh, 96px);
     border-color: rgba(56, 150, 90, 0.2);
+
+    .services-panel__content {
+      padding-right: 0;
+    }
   }
 
   &__content {
     position: relative;
     z-index: 2;
-    max-width: min(480px, 44vw);
     will-change: transform;
 
     &--center {
@@ -626,12 +681,13 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
     will-change: transform, opacity;
 
     &--mobile {
-      position: absolute;
-      top: $space-5;
-      right: $space-5;
+      top: auto;
+      bottom: clamp(4px, 1.5vw, 12px);
+      right: clamp(8px, 3vw, 16px);
       transform: none;
-      font-size: clamp(4rem, 15vw, 6rem);
-      opacity: 0.06;
+      font-size: clamp(5rem, 36vw, 9rem);
+      line-height: 0.82;
+      opacity: 0.045;
     }
   }
 
@@ -650,7 +706,9 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
     perspective: 800px;
 
     &--mobile {
-      font-size: clamp(2rem, 8vw, 3rem);
+      font-size: clamp(1.75rem, 7.5vw, 2.5rem);
+      max-width: 14ch;
+      line-height: 1.05;
     }
   }
 

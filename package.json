@@ -8,7 +8,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "i18n:validate": "tsx scripts/validate-i18n.ts"
+    "i18n:validate": "tsx scripts/validate-i18n.ts",
+    "favicons": "node scripts/generate-favicons.mjs"
   },
   "dependencies": {
     "@fontsource/dm-serif-display": "^5.2.8",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "sass": "^1.101.0",
+    "sharp": "^0.35.3",
     "tsx": "^4.22.4"
   }
 }

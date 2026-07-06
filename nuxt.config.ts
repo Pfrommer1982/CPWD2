@@ -22,6 +22,10 @@ export default defineNuxtConfig({
     minify: true,
   },
 
+  routeRules: {
+    '/work/career-pulse': { redirect: { to: '/work/careerpulse', statusCode: 301 } },
+  },
+
   vite: {
     build: {
       rollupOptions: {

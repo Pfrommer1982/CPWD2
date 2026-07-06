@@ -2,5 +2,6 @@
   <rect width="32" height="32" fill="#000000"/>
   <line x1="2.688" y1="15.552" x2="28.288" y2="15.552" stroke="#C8C9C9" stroke-width="1"/>
   <line x1="15.36" y1="3.2" x2="15.36" y2="28.736" stroke="#C8C9C9" stroke-width="1"/>
-  <circle cx="15.36" cy="15.552" r="2" fill="#38965A"/>
+  <circle cx="15.36" cy="15.552" r="5" fill="#38965A" opacity="0.28"/>
+  <circle cx="15.36" cy="15.552" r="2.75" fill="#38965A"/>
 </svg>
