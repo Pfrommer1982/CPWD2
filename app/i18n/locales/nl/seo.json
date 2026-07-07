@@ -2,7 +2,7 @@
   "seo": {
     "home": {
       "title": "CPWD",
-      "description": "CPWD bouwt maatwerk websites en webapps vanuit Nederland. Webdesign, development en online lancering. Persoonlijk en resultaatgericht."
+      "description": "CPWD is een webdevelopment-bureau uit Nederland. Maatwerk websites, webapps en cloud hosting. Webdesign, development en online lancering."
     },
     "about": {
       "title": "Over",
@@ -10,15 +10,15 @@
     },
     "work": {
       "title": "Werk",
-      "description": "Geselecteerde projecten van CPWD: maatwerk websites en webapps voor merken die online willen domineren."
+      "description": "Geselecteerde projecten van CPWD: maatwerk websites en webapps voor merken die online willen domineren. Webdevelopment uit Nederland."
     },
     "services": {
       "title": "Diensten",
-      "description": "Webdesign, webdevelopment, cloud hosting, motion en sound design. CPWD levert het complete traject van briefing tot livegang."
+      "description": "Webdesign, webdevelopment, cloud hosting, motion en sound design. CPWD levert het complete traject van briefing tot livegang in Nederland en daarbuiten."
     },
     "contact": {
       "title": "Contact",
-      "description": "Neem contact op met CPWD voor je volgende website- of webapp-project. Persoonlijk antwoord binnen 24 uur op werkdagen."
+      "description": "Neem contact op met CPWD voor je volgende website- of webapp-project. Webdevelopment-bureau uit Nederland. Persoonlijk antwoord binnen 24 uur op werkdagen."
     }
   }
 }

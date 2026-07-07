@@ -2,10 +2,15 @@
 definePageMeta({ layout: 'default' })
 
 const seo = useSectionTranslations('seo')
+const nav = useSectionTranslations('nav')
 
 useSeo(computed(() => ({
   title: seo.t('about.title'),
   description: seo.t('about.description'),
+  breadcrumbs: [
+    { name: 'CPWD', path: '/' },
+    { name: nav.t('about'), path: '/about' },
+  ],
 })))
 </script>
 

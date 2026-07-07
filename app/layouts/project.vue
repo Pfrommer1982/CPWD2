@@ -1,6 +1,6 @@
 <template>
   <div class="layout-project">
-    <SeoPersonSchema />
+    <SeoSiteSchema />
     <UiAppCursor />
     <UiAppNav />
     <main>

@@ -9,7 +9,9 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "i18n:validate": "tsx scripts/validate-i18n.ts",
-    "favicons": "node scripts/generate-favicons.mjs"
+    "favicons": "node scripts/generate-favicons.mjs",
+    "og-image": "node scripts/generate-og-image.mjs",
+    "seo:assets": "node scripts/generate-favicons.mjs && node scripts/generate-og-image.mjs"
   },
   "dependencies": {
     "@fontsource/dm-serif-display": "^5.2.8",

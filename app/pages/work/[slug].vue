@@ -6,6 +6,7 @@ definePageMeta({ layout: 'project' })
 
 const { locale } = useI18n()
 const projectI18n = useSectionTranslations('project')
+const nav = useSectionTranslations('nav')
 const localePath = useLocalePath()
 const route = useRoute()
 const imageKit = useImageKit()
@@ -22,8 +23,14 @@ useSeo({
   title: project.title,
   description: project.subtitle,
   image: imageKit.hero(project.heroImage),
+  imageAlt: project.title,
   type: 'article',
   canonicalPath: `/work/${project.slug}`,
+  breadcrumbs: [
+    { name: 'CPWD', path: '/' },
+    { name: nav.t('work'), path: '/work' },
+    { name: project.title, path: `/work/${project.slug}` },
+  ],
 })
 
 const nonDuoItems = computed(() =>

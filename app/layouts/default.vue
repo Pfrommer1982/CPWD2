@@ -18,7 +18,7 @@ function onLoaderComplete() {
 
 <template>
   <div class="layout">
-    <SeoPersonSchema />
+    <SeoSiteSchema />
     <UiAppLoader v-if="!loaderDone" @complete="onLoaderComplete" />
     <UiAppCursor />
     <UiAppNav />

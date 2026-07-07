@@ -5,11 +5,16 @@ definePageMeta({ layout: 'default' })
 
 const work = useSectionTranslations('work')
 const seo = useSectionTranslations('seo')
+const nav = useSectionTranslations('nav')
 const localePath = useLocalePath()
 
 useSeo(computed(() => ({
   title: seo.t('work.title'),
   description: seo.t('work.description'),
+  breadcrumbs: [
+    { name: 'CPWD', path: '/' },
+    { name: nav.t('work'), path: '/work' },
+  ],
 })))
 
 const sortedProjects = computed(() =>
