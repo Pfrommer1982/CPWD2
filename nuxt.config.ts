@@ -84,6 +84,7 @@ export default defineNuxtConfig({
     public: {
       imagekitUrlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://www.cpwd.nl',
+      googleSiteVerification: process.env.NUXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
     },
   },
 

@@ -211,7 +211,6 @@ onMounted(async () => {
                 :connecting="about.t('page.operator.feedConnecting')"
                 :downloading="about.t('page.operator.feedDownloading')"
                 :live="about.t('page.operator.feedLive')"
-                :placeholder="about.t('page.operator.photoPlaceholder')"
               />
             </div>
             <div class="about-chapter__content" data-chapter-side="right">

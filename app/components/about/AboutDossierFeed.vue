@@ -4,7 +4,6 @@ const props = defineProps<{
   connecting: string
   downloading: string
   live: string
-  placeholder: string
 }>()
 
 type FeedPhase = 'idle' | 'connecting' | 'downloading' | 'live'
@@ -373,7 +372,6 @@ onUnmounted(() => {
       <div class="dossier-feed__frame" aria-hidden="true" />
 
       <span v-if="phase === 'live'" class="dossier-feed__live font-mono">{{ live }}</span>
-      <span class="dossier-feed__placeholder font-mono">{{ placeholder }}</span>
     </div>
   </div>
 </template>
@@ -721,22 +719,6 @@ onUnmounted(() => {
       animation: feed-live-blink 1.2s ease-in-out infinite;
       vertical-align: middle;
     }
-  }
-
-  &__placeholder {
-    position: absolute;
-    bottom: 16px;
-    left: 16px;
-    right: 16px;
-    font-size: 9px;
-    letter-spacing: $tracking-wider;
-    text-transform: uppercase;
-    color: rgba($color-gold, 0.7);
-    background: rgba($color-bg, 0.75);
-    padding: 8px 10px;
-    border: 1px solid rgba($color-gold, 0.2);
-    text-align: center;
-    z-index: 12;
   }
 }
 
