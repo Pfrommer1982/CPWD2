@@ -12,7 +12,10 @@ export function useLenis() {
     if (lenisInstance) return lenisInstance
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) return null
+    const coarsePointer = window.matchMedia('(pointer: coarse)').matches
+    const hasTouch = navigator.maxTouchPoints > 0
+    // iOS Safari scroll is smoother with native momentum than JS smoothing.
+    if (prefersReduced || coarsePointer || hasTouch) return null
 
     const LenisClass = (await import('lenis')).default
     const { init: initGsap } = useGsap()

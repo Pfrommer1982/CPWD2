@@ -32,6 +32,7 @@ let grainCtx: CanvasRenderingContext2D | null = null
 let grainW = 0
 let grainH = 0
 let grainResizeObserver: ResizeObserver | null = null
+const lowPowerMode = ref(false)
 
 const GRAIN_ALPHA = 28
 const GRAIN_FPS = 24
@@ -87,6 +88,7 @@ function grainLoop(currentTime: number) {
 function startFilmGrain() {
   if (!import.meta.client || grainRunning) return
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  if (lowPowerMode.value) return
 
   resizeGrainCanvas()
   grainLastTime = 0
@@ -214,10 +216,12 @@ async function runSequence() {
   if (token !== sequenceToken) return
 
   phase.value = 'live'
-  triggerBurst()
-  await wait(120)
-  triggerBurst()
-  startGlitch()
+  if (!lowPowerMode.value) {
+    triggerBurst()
+    await wait(120)
+    triggerBurst()
+    startGlitch()
+  }
 }
 
 function resetSequence() {
@@ -232,6 +236,7 @@ function resetSequence() {
 
 onMounted(async () => {
   if (!import.meta.client) return
+  lowPowerMode.value = window.matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 0
   await nextTick()
   if (!rootRef.value) return
 

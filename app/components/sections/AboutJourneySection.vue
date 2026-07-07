@@ -11,7 +11,14 @@ const localePath = useLocalePath()
 const { parseHighlightedBody } = useSplitText()
 
 const isMobile = useMediaQuery('(max-width: 1099px)', { ssrWidth: 1100 })
+const isCoarsePointer = useMediaQuery('(pointer: coarse)', { ssrWidth: 1100 })
+const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)', { ssrWidth: 1100 })
 const layout = computed(() => (isMobile.value ? 'mobile' : 'desktop'))
+const showIntelBackdrop = computed(() => (
+  layout.value === 'desktop'
+  && !isCoarsePointer.value
+  && !prefersReducedMotion.value
+))
 
 const rootRef = ref<HTMLElement | null>(null)
 const heroRef = ref<HTMLElement | null>(null)
@@ -110,7 +117,11 @@ onMounted(async () => {
 
 <template>
   <div ref="rootRef" class="about-journey">
-    <AboutIntelBackdrop :root="rootRef" :ready="journeyReady" />
+    <AboutIntelBackdrop
+      v-if="showIntelBackdrop"
+      :root="rootRef"
+      :ready="journeyReady"
+    />
 
     <header ref="heroRef" class="about-journey__hero">
       <div class="about-journey__hero-inner container">
