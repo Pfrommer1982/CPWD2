@@ -2,6 +2,7 @@
 import type { Group, Line, Mesh, PerspectiveCamera, Scene, WebGLRenderer } from 'three'
 import { COMMS_RGB, COMMS_RGB_LIGHT, COMMS_THREE, COMMS_THREE_LIGHT } from '~/constants/brand'
 import { NL_OUTLINE_CENTROID, NL_OUTLINE_RINGS } from '~/data/nl-outline'
+import { resolveElementRef, type TemplateRefValue } from '~/utils/dom'
 
 const props = defineProps<{
   root?: HTMLElement | null
@@ -157,8 +158,8 @@ let scrollProgressTarget = 0
 const sectionOpacities = new Float32Array(SECTION_META.length)
 const sectionOpacitiesTarget = new Float32Array(SECTION_META.length)
 
-let globePos = { x: SECTION_META[0].globeX, y: SECTION_META[0].globeY }
-let globePosTarget = { x: SECTION_META[0].globeX, y: SECTION_META[0].globeY }
+let globePos = { x: SECTION_META[0]!.globeX, y: SECTION_META[0]!.globeY }
+let globePosTarget = { x: SECTION_META[0]!.globeX, y: SECTION_META[0]!.globeY }
 let finaleBlend = 0
 let finaleBlendTarget = 0
 let finaleRotate = 0
@@ -170,10 +171,11 @@ let nlProjectVec: import('three').Vector3 | null = null
 const nlScreen = { x: 0, y: 0, visible: false }
 let lockUiTypewriterStart = -1
 
-function unwrapEl(el: HTMLElement | null | undefined | { value?: HTMLElement | null }) {
+function unwrapEl(el: TemplateRefValue | HTMLElement | null | undefined | { value?: HTMLElement | null }): HTMLElement | null {
   if (!el) return null
-  if (typeof el === 'object' && 'value' in el) return el.value ?? null
-  return el
+  if (typeof el === 'object' && 'value' in el && !('$el' in el)) return el.value ?? null
+  if (el instanceof HTMLElement) return el
+  return resolveElementRef(el as TemplateRefValue)
 }
 
 function chaptersList() {
@@ -212,6 +214,7 @@ function globePathAt(t: number) {
   const u = smoothstep(pos - i)
   const a = SECTION_META[i]
   const b = SECTION_META[i + 1]
+  if (!a || !b) return { x: 0, y: 0 }
   return {
     x: lerp(a.globeX, b.globeX, u),
     y: lerp(a.globeY, b.globeY, u),
@@ -297,7 +300,7 @@ function landMapSample(latRad: number, lonDeg: number) {
   const cx = Math.max(0, Math.min(landMask.width - 1, x))
   const cy = Math.max(0, Math.min(landMask.height - 1, y))
   const idx = (cy * landMask.width + cx) * 4
-  return landMask.data[idx] / 255
+  return (landMask.data[idx] ?? 0) / 255
 }
 
 function landDiffuse(x: number, y: number, z: number, radius: number) {
@@ -392,8 +395,8 @@ function refreshSectionTargets() {
 
   const vh = window.innerHeight
   const finale = finaleElement()
-  const sections: (HTMLElement | null | undefined)[] = [
-    unwrapEl(props.hero),
+  const sections: (HTMLElement | null)[] = [
+    unwrapEl(props.hero ?? null),
     ...chaptersList(),
     finale,
   ]
@@ -404,7 +407,7 @@ function refreshSectionTargets() {
   })
 
   let total = 0
-  for (let i = 0; i < sectionOpacitiesTarget.length; i++) total += sectionOpacitiesTarget[i]
+  for (let i = 0; i < sectionOpacitiesTarget.length; i++) total += sectionOpacitiesTarget[i] ?? 0
   if (total < 0.01) sectionOpacitiesTarget[0] = 1
 
   updateFinaleBlendFromScroll()
@@ -416,7 +419,7 @@ function updateSmoothState() {
   const scrollEase = 0.032
 
   for (let i = 0; i < sectionOpacities.length; i++) {
-    sectionOpacities[i] = lerp(sectionOpacities[i], sectionOpacitiesTarget[i], opacityEase)
+    sectionOpacities[i] = lerp(sectionOpacities[i]!, sectionOpacitiesTarget[i]!, opacityEase)
   }
 
   scrollProgress = lerp(scrollProgress, scrollProgressTarget, scrollEase)
@@ -504,13 +507,13 @@ function updateStarTwinkle(timeMs: number) {
   const t = timeMs * 0.001
 
   for (let i = 0; i < starPhases.length; i++) {
-    const wave = Math.sin(t * starSpeeds[i] + starPhases[i])
-    const drift = Math.sin(t * starSpeeds[i] * 0.27 + starPhases[i] * 1.6) * 0.12
-    const tick = Math.floor(t * starSpeeds[i] * 1.2 + starPhases[i] * 0.4)
+    const wave = Math.sin(t * starSpeeds[i]! + starPhases[i]!)
+    const drift = Math.sin(t * starSpeeds[i]! * 0.27 + starPhases[i]! * 1.6) * 0.12
+    const tick = Math.floor(t * starSpeeds[i]! * 1.2 + starPhases[i]! * 0.4)
     const blink = seeded(tick * 17.3 + i * 4.9) > 0.974 ? 1.4 : 1
-    const twinkle = Math.min(1, Math.max(0.22, (starBaseBright[i] + wave * 0.28 + drift) * blink))
-    const depth = 0.58 + starDepthNorm[i] * 0.42
-    const gold = starIsGold[i] > 0.5
+    const twinkle = Math.min(1, Math.max(0.22, (starBaseBright[i]! + wave * 0.28 + drift) * blink))
+    const depth = 0.58 + starDepthNorm[i]! * 0.42
+    const gold = starIsGold[i]! > 0.5
 
     colors[i * 3] = (gold ? 0.27 : 0.95) * twinkle * depth
     colors[i * 3 + 1] = (gold ? 0.91 : 0.93) * twinkle * depth
@@ -558,11 +561,11 @@ async function initThree() {
       starSpeeds[i] = 0.3 + seeded(i * 8.3) * 1.5
       starBaseBright[i] = 0.48 + seeded(i * 9.7) * 0.44
       starIsGold[i] = seeded(i * 11.3) > 0.7 ? 1 : 0
-      starDepthNorm[i] = (starPos[i * 3 + 2] - starZMin) / (starZMax - starZMin)
+      starDepthNorm[i] = (starPos[i * 3 + 2]! - starZMin) / (starZMax - starZMin)
 
-      const gold = starIsGold[i] > 0.5
-      const depth = 0.58 + starDepthNorm[i] * 0.42
-      const b = starBaseBright[i] * depth
+      const gold = starIsGold[i]! > 0.5
+      const depth = 0.58 + starDepthNorm[i]! * 0.42
+      const b = starBaseBright[i]! * depth
       starColors[i * 3] = (gold ? 0.27 : 0.95) * b
       starColors[i * 3 + 1] = (gold ? 0.91 : 0.93) * b
       starColors[i * 3 + 2] = (gold ? 0.54 : 0.91) * b
@@ -599,6 +602,7 @@ async function initThree() {
     scene.add(starGroup)
 
     globeGroup = new THREE.Group()
+    const globe = globeGroup
 
     const dotTexture = createGlobePixelTexture(THREE)
     const haloTexture = createGlobeHaloTexture(THREE)
@@ -647,7 +651,7 @@ async function initThree() {
       }),
     )
     attachGlobeFacingShader(globeGlowPoints.material as import('three').PointsMaterial, 0.85)
-    globeGroup.add(globeGlowPoints)
+    globe.add(globeGlowPoints)
 
     globePoints = new THREE.Points(
       globeGeo,
@@ -663,7 +667,7 @@ async function initThree() {
       }),
     )
     attachGlobeFacingShader(globePoints.material as import('three').PointsMaterial)
-    globeGroup.add(globePoints)
+    globe.add(globePoints)
 
     atmosphereGlow = new THREE.Mesh(
       new THREE.SphereGeometry(1.61, 72, 72),
@@ -681,7 +685,7 @@ async function initThree() {
         blending: THREE.AdditiveBlending,
       }),
     )
-    globeGroup.add(atmosphereGlow)
+    globe.add(atmosphereGlow)
 
     const addNlRingLine = (
       ring: [number, number][],
@@ -696,7 +700,7 @@ async function initThree() {
       const geo = new THREE.BufferGeometry()
       geo.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3))
       const line = new THREE.LineLoop(geo, material)
-      globeGroup.add(line)
+      globe.add(line)
       return line
     }
 
@@ -746,7 +750,7 @@ async function initThree() {
     nlRing.lookAt(0, 0, 0)
     nlMarkerGroup.add(nlCore, nlRing)
     nlMarkerGroup.visible = false
-    globeGroup.add(nlMarkerGroup)
+    globe.add(nlMarkerGroup)
 
     ORBITAL_PATHS.forEach((path, i) => {
       const orbitGroup = new THREE.Group()
@@ -776,12 +780,12 @@ async function initThree() {
       satGroup.userData.orbit = path
       orbitGroup.add(satGroup)
 
-      globeGroup.add(orbitGroup)
+      globe.add(orbitGroup)
       orbitGroups.push(orbitGroup)
       satelliteGroups.push(satGroup)
     })
 
-    scene.add(globeGroup)
+    scene.add(globe)
 
     const resize = () => {
       if (!camera || !renderer || !wrapRef.value) return
@@ -927,7 +931,7 @@ function drawTelemetryBlock(
   feed.lines.forEach((line, i) => {
     let text = line
     if (line.includes(':') && i > 0) {
-      const [key] = line.split(':')
+      const [key = ''] = line.split(':')
       if (key.includes('LAT') || key.includes('LON')) {
         text = `${key}: ${(52 + Math.sin(time * 0.2 + feed.seed) * 3).toFixed(4)}`
       } else if (key.includes('PKT') || key.includes('HASH')) {
@@ -968,6 +972,7 @@ function drawSectionOverlay(
   if (opacity < 0.015) return
   if (index === FINALE_INDEX) return
   const meta = SECTION_META[index]
+  if (!meta) return
   const side = meta.globeX >= 0 ? 1 : -1
   const anchorX = w * (0.5 + meta.globeX * GLOBE_SCREEN_TRAVEL)
   const anchorY = h * (0.42 + meta.globeY * 0.12)
@@ -997,7 +1002,7 @@ function drawSectionOverlay(
   ctx.fillText(meta.label, tx, h * 0.12 + 12)
 
   meta.telemetry.forEach((line, li) => {
-    const [key] = line.split(':')
+    const [key = ''] = line.split(':')
     let val = line
     if (key.includes('HASH') || key.includes('PKT')) val = `${key}: ${telemetryValue(index + li, time, 'hex')}`
     ctx.fillStyle = `rgba(${DIM}, 0.28)`
@@ -1164,7 +1169,7 @@ function drawNetherlandsLock(
   const elapsed = lockUiTypewriterStart >= 0 ? time - lockUiTypewriterStart : 0
   const visibleLines = typewriterVisibleText(lines, elapsed)
   const inPause = typewriterInPause(elapsed, lines)
-  const typingDone = inPause || visibleLines.every((line, i) => line.length >= lines[i].length)
+  const typingDone = inPause || visibleLines.every((line, i) => line.length >= (lines[i]?.length ?? 0))
 
   ctx.globalAlpha = alpha
 
@@ -1217,7 +1222,7 @@ function drawNetherlandsLock(
 
   const cursorLineIdx = typingDone
     ? lines.length - 1
-    : visibleLines.findIndex((visible, i) => visible.length < lines[i].length)
+    : visibleLines.findIndex((visible, i) => visible.length < (lines[i]?.length ?? 0))
 
   visibleLines.forEach((visible, i) => {
     const y = panelY + padY + fontSize + i * lineH
@@ -1265,7 +1270,7 @@ function drawOverlay(time: number) {
 
   if (w >= 640) {
     for (let i = 0; i < SECTION_META.length; i++) {
-      drawSectionOverlay(ctx, w, h, i, sectionOpacities[i], time)
+      drawSectionOverlay(ctx, w, h, i, sectionOpacities[i]!, time)
     }
   }
 
@@ -1324,7 +1329,7 @@ function renderFrame(time: number) {
 
     if (atmosphereGlow) {
       const mat = atmosphereGlow.material as import('three').ShaderMaterial
-      mat.uniforms.intensity.value = lerp(0.58, 0.68, zoomAmt)
+      mat.uniforms.intensity!.value = lerp(0.58, 0.68, zoomAmt)
     }
 
     if (nlMarkerGroup) {
@@ -1374,14 +1379,15 @@ function stop() {
 
 async function bindScroll() {
   scrollTrigger?.kill()
-  if (!unwrapEl(props.root)) return
+  const root = unwrapEl(props.root ?? null)
+  if (!root) return
 
   const { init } = useGsap()
   await init()
   const { ScrollTrigger } = await import('gsap/ScrollTrigger')
 
   scrollTrigger = ScrollTrigger.create({
-    trigger: unwrapEl(props.root),
+    trigger: root,
     start: 'top top',
     end: 'bottom bottom',
     scrub: 1.4,

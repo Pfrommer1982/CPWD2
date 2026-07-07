@@ -10,6 +10,8 @@ const current = ref(props.initialIndex ?? 0)
 const lightboxRef = ref<HTMLElement>()
 const isTransitioning = ref(false)
 
+const activeImage = computed(() => props.images[current.value])
+
 function goTo(index: number) {
   if (isTransitioning.value || index === current.value) return
   isTransitioning.value = true
@@ -95,15 +97,15 @@ onUnmounted(() => {
             @before-leave="isTransitioning = true"
             @after-enter="isTransitioning = false"
           >
-            <figure :key="current" class="lightbox__figure">
+            <figure v-if="activeImage" :key="current" class="lightbox__figure">
               <img
-                :src="images[current].url"
-                :alt="images[current].alt"
+                :src="activeImage.url"
+                :alt="activeImage.alt"
                 class="lightbox__img"
                 draggable="false"
               >
               <figcaption class="lightbox__caption">
-                {{ images[current].alt }}
+                {{ activeImage.alt }}
               </figcaption>
             </figure>
           </Transition>

@@ -199,9 +199,9 @@ export function updateMissilePath(path: MissilePathRuntime, timeSec: number) {
   const u = idx - i0
 
   warhead.position.set(
-    lerp(positions[i0 * 3], positions[i1 * 3], u),
-    lerp(positions[i0 * 3 + 1], positions[i1 * 3 + 1], u),
-    lerp(positions[i0 * 3 + 2], positions[i1 * 3 + 2], u),
+    lerp(positions[i0 * 3] ?? 0, positions[i1 * 3] ?? 0, u),
+    lerp(positions[i0 * 3 + 1] ?? 0, positions[i1 * 3 + 1] ?? 0, u),
+    lerp(positions[i0 * 3 + 2] ?? 0, positions[i1 * 3 + 2] ?? 0, u),
   )
 
   const launching = progress < 0.06

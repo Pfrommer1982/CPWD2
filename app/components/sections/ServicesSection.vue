@@ -2,6 +2,7 @@
 import ServiceScene from '~/components/ServiceScene.vue'
 import { useMediaQuery } from '@vueuse/core'
 import { localeList, localeTags, resolveLocaleMessage, type ServiceLocaleItem } from '~/utils/i18n'
+import { resolveElementRef, type TemplateRefValue } from '~/utils/dom'
 
 const services = useSectionTranslations('services')
 const localePath = useLocalePath()
@@ -41,12 +42,14 @@ const sceneAccents = [
   'radial-gradient(ellipse 100% 80% at 50% 50%, rgba(56, 150, 90, 0.18) 0%, transparent 60%)',
 ]
 
-function setPanelRef(el: Element | null, index: number) {
-  if (el) panelRefs.value[index] = el as HTMLElement
+function setPanelRef(el: TemplateRefValue, index: number) {
+  const resolved = resolveElementRef(el)
+  if (resolved) panelRefs.value[index] = resolved
 }
 
-function setBgRef(el: Element | null, index: number) {
-  if (el) bgRefs.value[index] = el as HTMLElement
+function setBgRef(el: TemplateRefValue, index: number) {
+  const resolved = resolveElementRef(el)
+  if (resolved) bgRefs.value[index] = resolved
 }
 
 function titleWords(title: string) {

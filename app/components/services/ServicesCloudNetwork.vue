@@ -21,7 +21,7 @@ const nodes = [
   { id: 'tky', label: 'TKY', x: 86, y: 44 },
 ]
 
-const edges = [
+const edges: [string, string][] = [
   ['ams', 'lon'],
   ['ams', 'nyc'],
   ['ams', 'sgp'],
@@ -57,8 +57,11 @@ useVisibleTimeline({
 
   const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.6 })
 
-  tl.to(pulses[0], { scale: 1.8, opacity: 0.5, duration: 0.8, ease: 'power2.out' })
-  tl.to(pulses[0], { scale: 2.4, opacity: 0, duration: 0.8, ease: 'power1.in' }, '-=0.3')
+  const pulse = pulses[0]
+  if (pulse) {
+    tl.to(pulse, { scale: 1.8, opacity: 0.5, duration: 0.8, ease: 'power2.out' })
+    tl.to(pulse, { scale: 2.4, opacity: 0, duration: 0.8, ease: 'power1.in' }, '-=0.3')
+  }
 
   lines.forEach((line, i) => {
     tl.to(line, { strokeDashoffset: 0, opacity: 1, duration: 0.45, ease: 'power2.out' }, 0.15 + i * 0.12)
@@ -73,7 +76,7 @@ useVisibleTimeline({
   tl.to(lines, { opacity: 0.15, duration: 0.5 })
   tl.to(labels, { opacity: 0.35, scale: 0.85, duration: 0.5 }, '<')
   tl.set(lines, { strokeDashoffset: 100 })
-  tl.set(pulses[0], { scale: 0.6, opacity: 0 })
+  if (pulse) tl.set(pulse, { scale: 0.6, opacity: 0 })
 
   return tl
   },

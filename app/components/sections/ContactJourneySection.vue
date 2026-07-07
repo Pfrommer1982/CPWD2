@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useMediaQuery } from '@vueuse/core'
 import { localeList, resolveLocaleMessage } from '~/utils/i18n'
+import { resolveElementRef, type TemplateRefValue } from '~/utils/dom'
 import { CPWD_GITHUB_URL, CPWD_LINKEDIN_URL } from '~/constants/brand'
 
 const contact = useSectionTranslations('contact')
@@ -101,8 +102,9 @@ const txStatus = computed(() => {
   return contact.t('page.transmit.statusIdle')
 })
 
-function setChapterRef(el: Element | null, index: number) {
-  if (el) chapterRefs.value[index] = el as HTMLElement
+function setChapterRef(el: TemplateRefValue, index: number) {
+  const resolved = resolveElementRef(el)
+  if (resolved) chapterRefs.value[index] = resolved
 }
 
 function titleWords(title: string) {

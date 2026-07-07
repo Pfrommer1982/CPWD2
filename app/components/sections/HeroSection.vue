@@ -25,9 +25,14 @@ onMounted(async () => {
 
   const { gsap } = await import('gsap')
 
+  const label = labelEl.value
+  const bottom = bottomEl.value
+  const scroll = scrollEl.value
+  if (!label || !bottom || !scroll) return
+
   const tl = gsap.timeline({ delay: 0.5 })
 
-  tl.from(labelEl.value, {
+  tl.from(label, {
     opacity: 0,
     y: 20,
     duration: 0.8,
@@ -40,13 +45,13 @@ onMounted(async () => {
       stagger: 0.12,
       ease: 'power4.out',
     }, '-=0.4')
-    .from(bottomEl.value, {
+    .from(bottom, {
       opacity: 0,
       y: 30,
       duration: 0.8,
       ease: 'power3.out',
     }, '-=0.5')
-    .from(scrollEl.value, {
+    .from(scroll, {
       opacity: 0,
       duration: 0.6,
     }, '-=0.3')

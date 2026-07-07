@@ -50,7 +50,9 @@ export function updateRadarBlips(blips: RadarBlip[], time: number) {
   }
 
   for (let i = blips.length - 1; i >= 0; i--) {
-    if (time - blips[i].born > blips[i].ttl) blips.splice(i, 1)
+    const blip = blips[i]
+    if (!blip) continue
+    if (time - blip.born > blip.ttl) blips.splice(i, 1)
   }
 }
 

@@ -36,8 +36,8 @@ export function buildTacticalDataCells(count: number, seedOffset = 0, liveCount 
   return Array.from({ length: count }, (_, i) => {
     const n = i + seedOffset * 997
     const hex = Math.floor(seed(n * 4.1) * 0xffffff).toString(16).toUpperCase().padStart(6, '0')
-    const prefix = PREFIXES[i % PREFIXES.length]
-    const suffix = SUFFIXES[Math.floor(seed(n * 6.7) * SUFFIXES.length)]
+    const prefix = PREFIXES[i % PREFIXES.length] ?? 'SIG'
+    const suffix = SUFFIXES[Math.floor(seed(n * 6.7) * SUFFIXES.length)] ?? 'OK'
     const val = (seed(n * 8.3) * 9999).toFixed(seed(n * 9.1) > 0.5 ? 0 : 1)
     const live = liveIds.has(i)
 

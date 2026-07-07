@@ -133,10 +133,10 @@ function createStarLayer(
     baseBright[i] = 0.62 + globeSeeded(i * 9.7) * 0.38
     isGold[i] = globeSeeded(i * 11.3) > (1 - goldChance) ? 1 : 0
 
-    const depthNorm = (pos[i * 3 + 2] - zMin) / Math.max(zMax - zMin, 0.001)
+    const depthNorm = (pos[i * 3 + 2]! - zMin) / Math.max(zMax - zMin, 0.001)
     const depth = 0.52 + depthNorm * 0.48
-    const gold = isGold[i] > 0.5
-    const b = baseBright[i] * depth
+    const gold = isGold[i]! > 0.5
+    const b = baseBright[i]! * depth
     colors[i * 3] = (gold ? 0.27 : 0.95) * b
     colors[i * 3 + 1] = (gold ? 0.91 : 0.93) * b
     colors[i * 3 + 2] = (gold ? 0.54 : 0.91) * b
@@ -184,11 +184,11 @@ function updateStarTwinkle(
   const t = timeMs * 0.001
 
   for (let i = 0; i < phases.length; i++) {
-    const depthNorm = (geo.attributes.position!.array[i * 3 + 2] - zMin) / Math.max(zMax - zMin, 0.001)
+    const depthNorm = (geo.attributes.position!.array[i * 3 + 2]! - zMin) / Math.max(zMax - zMin, 0.001)
     const depth = 0.55 + depthNorm * 0.45
-    const wave = Math.sin(t * speeds[i] + phases[i])
-    const twinkle = Math.min(1, Math.max(0.45, baseBright[i] + wave * 0.22))
-    const gold = isGold[i] > 0.5
+    const wave = Math.sin(t * speeds[i]! + phases[i]!)
+    const twinkle = Math.min(1, Math.max(0.45, baseBright[i]! + wave * 0.22))
+    const gold = isGold[i]! > 0.5
 
     colors[i * 3] = (gold ? 0.27 : 0.95) * twinkle * depth
     colors[i * 3 + 1] = (gold ? 0.91 : 0.93) * twinkle * depth
@@ -641,7 +641,7 @@ function renderFrame(time: number) {
 
     if (atmosphereMesh) {
       const mat = atmosphereMesh.material as import('three').ShaderMaterial
-      mat.uniforms.intensity.value = lerp(0.78, 0.52, smoothProgress)
+      mat.uniforms.intensity!.value = lerp(0.78, 0.52, smoothProgress)
     }
 
     if (satelliteGroup) {

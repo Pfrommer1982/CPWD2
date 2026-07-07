@@ -25,7 +25,9 @@ function pseudoHash(input: string) {
 }
 
 function randomHexPair() {
-  return CIPHER[Math.floor(Math.random() * 16)] + CIPHER[Math.floor(Math.random() * 16)]
+  const a = CIPHER[Math.floor(Math.random() * 16)] ?? '0'
+  const b = CIPHER[Math.floor(Math.random() * 16)] ?? '0'
+  return a + b
 }
 
 function toCipherTokens(text: string) {

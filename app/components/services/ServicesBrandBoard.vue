@@ -30,16 +30,16 @@ useVisibleTimeline({
 
   if (reduced) {
     gsap.set(tileEls, { opacity: 1, scale: 1, rotateY: 0 })
-    gsap.set(ruler, { scaleX: 1, opacity: 0.6 })
+    if (ruler) gsap.set(ruler, { scaleX: 1, opacity: 0.6 })
     return null
   }
 
   gsap.set(tileEls, { opacity: 0, scale: 0.72, rotateY: -28 })
-  gsap.set(ruler, { scaleX: 0, opacity: 0 })
+  if (ruler) gsap.set(ruler, { scaleX: 0, opacity: 0 })
 
   const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.7 })
 
-  tl.to(ruler, { scaleX: 1, opacity: 1, duration: 0.5, ease: 'power2.out' })
+  if (ruler) tl.to(ruler, { scaleX: 1, opacity: 1, duration: 0.5, ease: 'power2.out' })
   tl.to(tileEls, {
     opacity: 1,
     scale: 1,
@@ -57,7 +57,7 @@ useVisibleTimeline({
     stagger: { each: 0.04, from: 'edges' },
     ease: 'power2.in',
   })
-  tl.to(ruler, { scaleX: 0, opacity: 0, duration: 0.3, ease: 'power2.in' }, '-=0.25')
+  if (ruler) tl.to(ruler, { scaleX: 0, opacity: 0, duration: 0.3, ease: 'power2.in' }, '-=0.25')
 
   return tl
   },

@@ -13,6 +13,14 @@ onMounted(async () => {
 
   const { gsap } = await import('gsap')
 
+  const setPosition = (target: HTMLElement | undefined, vars: { x?: number; y?: number }) => {
+    if (target) gsap.set(target, vars)
+  }
+
+  const tween = (target: HTMLElement | undefined, vars: gsap.TweenVars) => {
+    if (target) gsap.to(target, vars)
+  }
+
   let mouseX = 0
   let mouseY = 0
   let crossX = 0
@@ -21,13 +29,13 @@ onMounted(async () => {
   const onMove = (e: MouseEvent) => {
     mouseX = e.clientX
     mouseY = e.clientY
-    gsap.set(dotEl.value, { x: mouseX, y: mouseY })
+    setPosition(dotEl.value, { x: mouseX, y: mouseY })
   }
 
   const tick = () => {
     crossX += (mouseX - crossX) * 0.14
     crossY += (mouseY - crossY) * 0.14
-    gsap.set(crosshairEl.value, { x: crossX, y: crossY })
+    setPosition(crosshairEl.value, { x: crossX, y: crossY })
   }
 
   gsap.ticker.add(tick)
@@ -38,24 +46,24 @@ onMounted(async () => {
   }
 
   const setHover = () => {
-    gsap.to(crosshairEl.value, { scale: 1.25, duration: 0.25, ease: 'power2.out' })
-    gsap.to(dotEl.value, { scale: 1.4, duration: 0.2 })
+    tween(crosshairEl.value, { scale: 1.25, duration: 0.25, ease: 'power2.out' })
+    tween(dotEl.value, { scale: 1.4, duration: 0.2 })
     setStroke(STROKE_HOVER)
   }
 
   const setView = () => {
     if (labelEl.value) labelEl.value.textContent = 'VIEW'
-    gsap.to(crosshairEl.value, { scale: 1.55, duration: 0.3, ease: 'power2.out' })
-    gsap.to(dotEl.value, { scale: 0, duration: 0.2 })
+    tween(crosshairEl.value, { scale: 1.55, duration: 0.3, ease: 'power2.out' })
+    tween(dotEl.value, { scale: 0, duration: 0.2 })
     setStroke(STROKE_HOVER)
-    gsap.to(labelEl.value, { opacity: 1, duration: 0.2 })
+    tween(labelEl.value, { opacity: 1, duration: 0.2 })
   }
 
   const resetCursor = () => {
-    gsap.to(crosshairEl.value, { scale: 1, duration: 0.3, ease: 'power2.out' })
-    gsap.to(dotEl.value, { scale: 1, duration: 0.2 })
+    tween(crosshairEl.value, { scale: 1, duration: 0.3, ease: 'power2.out' })
+    tween(dotEl.value, { scale: 1, duration: 0.2 })
     setStroke(STROKE_DEFAULT)
-    gsap.to(labelEl.value, { opacity: 0, duration: 0.1 })
+    tween(labelEl.value, { opacity: 0, duration: 0.1 })
   }
 
   function bindEl(el: Element) {

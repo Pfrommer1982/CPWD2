@@ -1,9 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { createI18nLocaleConfig } from './app/i18n/config'
+
+const rootDir = dirname(fileURLToPath(import.meta.url))
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: false },
+
+  alias: {
+    '~/types': resolve(rootDir, 'types'),
+  },
 
   modules: [
     '@nuxtjs/i18n',
@@ -30,9 +38,9 @@ export default defineNuxtConfig({
     build: {
       rollupOptions: {
         output: {
-          manualChunks: {
-            gsap: ['gsap'],
-            three: ['three'],
+          manualChunks(id) {
+            if (id.includes('node_modules/gsap')) return 'gsap'
+            if (id.includes('node_modules/three')) return 'three'
           },
         },
       },
@@ -62,9 +70,8 @@ export default defineNuxtConfig({
   i18n: {
     restructureDir: 'app/i18n',
     langDir: 'locales',
-    lazy: true,
     defaultLocale: 'nl',
-    fallbackLocale: 'en',
+    baseUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://www.cpwd.nl',
     locales: createI18nLocaleConfig(),
     strategy: 'no_prefix',
     vueI18n: './i18n.config.ts',

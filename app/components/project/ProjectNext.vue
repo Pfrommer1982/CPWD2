@@ -1,26 +1,26 @@
 <script setup lang="ts">
 import type { Project } from '~/types'
 
-defineProps<{ project: Project }>()
-const project = useSectionTranslations('project')
+const props = defineProps<{ project: Project }>()
+const projectI18n = useSectionTranslations('project')
 const localePath = useLocalePath()
 const { setCursorState } = useCursor()
 </script>
 
 <template>
   <NuxtLink
-    v-if="project"
-    :to="localePath(`/work/${project.slug}`)"
+    v-if="props.project"
+    :to="localePath(`/work/${props.project.slug}`)"
     class="project-next"
     @mouseenter="setCursorState('view')"
     @mouseleave="setCursorState('default')"
   >
-    <span class="section-label project-next__label">{{ project.t('next') }}</span>
+    <span class="section-label project-next__label">{{ projectI18n.t('next') }}</span>
     <h3 class="project-next__title font-display">
-      {{ project.title }}
+      {{ props.project.title }}
     </h3>
     <div class="project-next__image-wrap">
-      <img :src="project.thumbnail" :alt="project.title" loading="lazy" class="project-next__image">
+      <img :src="props.project.thumbnail" :alt="props.project.title" loading="lazy" class="project-next__image">
     </div>
     <span class="project-next__arrow">→</span>
   </NuxtLink>

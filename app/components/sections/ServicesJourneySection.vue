@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ServiceScene from '~/components/ServiceScene.vue'
 import { useMediaQuery } from '@vueuse/core'
-import { localeList, localeTags, resolveLocaleMessage, type ServiceLocaleItem } from '~/utils/i18n'
+import { resolveElementRef, type TemplateRefValue } from '~/utils/dom'
 
 const services = useSectionTranslations('services')
 const localePath = useLocalePath()
@@ -27,8 +27,9 @@ const items = computed(() => {
   } satisfies ServiceLocaleItem))
 })
 
-function setChapterRef(el: Element | null, index: number) {
-  if (el) chapterRefs.value[index] = el as HTMLElement
+function setChapterRef(el: TemplateRefValue, index: number) {
+  const resolved = resolveElementRef(el)
+  if (resolved) chapterRefs.value[index] = resolved
 }
 
 function titleWords(title: string) {

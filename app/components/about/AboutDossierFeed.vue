@@ -241,6 +241,7 @@ onMounted(async () => {
 
   observer = new IntersectionObserver(
     ([entry]) => {
+      if (!entry) return
       isIntersecting.value = entry.isIntersecting
       if (entry.isIntersecting) scheduleVisibilityCheck()
       else cancelAnimationFrame(visibilityFrame)

@@ -28,35 +28,37 @@ useVisibleTimeline({
 
     if (!ring || !specimen) return null
 
+    const crosshairDot = crosshair?.querySelector('.svc-design__crosshair-dot') ?? null
+
     if (reduced) {
       gsap.set(ring, { strokeDashoffset: 0, opacity: 0.7 })
-      gsap.set(grid, { opacity: 0.45 })
+      if (grid) gsap.set(grid, { opacity: 0.45 })
       gsap.set(phi, { strokeDashoffset: 0, opacity: 0.5 })
       gsap.set(specimen, { opacity: 1, scale: 1, filter: 'blur(0px)' })
       gsap.set(baselines, { scaleX: 1, opacity: 0.55 })
       gsap.set(chips, { opacity: 1, scale: 1 })
-      gsap.set(crosshair, { opacity: 0.85 })
-      gsap.set(crosshair?.querySelector('.svc-design__crosshair-dot'), { scale: 1 })
-      gsap.set(lock, { opacity: 1, y: 0 })
+      if (crosshair) gsap.set(crosshair, { opacity: 0.85 })
+      if (crosshairDot) gsap.set(crosshairDot, { scale: 1 })
+      if (lock) gsap.set(lock, { opacity: 1, y: 0 })
       gsap.set(readouts, { opacity: 0.7, y: 0 })
       return null
     }
 
     gsap.set(ring, { strokeDashoffset: 420, opacity: 0 })
-    gsap.set(grid, { opacity: 0 })
+    if (grid) gsap.set(grid, { opacity: 0 })
     gsap.set(phi, { strokeDashoffset: 120, opacity: 0 })
     gsap.set(specimen, { opacity: 0, scale: 0.88, filter: 'blur(6px)' })
     gsap.set(baselines, { scaleX: 0, opacity: 0, transformOrigin: 'left center' })
     gsap.set(chips, { opacity: 0, scale: 0.6 })
-    gsap.set(crosshair, { opacity: 0 })
-    gsap.set(crosshair?.querySelector('.svc-design__crosshair-dot'), { scale: 0.4 })
-    gsap.set(lock, { opacity: 0, y: 8 })
+    if (crosshair) gsap.set(crosshair, { opacity: 0 })
+    if (crosshairDot) gsap.set(crosshairDot, { scale: 0.4 })
+    if (lock) gsap.set(lock, { opacity: 0, y: 8 })
     gsap.set(readouts, { opacity: 0, y: 6 })
 
     const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.85 })
 
     tl.to(ring, { strokeDashoffset: 0, opacity: 0.75, duration: 0.7, ease: 'power2.out' })
-    tl.to(grid, { opacity: 0.5, duration: 0.45, ease: 'power1.out' }, 0.15)
+    if (grid) tl.to(grid, { opacity: 0.5, duration: 0.45, ease: 'power1.out' }, 0.15)
     tl.to(phi, {
       strokeDashoffset: 0,
       opacity: 0.55,
@@ -92,27 +94,32 @@ useVisibleTimeline({
       stagger: 0.05,
       ease: 'power2.out',
     }, 0.75)
-    tl.to(crosshair, { opacity: 1, duration: 0.35, ease: 'power2.out' }, 0.9)
-    tl.fromTo(crosshair?.querySelector('.svc-design__crosshair-dot'), {
-      scale: 0.4,
-    }, {
-      scale: 1,
-      duration: 0.35,
-      ease: 'back.out(2)',
-    }, 0.9)
-    tl.to(lock, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }, 1)
+    if (crosshair) tl.to(crosshair, { opacity: 1, duration: 0.35, ease: 'power2.out' }, 0.9)
+    if (crosshairDot) {
+      tl.fromTo(crosshairDot, {
+        scale: 0.4,
+      }, {
+        scale: 1,
+        duration: 0.35,
+        ease: 'back.out(2)',
+      }, 0.9)
+    }
+    if (lock) tl.to(lock, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }, 1)
     tl.to({}, { duration: 1.4 })
-    tl.to([lock, crosshair, readouts], {
-      opacity: 0,
-      duration: 0.25,
-      stagger: 0.03,
-      ease: 'power1.in',
-    }, 2.55)
+    const fadeTargets = [lock, crosshair, ...readouts].filter(Boolean)
+    if (fadeTargets.length) {
+      tl.to(fadeTargets, {
+        opacity: 0,
+        duration: 0.25,
+        stagger: 0.03,
+        ease: 'power1.in',
+      }, 2.55)
+    }
     tl.to(chips, { opacity: 0, scale: 0.85, duration: 0.3, stagger: 0.03 }, 2.55)
     tl.to(baselines, { opacity: 0, duration: 0.25 }, 2.6)
     tl.to(specimen, { opacity: 0, scale: 0.94, filter: 'blur(4px)', duration: 0.35 }, 2.65)
     tl.to(phi, { opacity: 0, duration: 0.25, stagger: 0.03 }, 2.65)
-    tl.to(grid, { opacity: 0, duration: 0.25 }, 2.7)
+    if (grid) tl.to(grid, { opacity: 0, duration: 0.25 }, 2.7)
     tl.to(ring, { strokeDashoffset: 420, opacity: 0, duration: 0.45, ease: 'power2.in' }, 2.7)
 
     return tl

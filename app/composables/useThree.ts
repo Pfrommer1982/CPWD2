@@ -72,21 +72,26 @@ export function useThree(canvasRef: Ref<HTMLCanvasElement | null>) {
     const startTime = performance.now()
     let animationId = 0
 
+    const positionAttr = geometry.attributes.position!
+
     function animate() {
       animationId = requestAnimationFrame(animate)
       const elapsed = (performance.now() - startTime) / 1000
-      const pos = geometry.attributes.position.array as Float32Array
+      const pos = positionAttr.array as Float32Array
 
       for (let i = 0; i < particleCount; i++) {
-        pos[i * 3] += velocities[i * 3] + Math.sin(elapsed + i) * 0.0005
-        pos[i * 3 + 1] += velocities[i * 3 + 1] + Math.cos(elapsed * 0.5 + i) * 0.0005
-        pos[i * 3 + 2] += velocities[i * 3 + 2]
+        const vx = velocities[i * 3] ?? 0
+        const vy = velocities[i * 3 + 1] ?? 0
+        const vz = velocities[i * 3 + 2] ?? 0
+        pos[i * 3] = (pos[i * 3] ?? 0) + vx + Math.sin(elapsed + i) * 0.0005
+        pos[i * 3 + 1] = (pos[i * 3 + 1] ?? 0) + vy + Math.cos(elapsed * 0.5 + i) * 0.0005
+        pos[i * 3 + 2] = (pos[i * 3 + 2] ?? 0) + vz
 
-        if (Math.abs(pos[i * 3]) > 10) velocities[i * 3] *= -1
-        if (Math.abs(pos[i * 3 + 1]) > 10) velocities[i * 3 + 1] *= -1
+        if (Math.abs(pos[i * 3] ?? 0) > 10) velocities[i * 3] = (velocities[i * 3] ?? 0) * -1
+        if (Math.abs(pos[i * 3 + 1] ?? 0) > 10) velocities[i * 3 + 1] = (velocities[i * 3 + 1] ?? 0) * -1
       }
 
-      geometry.attributes.position.needsUpdate = true
+      positionAttr.needsUpdate = true
       particles.rotation.y = elapsed * 0.02
 
       if (onAnimate && context) {

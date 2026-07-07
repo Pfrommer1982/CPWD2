@@ -124,7 +124,7 @@ function landMapSample(landMask: ImageData | null, latRad: number, lonDeg: numbe
   const cx = Math.max(0, Math.min(landMask.width - 1, x))
   const cy = Math.max(0, Math.min(landMask.height - 1, y))
   const idx = (cy * landMask.width + cx) * 4
-  return landMask.data[idx] / 255
+  return (landMask.data[idx] ?? 0) / 255
 }
 
 function landDiffuse(x: number, y: number, z: number, radius: number) {

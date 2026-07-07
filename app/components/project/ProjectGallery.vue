@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { GalleryItem } from '~/types'
+import type { ProjectGalleryItem } from '~/data/projects'
 
-defineProps<{ items: GalleryItem[] }>()
+defineProps<{ items: ProjectGalleryItem[] }>()
 
 const galleryRef = ref<HTMLElement | null>(null)
 
@@ -38,13 +38,13 @@ onMounted(async () => {
       class="gallery-item"
       :class="`gallery-item--${item.layout}`"
     >
-      <template v-if="item.type === 'image'">
-        <img :src="item.url" :alt="item.caption || ''" loading="lazy" class="gallery-item__media">
+      <template v-if="item.type === 'image' || !item.type">
+        <img :src="item.src" :alt="item.alt || item.caption || ''" loading="lazy" class="gallery-item__media">
       </template>
       <template v-else-if="item.type === 'video'">
-        <video :src="item.url" controls class="gallery-item__media" />
+        <video :src="item.src" controls class="gallery-item__media" />
       </template>
-      <p v-if="item.caption && (item.layout === 'left-text' || item.layout === 'right-text')" class="gallery-item__caption">
+      <p v-if="item.caption" class="gallery-item__caption">
         {{ item.caption }}
       </p>
     </div>

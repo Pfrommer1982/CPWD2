@@ -68,6 +68,9 @@ onMounted(async () => {
 
   const { createContext } = useGsap()
   await createContext(pageRef.value, async () => {
+    const page = pageRef.value
+    if (!page) return
+
     const { init } = useGsap()
     const gsap = await init()
     if (!gsap) return
@@ -161,7 +164,7 @@ onMounted(async () => {
       )
     })
 
-    const videoMedia = pageRef.value.querySelector('.project-video__media')
+    const videoMedia = page.querySelector('.project-video__media')
     if (videoMedia) {
       gsap.fromTo(
         videoMedia,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { localeList, resolveLocaleMessage } from '~/utils/i18n'
+import { resolveElementRef, type TemplateRefValue } from '~/utils/dom'
 import { CPWD_GITHUB_URL, CPWD_LINKEDIN_URL } from '~/constants/brand'
 
 interface FinaleRow {
@@ -30,8 +30,9 @@ const rows = computed(() => {
   })
 })
 
-function setTextRef(el: Element | null, index: number) {
-  if (el) textRefs.value[index] = el as HTMLElement
+function setTextRef(el: TemplateRefValue, index: number) {
+  const resolved = resolveElementRef(el)
+  if (resolved) textRefs.value[index] = resolved
 }
 
 function rowHref(row: FinaleRow): string | undefined {

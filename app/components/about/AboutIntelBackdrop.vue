@@ -87,8 +87,11 @@ function updateStarTwinkle(timeMs: number) {
   const t = timeMs * 0.001
 
   for (let i = 0; i < starPhases.length; i++) {
-    const wave = Math.sin(t * starSpeeds[i] + starPhases[i])
-    const twinkle = Math.min(1, Math.max(0.25, starBaseBright[i] + wave * 0.22))
+    const speed = starSpeeds[i]!
+    const phase = starPhases[i]!
+    const bright = starBaseBright[i]!
+    const wave = Math.sin(t * speed + phase)
+    const twinkle = Math.min(1, Math.max(0.25, bright + wave * 0.22))
     colors[i * 3] = 0.95 * twinkle
     colors[i * 3 + 1] = 0.91 * twinkle
     colors[i * 3 + 2] = 0.82 * twinkle
@@ -123,7 +126,7 @@ async function initThree() {
     starPhases[i] = seeded(i * 7.1) * Math.PI * 2
     starSpeeds[i] = 0.3 + seeded(i * 8.3) * 1.2
     starBaseBright[i] = 0.45 + seeded(i * 9.7) * 0.4
-    const b = starBaseBright[i]
+    const b = starBaseBright[i]!
     starColors[i * 3] = 0.95 * b
     starColors[i * 3 + 1] = 0.91 * b
     starColors[i * 3 + 2] = 0.82 * b
@@ -228,7 +231,9 @@ function updateRadarBlips(time: number) {
   }
 
   for (let i = radarBlips.length - 1; i >= 0; i--) {
-    if (time - radarBlips[i].born > radarBlips[i].ttl) radarBlips.splice(i, 1)
+    const blip = radarBlips[i]
+    if (!blip) continue
+    if (time - blip.born > blip.ttl) radarBlips.splice(i, 1)
   }
 }
 

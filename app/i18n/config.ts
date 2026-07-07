@@ -16,7 +16,7 @@ export const I18N_ROOT = join(process.cwd(), 'app/i18n/locales')
 
 export function getNamespaceFiles(): string[] {
   return readdirSync(join(I18N_ROOT, I18N_DEFAULT_LOCALE))
-    .filter(file => file.endsWith('.json'))
+    .filter((file: string) => file.endsWith('.json'))
     .sort()
 }
 

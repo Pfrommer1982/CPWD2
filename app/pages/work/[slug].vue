@@ -44,10 +44,12 @@ const duoPairs = computed(() => {
   const duos = project.gallery.filter(item => item.layout === 'duo')
   const pairs: ProjectGalleryItem[][] = []
   for (let i = 0; i < duos.length; i += 2) {
-    if (duos[i + 1]) {
-      pairs.push([duos[i], duos[i + 1]])
-    } else {
-      pairs.push([duos[i]])
+    const first = duos[i]
+    const second = duos[i + 1]
+    if (first && second) {
+      pairs.push([first, second])
+    } else if (first) {
+      pairs.push([first])
     }
   }
   return pairs

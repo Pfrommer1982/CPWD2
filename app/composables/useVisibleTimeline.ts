@@ -1,7 +1,8 @@
 import type { Ref } from 'vue'
+import type gsap from 'gsap'
 
 interface VisibleTimelineContext {
-  gsap: typeof import('gsap').gsap
+  gsap: typeof gsap
   reduced: boolean
 }
 
@@ -9,7 +10,7 @@ interface VisibleTimelineOptions {
   root: Ref<HTMLElement | null>
   active?: Ref<boolean>
   staticMode?: Ref<boolean>
-  factory: (ctx: VisibleTimelineContext) => import('gsap').gsap.core.Timeline | null | void
+  factory: (ctx: VisibleTimelineContext) => gsap.core.Timeline | null | void
 }
 
 export async function whenSceneReady(check: () => boolean, run: () => void, attempts = 12) {
@@ -25,8 +26,8 @@ export async function whenSceneReady(check: () => boolean, run: () => void, atte
 }
 
 export function useVisibleTimeline({ root, active, staticMode, factory }: VisibleTimelineOptions) {
-  let gsapCtx: ReturnType<typeof import('gsap').gsap.context> | null = null
-  let timeline: import('gsap').gsap.core.Timeline | null = null
+  let gsapCtx: ReturnType<typeof gsap.context> | null = null
+  let timeline: gsap.core.Timeline | null = null
   let built = false
   let observer: IntersectionObserver | null = null
   let inView = false
@@ -71,8 +72,8 @@ export function useVisibleTimeline({ root, active, staticMode, factory }: Visibl
     if (!ready || !root.value) return
 
     const { init } = useGsap()
-    const gsap = await init()
-    if (!gsap) return
+    const gsapInstance = await init()
+    if (!gsapInstance) return
 
     gsapCtx?.revert()
     timeline?.kill()
@@ -81,8 +82,8 @@ export function useVisibleTimeline({ root, active, staticMode, factory }: Visibl
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    gsapCtx = gsap.context(() => {
-      const tl = factory({ gsap, reduced })
+    gsapCtx = gsapInstance.context(() => {
+      const tl = factory({ gsap: gsapInstance, reduced })
       if (!tl) return
 
       timeline = tl.paused(true)

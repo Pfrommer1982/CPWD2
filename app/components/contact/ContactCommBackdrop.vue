@@ -358,7 +358,7 @@ function drawHud(ctx: CanvasRenderingContext2D, w: number, h: number, time: numb
     [insets.side, h - insets.bottom],
     [w - insets.side, h - insets.bottom],
   ]
-  corners.forEach(([x, y], i) => {
+  corners.forEach(([x = 0, y = 0], i) => {
     ctx.strokeStyle = `rgba(${COMMS}, ${0.18 + scroll * 0.14})`
     ctx.beginPath()
     const s = 16
