@@ -1,10 +1,13 @@
 <script setup lang="ts">
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   src: string
   poster?: string
   caption?: string
   accentColor?: string
-}>()
+  large?: boolean
+}>(), {
+  large: false,
+})
 
 const projectI18n = useSectionTranslations('project')
 const imageKit = useImageKit()
@@ -151,6 +154,7 @@ onUnmounted(() => {
   <div
     ref="rootRef"
     class="project-video"
+    :class="{ 'project-video--large': large }"
     :style="{ '--video-accent': accent }"
   >
     <div class="project-video__media">
@@ -375,6 +379,39 @@ onUnmounted(() => {
 
       &--expand {
         margin-left: auto;
+      }
+    }
+  }
+
+  &--large {
+    .project-video__media {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      background: #000;
+      border-block: 1px solid $color-border;
+      aspect-ratio: unset;
+      min-height: unset;
+    }
+
+    .project-video__player {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: none;
+      object-fit: contain;
+
+      @media (min-aspect-ratio: 16/9) {
+        width: auto;
+        height: clamp(360px, 88svh, 1080px);
+        max-width: 100vw;
+        margin-inline: auto;
+      }
+
+      @media (max-aspect-ratio: 16/9) {
+        width: 100%;
+        height: auto;
+        max-height: 72svh;
       }
     }
   }

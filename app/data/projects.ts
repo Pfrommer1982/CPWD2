@@ -210,7 +210,7 @@ export const projects: Project[] = [
         },
       },
       video: {
-        src: `${CP}/CareerPulseInstr.mp4`,
+        src: `${CP}/CareerPulse Vid.mp4`,
         title: { nl: 'Platform demo', en: 'Platform demo' },
         body: {
           nl: 'Walkthrough door CareerPulse: van homepage tot CV-studio, templates en vacaturezoeker.',

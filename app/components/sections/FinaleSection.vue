@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { localeList, resolveLocaleMessage } from '~/utils/i18n'
+import { CPWD_GITHUB_URL, CPWD_LINKEDIN_URL } from '~/constants/brand'
 
 interface FinaleRow {
   text: string
@@ -37,8 +38,8 @@ function rowHref(row: FinaleRow): string | undefined {
   switch (row.action) {
     case 'contact': return localePath('/contact')
     case 'email': return 'mailto:info@cpwd.nl'
-    case 'linkedin': return 'https://linkedin.com'
-    case 'github': return 'https://github.com'
+    case 'linkedin': return CPWD_LINKEDIN_URL
+    case 'github': return CPWD_GITHUB_URL
     default: return undefined
   }
 }

@@ -1,6 +1,6 @@
 export const CPWD_LOGO_PATH = '/cpwd/CPWD-logo.png'
 export const CPWD_GITHUB_URL = 'https://github.com/Pfrommer1982'
-export const CPWD_LINKEDIN_URL = 'https://linkedin.com'
+export const CPWD_LINKEDIN_URL = 'https://www.linkedin.com/in/christoph-pfrommer/'
 
 /** Radar phosphor accent — keep in sync with app/assets/scss/_variables.scss */
 export const COMMS_RGB = '56, 150, 90'

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CPWD_GITHUB_URL } from '~/constants/brand'
+import { CPWD_GITHUB_URL, CPWD_LINKEDIN_URL } from '~/constants/brand'
 
 const config = useRuntimeConfig()
 const { locale } = useI18n()
@@ -18,7 +18,7 @@ const schema = computed(() => ({
     '@type': 'PostalAddress',
     addressCountry: 'NL',
   },
-  sameAs: [CPWD_GITHUB_URL],
+  sameAs: [CPWD_GITHUB_URL, CPWD_LINKEDIN_URL],
   knowsAbout: [
     'Web Development',
     'Web Design',

@@ -256,6 +256,7 @@ onMounted(async () => {
 
       <div class="showcase-video__stage">
         <ProjectVideoPlayer
+          large
           :src="showcase.video.src"
           :poster="showcase.video.poster"
           :caption="videoCaption"
@@ -684,7 +685,7 @@ onMounted(async () => {
 
 .showcase-video {
   &__head-wrap {
-    margin-bottom: clamp(24px, 4vw, 40px);
+    margin-bottom: clamp(16px, 3vw, 28px);
   }
 
   &__head {
@@ -692,26 +693,18 @@ onMounted(async () => {
   }
 
   &__stage {
-    width: 100%;
-    max-width: none;
-    margin-inline: 0;
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
     padding-inline: 0;
   }
 
   &--hero {
     position: relative;
     z-index: 2;
-    padding-top: clamp(24px, 4vw, 64px);
-    padding-bottom: clamp(32px, 5vw, 64px);
+    padding-block: clamp(16px, 3vw, 32px);
     background: linear-gradient(180deg, rgba($color-bg, 0.72), $color-bg 48%);
     border-top: 1px solid $color-border;
-
-    :deep(.project-video__media) {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      min-height: clamp(260px, 62vw, min(78vh, 920px));
-      border-block: 1px solid $color-border;
-    }
 
     :deep(.project-video__controls),
     :deep(.project-video__caption) {

@@ -2,8 +2,9 @@
 import { useMediaQuery } from '@vueuse/core'
 import { localeList, resolveLocaleMessage } from '~/utils/i18n'
 
+import { CPWD_GITHUB_URL } from '~/constants/brand'
+
 const GITHUB_AVATAR = 'https://avatars.githubusercontent.com/u/90003610?v=4'
-const GITHUB_URL = 'https://github.com/Pfrommer1982'
 
 const about = useSectionTranslations('about')
 const localePath = useLocalePath()
@@ -230,7 +231,7 @@ onMounted(async () => {
                 </div>
               </dl>
               <a
-                :href="GITHUB_URL"
+                :href="CPWD_GITHUB_URL"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="about-dossier-link font-mono"
