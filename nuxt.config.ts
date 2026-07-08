@@ -31,6 +31,7 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
+    '/home': { redirect: { to: '/', statusCode: 301 } },
     '/work/career-pulse': { redirect: { to: '/work/careerpulse', statusCode: 301 } },
   },
 
