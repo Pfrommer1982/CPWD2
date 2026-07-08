@@ -156,7 +156,7 @@ onUnmounted(stopLoader)
   background: none;
   border: none;
   text-align: left;
-  cursor: none;
+  cursor: pointer;
   color: $color-text-muted;
   transition: color $dur-fast $ease-gold;
 

@@ -232,7 +232,7 @@ watch(menuOpen, (open) => {
     background: none;
     border: none;
     color: $color-text-faint;
-    cursor: none;
+    cursor: pointer;
     transition: color $dur-fast $ease-gold;
 
     &--active {
@@ -258,7 +258,7 @@ watch(menuOpen, (open) => {
     padding: 0;
     width: 26px;
     height: 18px;
-    cursor: none;
+    cursor: pointer;
 
     @media (min-width: 769px) {
       display: none;

@@ -1,7 +1,6 @@
 <template>
   <div class="layout-project">
     <SeoSiteSchema />
-    <UiAppCursor />
     <UiAppNav />
     <main>
       <slot />

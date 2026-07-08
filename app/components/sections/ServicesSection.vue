@@ -625,8 +625,18 @@ useIlluminateRing({ ring: introRingRef, trackArea: introDecoRef })
     padding-block: clamp(64px, 12vh, 96px);
     border-color: rgba(56, 150, 90, 0.2);
 
+    // Reset the two-column grid inherited from the regular service cards so the
+    // CTA reads as a single centred column (label, heading, copy, button).
     .services-panel__content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
       padding-right: 0;
+    }
+
+    .services-panel__desc {
+      max-width: 46ch;
     }
   }
 

@@ -514,7 +514,7 @@ onMounted(async () => {
     padding: 0;
     background: none;
     border: none;
-    cursor: none;
+    cursor: pointer;
     color: $color-error;
     transition: color $dur-fast $ease-gold, transform $dur-fast $ease-gold;
 

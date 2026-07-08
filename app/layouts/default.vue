@@ -20,7 +20,6 @@ function onLoaderComplete() {
   <div class="layout">
     <SeoSiteSchema />
     <UiAppLoader v-if="!loaderDone" @complete="onLoaderComplete" />
-    <UiAppCursor />
     <UiAppNav />
     <main class="layout__main">
       <slot />
