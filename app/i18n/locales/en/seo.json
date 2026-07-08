@@ -19,6 +19,10 @@
     "contact": {
       "title": "Contact",
       "description": "Get in touch with CPWD for your next website or web app project. Web development agency based in the Netherlands. Personal reply within 24 hours on business days."
+    },
+    "faq": {
+      "title": "Knowledge base & frequently asked questions",
+      "description": "Answers to frequently asked questions about building websites: pricing, process, technology, SEO and maintenance. The complete knowledge base of web development agency CPWD."
     }
   }
 }

@@ -13,6 +13,7 @@
         { "text": "New website project?", "reveal": "Tell us your plan →", "action": "contact" },
         { "text": "Start a project", "reveal": "Get in touch →", "action": "contact" },
         { "text": "info{'@'}cpwd.nl", "reveal": "Email us →", "action": "email" },
+        { "text": "Knowledge base", "reveal": "Read the answers →", "action": "faq" },
         { "text": "LinkedIn", "reveal": "Connect →", "action": "linkedin" },
         { "text": "GitHub", "reveal": "View code →", "action": "github" }
       ]

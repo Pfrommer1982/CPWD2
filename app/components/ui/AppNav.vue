@@ -11,6 +11,7 @@ const navItems = [
   { to: '/work', label: 'work' },
   { to: '/services', label: 'services' },
   { to: '/about', label: 'about' },
+  { to: '/faq', label: 'faq' },
   { to: '/contact', label: 'contact' },
 ]
 

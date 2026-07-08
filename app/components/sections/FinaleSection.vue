@@ -38,6 +38,7 @@ function setTextRef(el: TemplateRefValue, index: number) {
 function rowHref(row: FinaleRow): string | undefined {
   switch (row.action) {
     case 'contact': return localePath('/contact')
+    case 'faq': return localePath('/faq')
     case 'email': return 'mailto:info@cpwd.nl'
     case 'linkedin': return CPWD_LINKEDIN_URL
     case 'github': return CPWD_GITHUB_URL

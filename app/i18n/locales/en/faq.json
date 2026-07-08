@@ -1,0 +1,23 @@
+{
+  "faq": {
+    "label": "KNOWLEDGE BASE",
+    "heading": "Answers to your questions",
+    "intro": "Everything you want to know about working with CPWD: our approach, pricing, technology and what happens after launch. Question not listed? Feel free to get in touch.",
+    "searchPlaceholder": "Search a question...",
+    "searchLabel": "Search the knowledge base",
+    "clearSearch": "Clear search",
+    "noResults": "No results found. Try another search term or get in touch.",
+    "categoriesLabel": "Categories",
+    "readArticle": "Read the full answer",
+    "backToHub": "Back to knowledge base",
+    "relatedLabel": "Related questions",
+    "updatedLabel": "Updated",
+    "inCategory": "In category",
+    "cta": {
+      "label": "STILL QUESTIONS",
+      "heading": "Can't find your question?",
+      "body": "Tell us about your project or ask your question directly. You get a personal reply within 24 hours on business days.",
+      "button": "Get in touch"
+    }
+  }
+}

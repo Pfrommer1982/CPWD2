@@ -19,6 +19,10 @@
     "contact": {
       "title": "Contact",
       "description": "Neem contact op met CPWD voor je volgende website- of webapp-project. Webdevelopment-bureau uit Nederland. Persoonlijk antwoord binnen 24 uur op werkdagen."
+    },
+    "faq": {
+      "title": "Kennisbank & veelgestelde vragen",
+      "description": "Antwoorden op veelgestelde vragen over websites laten maken: prijzen, proces, techniek, SEO en onderhoud. De complete kennisbank van webdevelopment-bureau CPWD."
     }
   }
 }

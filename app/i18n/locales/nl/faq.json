@@ -1,0 +1,23 @@
+{
+  "faq": {
+    "label": "KENNISBANK",
+    "heading": "Antwoorden op je vragen",
+    "intro": "Alles wat je wilt weten over samenwerken met CPWD: onze aanpak, prijzen, techniek en wat er na livegang gebeurt. Staat je vraag er niet bij? Neem gerust contact op.",
+    "searchPlaceholder": "Zoek een vraag...",
+    "searchLabel": "Zoek in de kennisbank",
+    "clearSearch": "Zoekopdracht wissen",
+    "noResults": "Geen resultaten gevonden. Probeer een andere zoekterm of neem contact op.",
+    "categoriesLabel": "Categorieën",
+    "readArticle": "Lees het volledige antwoord",
+    "backToHub": "Terug naar kennisbank",
+    "relatedLabel": "Gerelateerde vragen",
+    "updatedLabel": "Bijgewerkt",
+    "inCategory": "In categorie",
+    "cta": {
+      "label": "NOG VRAGEN",
+      "heading": "Staat je vraag er niet tussen?",
+      "body": "Vertel ons over je project of stel je vraag rechtstreeks. Je krijgt een persoonlijk antwoord binnen 24 uur op werkdagen.",
+      "button": "Neem contact op"
+    }
+  }
+}

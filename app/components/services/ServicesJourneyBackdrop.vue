@@ -434,16 +434,35 @@ function updateSmoothState() {
   globePos.y = lerp(globePos.y, globePosTarget.y, globeEase)
 
   finaleRotate = finaleRotationBlend(finaleBlend)
-  finaleZoom = finalePhases(finaleBlend).zoom
-  finaleLockUi = finaleLockUiBlend(finaleBlend, finaleRotate)
+
+  // The zoom to Netherlands gets its own low-pass filter so the "fly-in" always
+  // reads as an animation, independent of scroll speed. Even a fast flick-scroll
+  // (e.g. an Apple Magic Mouse) will play the zoom at a controlled pace instead
+  // of snapping instantly. Zoom-in is slow (the hook of the animation);
+  // zoom-out stays quicker so scrolling back up feels responsive.
+  // On desktop (esp. fast flick-scroll with a Magic Mouse) we want the zoom
+  // decoupled from scroll speed, so it plays as a slow, always-visible fly-in.
+  // On mobile the page tail is short and leads straight into the footer, so a
+  // slow decoupled zoom would only finish once you've already scrolled past
+  // "Ready to lock in". There we keep the zoom tightly scroll-linked so it
+  // completes exactly when that section sits centered on screen.
+  const vw = wrapRef.value?.clientWidth ?? window.innerWidth
+  const mobileLayout = vw < 1100
+  const zoomTarget = finalePhases(finaleBlend).zoom
+  const zoomEaseIn = mobileLayout ? 0.14 : 0.018
+  const zoomEase = zoomTarget > finaleZoom ? zoomEaseIn : 0.07
+  finaleZoom = lerp(finaleZoom, zoomTarget, zoomEase)
+
+  finaleLockUi = finaleLockUiBlend(finaleBlend, finaleRotate) * smoothstep((finaleZoom - 0.5) / 0.5)
 
   if (finaleBlendTarget >= 0.99) {
     finaleBlend = Math.max(finaleBlend, 0.985)
   }
   if (finaleBlend >= 0.97) {
     finaleRotate = 1
+  }
+  if (finaleZoom >= 0.992) {
     finaleZoom = 1
-    finaleLockUi = 1
   }
 }
 
@@ -906,8 +925,11 @@ function rectsOverlap(a: DOMRect, x: number, y: number, w: number, h: number, pa
 
 function finaleGlobeOffset(w: number) {
   const tier = viewportTier(w)
-  if (tier === 'narrow') return { x: -0.38, y: -0.1 }
-  if (tier === 'medium') return { x: 0.42, y: -0.02 }
+  // On phones the frame is too narrow to push the globe sideways without
+  // clipping Netherlands off-screen, so we centre it horizontally and drop it
+  // into the empty space below the "Ready to lock in" copy.
+  if (tier === 'narrow') return { x: 0, y: -0.32 }
+  if (tier === 'medium') return { x: 0.28, y: -0.04 }
   return { x: 0.52, y: 0 }
 }
 

@@ -1,6 +1,7 @@
 import { statSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { projects } from '../../app/data/projects'
+import { knowledgeArticles } from '../../app/data/knowledge'
 
 type ChangeFreq = 'daily' | 'weekly' | 'monthly' | 'yearly'
 
@@ -86,7 +87,20 @@ export default defineEventHandler((event) => {
       changefreq: 'monthly',
       lastmod: getLastModified('app/pages/contact.vue', 'app/components/sections/ContactJourneySection.vue'),
     },
+    {
+      path: '/faq',
+      priority: '0.8',
+      changefreq: 'monthly',
+      lastmod: getLastModified('app/data/knowledge.ts', 'app/pages/faq/index.vue'),
+    },
   ]
+
+  const faqPages: SitemapUrl[] = knowledgeArticles.map((article) => ({
+    path: `/faq/${article.slug}`,
+    priority: '0.6',
+    changefreq: 'monthly',
+    lastmod: toIsoDate(new Date(article.updated)),
+  }))
 
   const projectPages: SitemapUrl[] = projects.map((project) => ({
     path: `/work/${project.slug}`,
@@ -99,7 +113,7 @@ export default defineEventHandler((event) => {
     }],
   }))
 
-  const allPages = [...staticPages, ...projectPages].map((page) => ({
+  const allPages = [...staticPages, ...projectPages, ...faqPages].map((page) => ({
     ...page,
     lastmod: page.lastmod || nowIso,
   }))
