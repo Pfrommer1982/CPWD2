@@ -9,6 +9,9 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  // Tells the browser this is a dark UI so native controls (scrollbars, form
+  // fields, autofill, date pickers) render in dark mode instead of light.
+  color-scheme: dark;
 }
 
 body {

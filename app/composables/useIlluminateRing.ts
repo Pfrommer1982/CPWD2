@@ -1,8 +1,9 @@
 import type { Ref } from 'vue'
+import { resolveElementRef, type TemplateRefValue } from '~/utils/dom'
 
 interface IlluminateRingOptions {
-  ring: Ref<HTMLElement | null>
-  trackArea: Ref<HTMLElement | null>
+  ring: Ref<TemplateRefValue>
+  trackArea: Ref<TemplateRefValue>
 }
 
 function clamp(value: number, min = 0, max = 1) {
@@ -17,14 +18,25 @@ function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t
 }
 
+function asStyleElement(el: TemplateRefValue): HTMLElement | null {
+  const resolved = resolveElementRef(el)
+  if (!resolved?.style) return null
+  return resolved
+}
+
 export function useIlluminateRing({ ring, trackArea }: IlluminateRingOptions) {
+  if (!import.meta.client) return
+
   let frame = 0
   let cleanup: (() => void) | null = null
+  let activeRing: HTMLElement | null = null
 
   const current = { x: 0.5, y: 0.75 }
   const mouse = { x: 0.5, y: 0.75, active: false, lastAt: 0 }
 
   function setVars(el: HTMLElement, x: number, y: number, extras: Record<string, string>) {
+    if (!el.style) return
+
     el.style.setProperty('--ratio-x', String(x))
     el.style.setProperty('--ratio-y', String(y))
     el.style.setProperty('--from-center', String(fromCenter(x, y)))
@@ -35,7 +47,7 @@ export function useIlluminateRing({ ring, trackArea }: IlluminateRingOptions) {
   }
 
   function onPointerMove(event: PointerEvent) {
-    const area = trackArea.value
+    const area = asStyleElement(trackArea.value)
     if (!area) return
 
     const box = area.getBoundingClientRect()
@@ -55,9 +67,12 @@ export function useIlluminateRing({ ring, trackArea }: IlluminateRingOptions) {
     const t0 = performance.now()
 
     const tick = (now: number) => {
+      if (activeRing !== el || !el.isConnected || !el.style) {
+        return
+      }
+
       const t = (now - t0) * 0.001
 
-      // Organic auto drift — always running
       const autoX = 0.5
         + Math.sin(t * 0.55) * 0.22
         + Math.sin(t * 1.15 + 1.4) * 0.09
@@ -96,12 +111,13 @@ export function useIlluminateRing({ ring, trackArea }: IlluminateRingOptions) {
     cleanup?.()
     cleanup = null
     mouse.active = false
+    activeRing = null
   }
 
-  function setup(el: HTMLElement, area: HTMLElement) {
-    if (!import.meta.client) return
+  function setup(ringEl: HTMLElement, area: HTMLElement) {
+    activeRing = ringEl
 
-    setVars(el, current.x, current.y, {
+    setVars(ringEl, current.x, current.y, {
       '--shimmer-angle': '0deg',
       '--noise-x': '0px',
       '--noise-y': '0px',
@@ -119,14 +135,17 @@ export function useIlluminateRing({ ring, trackArea }: IlluminateRingOptions) {
       area.removeEventListener('pointerleave', onPointerLeave)
     }
 
-    startLoop(el)
+    startLoop(ringEl)
   }
 
   watch(
     [ring, trackArea],
     ([ringEl, areaEl]) => {
       teardown()
-      if (ringEl && areaEl) setup(ringEl, areaEl)
+
+      const resolvedRing = asStyleElement(ringEl)
+      const resolvedArea = asStyleElement(areaEl)
+      if (resolvedRing && resolvedArea) setup(resolvedRing, resolvedArea)
     },
     { flush: 'post' },
   )

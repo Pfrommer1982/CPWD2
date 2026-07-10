@@ -4,6 +4,10 @@
     "heading": "Full scope. One agency.",
     "intro": "Design, development, hosting and more. One point of contact, from brief to live website.",
     "scrollHint": "Scroll for overview",
+    "teaser": {
+      "cta": "View all services",
+      "previewLabel": "On screen"
+    },
     "journey": {
       "label": "APPROACH",
       "heading": "From brief to launch",

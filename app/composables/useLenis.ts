@@ -57,10 +57,10 @@ export function useLenis() {
   function scrollToTop() {
     if (!import.meta.client) return
 
-    lenisInstance?.scrollTo(0, { immediate: true })
-    window.scrollTo(0, 0)
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' in window ? 'instant' : 'auto' })
     document.documentElement.scrollTop = 0
     document.body.scrollTop = 0
+    lenisInstance?.scrollTo(0, { immediate: true, force: true })
   }
 
   async function refresh() {

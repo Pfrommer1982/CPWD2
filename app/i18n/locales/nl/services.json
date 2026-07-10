@@ -4,6 +4,10 @@
     "heading": "Full scope. Eén bureau.",
     "intro": "Design, development, hosting en meer. Eén aanspreekpunt, van briefing tot live website.",
     "scrollHint": "Scroll voor overzicht",
+    "teaser": {
+      "cta": "Bekijk alle diensten",
+      "previewLabel": "In beeld"
+    },
     "journey": {
       "label": "AANPAK",
       "heading": "Van briefing tot livegang",
