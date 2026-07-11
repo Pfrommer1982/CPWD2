@@ -9,8 +9,7 @@ const outlineBody = computed(() => about.t('hook.body').replace(/\*/g, ''))
 <template>
   <section ref="sectionRef" class="about-section">
     <div class="about-section__backdrop" aria-hidden="true">
-      <EffectsTacticalRadarHud />
-      <EffectsTacticalDataField />
+      <div class="about-section__glow" />
     </div>
 
     <div class="about-section__grid">
@@ -41,7 +40,7 @@ const outlineBody = computed(() => about.t('hook.body').replace(/\*/g, ''))
 
       <div class="about-section__visual">
         <ClientOnly>
-          <AboutHookTerminal :root="sectionRef" />
+          <AboutHookTerminal />
           <template #fallback>
             <div class="about-section__visual-fallback" aria-hidden="true" />
           </template>
@@ -61,6 +60,14 @@ const outlineBody = computed(() => about.t('hook.body').replace(/\*/g, ''))
     inset: 0;
     pointer-events: none;
     overflow: hidden;
+  }
+
+  &__glow {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 50% 40% at 78% 35%, rgba(56, 150, 90, 0.07), transparent 70%),
+      radial-gradient(ellipse 35% 30% at 12% 75%, rgba(56, 150, 90, 0.04), transparent 72%);
   }
 
   &__grid {

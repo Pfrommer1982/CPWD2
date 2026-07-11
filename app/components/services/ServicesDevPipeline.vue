@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useMediaQuery } from '@vueuse/core'
+
 const props = withDefaults(defineProps<{
   active?: boolean
   mobile?: boolean
@@ -11,14 +13,15 @@ const rootRef = ref<HTMLElement | null>(null)
 const terminalRef = ref<HTMLElement | null>(null)
 const activeRef = toRef(props, 'active')
 const staticMode = toRef(props, 'mobile')
+const isMobile = useMediaQuery('(max-width: 899px)', { ssrWidth: 900 })
 
 const steps = ['commit', 'build', 'test', 'deploy']
-const lines = [
+const lines = computed(() => [
   '$ git push origin main',
   '→ running nuxt build...',
-  '→ 142 modules transformed',
+  isMobile.value ? '→ 142 modules trans...' : '→ 142 modules transformed',
   '✓ deployed to edge',
-]
+])
 
 useVisibleTimeline({
   root: rootRef,
@@ -192,6 +195,9 @@ useVisibleTimeline({
     line-height: 1.4;
     color: rgba(242, 238, 232, 0.82);
     opacity: 0.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 </style>
