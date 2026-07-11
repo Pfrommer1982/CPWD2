@@ -93,6 +93,18 @@ export default defineEventHandler((event) => {
       changefreq: 'monthly',
       lastmod: getLastModified('app/data/knowledge.ts', 'app/pages/faq/index.vue'),
     },
+    {
+      path: '/privacy',
+      priority: '0.4',
+      changefreq: 'yearly',
+      lastmod: getLastModified('app/pages/privacy.vue', 'app/i18n/locales/nl/privacy.json'),
+    },
+    {
+      path: '/terms',
+      priority: '0.4',
+      changefreq: 'yearly',
+      lastmod: getLastModified('app/pages/terms.vue', 'app/i18n/locales/nl/terms.json'),
+    },
   ]
 
   const faqPages: SitemapUrl[] = knowledgeArticles.map((article) => ({

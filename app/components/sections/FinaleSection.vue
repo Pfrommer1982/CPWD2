@@ -90,6 +90,15 @@ useFinaleScene({ scrollLayers: textRefs })
           </NuxtLink>
           <span class="finale__location font-mono">{{ finale.t('location') }}</span>
         </div>
+        <nav class="finale__legal font-mono" :aria-label="finale.t('privacyLink')">
+          <NuxtLink :to="localePath('/privacy')" class="finale__legal-link">
+            {{ finale.t('privacyLink') }}
+          </NuxtLink>
+          <span class="finale__legal-sep" aria-hidden="true">·</span>
+          <NuxtLink :to="localePath('/terms')" class="finale__legal-link">
+            {{ finale.t('termsLink') }}
+          </NuxtLink>
+        </nav>
         <p class="finale__copy font-mono">
           {{ finale.t('copy', { year }) }}
         </p>
@@ -218,20 +227,69 @@ useFinaleScene({ scrollLayers: textRefs })
 }
 
 .finale__meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: $space-5;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    'brand legal'
+    'copy copy';
+  align-items: end;
+  gap: $space-4 $space-5;
   padding-top: $space-6;
   margin-top: $space-6;
   border-top: 1px solid $color-border;
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'brand'
+      'legal'
+      'copy';
+  }
 }
 
 .finale__meta-left {
+  grid-area: brand;
   display: flex;
   flex-direction: column;
   gap: $space-3;
+}
+
+.finale__legal {
+  grid-area: legal;
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  justify-self: end;
+
+  @media (max-width: 767px) {
+    justify-self: start;
+  }
+}
+
+.finale__legal-link {
+  font-size: $text-xs;
+  letter-spacing: $tracking-wide;
+  color: $color-text-faint;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color $dur-fast $ease-gold;
+
+  &:hover {
+    color: $color-gold-light;
+  }
+}
+
+.finale__legal-sep {
+  color: rgba($color-text-faint, 0.45);
+  font-size: $text-xs;
+}
+
+.finale__copy {
+  grid-area: copy;
+  font-size: $text-xs;
+  color: $color-text-faint;
+  letter-spacing: $tracking-wide;
+  margin: 0;
 }
 
 .finale__logo {
@@ -248,12 +306,6 @@ useFinaleScene({ scrollLayers: textRefs })
   letter-spacing: $tracking-wide;
   color: $color-text-faint;
   text-transform: uppercase;
-}
-
-.finale__copy {
-  font-size: $text-xs;
-  color: $color-text-faint;
-  letter-spacing: $tracking-wide;
 }
 
 @media (hover: none) and (pointer: coarse) {

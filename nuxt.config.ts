@@ -133,6 +133,7 @@ export default defineNuxtConfig({
         { rel: 'dns-prefetch', href: 'https://ik.imagekit.io' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+        { rel: 'preload', href: '/assets/Layn.ttf', as: 'font', type: 'font/ttf', crossorigin: '' },
         {
           rel: 'stylesheet',
           href: 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap',

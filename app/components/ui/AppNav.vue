@@ -46,7 +46,7 @@ watch(menuOpen, (open) => {
   <nav class="nav" :class="{ 'nav--scrolled': isScrolled, 'nav--open': menuOpen }">
     <div class="nav__inner container">
       <NuxtLink :to="localePath('/')" class="nav__logo" aria-label="CPWD" @click="closeMenu">
-        <UiAppLogo :height="48" />
+        <UiAppLogo :height="36" />
       </NuxtLink>
 
       <ul class="nav__links" role="list">

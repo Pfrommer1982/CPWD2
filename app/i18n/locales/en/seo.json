@@ -23,6 +23,14 @@
     "faq": {
       "title": "Knowledge base & frequently asked questions",
       "description": "Answers to frequently asked questions about building websites: pricing, process, technology, SEO and maintenance. The complete knowledge base of web development agency CPWD."
+    },
+    "privacy": {
+      "title": "Privacy policy",
+      "description": "CPWD privacy policy. Learn what personal data we process, why, and what rights you have under the GDPR."
+    },
+    "terms": {
+      "title": "Terms of service",
+      "description": "CPWD terms of service for web design, web development and related services."
     }
   }
 }

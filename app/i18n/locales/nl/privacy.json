@@ -1,0 +1,82 @@
+{
+  "privacy": {
+    "label": "PRIVACY",
+    "badge": "AVG / GDPR",
+    "heading": "Privacybeleid",
+    "intro": "CPWD.nl is een informatieve website. Wij slaan geen bezoekersgegevens op in een database en hebben geen gebruikersaccounts. Dit beleid legt uit welke minimale gegevensverwerking wél plaatsvindt.",
+    "updatedLabel": "Laatst bijgewerkt",
+    "updatedDate": "11 juli 2026",
+    "navLabel": "Inhoud",
+    "rightsTitle": "Jouw rechten",
+    "rightsIntro": "Ook bij minimale verwerking heb je rechten onder de AVG. Vragen? Mail naar info{'@'}cpwd.nl.",
+    "contactTitle": "Contact over privacy",
+    "contactBody": "Vragen over dit beleid? Mail naar info{'@'}cpwd.nl. CPWD is gevestigd in Nederland.",
+    "authorityTitle": "Autoriteit Persoonsgegevens",
+    "authorityBody": "Ben je het niet eens met onze afhandeling? Je kunt een klacht indienen bij de Autoriteit Persoonsgegevens (autoriteitpersoonsgegevens.nl).",
+    "encrypt": {
+      "label": "End-to-end flow",
+      "plain": "CPWD slaat geen bezoekersdata op",
+      "status": "GEEN DATABASE OPSLAG",
+      "tags": ["TLS 1.3", "AES-256", "ZERO PERSIST"]
+    },
+    "sections": [
+      {
+        "id": "controller",
+        "title": "Verantwoordelijke",
+        "paragraphs": [
+          "CPWD is verantwoordelijk voor cpwd.nl.",
+          "Contact: info{'@'}cpwd.nl · Nederland."
+        ]
+      },
+      {
+        "id": "storage",
+        "title": "Geen opslag",
+        "paragraphs": [
+          "Deze website is informatief. Wij onderhouden geen database met bezoekersprofielen, accounts of nieuwsbrieven.",
+          "Bezoeken aan cpwd.nl worden niet gekoppeld aan een persoonlijk dossier op onze servers."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Contactformulier",
+        "paragraphs": [
+          "Als je ons contactformulier gebruikt, sturen wij je bericht direct per e-mail. Die gegevens worden niet opgeslagen in een database op deze website.",
+          "E-mailcorrespondentie bewaren wij alleen zolang nodig om je vraag af te handelen."
+        ]
+      },
+      {
+        "id": "logs",
+        "title": "Technische logs",
+        "paragraphs": [
+          "Onze hostingprovider kan standaard serverlogs bijhouden (zoals IP-adres en browsertype) voor beveiliging en stabiliteit. Wij hebben geen directe toegang tot een bezoekersregister.",
+          "Deze logs vallen onder de verwerkersovereenkomst met onze host en worden kort bewaard."
+        ]
+      },
+      {
+        "id": "cookies",
+        "title": "Cookies",
+        "paragraphs": [
+          "Wij gebruiken uitsluitend functionele cookies, bijvoorbeeld voor taalkeuze.",
+          "Geen tracking- of advertentiecookies. Je kunt cookies beheren via je browser."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Wijzigingen",
+        "paragraphs": [
+          "Dit privacybeleid kan worden aangepast. De actuele versie staat altijd op deze pagina.",
+          "Bij wezenlijke wijzigingen vermelden wij de nieuwe datum bovenaan."
+        ]
+      }
+    ],
+    "rights": [
+      "Recht op inzage",
+      "Recht op rectificatie",
+      "Recht op verwijdering",
+      "Recht op beperking van verwerking",
+      "Recht op dataportabiliteit",
+      "Recht om bezwaar te maken",
+      "Recht om toestemming in te trekken"
+    ]
+  }
+}

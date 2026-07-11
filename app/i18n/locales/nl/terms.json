@@ -1,0 +1,67 @@
+{
+  "terms": {
+    "label": "VOORWAARDEN",
+    "ref": "CPWD-TOS-2026",
+    "heading": "Algemene voorwaarden",
+    "intro": "Deze algemene voorwaarden zijn van toepassing op alle offertes, overeenkomsten en diensten van CPWD. Door gebruik te maken van onze website of diensten ga je akkoord met deze voorwaarden.",
+    "updatedLabel": "Versie",
+    "updatedDate": "11 juli 2026",
+    "stamp": "CPWD",
+    "sealApproved": "GOEDGEKEURD",
+    "sealSigned": "Digitaal ondertekend",
+    "contactTitle": "Vragen?",
+    "contactBody": "Vragen over deze voorwaarden? Neem contact op via info{'@'}cpwd.nl.",
+    "articles": [
+      {
+        "num": "01",
+        "title": "Toepasselijkheid",
+        "body": "Deze voorwaarden gelden voor alle aanbiedingen, offertes en overeenkomsten tussen CPWD en de opdrachtgever. Afwijkende voorwaarden van de opdrachtgever zijn alleen van toepassing als CPWD die schriftelijk heeft aanvaard."
+      },
+      {
+        "num": "02",
+        "title": "Dienstverlening",
+        "body": "CPWD levert webdesign, webdevelopment, hosting en aanverwante digitale diensten zoals beschreven in de offerte of overeenkomst. De scope, planning en deliverables worden per project vastgelegd."
+      },
+      {
+        "num": "03",
+        "title": "Offertes & overeenkomsten",
+        "body": "Offertes zijn vrijblijvend, tenzij anders vermeld, en geldig voor de genoemde termijn. Een overeenkomst komt tot stand na schriftelijke bevestiging door beide partijen of na start van de werkzaamheden met instemming van de opdrachtgever."
+      },
+      {
+        "num": "04",
+        "title": "Verplichtingen opdrachtgever",
+        "body": "De opdrachtgever levert tijdig alle benodigde content, feedback en toegang die nodig zijn voor uitvoering. Vertraging door de opdrachtgever kan leiden tot aanpassing van planning en kosten."
+      },
+      {
+        "num": "05",
+        "title": "Intellectueel eigendom",
+        "body": "Na volledige betaling gaan de overeengekomen deliverables over naar de opdrachtgever, voor zover in de overeenkomst bepaald. CPWD behoudt het recht generieke code, frameworks en know-how te hergebruiken, mits geen vertrouwelijke informatie van de opdrachtgever wordt openbaar gemaakt."
+      },
+      {
+        "num": "06",
+        "title": "Aansprakelijkheid",
+        "body": "CPWD is uitsluitend aansprakelijk voor directe schade door een toerekenbare tekortkoming, beperkt tot het factuurbedrag van het betreffende project, tenzij dwingend recht anders bepaalt. CPWD is niet aansprakelijk voor indirecte schade, gevolgschade of gederfde winst."
+      },
+      {
+        "num": "07",
+        "title": "Betaling",
+        "body": "Facturen zijn betaalbaar binnen de op de factuur vermelde termijn, doorgaans 14 dagen. Bij late betaling kunnen wettelijke rente en redelijke incassokosten in rekening worden gebracht. CPWD mag werkzaamheden opschorten bij niet-tijdige betaling."
+      },
+      {
+        "num": "08",
+        "title": "Geheimhouding",
+        "body": "Beide partijen behandelen vertrouwelijke informatie die in het kader van de opdracht wordt gedeeld als vertrouwelijk, tenzij openbaarmaking wettelijk verplicht is."
+      },
+      {
+        "num": "09",
+        "title": "Duur & beëindiging",
+        "body": "Overeenkomsten eindigen na oplevering en afhandeling, tenzij een doorlopende dienst (zoals hosting) is overeengekomen. Beide partijen kunnen een doorlopende dienst opzeggen conform de afgesproken opzegtermijn."
+      },
+      {
+        "num": "10",
+        "title": "Toepasselijk recht",
+        "body": "Op alle overeenkomsten is Nederlands recht van toepassing. Geschillen worden voorgelegd aan de bevoegde rechter in Nederland, tenzij dwingend recht anders voorschrijft."
+      }
+    ]
+  }
+}

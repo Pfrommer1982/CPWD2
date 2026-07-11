@@ -23,6 +23,14 @@
     "faq": {
       "title": "Kennisbank & veelgestelde vragen",
       "description": "Antwoorden op veelgestelde vragen over websites laten maken: prijzen, proces, techniek, SEO en onderhoud. De complete kennisbank van webdevelopment-bureau CPWD."
+    },
+    "privacy": {
+      "title": "Privacybeleid",
+      "description": "Privacybeleid van CPWD. Lees welke persoonsgegevens wij verwerken, waarom, en welke rechten je hebt onder de AVG/GDPR."
+    },
+    "terms": {
+      "title": "Algemene voorwaarden",
+      "description": "Algemene voorwaarden van CPWD voor webdesign, webdevelopment en gerelateerde diensten."
     }
   }
 }

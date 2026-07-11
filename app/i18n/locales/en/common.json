@@ -8,6 +8,8 @@
       "label": "LOCK IN",
       "location": "The Netherlands, working worldwide",
       "copy": "© {year} CPWD. All rights reserved.",
+      "privacyLink": "Privacy policy",
+      "termsLink": "Terms of service",
       "rows": [
         { "text": "Ready to lock in?", "reveal": "Lock in →", "action": "contact" },
         { "text": "New website project?", "reveal": "Tell us your plan →", "action": "contact" },

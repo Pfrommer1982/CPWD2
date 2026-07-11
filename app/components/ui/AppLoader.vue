@@ -76,8 +76,6 @@ async function dismiss() {
   &__logo {
     display: block;
     margin: 0 auto $space-8;
-    opacity: 0;
-    animation: fade-in 0.6s $ease-out-expo 0.2s forwards;
   }
 
   &__ring {

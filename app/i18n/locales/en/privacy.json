@@ -1,0 +1,82 @@
+{
+  "privacy": {
+    "label": "PRIVACY",
+    "badge": "GDPR",
+    "heading": "Privacy policy",
+    "intro": "CPWD.nl is an informational website. We do not store visitor data in a database and we have no user accounts. This policy explains what minimal processing does take place.",
+    "updatedLabel": "Last updated",
+    "updatedDate": "11 July 2026",
+    "navLabel": "Contents",
+    "rightsTitle": "Your rights",
+    "rightsIntro": "Even with minimal processing you have rights under the GDPR. Questions? Email info{'@'}cpwd.nl.",
+    "contactTitle": "Privacy contact",
+    "contactBody": "Questions about this policy? Email info{'@'}cpwd.nl. CPWD is based in the Netherlands.",
+    "authorityTitle": "Supervisory authority",
+    "authorityBody": "If you disagree with how we handle your request, you may lodge a complaint with the Dutch Data Protection Authority (autoriteitpersoonsgegevens.nl).",
+    "encrypt": {
+      "label": "End-to-end flow",
+      "plain": "CPWD does not store visitor data",
+      "status": "NO DATABASE STORAGE",
+      "tags": ["TLS 1.3", "AES-256", "ZERO PERSIST"]
+    },
+    "sections": [
+      {
+        "id": "controller",
+        "title": "Data controller",
+        "paragraphs": [
+          "CPWD is responsible for cpwd.nl.",
+          "Contact: info{'@'}cpwd.nl · The Netherlands."
+        ]
+      },
+      {
+        "id": "storage",
+        "title": "No storage",
+        "paragraphs": [
+          "This website is informational. We do not maintain a database of visitor profiles, accounts or newsletters.",
+          "Visits to cpwd.nl are not linked to a personal dossier on our servers."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Contact form",
+        "paragraphs": [
+          "If you use our contact form, we send your message directly by email. That data is not stored in a database on this website.",
+          "We only keep email correspondence as long as needed to handle your enquiry."
+        ]
+      },
+      {
+        "id": "logs",
+        "title": "Technical logs",
+        "paragraphs": [
+          "Our hosting provider may keep standard server logs (such as IP address and browser type) for security and stability. We do not have direct access to a visitor registry.",
+          "These logs fall under our processor agreement with our host and are retained briefly."
+        ]
+      },
+      {
+        "id": "cookies",
+        "title": "Cookies",
+        "paragraphs": [
+          "We use functional cookies only, for example for language preference.",
+          "No tracking or advertising cookies. You can manage cookies in your browser."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Changes",
+        "paragraphs": [
+          "This privacy policy may be updated. The current version is always published on this page.",
+          "For material changes we update the date at the top."
+        ]
+      }
+    ],
+    "rights": [
+      "Right of access",
+      "Right to rectification",
+      "Right to erasure",
+      "Right to restriction of processing",
+      "Right to data portability",
+      "Right to object",
+      "Right to withdraw consent"
+    ]
+  }
+}

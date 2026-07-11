@@ -33,6 +33,7 @@ $color-error:        #C44B3A;
 $font-display:  'Rajdhani', 'Segoe UI', sans-serif;
 $font-body:     'IBM Plex Sans', system-ui, sans-serif;
 $font-mono:     'Share Tech Mono', 'Courier New', monospace;
+$font-logo:     'Layn', $font-display;
 
 $text-xs:    clamp(0.65rem,  0.6rem  + 0.2vw,  0.75rem);
 $text-sm:    clamp(0.8rem,   0.75rem + 0.2vw,  0.9rem);

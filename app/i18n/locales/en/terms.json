@@ -1,0 +1,67 @@
+{
+  "terms": {
+    "label": "TERMS",
+    "ref": "CPWD-TOS-2026",
+    "heading": "Terms of service",
+    "intro": "These terms apply to all quotes, agreements and services provided by CPWD. By using our website or services you agree to these terms.",
+    "updatedLabel": "Version",
+    "updatedDate": "11 July 2026",
+    "stamp": "CPWD",
+    "sealApproved": "APPROVED",
+    "sealSigned": "Digitally signed",
+    "contactTitle": "Questions?",
+    "contactBody": "Questions about these terms? Contact us at info{'@'}cpwd.nl.",
+    "articles": [
+      {
+        "num": "01",
+        "title": "Applicability",
+        "body": "These terms apply to all proposals, quotes and agreements between CPWD and the client. Deviating terms from the client apply only if CPWD has accepted them in writing."
+      },
+      {
+        "num": "02",
+        "title": "Services",
+        "body": "CPWD provides web design, web development, hosting and related digital services as described in the quote or agreement. Scope, timeline and deliverables are defined per project."
+      },
+      {
+        "num": "03",
+        "title": "Quotes & agreements",
+        "body": "Quotes are non-binding unless stated otherwise and valid for the period indicated. An agreement is formed after written confirmation by both parties or after commencement of work with the client's consent."
+      },
+      {
+        "num": "04",
+        "title": "Client obligations",
+        "body": "The client provides all required content, feedback and access in a timely manner. Delays caused by the client may result in adjusted timelines and costs."
+      },
+      {
+        "num": "05",
+        "title": "Intellectual property",
+        "body": "Upon full payment, agreed deliverables transfer to the client as specified in the agreement. CPWD retains the right to reuse generic code, frameworks and know-how, provided no confidential client information is disclosed."
+      },
+      {
+        "num": "06",
+        "title": "Liability",
+        "body": "CPWD is liable only for direct damage caused by an attributable failure, limited to the invoice amount of the relevant project, unless mandatory law provides otherwise. CPWD is not liable for indirect damage, consequential loss or lost profits."
+      },
+      {
+        "num": "07",
+        "title": "Payment",
+        "body": "Invoices are payable within the term stated on the invoice, typically 14 days. Late payment may incur statutory interest and reasonable collection costs. CPWD may suspend work in case of non-payment."
+      },
+      {
+        "num": "08",
+        "title": "Confidentiality",
+        "body": "Both parties treat confidential information shared in the course of the engagement as confidential, unless disclosure is legally required."
+      },
+      {
+        "num": "09",
+        "title": "Term & termination",
+        "body": "Agreements end upon delivery and completion unless an ongoing service (such as hosting) has been agreed. Either party may terminate an ongoing service according to the agreed notice period."
+      },
+      {
+        "num": "10",
+        "title": "Governing law",
+        "body": "Dutch law applies to all agreements. Disputes are submitted to the competent court in the Netherlands, unless mandatory law provides otherwise."
+      }
+    ]
+  }
+}

@@ -8,6 +8,8 @@
       "label": "LOCK IN",
       "location": "Nederland, wereldwijd actief",
       "copy": "© {year} CPWD. Alle rechten voorbehouden.",
+      "privacyLink": "Privacybeleid",
+      "termsLink": "Algemene voorwaarden",
       "rows": [
         { "text": "Klaar om te locken?", "reveal": "Lock in →", "action": "contact" },
         { "text": "Nieuw website-project?", "reveal": "Vertel ons je plan →", "action": "contact" },
