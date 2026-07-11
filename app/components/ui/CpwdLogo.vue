@@ -35,7 +35,11 @@ const logoStyle = computed(() => ({
       </div>
       <div class="line horizontal" />
       <div class="line vertical" />
-      <div class="dot" />
+      <div class="dot-wrap">
+        <span class="dot-ring dot-ring--1" aria-hidden="true" />
+        <span class="dot-ring dot-ring--2" aria-hidden="true" />
+        <span class="dot" />
+      </div>
     </div>
   </div>
 </template>
@@ -159,20 +163,55 @@ const logoStyle = computed(() => ({
   transform: translateX(-50%);
 }
 
-.dot {
+.dot-wrap {
   position: absolute;
   top: 50%;
   left: 50%;
   width: calc(20px * var(--scale));
   height: calc(20px * var(--scale));
-  border-radius: 50%;
-  background: $color-gold;
   transform: translate(-50%, -50%);
   pointer-events: none;
+}
+
+.dot-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: calc(1.5px * var(--scale)) solid rgba($color-gold, 0.75);
+  animation: dot-ring-pulse 3.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+
+  &--2 {
+    animation-delay: 1.6s;
+  }
+}
+
+.dot {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: $color-gold;
   box-shadow:
     0 0 calc(10px * var(--scale)) rgba($color-gold, 0.65),
     0 0 calc(22px * var(--scale)) rgba($color-gold, 0.35),
     0 0 calc(36px * var(--scale)) rgba($color-gold, 0.15);
+}
+
+@keyframes dot-ring-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.75;
+  }
+
+  15% {
+    opacity: 0.55;
+  }
+
+  100% {
+    transform: scale(9.6);
+    opacity: 0;
+  }
 }
 
 @keyframes slide-left {
@@ -231,6 +270,12 @@ const logoStyle = computed(() => ({
     animation: none;
     opacity: 1;
     transform: none;
+  }
+
+  .dot-ring {
+    animation: none;
+    opacity: 0.35;
+    transform: scale(1.6);
   }
 }
 </style>
