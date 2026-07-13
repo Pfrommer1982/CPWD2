@@ -1,28 +1,52 @@
 <script setup lang="ts">
 const barRef = ref<HTMLElement | null>(null)
+const route = useRoute()
 
-onMounted(async () => {
-  if (!import.meta.client) return
+let ctx: ReturnType<typeof import('gsap').gsap.context> | null = null
+
+async function setup() {
+  if (!import.meta.client || !barRef.value) return
+
+  ctx?.revert()
+  ctx = null
 
   const { init } = useGsap()
   const gsap = await init()
   if (!gsap || !barRef.value) return
 
-  gsap.to(barRef.value, {
-    scaleX: 1,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: document.body,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: 0.3,
-      onUpdate: (self: { progress: number }) => {
-        if (barRef.value) {
-          barRef.value.style.transform = `scaleX(${self.progress})`
-        }
+  ctx = gsap.context(() => {
+    gsap.to(barRef.value, {
+      scaleX: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: document.body,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.3,
+        onUpdate: (self: { progress: number }) => {
+          if (barRef.value) {
+            barRef.value.style.transform = `scaleX(${self.progress})`
+          }
+        },
       },
-    },
+    })
   })
+}
+
+watch(() => route.path, () => {
+  if (barRef.value) {
+    barRef.value.style.transform = 'scaleX(0)'
+  }
+  void setup()
+})
+
+onMounted(() => {
+  void setup()
+})
+
+onUnmounted(() => {
+  ctx?.revert()
+  ctx = null
 })
 </script>
 

@@ -1,5 +1,6 @@
 import type Lenis from 'lenis'
 import 'lenis/dist/lenis.css'
+import { forceScrollToTop } from '~/utils/scrollReset'
 
 let lenisInstance: Lenis | null = null
 let tickerCallback: ((time: number) => void) | null = null
@@ -54,9 +55,7 @@ export function useLenis() {
   function scrollToTop() {
     if (!import.meta.client) return
 
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' in window ? 'instant' : 'auto' })
-    document.documentElement.scrollTop = 0
-    document.body.scrollTop = 0
+    forceScrollToTop()
     lenisInstance?.scrollTo(0, { immediate: true, force: true })
   }
 

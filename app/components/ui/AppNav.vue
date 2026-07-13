@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { forceScrollToTop } from '~/utils/scrollReset'
+
 const nav = useSectionTranslations('nav')
 const { locale, switchLocale } = useLocaleSwitch()
 const localePath = useLocalePath()
@@ -35,6 +37,7 @@ onMounted(() => {
 watch(() => route.path, () => {
   menuOpen.value = false
   document.body.style.overflow = ''
+  forceScrollToTop()
 })
 
 watch(menuOpen, (open) => {
