@@ -275,8 +275,7 @@ const logoStyle = computed(() => ({
   }
 }
 
-:global(html.graphics-tier-static),
-:global(html.graphics-tier-reduced) {
+:global(html.graphics-tier-static) {
   .square1,
   .square2,
   .square3,

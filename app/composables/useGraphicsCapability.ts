@@ -12,19 +12,23 @@ const state = reactive({
   lowPower: false,
 })
 
-function isLowPowerDevice(): boolean {
-  const cores = navigator.hardwareConcurrency ?? 4
+function isLowPowerDesktop(): boolean {
+  // Phones/tablets often under-report cores and RAM — never mark them low-power here.
+  if (navigator.maxTouchPoints > 0) return false
+  if (window.matchMedia('(pointer: coarse)').matches) return false
+
+  const cores = navigator.hardwareConcurrency ?? 8
   if (cores <= 2) return true
 
   const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory
-  if (memory !== undefined && memory <= 4) return true
+  if (memory !== undefined && memory <= 2) return true
 
   return false
 }
 
 function computeTier(): GraphicsTier {
   if (state.prefersReducedMotion || !state.webgl) return 'static'
-  if (state.isCoarsePointer || state.isTouch || state.lowPower) return 'reduced'
+  if (state.lowPower) return 'reduced'
   return 'full'
 }
 
@@ -41,7 +45,7 @@ function readCapability() {
   state.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   state.isCoarsePointer = window.matchMedia('(pointer: coarse)').matches
   state.isTouch = navigator.maxTouchPoints > 0
-  state.lowPower = isLowPowerDevice()
+  state.lowPower = isLowPowerDesktop()
   state.webgl = detectWebGL()
   state.tier = computeTier()
   state.initialized = true
@@ -72,10 +76,19 @@ export function initGraphicsCapability() {
 export function useGraphicsCapability() {
   if (import.meta.client) initGraphicsCapability()
 
-  const canUseWebGL = computed(() => state.tier === 'full')
-  const smoothScroll = computed(() => state.tier === 'full')
-  const animateMotion = computed(() => state.tier !== 'static')
-  const enableHeavyFx = computed(() => state.tier === 'full')
+  // WebGL + canvas effects: on whenever the GPU supports it (incl. high-end phones).
+  const canUseWebGL = computed(() => state.webgl && !state.prefersReducedMotion)
+  const enableHeavyFx = computed(() => state.webgl && !state.prefersReducedMotion)
+
+  // GSAP / scroll-linked motion: off only for OS-level reduced-motion preference.
+  const animateMotion = computed(() => !state.prefersReducedMotion)
+
+  // Lenis smooth scroll: desktop pointer only — native touch scroll stays smoother on iOS.
+  const smoothScroll = computed(() => (
+    !state.prefersReducedMotion
+    && !state.isCoarsePointer
+    && !state.isTouch
+  ))
 
   return {
     tier: computed(() => state.tier),
