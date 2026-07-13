@@ -12,14 +12,9 @@ const localePath = useLocalePath()
 const { parseHighlightedBody } = useSplitText()
 
 const isMobile = useMediaQuery('(max-width: 1099px)', { ssrWidth: 1100 })
-const isCoarsePointer = useMediaQuery('(pointer: coarse)', { ssrWidth: 1100 })
-const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)', { ssrWidth: 1100 })
+const { canUseWebGL } = useGraphicsCapability()
 const layout = computed(() => (isMobile.value ? 'mobile' : 'desktop'))
-const showIntelBackdrop = computed(() => (
-  layout.value === 'desktop'
-  && !isCoarsePointer.value
-  && !prefersReducedMotion.value
-))
+const showIntelBackdrop = computed(() => layout.value === 'desktop' && canUseWebGL.value)
 
 const rootRef = ref<HTMLElement | null>(null)
 const heroRef = ref<HTMLElement | null>(null)

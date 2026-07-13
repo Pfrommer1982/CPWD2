@@ -26,8 +26,8 @@ const articles = computed(() => {
 onMounted(async () => {
   if (!import.meta.client || !sectionRef.value) return
 
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (reduced) return
+  const { animateMotion } = useGraphicsCapability()
+  if (!animateMotion.value) return
 
   const { init, createContext } = useGsap()
   const gsap = await init()

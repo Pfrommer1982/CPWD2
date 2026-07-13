@@ -68,6 +68,12 @@ export function useVisibleTimeline({ root, active, staticMode, factory }: Visibl
     const el = root.value
     if (!el || !import.meta.client || staticMode?.value) return
 
+    const { animateMotion } = useGraphicsCapability()
+    if (!animateMotion.value) {
+      await revealMotionElements(el)
+      return
+    }
+
     const ready = await whenSceneReady(() => !!root.value, () => {})
     if (!ready || !root.value) return
 
@@ -80,7 +86,7 @@ export function useVisibleTimeline({ root, active, staticMode, factory }: Visibl
     timeline = null
     built = false
 
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const reduced = !animateMotion.value
 
     gsapCtx = gsapInstance.context(() => {
       const tl = factory({ gsap: gsapInstance, reduced })

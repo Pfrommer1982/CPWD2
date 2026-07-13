@@ -11,7 +11,7 @@ export function useFinaleScene(options: FinaleSceneOptions) {
   onMounted(async () => {
     if (!import.meta.client) return
 
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const { animateMotion } = useGraphicsCapability()
     const mobile = window.matchMedia('(max-width: 767px)').matches
     await nextTick()
 
@@ -25,7 +25,7 @@ export function useFinaleScene(options: FinaleSceneOptions) {
 
     ctx = gsap.context(() => {
       scrollLayers.value.filter(Boolean).forEach((text) => {
-        if (reduced || mobile) {
+        if (!animateMotion.value || mobile) {
           gsap.set(text, { backgroundSize: '100%' })
           return
         }

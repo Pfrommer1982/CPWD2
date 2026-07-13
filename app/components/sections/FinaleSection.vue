@@ -151,7 +151,6 @@ useFinaleScene({ scrollLayers: textRefs })
   display: block;
   text-decoration: none;
   color: inherit;
-  cursor: none;
 }
 
 .finale-row__text {

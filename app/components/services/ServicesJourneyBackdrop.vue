@@ -12,6 +12,8 @@ const props = defineProps<{
   ready?: boolean
 }>()
 
+const { canUseWebGL, animateMotion } = useGraphicsCapability()
+
 const wrapRef = ref<HTMLElement | null>(null)
 const webglRef = ref<HTMLCanvasElement | null>(null)
 const overlayRef = ref<HTMLCanvasElement | null>(null)
@@ -1426,7 +1428,14 @@ async function boot() {
   if (!import.meta.client || initialized) return
 
   await nextTick()
-  if (!webglRef.value || !wrapRef.value) return
+  if (!wrapRef.value) return
+
+  if (!canUseWebGL.value) {
+    initialized = true
+    return
+  }
+
+  if (!webglRef.value) return
 
   await initThree()
   if (!scene || !globeGroup) return
@@ -1438,8 +1447,7 @@ async function boot() {
   sectionOpacities.set(sectionOpacitiesTarget)
   renderFrame(performance.now())
 
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (!reduced) start()
+  if (animateMotion.value) start()
 }
 
 watch(() => props.ready, (isReady) => {
@@ -1457,8 +1465,19 @@ onUnmounted(() => {
 <template>
   <Teleport to="body">
     <div ref="wrapRef" class="journey-backdrop" aria-hidden="true">
-      <canvas ref="webglRef" class="journey-backdrop__webgl" />
-      <canvas ref="overlayRef" class="journey-backdrop__overlay" />
+      <div
+        v-if="!canUseWebGL"
+        class="graphics-fallback-globe graphics-fallback-globe--journey journey-backdrop__fallback"
+        aria-hidden="true"
+      >
+        <div class="graphics-fallback-globe__stars" />
+        <div class="graphics-fallback-globe__glow" />
+        <div class="graphics-fallback-globe__halo" />
+      </div>
+      <template v-else>
+        <canvas ref="webglRef" class="journey-backdrop__webgl" />
+        <canvas ref="overlayRef" class="journey-backdrop__overlay" />
+      </template>
     </div>
   </Teleport>
 </template>

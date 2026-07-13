@@ -294,6 +294,13 @@ export function useAboutJourney({
   async function mount(mode: 'desktop' | 'mobile') {
     teardown()
     activeChapter.value = -1
+
+    const { animateMotion } = useGraphicsCapability()
+    if (!animateMotion.value && root.value) {
+      await revealMotionElements(root.value)
+      return
+    }
+
     if (mode === 'desktop') await setupDesktop()
     else await setupMobile()
   }

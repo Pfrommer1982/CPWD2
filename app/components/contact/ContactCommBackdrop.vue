@@ -11,6 +11,7 @@ const props = defineProps<{
 
 const wrapRef = ref<HTMLElement | null>(null)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
+const { enableHeavyFx } = useGraphicsCapability()
 
 const COMMS = COMMS_RGB
 const COMMS_LIGHT = COMMS_RGB_LIGHT
@@ -526,16 +527,21 @@ async function bindScroll() {
 async function boot() {
   if (!import.meta.client || initialized) return
   await nextTick()
-  if (!wrapRef.value || !canvasRef.value) return
+  if (!wrapRef.value) return
+
+  if (!enableHeavyFx.value) {
+    initialized = true
+    return
+  }
+
+  if (!canvasRef.value) return
 
   try {
     initStars()
     initialized = true
     await bindScroll()
     drawFrame(performance.now())
-
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (!reduced) start()
+    start()
 
     resizeObserver = new ResizeObserver(() => drawFrame(performance.now()))
     resizeObserver.observe(wrapRef.value)
@@ -569,7 +575,15 @@ onUnmounted(() => {
 <template>
   <Teleport to="body">
     <div ref="wrapRef" class="contact-comm-backdrop" aria-hidden="true">
-      <canvas ref="canvasRef" class="contact-comm-backdrop__canvas" />
+      <div
+        v-if="!enableHeavyFx"
+        class="graphics-fallback-globe graphics-fallback-globe--contact contact-comm-backdrop__fallback"
+        aria-hidden="true"
+      >
+        <div class="graphics-fallback-globe__stars" />
+        <div class="graphics-fallback-globe__glow" />
+      </div>
+      <canvas v-else ref="canvasRef" class="contact-comm-backdrop__canvas" />
     </div>
   </Teleport>
 </template>

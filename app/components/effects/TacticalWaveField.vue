@@ -27,7 +27,8 @@ let running = false
 let observer: IntersectionObserver | null = null
 let resizeObserver: ResizeObserver | null = null
 let startTime = 0
-const reducedMotion = ref(false)
+const { enableHeavyFx } = useGraphicsCapability()
+const staticFx = computed(() => !enableHeavyFx.value)
 
 function resizeCanvas() {
   const canvas = canvasRef.value
@@ -135,13 +136,13 @@ function renderFrame(now: number) {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
   ctx.clearRect(0, 0, w, h)
 
-  const t = reducedMotion.value ? 0 : now - startTime
+  const t = staticFx.value ? 0 : now - startTime
 
   drawGrid(ctx, w, h)
-  if (!reducedMotion.value) drawSweep(ctx, w, h, t)
+  if (!staticFx.value) drawSweep(ctx, w, h, t)
   WAVES.forEach(wave => drawWave(ctx, w, h, t, wave))
 
-  if (running && !reducedMotion.value) raf = requestAnimationFrame(renderFrame)
+  if (running && enableHeavyFx.value) raf = requestAnimationFrame(renderFrame)
 }
 
 function start() {
@@ -173,15 +174,19 @@ function setupObserver() {
 }
 
 onMounted(() => {
-  reducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   resizeCanvas()
+  renderFrame(performance.now())
 
-  if (reducedMotion.value) {
-    renderFrame(performance.now())
+  if (!enableHeavyFx.value) {
+    resizeObserver = new ResizeObserver(() => {
+      resizeCanvas()
+      renderFrame(performance.now())
+    })
+    if (wrapRef.value) resizeObserver.observe(wrapRef.value)
+    return
   }
-  else {
-    setupObserver()
-  }
+
+  setupObserver()
 
   resizeObserver = new ResizeObserver(() => {
     resizeCanvas()

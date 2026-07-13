@@ -40,8 +40,8 @@ onMounted(async () => {
   await nextTick()
   measure()
 
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (reduced) return
+  const { animateMotion } = useGraphicsCapability()
+  if (!animateMotion.value) return
 
   if (typeof ResizeObserver !== 'undefined') {
     resizeObserver = new ResizeObserver(measure)

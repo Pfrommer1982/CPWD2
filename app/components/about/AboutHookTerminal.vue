@@ -6,7 +6,8 @@ const terminalRef = ref<HTMLElement | null>(null)
 
 const inView = ref(false)
 const t = ref(0)
-const reducedMotion = ref(false)
+const { enableHeavyFx } = useGraphicsCapability()
+const staticFx = computed(() => !enableHeavyFx.value)
 
 const BAR_COUNT = 10
 const SPEC_COUNT = 36
@@ -63,7 +64,7 @@ function tick(time: number) {
   t.value = time * 0.001
   const now = t.value
 
-  if (reducedMotion.value) {
+  if (staticFx.value) {
     barHeights.value = barHeights.value.map((_, i) => 0.35 + (i % 3) * 0.12)
     specHeights.value = specHeights.value.map((_, i) => 0.2 + (i % 5) * 0.06)
     loadProgress.value = scanItems.value.map((item, i) => (
@@ -128,8 +129,16 @@ function setupObserver() {
 }
 
 onMounted(() => {
-  reducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  loadProgress.value = scanItems.value.map(() => 0)
+  loadProgress.value = scanItems.value.map((item, i) => (
+    item.status === 'pass' ? 0.92 : 0.38 + i * 0.08
+  ))
+
+  if (staticFx.value) {
+    barHeights.value = barHeights.value.map((_, i) => 0.35 + (i % 3) * 0.12)
+    specHeights.value = specHeights.value.map((_, i) => 0.2 + (i % 5) * 0.06)
+    return
+  }
+
   setupObserver()
 })
 

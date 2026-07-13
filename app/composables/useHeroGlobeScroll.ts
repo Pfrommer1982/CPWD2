@@ -7,8 +7,8 @@ export function useHeroGlobeScroll(progress: Ref<number>, root: Ref<HTMLElement 
     scrollTrigger?.kill()
     if (!import.meta.client || !root.value) return
 
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduced) {
+    const { animateMotion } = useGraphicsCapability()
+    if (!animateMotion.value) {
       progress.value = 0
       return
     }

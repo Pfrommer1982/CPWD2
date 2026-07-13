@@ -27,7 +27,8 @@ async function setupAnimation() {
   const fills = rootRef.value.querySelectorAll<HTMLElement>('.outline-text__fill')
   const triggerEl = props.trigger ?? rootRef.value
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const { animateMotion } = useGraphicsCapability()
+  if (!animateMotion.value) {
     fills.forEach(fill => { fill.style.clipPath = 'inset(0)' })
     return
   }

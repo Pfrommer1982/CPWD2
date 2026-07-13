@@ -5,6 +5,7 @@
 @use 'links';
 @use 'components';
 @use 'service-scenes';
+@use 'graphics-fallback';
 
 ::selection {
   background: $color-gold;

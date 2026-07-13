@@ -21,7 +21,8 @@ function startHudIntro() {
 
 onMounted(async () => {
   if (!import.meta.client) return
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  const { animateMotion } = useGraphicsCapability()
+  if (!animateMotion.value) return
 
   const { gsap } = await import('gsap')
 

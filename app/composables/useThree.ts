@@ -11,16 +11,14 @@ interface ThreeContext {
 
 export function useThree(canvasRef: Ref<HTMLCanvasElement | null>) {
   let context: ThreeContext | null = null
-  const isReducedMotion = ref(false)
+  const { canUseWebGL } = useGraphicsCapability()
 
   async function init(options: {
     particleCount?: number
     onAnimate?: (ctx: ThreeContext, elapsed: number) => void
   } = {}) {
     if (!import.meta.client || !canvasRef.value) return null
-
-    isReducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (isReducedMotion.value) return null
+    if (!canUseWebGL.value) return null
 
     const THREE = await import('three')
     const canvas = canvasRef.value
@@ -130,5 +128,5 @@ export function useThree(canvasRef: Ref<HTMLCanvasElement | null>) {
     context = null
   })
 
-  return { init, isReducedMotion }
+  return { init, canUseWebGL }
 }

@@ -87,8 +87,8 @@ let resizeObserver: ResizeObserver | null = null
 onMounted(() => {
   if (!import.meta.client || props.mobile) return
 
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (reduced) {
+  const { enableHeavyFx } = useGraphicsCapability()
+  if (!enableHeavyFx.value) {
     phase = 1.2
     draw()
     return

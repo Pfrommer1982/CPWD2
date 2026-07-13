@@ -13,6 +13,7 @@ const props = withDefaults(defineProps<{
 
 const canvasRef = ref<HTMLCanvasElement>()
 const wrapperRef = ref<HTMLElement>()
+const { enableHeavyFx } = useGraphicsCapability()
 
 let frameId = 0
 let time = 0
@@ -96,8 +97,9 @@ function onPointerMove(e: PointerEvent) {
 
 onMounted(() => {
   if (!import.meta.client || !canvasRef.value) return
+  if (!enableHeavyFx.value) return
 
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const staticFx = !enableHeavyFx.value
   const canvas = canvasRef.value
   const ctx = canvas.getContext('2d')
   if (!ctx) return
@@ -115,7 +117,7 @@ onMounted(() => {
     canvas.height = height * dpr
     canvas.style.width = `${width}px`
     canvas.style.height = `${height}px`
-    if (reduced) draw(ctx, width, height, dpr)
+    if (staticFx) draw(ctx, width, height, dpr)
   }
 
   resize()
@@ -128,7 +130,7 @@ onMounted(() => {
   }
 
   const tick = () => {
-    if (reduced) return
+    if (staticFx) return
 
     time += 0.016
     pointer.x += (targetPointer.x - pointer.x) * 0.04
@@ -137,7 +139,7 @@ onMounted(() => {
     frameId = requestAnimationFrame(tick)
   }
 
-  if (!reduced) tick()
+  if (!staticFx) tick()
 })
 
 onUnmounted(() => {
@@ -149,7 +151,8 @@ onUnmounted(() => {
 
 <template>
   <div ref="wrapperRef" class="dot-field" aria-hidden="true">
-    <canvas ref="canvasRef" class="dot-field__canvas" />
+    <div v-if="!enableHeavyFx" class="graphics-fallback-dots" />
+    <canvas v-else ref="canvasRef" class="dot-field__canvas" />
   </div>
 </template>
 

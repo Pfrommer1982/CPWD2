@@ -1,10 +1,10 @@
 <script setup lang="ts">
 const canvasRef = ref<HTMLCanvasElement | null>(null)
+const { enableHeavyFx } = useGraphicsCapability()
 let animationId = 0
 
 onMounted(() => {
-  if (!import.meta.client) return
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  if (!import.meta.client || !enableHeavyFx.value) return
 
   const canvas = canvasRef.value
   if (!canvas) return
@@ -61,7 +61,8 @@ onMounted(() => {
 
 <template>
   <ClientOnly>
-    <canvas ref="canvasRef" class="noise-bg" />
+    <div v-if="!enableHeavyFx" class="noise-bg noise-bg--static" aria-hidden="true" />
+    <canvas v-else ref="canvasRef" class="noise-bg" />
   </ClientOnly>
 </template>
 
@@ -74,5 +75,18 @@ onMounted(() => {
   z-index: $z-canvas;
   pointer-events: none;
   opacity: 0.4;
+
+  &--static {
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 40%, rgba(56, 150, 90, 0.05), transparent 70%),
+      repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.015) 0,
+        rgba(255, 255, 255, 0.015) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+    opacity: 0.35;
+  }
 }
 </style>

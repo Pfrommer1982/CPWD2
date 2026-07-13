@@ -22,7 +22,7 @@ const liveText = ref<Record<number, string>>({})
 
 let observer: IntersectionObserver | null = null
 let tickTimer: ReturnType<typeof setInterval> | null = null
-const reducedMotion = ref(false)
+const { enableHeavyFx } = useGraphicsCapability()
 
 function syncLiveCells(source: TacticalDataCell[]) {
   const next: Record<number, string> = { ...liveText.value }
@@ -46,7 +46,7 @@ function stopLiveLoop() {
 
 function setupObserver() {
   const el = rootRef.value
-  if (!el || reducedMotion.value) return
+  if (!el || !enableHeavyFx.value) return
 
   observer?.disconnect()
   observer = new IntersectionObserver(
@@ -64,13 +64,11 @@ watch(cells, (next) => {
 }, { deep: true })
 
 onMounted(() => {
-  reducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (reducedMotion.value) {
-    for (const cell of cells.value) {
-      if (cell.live) liveText.value[cell.id] = cell.text
-    }
-    return
+  for (const cell of cells.value) {
+    if (cell.live) liveText.value[cell.id] = cell.text
   }
+
+  if (!enableHeavyFx.value) return
   setupObserver()
 })
 

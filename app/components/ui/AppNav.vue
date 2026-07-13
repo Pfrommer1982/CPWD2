@@ -419,7 +419,7 @@ watch(menuOpen, (open) => {
   background: none;
   border: none;
   color: $color-text-faint;
-  cursor: none;
+  cursor: pointer;
   transition: color $dur-fast $ease-gold;
 
   &--active {

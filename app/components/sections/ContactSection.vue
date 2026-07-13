@@ -6,6 +6,9 @@ const sectionRef = ref<HTMLElement | null>(null)
 onMounted(async () => {
   if (!sectionRef.value) return
 
+  const { animateMotion } = useGraphicsCapability()
+  if (!animateMotion.value) return
+
   const { init } = useGsap()
   const gsap = await init()
   if (!gsap) return

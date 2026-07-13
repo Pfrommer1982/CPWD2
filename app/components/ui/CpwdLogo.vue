@@ -33,8 +33,10 @@ const logoStyle = computed(() => ({
           D
         </div>
       </div>
-      <div class="line horizontal" />
-      <div class="line vertical" />
+      <svg class="logo-cross" viewBox="0 0 250 250" aria-hidden="true">
+        <line class="logo-cross__line" x1="0" y1="125" x2="250" y2="125" stroke-width="4" />
+        <line class="logo-cross__line" x1="125" y1="0" x2="125" y2="250" stroke-width="4" />
+      </svg>
       <div class="dot-wrap">
         <span class="dot-ring dot-ring--1" aria-hidden="true" />
         <span class="dot-ring dot-ring--2" aria-hidden="true" />
@@ -142,25 +144,18 @@ const logoStyle = computed(() => ({
   right: calc(10px * var(--scale));
 }
 
-.line {
+.logo-cross {
   position: absolute;
-  background-color: var(--logo-line);
-}
-
-.horizontal {
+  inset: 0;
   width: 100%;
-  height: calc(4px * var(--scale));
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
 }
 
-.vertical {
-  width: calc(4px * var(--scale));
-  height: 100%;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+.logo-cross__line {
+  stroke: var(--logo-line);
+  shape-rendering: geometricPrecision;
 }
 
 .dot-wrap {
@@ -171,6 +166,7 @@ const logoStyle = computed(() => ({
   height: calc(20px * var(--scale));
   transform: translate(-50%, -50%);
   pointer-events: none;
+  z-index: 3;
 }
 
 .dot-ring {
@@ -274,6 +270,24 @@ const logoStyle = computed(() => ({
 
   .dot-ring {
     animation: none;
+    opacity: 0.35;
+    transform: scale(1.6);
+  }
+}
+
+:global(html.graphics-tier-static),
+:global(html.graphics-tier-reduced) {
+  .square1,
+  .square2,
+  .square3,
+  .square4 {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .dot-ring {
+    animation: none !important;
     opacity: 0.35;
     transform: scale(1.6);
   }

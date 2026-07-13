@@ -2,10 +2,10 @@
 import { COMMS_THREE } from '~/constants/brand'
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
+const { canUseWebGL } = useGraphicsCapability()
 
 onMounted(async () => {
-  if (!import.meta.client) return
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  if (!import.meta.client || !canUseWebGL.value) return
 
   const canvas = canvasRef.value
   if (!canvas) return
@@ -78,7 +78,8 @@ onMounted(async () => {
 
 <template>
   <ClientOnly>
-    <canvas ref="canvasRef" class="floating-geo" />
+    <div v-if="!canUseWebGL" class="floating-geo floating-geo--static" aria-hidden="true" />
+    <canvas v-else ref="canvasRef" class="floating-geo" />
   </ClientOnly>
 </template>
 
@@ -87,5 +88,10 @@ onMounted(async () => {
   width: 100%;
   height: 100%;
   min-height: 400px;
+
+  &--static {
+    min-height: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(56, 150, 90, 0.08), transparent 70%);
+  }
 }
 </style>

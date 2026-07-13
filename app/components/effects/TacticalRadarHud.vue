@@ -15,7 +15,8 @@ let observer: IntersectionObserver | null = null
 let resizeObserver: ResizeObserver | null = null
 let blips: RadarBlip[] = []
 let startTime = 0
-const reducedMotion = ref(false)
+const { enableHeavyFx } = useGraphicsCapability()
+const staticFx = computed(() => !enableHeavyFx.value)
 
 function resizeCanvas() {
   const canvas = canvasRef.value
@@ -47,10 +48,10 @@ function renderFrame(now: number) {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
 
   const t = (now - startTime) * 0.001
-  if (!reducedMotion.value) updateRadarBlips(blips, t)
-  drawTacticalRadarHud(ctx, w, h, t, blips, reducedMotion.value)
+  if (!staticFx.value) updateRadarBlips(blips, t)
+  drawTacticalRadarHud(ctx, w, h, t, blips, staticFx.value)
 
-  if (running) raf = requestAnimationFrame(renderFrame)
+  if (running && enableHeavyFx.value) raf = requestAnimationFrame(renderFrame)
 }
 
 function start() {
@@ -83,8 +84,12 @@ function setupObserver() {
 }
 
 onMounted(() => {
-  reducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   blips = createInitialRadarBlips(0)
+  resizeCanvas()
+  renderFrame(performance.now())
+
+  if (!enableHeavyFx.value) return
+
   setupObserver()
 
   resizeObserver = new ResizeObserver(() => resizeCanvas())

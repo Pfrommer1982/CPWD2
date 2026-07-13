@@ -124,8 +124,8 @@ export function useIlluminateRing({ ring, trackArea }: IlluminateRingOptions) {
       '--shimmer-pulse': '0.75',
     })
 
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduced) return
+    const { enableHeavyFx } = useGraphicsCapability()
+    if (!enableHeavyFx.value) return
 
     area.addEventListener('pointermove', onPointerMove, { passive: true })
     area.addEventListener('pointerleave', onPointerLeave, { passive: true })

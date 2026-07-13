@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const { fx, glitchShift, start: startGlitch, stop: stopGlitch } = useCommsScreenGlitch()
+const { enableHeavyFx } = useGraphicsCapability()
+const staticFx = computed(() => !enableHeavyFx.value)
 
 const GRAIN_SIZE = 192
 const INTENSITY = 0.55
@@ -9,7 +11,6 @@ let raf = 0
 let frame = 0
 let imageData: ImageData | null = null
 let ctx: CanvasRenderingContext2D | null = null
-const reducedMotion = ref(false)
 
 const glitchStyle = computed(() => ({
   '--glitch-x': `${glitchShift.value.x}px`,
@@ -48,20 +49,18 @@ function paintGrain(snowBoost = 0) {
 
 function tick() {
   frame++
-  if (!reducedMotion.value && frame % 2 === 0) {
+  if (!staticFx.value && frame % 2 === 0) {
     paintGrain(fx.snow ? 0.65 : 0)
   }
   raf = requestAnimationFrame(tick)
 }
 
 onMounted(() => {
-  reducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (!enableHeavyFx.value) return
   if (initCanvas()) {
     paintGrain()
-    if (!reducedMotion.value) {
-      raf = requestAnimationFrame(tick)
-      startGlitch()
-    }
+    raf = requestAnimationFrame(tick)
+    startGlitch()
   }
 })
 
@@ -79,6 +78,7 @@ onUnmounted(() => {
     class="comms-screen"
     aria-hidden="true"
     :class="{
+      'comms-screen--lite': staticFx,
       'comms-screen--tear': fx.tear,
       'comms-screen--tracking': fx.tracking,
       'comms-screen--chroma': fx.chroma,
@@ -90,7 +90,7 @@ onUnmounted(() => {
   >
     <div
       class="comms-screen__pulse"
-      :class="{ 'comms-screen__pulse--static': reducedMotion }"
+      :class="{ 'comms-screen__pulse--static': staticFx }"
     >
       <canvas ref="canvasRef" class="comms-screen__grain" />
       <div class="comms-screen__scanlines" />
@@ -115,6 +115,20 @@ onUnmounted(() => {
   pointer-events: none;
   overflow: hidden;
   isolation: isolate;
+
+  &--lite {
+    opacity: 0.28;
+
+    .comms-screen__grain {
+      display: none;
+    }
+
+    .comms-screen__glitch-bars,
+    .comms-screen__glitch-chroma,
+    .comms-screen__glitch-radar {
+      display: none;
+    }
+  }
 
   &__pulse {
     position: absolute;

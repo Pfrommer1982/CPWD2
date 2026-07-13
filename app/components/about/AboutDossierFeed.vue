@@ -32,6 +32,7 @@ let grainW = 0
 let grainH = 0
 let grainResizeObserver: ResizeObserver | null = null
 const lowPowerMode = ref(false)
+const { enableHeavyFx } = useGraphicsCapability()
 
 const GRAIN_ALPHA = 28
 const GRAIN_FPS = 24
@@ -86,7 +87,7 @@ function grainLoop(currentTime: number) {
 
 function startFilmGrain() {
   if (!import.meta.client || grainRunning) return
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  if (!enableHeavyFx.value) return
   if (lowPowerMode.value) return
 
   resizeGrainCanvas()
@@ -235,7 +236,7 @@ function resetSequence() {
 
 onMounted(async () => {
   if (!import.meta.client) return
-  lowPowerMode.value = window.matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 0
+  lowPowerMode.value = !enableHeavyFx.value
   await nextTick()
   if (!rootRef.value) return
 

@@ -58,8 +58,7 @@ const matchCount = computed(() =>
 )
 
 const totalArticles = knowledgeArticles.length
-const enableFx = ref(false)
-const prefersReducedMotion = ref(false)
+const { enableHeavyFx, animateMotion } = useGraphicsCapability()
 
 const GLYPHS = '01<>[]/\\#*+=ABCDEF0123456789'
 let scrambleRaf = 0
@@ -96,7 +95,7 @@ function runSearchDecrypt(value: string) {
   if (searchTimer) clearTimeout(searchTimer)
   const term = value.trim()
 
-  if (prefersReducedMotion.value) {
+  if (!animateMotion.value) {
     appliedQuery.value = value
     searching.value = false
     return
@@ -126,13 +125,7 @@ const heroRef = ref<HTMLElement | null>(null)
 
 onMounted(async () => {
   if (!import.meta.client) return
-
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const coarse = window.matchMedia('(pointer: coarse)').matches
-  enableFx.value = !reduced && !coarse
-  prefersReducedMotion.value = reduced
-
-  if (reduced) return
+  if (!animateMotion.value) return
 
   const { init, createContext } = useGsap()
   const gsap = await init()
@@ -223,7 +216,7 @@ onMounted(async () => {
     <SeoFaqSchema :articles="knowledgeArticles" />
 
     <ClientOnly>
-      <div v-if="enableFx" class="faq-page__fx" aria-hidden="true">
+      <div v-if="enableHeavyFx" class="faq-page__fx" aria-hidden="true">
         <EffectsTacticalDataField :count="34" :seed="7" :live-count="5" />
         <div class="faq-page__scan" />
       </div>
@@ -234,7 +227,7 @@ onMounted(async () => {
         <div class="faq-hero__grid" />
         <div class="faq-hero__glow" />
         <ClientOnly>
-          <EffectsTacticalRadarHud v-if="enableFx" />
+          <EffectsTacticalRadarHud v-if="enableHeavyFx" />
         </ClientOnly>
       </div>
 

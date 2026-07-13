@@ -355,6 +355,12 @@ export function useServicesJourney({
     teardown()
     activeChapter.value = -1
 
+    const { animateMotion } = useGraphicsCapability()
+    if (!animateMotion.value && root.value) {
+      await revealMotionElements(root.value)
+      return
+    }
+
     if (mode === 'desktop') await setupDesktop()
     else await setupMobile()
   }

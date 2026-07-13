@@ -23,6 +23,8 @@ const props = defineProps<{
   scrollProgress?: number
 }>()
 
+const { canUseWebGL, animateMotion } = useGraphicsCapability()
+
 const wrapRef = ref<HTMLElement | null>(null)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const hudRef = ref<HTMLCanvasElement | null>(null)
@@ -716,9 +718,16 @@ function stop() {
 async function boot() {
   if (!import.meta.client) return
   await nextTick()
-  if (!canvasRef.value || !wrapRef.value) return
+  if (!wrapRef.value) return
 
-  hudIntroReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  hudIntroReduced = !animateMotion.value
+  if (!canUseWebGL.value) return
+
+  if (!canvasRef.value) {
+    await new Promise<void>(resolve => requestAnimationFrame(() => resolve()))
+  }
+  if (!canvasRef.value) return
+
   startHudLoop()
 
   await initThree()
@@ -766,7 +775,16 @@ onUnmounted(() => {
 
 <template>
   <div ref="wrapRef" class="hero-globe" aria-hidden="true">
-    <ClientOnly>
+    <div
+      v-if="!canUseWebGL"
+      class="graphics-fallback-globe hero-globe__fallback"
+      aria-hidden="true"
+    >
+      <div class="graphics-fallback-globe__stars" />
+      <div class="graphics-fallback-globe__glow" />
+      <div class="graphics-fallback-globe__halo" />
+    </div>
+    <ClientOnly v-else>
       <canvas ref="canvasRef" class="hero-globe__canvas" />
       <canvas ref="hudRef" class="hero-globe__hud" />
     </ClientOnly>

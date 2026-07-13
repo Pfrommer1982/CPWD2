@@ -20,7 +20,7 @@ const tags = computed(() => {
 
 let raf = 0
 let observer: IntersectionObserver | null = null
-let reducedMotion = false
+const { enableHeavyFx } = useGraphicsCapability()
 
 function hexLine(len = 28) {
   return Array.from({ length: len }, () => GLYPHS[Math.floor(Math.random() * 16)]).join('')
@@ -41,7 +41,7 @@ function tick(time: number) {
   const t = time * 0.001
   phase.value = (Math.sin(t * 0.85) + 1) * 0.5
 
-  if (reducedMotion) {
+  if (!enableHeavyFx.value) {
     displayText.value = PLAIN.value
     return
   }
@@ -80,9 +80,13 @@ function stop() {
 }
 
 onMounted(() => {
-  reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  displayText.value = PLAIN.value
+  streamLines.value = Array.from({ length: 5 }, () => hexLine(32))
+
   const el = panelRef.value
   if (!el) return
+
+  if (!enableHeavyFx.value) return
 
   observer = new IntersectionObserver(
     ([entry]) => {

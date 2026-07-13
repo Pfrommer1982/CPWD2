@@ -45,18 +45,14 @@ useSeo(computed(() => ({
   ],
 })))
 
-const enableFx = ref(false)
+const { enableHeavyFx, animateMotion } = useGraphicsCapability()
 const articleRef = ref<HTMLElement | null>(null)
 
 onMounted(async () => {
   if (!import.meta.client) return
 
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const coarse = window.matchMedia('(pointer: coarse)').matches
-  enableFx.value = !reduced && !coarse
-
   const scope = articleRef.value
-  if (reduced || !scope) return
+  if (!animateMotion.value || !scope) return
 
   const { init, createContext } = useGsap()
   const gsap = await init()
@@ -95,7 +91,7 @@ onMounted(async () => {
     <SeoArticleSchema :article="article" />
 
     <ClientOnly>
-      <div v-if="enableFx" class="faq-article-page__fx" aria-hidden="true">
+      <div v-if="enableHeavyFx" class="faq-article-page__fx" aria-hidden="true">
         <EffectsTacticalWaveField />
       </div>
     </ClientOnly>

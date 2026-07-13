@@ -23,7 +23,7 @@ const number = computed(() => String(props.index + 1).padStart(2, '0'))
 const progressText = computed(() => String(progress.value).padStart(3, '0'))
 
 const LOADER_DURATION = 460
-let reducedMotion = false
+const { animateMotion } = useGraphicsCapability()
 let raf = 0
 
 function stopLoader() {
@@ -62,17 +62,13 @@ function toggle() {
   }
 
   open.value = true
-  if (reducedMotion) {
+  if (!animateMotion.value) {
     decoding.value = false
     progress.value = 100
     return
   }
   runLoader()
 }
-
-onMounted(() => {
-  reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-})
 
 onUnmounted(stopLoader)
 </script>

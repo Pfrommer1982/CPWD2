@@ -120,7 +120,7 @@ export function useServicesCarousel(options: ServicesCarouselOptions) {
   async function setup() {
     if (!import.meta.client || !root.value) return
 
-    reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    reducedMotion = !useGraphicsCapability().animateMotion.value
 
     const { init } = useGsap()
     const gsap = await init()

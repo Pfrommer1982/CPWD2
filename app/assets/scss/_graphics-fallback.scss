@@ -1,0 +1,138 @@
+@use 'variables' as *;
+
+// Static CSS substitute for WebGL globe / star-field backdrops.
+.graphics-fallback-globe {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: $color-bg;
+
+  &__glow {
+    position: absolute;
+    top: 50%;
+    right: -8%;
+    width: min(58vw, 520px);
+    height: min(58vw, 520px);
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 42% 42%, rgba(56, 150, 90, 0.34) 0%, rgba(56, 150, 90, 0.12) 34%, transparent 68%),
+      radial-gradient(circle at 58% 58%, rgba(20, 48, 34, 0.55) 0%, transparent 62%);
+    filter: blur(2px);
+  }
+
+  &__halo {
+    position: absolute;
+    top: 50%;
+    right: 2%;
+    width: min(42vw, 380px);
+    height: min(42vw, 380px);
+    transform: translateY(-50%);
+    border-radius: 50%;
+    border: 1px solid rgba(56, 150, 90, 0.14);
+    box-shadow:
+      0 0 40px rgba(56, 150, 90, 0.08),
+      inset 0 0 30px rgba(56, 150, 90, 0.04);
+    opacity: 0.75;
+  }
+
+  &__stars {
+    position: absolute;
+    inset: 0;
+    opacity: 0.55;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, rgba(200, 230, 210, 0.7), transparent),
+      radial-gradient(1px 1px at 28% 62%, rgba(56, 150, 90, 0.55), transparent),
+      radial-gradient(1.5px 1.5px at 44% 34%, rgba(220, 240, 225, 0.65), transparent),
+      radial-gradient(1px 1px at 58% 78%, rgba(200, 230, 210, 0.45), transparent),
+      radial-gradient(1px 1px at 72% 22%, rgba(56, 150, 90, 0.5), transparent),
+      radial-gradient(1.5px 1.5px at 84% 56%, rgba(220, 240, 225, 0.55), transparent),
+      radial-gradient(1px 1px at 18% 84%, rgba(200, 230, 210, 0.4), transparent),
+      radial-gradient(1px 1px at 36% 12%, rgba(56, 150, 90, 0.35), transparent);
+    background-size: 100% 100%;
+  }
+
+  &--journey {
+    background: #030504;
+
+    .graphics-fallback-globe__glow {
+      right: 50%;
+      top: 42%;
+      transform: translate(50%, -50%);
+      width: min(72vw, 640px);
+      height: min(72vw, 640px);
+      opacity: 0.9;
+    }
+
+    .graphics-fallback-globe__halo {
+      right: 50%;
+      top: 42%;
+      transform: translate(50%, -50%);
+      width: min(52vw, 460px);
+      height: min(52vw, 460px);
+    }
+  }
+
+  &--contact {
+    background: $color-bg;
+
+    .graphics-fallback-globe__glow {
+      right: 50%;
+      top: 35%;
+      transform: translate(50%, -50%);
+      width: min(80vw, 700px);
+      height: min(50vw, 420px);
+      border-radius: 40%;
+      opacity: 0.65;
+    }
+  }
+}
+
+// Dot-field / canvas backdrop substitute
+.graphics-fallback-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(56, 150, 90, 0.06), transparent 70%),
+    $color-bg;
+  opacity: 0.9;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.35;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(235, 230, 220, 0.35), transparent),
+      radial-gradient(1px 1px at 30% 70%, rgba(56, 150, 90, 0.3), transparent),
+      radial-gradient(1.5px 1.5px at 55% 35%, rgba(235, 230, 220, 0.28), transparent),
+      radial-gradient(1px 1px at 75% 80%, rgba(56, 150, 90, 0.25), transparent),
+      radial-gradient(1px 1px at 90% 25%, rgba(235, 230, 220, 0.22), transparent);
+  }
+}
+
+// Static tier: ensure scroll-reveal placeholders and outline fills stay visible
+// without WebGL / reduced-motion (covers no-WebGL laptops without OS setting).
+html.graphics-tier-static {
+  .will-reveal,
+  .will-reveal-left,
+  .will-reveal-scale {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .outline-text__fill {
+    clip-path: inset(0) !important;
+  }
+
+  .finale-row__text {
+    background-size: 100% !important;
+  }
+
+  .finale-row__hover {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%) !important;
+  }
+}
