@@ -27,12 +27,20 @@ function ensureScrollAtTop() {
   lenis?.scrollTo(0, { immediate: true, force: true })
 }
 
+function killScrollTriggersSync() {
+  // Must stay synchronous. An async kill after `await import()` can race the
+  // incoming page's onMounted and destroy fresh ScrollTriggers — leaving
+  // elements stuck at the gsap.from opacity:0 start state (empty sections).
+  if (!scrollTriggerModule) return
+  scrollTriggerModule.ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+}
+
 async function clearLeavingPageScroll() {
   ensureScrollAtTop()
+  killScrollTriggersSync()
 
   try {
     const ScrollTrigger = await getScrollTrigger()
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill())
     ScrollTrigger.clearScrollMemory?.()
     ScrollTrigger.refresh(true)
   }
