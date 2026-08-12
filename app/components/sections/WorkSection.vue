@@ -4,29 +4,55 @@ import { getFeaturedProjects } from '~/data/projects'
 const work = useSectionTranslations('work')
 const localePath = useLocalePath()
 const imageKit = useImageKit()
+const { animateMotion } = useGraphicsCapability()
 const projects = getFeaturedProjects()
 const gridRef = ref<HTMLElement | null>(null)
 
+let animationCtx: ReturnType<typeof import('gsap').gsap.context> | null = null
+
 onMounted(async () => {
-  if (!gridRef.value) return
+  if (!import.meta.client || !gridRef.value) return
+
+  // Reduced-motion / no-JS-friendly: keep cards visible. Never leave them stuck at opacity 0.
+  if (!animateMotion.value) return
 
   const { init } = useGsap()
   const gsap = await init()
-  if (!gsap) return
+  if (!gsap || !gridRef.value) return
 
   const cards = gridRef.value.querySelectorAll('.work-card')
-  gsap.from(cards, {
-    y: 80,
-    opacity: 0,
-    duration: 1,
-    stagger: 0.15,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: gridRef.value,
-      start: 'top 85%',
-      toggleActions: 'play none none reverse',
-    },
-  })
+  if (!cards.length) return
+
+  animationCtx = gsap.context(() => {
+    // once: true + no reverse — previous `toggleActions: '... reverse'` hid cards again
+    // whenever the grid top crossed back below ~85vh, which is exactly when the
+    // "Recent werk" heading is on screen. That made the section look empty on live.
+    gsap.fromTo(
+      cards,
+      { y: 80, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        stagger: 0.15,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: gridRef.value,
+          start: 'top 92%',
+          once: true,
+          toggleActions: 'play none none none',
+        },
+      },
+    )
+  }, gridRef.value)
+
+  await nextTick()
+  await useLenis().refresh()
+})
+
+onUnmounted(() => {
+  animationCtx?.revert()
+  animationCtx = null
 })
 </script>
 
@@ -110,6 +136,15 @@ onMounted(async () => {
   &__footer {
     margin-top: $space-10;
     text-align: center;
+
+    // Match section secondary type (outline heading / card meta), not primary CTA white.
+    .link-arrow {
+      color: $color-text-muted;
+
+      &:hover {
+        color: $color-gold;
+      }
+    }
   }
 }
 
