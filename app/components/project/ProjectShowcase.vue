@@ -204,7 +204,12 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div ref="pageRef" class="showcase" :style="{ '--project-accent': project.accentColor }">
+  <div
+    ref="pageRef"
+    class="showcase"
+    :class="{ 'showcase--accurate-black': project.slug === 'accurate-black' }"
+    :style="{ '--project-accent': project.accentColor }"
+  >
     <section class="showcase-hero">
       <div ref="heroMedia" class="showcase-hero__media">
         <div ref="heroClip" class="showcase-hero__clip">
@@ -535,6 +540,21 @@ onMounted(async () => {
     height: 48px;
     background: linear-gradient(to bottom, $color-gold, transparent);
     animation: scroll-bounce 2.5s ease-in-out infinite;
+  }
+}
+
+// Soften in-image type so page tagline/meta stay readable (Accurate Black only).
+.showcase--accurate-black {
+  .showcase-hero__img {
+    filter: blur(4px) brightness(0.68);
+    transform: scale(1.06);
+    transform-origin: center 20%;
+  }
+
+  .showcase-hero__vignette {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(8, 8, 8, 0.97) 0%, transparent 70%),
+      linear-gradient(to bottom, rgba(8, 8, 8, 0.48) 0%, rgba(8, 8, 8, 0.9) 100%);
   }
 }
 

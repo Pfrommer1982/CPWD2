@@ -33,6 +33,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/home': { redirect: { to: '/', statusCode: 301 } },
     '/work/career-pulse': { redirect: { to: '/work/careerpulse', statusCode: 301 } },
+    '/website-check': { redirect: { to: '/website-scanner', statusCode: 301 } },
   },
 
   vite: {
@@ -89,6 +90,7 @@ export default defineNuxtConfig({
     resendApiKey: process.env.RESEND_API_KEY,
     contactToEmail: process.env.CONTACT_TO_EMAIL || 'info@cpwd.nl',
     contactFromEmail: process.env.CONTACT_FROM_EMAIL || 'CPWD Contact <noreply@cpwd.nl>',
+    googlePagespeedApiKey: process.env.GOOGLE_PAGESPEED_API_KEY || '',
     public: {
       imagekitUrlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://www.cpwd.nl',

@@ -5,9 +5,14 @@ const props = defineProps<{
   projects: Project[]
 }>()
 
+const { locale } = useI18n()
 const work = useSectionTranslations('work')
 const localePath = useLocalePath()
 const imageKit = useImageKit()
+
+function badgeLabel(badge: { nl: string; en: string }) {
+  return locale.value === 'nl' ? badge.nl : badge.en
+}
 
 const rootRef = ref<HTMLElement | null>(null)
 
@@ -107,6 +112,10 @@ onMounted(async () => {
         <div class="work-dossier__body">
           <div class="work-dossier__meta font-mono">
             <span>{{ project.category }}</span>
+            <span
+              v-if="project.badge"
+              class="work-dossier__badge"
+            >{{ badgeLabel(project.badge) }}</span>
           </div>
 
           <h2 class="work-dossier__title font-display">
@@ -346,10 +355,26 @@ onMounted(async () => {
   }
 
   &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $space-3;
     font-size: $text-xs;
     letter-spacing: $tracking-wider;
     text-transform: uppercase;
     color: $color-text-faint;
+  }
+
+  &__badge {
+    padding: 6px 12px;
+    border: 1px solid rgba(56, 150, 90, 0.55);
+    border-radius: $radius-sm;
+    color: $color-gold-light;
+    background: rgba(10, 16, 12, 0.9);
+    box-shadow: 0 0 0 1px rgba(5, 8, 7, 0.4);
+    font-size: $text-sm;
+    font-weight: 500;
+    letter-spacing: $tracking-wider;
   }
 
   &__title {

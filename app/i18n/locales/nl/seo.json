@@ -24,6 +24,14 @@
       "title": "Kennisbank & veelgestelde vragen",
       "description": "Antwoorden op veelgestelde vragen over websites laten maken: prijzen, proces, techniek, SEO en onderhoud. De complete kennisbank van webdevelopment-bureau CPWD."
     },
+    "websiteScanner": {
+      "title": "Website scanner",
+      "description": "Scan snelheid, SEO, toegankelijkheid en technische kwaliteit van je website. CPWD vertaalt Lighthouse-data naar duidelijke, menselijke inzichten."
+    },
+    "projectEstimator": {
+      "title": "Project estimator",
+      "description": "Stel je website of weboplossing samen en krijg direct een vrijblijvende prijsindicatie. Professioneel maatwerk zonder bureauprijzen."
+    },
     "privacy": {
       "title": "Privacybeleid",
       "description": "Privacybeleid van CPWD. Lees welke persoonsgegevens wij verwerken, waarom, en welke rechten je hebt onder de AVG/GDPR."

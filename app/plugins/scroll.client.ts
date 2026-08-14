@@ -29,7 +29,7 @@ function ensureScrollAtTop() {
 
 function killScrollTriggersSync() {
   // Must stay synchronous. An async kill after `await import()` can race the
-  // incoming page's onMounted and destroy fresh ScrollTriggers — leaving
+  // incoming page's onMounted and destroy fresh ScrollTriggers - leaving
   // elements stuck at the gsap.from opacity:0 start state (empty sections).
   if (!scrollTriggerModule) return
   scrollTriggerModule.ScrollTrigger.getAll().forEach(trigger => trigger.kill())
@@ -45,7 +45,7 @@ async function clearLeavingPageScroll() {
     ScrollTrigger.refresh(true)
   }
   catch {
-    // GSAP not loaded yet — native scroll reset above is enough.
+    // GSAP not loaded yet - native scroll reset above is enough.
   }
 
   ensureScrollAtTop()
@@ -90,11 +90,13 @@ export default defineNuxtPlugin((nuxtApp) => {
     ensureScrollAtTop()
   })
 
-  router.beforeEach(() => {
+  router.beforeEach((to, from) => {
+    if (to.path === from.path) return
     void clearLeavingPageScroll()
   })
 
-  router.afterEach(async () => {
+  router.afterEach(async (to, from) => {
+    if (to.path === from.path) return
     ensureScrollAtTop()
     await nextTick()
     ensureScrollAtTop()

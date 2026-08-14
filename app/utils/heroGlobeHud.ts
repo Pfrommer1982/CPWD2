@@ -9,7 +9,7 @@ function hudSeed(n: number) {
   return x - Math.floor(x)
 }
 
-/** Irregular scroll speed — slow drift with occasional brief bursts. */
+/** Irregular scroll speed - slow drift with occasional brief bursts. */
 function scrollRate(t: number, channel: number) {
   const slot = Math.floor(t * (0.05 + channel * 0.008))
   const base = 0.35 + hudSeed(slot + channel * 47) * 0.55

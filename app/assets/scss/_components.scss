@@ -1,6 +1,6 @@
 @use 'variables' as *;
 
-// Matches .container content edge on wide viewports — use for full-bleed sections (e.g. horizontal slides).
+// Matches .container content edge on wide viewports - use for full-bleed sections (e.g. horizontal slides).
 :root {
   --site-gutter: #{$page-gutter};
   --site-inset: max(var(--site-gutter), calc((100vw - #{$content-width}) / 2 + var(--site-gutter)));
@@ -30,7 +30,7 @@
   max-width: $max-width;
 }
 
-// Narrow text measure — always nest inside .container so the page gutter stays aligned.
+// Narrow text measure - always nest inside .container so the page gutter stays aligned.
 .copy-width {
   max-width: $copy-width;
 }

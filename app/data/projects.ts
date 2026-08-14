@@ -53,7 +53,27 @@ export interface Project {
   technologies: string[]
   thumbnail: string
   heroImage: string
+  /** Hero for `/work/:slug/legacy` showcase when it differs from the new-version hero. */
+  legacyHeroImage?: string
   accentColor: string
+  /** Optional chip on Recent werk / work index cards (NL + EN). */
+  badge?: { nl: string; en: string }
+  /**
+   * When true, `/work/:slug` shows the lean case frame (hero + story).
+   * Deep showcase/gallery lives at `/work/:slug/legacy`.
+   */
+  hasLegacy?: boolean
+  /** Why this case got a new version - shown on the lean `/work/:slug` page. */
+  refresh?: {
+    title: { nl: string; en: string }
+    body: { nl: string; en: string }
+  }
+  /** Featured media for the lean new-version page (not shown on legacy). */
+  featureVideo?: {
+    src: string
+    poster?: string
+    caption?: { nl: string; en: string }
+  }
   challenge: {
     nl: string
     en: string
@@ -82,9 +102,29 @@ export const projects: Project[] = [
     year: 2025,
     role: ['Art direction', 'Development', 'CMS', 'Motion design'],
     technologies: ['Nuxt', 'Vue 3', 'SCSS', 'Firebase', 'ImageKit', 'GSAP'],
-    thumbnail: `${ACC}/phone_mockup_3 ACC.png`,
-    heroImage: `${ACC}/Acc Macbook.png`,
+    thumbnail: `${ACC}/AccurateBlack-hero-image.png`,
+    heroImage: `${ACC}/AccurateBlack-hero-image.png`,
+    legacyHeroImage: `${ACC}/Acc Macbook.png`,
     accentColor: '#38965A',
+    badge: { nl: 'Nieuwe versie', en: 'New version' },
+    hasLegacy: true,
+    refresh: {
+      title: {
+        nl: 'Opnieuw scherp gezet',
+        en: 'Sharpened again',
+      },
+      body: {
+        nl: 'Het internet staat nooit stil. De Accurate Black-site begon grafisch weer te verouderen, en de klant vroeg om een frisse, moderne versie. Op verzoek tillen we het platform opnieuw naar het nu, en dat doen we zo vaak als het merk erom vraagt.',
+        en: 'The internet never stands still. The Accurate Black site was becoming graphically outdated again, and the client asked for a fresh, modern version. On request we bring the platform back up to date, and we can do it again whenever the brand needs it.',
+      },
+    },
+    featureVideo: {
+      src: `${ACC}/AccurateBlack-laptop-mockup.mp4`,
+      caption: {
+        nl: 'Nieuwe site in beeld',
+        en: 'New site in motion',
+      },
+    },
     challenge: {
       nl: 'Accurate Black wilde online net zo onderscheidend zijn als hun releases: donker, krachtig en authentiek. De uitdaging? Een digitale ervaring die het karakter van het label voelbaar maakt, en fans, artiesten en partners direct het merk in trekt.',
       en: 'Accurate Black wanted to stand out online the way their releases do, dark, powerful and unmistakably authentic. The challenge: create a digital experience that captures the label\'s character and pulls fans, artists and partners straight into the brand.',

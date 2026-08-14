@@ -5,12 +5,16 @@ const props = withDefaults(defineProps<{
   caption?: string
   accentColor?: string
   large?: boolean
+  /** Editorial: cinematic mockup moment, no control chrome. Default keeps showcase UX. */
+  variant?: 'default' | 'editorial'
 }>(), {
   large: false,
+  variant: 'default',
 })
 
 const projectI18n = useSectionTranslations('project')
 const imageKit = useImageKit()
+const { animateMotion } = useGraphicsCapability()
 
 const rootRef = ref<HTMLElement | null>(null)
 const inlineVideo = ref<HTMLVideoElement | null>(null)
@@ -20,6 +24,10 @@ const isMuted = ref(true)
 const isPlaying = ref(false)
 const hasError = ref(false)
 const isVisible = ref(false)
+const showPulse = ref(false)
+
+const isEditorial = computed(() => props.variant === 'editorial')
+const allowAutoplay = computed(() => animateMotion.value)
 
 const videoUrl = computed(() => imageKit.video(props.src))
 const posterUrl = computed(() =>
@@ -29,13 +37,15 @@ const posterUrl = computed(() =>
 const accent = computed(() => props.accentColor || '#38965A')
 
 let scrollObserver: IntersectionObserver | null = null
+let pulseTimer: ReturnType<typeof setTimeout> | null = null
 
 function activeVideo() {
   return isExpanded.value ? expandedVideo.value : inlineVideo.value
 }
 
-async function playVideo(video = activeVideo()) {
+async function playVideo(video = activeVideo(), { force = false } = {}) {
   if (!video || hasError.value) return
+  if (!force && !allowAutoplay.value) return
   try {
     await video.play()
     isPlaying.value = true
@@ -49,11 +59,21 @@ function pauseVideo(video = activeVideo()) {
   isPlaying.value = false
 }
 
+function flashPulse() {
+  if (!isEditorial.value) return
+  showPulse.value = true
+  if (pulseTimer) clearTimeout(pulseTimer)
+  pulseTimer = setTimeout(() => {
+    showPulse.value = false
+  }, 700)
+}
+
 function togglePlay() {
   const video = activeVideo()
   if (!video || hasError.value) return
-  if (video.paused) playVideo(video)
+  if (video.paused) playVideo(video, { force: true })
   else pauseVideo(video)
+  flashPulse()
 }
 
 function toggleMute() {
@@ -73,6 +93,7 @@ function syncInlineTime() {
 }
 
 async function openExpanded() {
+  if (isEditorial.value) return
   syncExpandedTime()
   isExpanded.value = true
   document.body.style.overflow = 'hidden'
@@ -111,14 +132,16 @@ function onVideoError() {
 
 function onCanPlayInline() {
   hasError.value = false
-  if (isVisible.value && !isExpanded.value) playVideo(inlineVideo.value ?? undefined)
+  if (isVisible.value && !isExpanded.value && allowAutoplay.value) {
+    playVideo(inlineVideo.value ?? undefined)
+  }
 }
 
 watch(videoUrl, async () => {
   hasError.value = false
   await nextTick()
   inlineVideo.value?.load()
-  if (isVisible.value) playVideo(inlineVideo.value ?? undefined)
+  if (isVisible.value && allowAutoplay.value) playVideo(inlineVideo.value ?? undefined)
 })
 
 onMounted(() => {
@@ -130,6 +153,10 @@ onMounted(() => {
     (entries) => {
       entries.forEach((entry) => {
         isVisible.value = entry.isIntersecting
+        if (!allowAutoplay.value) {
+          pauseVideo(inlineVideo.value ?? undefined)
+          return
+        }
         if (entry.isIntersecting && !isExpanded.value) playVideo(inlineVideo.value ?? undefined)
         else if (!isExpanded.value) pauseVideo(inlineVideo.value ?? undefined)
       })
@@ -143,6 +170,7 @@ onMounted(() => {
 onUnmounted(() => {
   scrollObserver?.disconnect()
   window.removeEventListener('keydown', onKeydown)
+  if (pulseTimer) clearTimeout(pulseTimer)
   if (isExpanded.value) {
     document.body.style.overflow = ''
     delete document.body.dataset.videoExpanded
@@ -154,7 +182,10 @@ onUnmounted(() => {
   <div
     ref="rootRef"
     class="project-video"
-    :class="{ 'project-video--large': large }"
+    :class="{
+      'project-video--large': large && !isEditorial,
+      'project-video--editorial': isEditorial,
+    }"
     :style="{ '--video-accent': accent }"
   >
     <div class="project-video__media">
@@ -169,18 +200,33 @@ onUnmounted(() => {
         playsinline
         webkit-playsinline
         preload="metadata"
+        :aria-label="caption || projectI18n.t('video.label')"
         @timeupdate="onInlineTimeUpdate"
         @canplay="onCanPlayInline"
         @error="onVideoError"
         @click="togglePlay"
       />
 
+      <div
+        v-if="isEditorial && showPulse"
+        class="project-video__pulse"
+        aria-hidden="true"
+      >
+        <svg v-if="isPlaying" viewBox="0 0 24 24">
+          <rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor" />
+          <rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor" />
+        </svg>
+        <svg v-else viewBox="0 0 24 24">
+          <path d="M8 5.5v13l11-6.5L8 5.5z" fill="currentColor" />
+        </svg>
+      </div>
+
       <p v-if="hasError" class="project-video__error font-mono">
         {{ projectI18n.t('video.error') }}
       </p>
     </div>
 
-    <div class="project-video__controls">
+    <div v-if="!isEditorial" class="project-video__controls">
       <button
         type="button"
         class="project-video__control"
@@ -228,14 +274,14 @@ onUnmounted(() => {
       </button>
     </div>
 
-    <p v-if="caption" class="project-video__caption font-mono">
+    <p v-if="caption && !isEditorial" class="project-video__caption font-mono">
       {{ caption }}
     </p>
 
     <Teleport to="body">
       <Transition name="video-expand">
         <div
-          v-if="isExpanded"
+          v-if="isExpanded && !isEditorial"
           class="project-video-modal"
           role="dialog"
           aria-modal="true"
@@ -298,6 +344,26 @@ onUnmounted(() => {
     display: block;
     background: #000;
     cursor: pointer;
+  }
+
+  &__pulse {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+    color: $color-text;
+    animation: video-pulse-fade 0.7s ease forwards;
+
+    svg {
+      width: 48px;
+      height: 48px;
+      padding: 14px;
+      border-radius: 999px;
+      background: rgba(5, 8, 7, 0.45);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    }
   }
 
   &__error {
@@ -414,6 +480,47 @@ onUnmounted(() => {
         max-height: 72svh;
       }
     }
+  }
+
+  &--editorial {
+    .project-video__media {
+      aspect-ratio: unset;
+      min-height: clamp(280px, 56svh, 720px);
+      max-height: min(78svh, 860px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 55%, rgba(56, 150, 90, 0.06), transparent 70%),
+        #050807;
+      border: 0;
+    }
+
+    .project-video__player {
+      width: 100%;
+      height: 100%;
+      max-height: min(78svh, 860px);
+      object-fit: contain;
+      object-position: center;
+      background: transparent;
+    }
+  }
+}
+
+@keyframes video-pulse-fade {
+  0% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  18% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.04);
   }
 }
 

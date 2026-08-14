@@ -39,6 +39,8 @@ function rowHref(row: FinaleRow): string | undefined {
   switch (row.action) {
     case 'contact': return localePath('/contact')
     case 'faq': return localePath('/faq')
+    case 'website-scanner': return localePath('/website-scanner')
+    case 'project-estimator': return localePath('/project-estimator')
     case 'email': return 'mailto:info@cpwd.nl'
     case 'linkedin': return CPWD_LINKEDIN_URL
     case 'github': return CPWD_GITHUB_URL
@@ -186,7 +188,7 @@ useFinaleScene({ scrollLayers: textRefs })
   line-height: 1.2;
 }
 
-// Solid panel wipe — different text, not a recolor
+// Solid panel wipe - different text, not a recolor
 .finale-row__hover {
   position: absolute;
   inset: 0;

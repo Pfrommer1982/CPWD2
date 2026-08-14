@@ -44,7 +44,7 @@ export function useImageKit() {
     return `${baseUrl}${joiner}${search}`
   }
 
-  /** ImageKit video URL — orig-true bypasses transformation quota and serves the source mp4. */
+  /** ImageKit video URL - orig-true bypasses transformation quota and serves the source mp4. */
   function video(path: string) {
     if (!path) return ''
 

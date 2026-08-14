@@ -14,6 +14,8 @@ const navItems = [
   { to: '/services', label: 'services' },
   { to: '/about', label: 'about' },
   { to: '/faq', label: 'faq' },
+  { to: '/website-scanner', label: 'websiteScanner' },
+  { to: '/project-estimator', label: 'projectEstimator' },
   { to: '/contact', label: 'contact' },
 ]
 
@@ -346,7 +348,7 @@ watch(menuOpen, (open) => {
   flex-direction: column;
   justify-content: center;
   flex: 1;
-  gap: clamp(8px, 2vh, 20px);
+  gap: clamp(4px, 1.2vh, 12px);
   margin: 0;
   padding: 0;
 
@@ -359,15 +361,15 @@ watch(menuOpen, (open) => {
 .nav__menu-link {
   display: flex;
   align-items: center;
-  gap: clamp(16px, 4vw, 28px);
+  gap: clamp(12px, 3vw, 20px);
   font-family: $font-display;
-  font-size: clamp(2.5rem, 10vw, 4rem);
+  font-size: clamp(1.55rem, 6.2vw, 2.25rem);
   font-weight: 600;
-  line-height: 1;
-  letter-spacing: 0.06em;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: $color-text-muted;
-  padding: clamp(12px, 2.5vh, 20px) 0;
+  padding: clamp(8px, 1.6vh, 14px) 0;
   border-bottom: 1px solid rgba(56, 150, 90, 0.12);
   transition: color $dur-fast $ease-gold;
 

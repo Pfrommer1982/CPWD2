@@ -1,0 +1,190 @@
+{
+  "projectEstimator": {
+    "eyebrow": "Project estimator",
+    "title": "Wat kost jouw project?",
+    "lead": "Stel je website of weboplossing samen en krijg in minder dan een minuut een vrijblijvende prijsindicatie. Direct contact, scherpe projectprijs, geen bureaulaag ertussen.",
+    "decrypt": {
+      "decrypting": "DECRYPTING",
+      "encrypted": "ENCRYPTED",
+      "sealed": "SEALED",
+      "lockedHint": "Voltooide stappen ontgrendelen dit kanaal",
+      "continue": "Doorgaan",
+      "unlock": "Open stap"
+    },
+    "status": {
+      "type": "PROJECT TYPE REGISTERED",
+      "pages": "SCOPE UPDATED",
+      "design": "DESIGN PROFILE SET",
+      "features": "MODULE UPDATED",
+      "content": "CONTENT PATH SET",
+      "hosting": "HOSTING OPTION SET",
+      "ready": "PROJECT PROFILE READY",
+      "reset": "CONFIGURATION CLEARED"
+    },
+    "steps": {
+      "type": "Projecttype",
+      "pages": "Pagina's",
+      "design": "Design",
+      "features": "Modules",
+      "content": "Content",
+      "hosting": "Hosting"
+    },
+    "nav": {
+      "next": "Volgende",
+      "back": "Terug",
+      "calculate": "Bereken project",
+      "reset": "Nieuw project",
+      "request": "Project aanvragen",
+      "copyCode": "Kopieer projectcode",
+      "copied": "Gekopieerd"
+    },
+    "type": {
+      "title": "Wat wil je laten bouwen?",
+      "one-page": {
+        "label": "One-page website",
+        "body": "Een compacte website waarbij alle belangrijke informatie op één pagina staat."
+      },
+      "business": {
+        "label": "Bedrijfswebsite",
+        "body": "Een professionele website met meerdere pagina's. Basis bevat 3 pagina's."
+      },
+      "portfolio": {
+        "label": "Portfolio",
+        "body": "Voor creatieve professionals, freelancers of kleine merken die werk willen tonen."
+      },
+      "webshop": {
+        "label": "Webshop",
+        "body": "Een site waarop producten verkocht en betaald kunnen worden.",
+        "note": "Externe kosten voor betaalproviders, abonnementen of transacties zijn niet automatisch inbegrepen."
+      },
+      "webapp": {
+        "label": "Webapplicatie",
+        "body": "Maatwerk: dashboards, accounts, tools of andere interactieve systemen.",
+        "note": "Dit is een eerste indicatie. Maatwerk verschilt sterk per project."
+      },
+      "from": "vanaf"
+    },
+    "pages": {
+      "title": "Hoeveel pagina's heb je nodig?",
+      "included": "{count} pagina's inbegrepen in de basisprijs",
+      "extra": "Extra pagina: €{price}",
+      "overMax": "Meer dan {max} pagina's? Neem contact op voor maatwerk."
+    },
+    "design": {
+      "title": "Hoe uitgebreid mag het design zijn?",
+      "clean": {
+        "label": "Clean",
+        "body": "Professioneel en verzorgd, met subtiele interacties."
+      },
+      "custom": {
+        "label": "Custom",
+        "body": "Meer maatwerk in layout, visuals en animaties."
+      },
+      "showcase": {
+        "label": "Showcase",
+        "body": "Design en interactieve presentatie als belangrijk onderdeel: scroll effects, custom transitions, showcase-elementen."
+      }
+    },
+    "features": {
+      "title": "Welke modules wil je toevoegen?",
+      "multiHint": "Selecteer alle modules die je nodig hebt. Meerdere keuzes mogelijk.",
+      "contact-form": { "label": "Contactformulier", "body": "Een helder formulier voor aanvragen en berichten." },
+      "cms": { "label": "CMS", "body": "Beheer zelf teksten of pagina-onderdelen zonder developer." },
+      "blog": { "label": "Blog / nieuws", "body": "Een nieuws- of blogsectie voor updates." },
+      "multilingual": { "label": "Meertalig", "body": "Technische ondersteuning voor meerdere talen. Vertaalwerk zelf is niet inbegrepen." },
+      "maps": { "label": "Google Maps / locatie", "body": "Kaart of locatieblok op de site." },
+      "newsletter": { "label": "Nieuwsbriefinschrijving", "body": "Aanmeldblok gekoppeld aan je nieuwsbrieftool." },
+      "social": { "label": "Social media-integratie", "body": "Profielen en deelacties netjes gekoppeld." },
+      "analytics": { "label": "Basis analytics", "body": "Meetbezoek zonder onnodige complexiteit." },
+      "advanced-animations": { "label": "Geavanceerde animaties", "body": "Rijkere motion voor presentatie en merkbeleving." },
+      "api": { "label": "API-koppeling", "body": "Koppeling met een externe dienst. Complexiteit verschilt per case." },
+      "accounts": { "label": "Gebruikersaccounts / login", "body": "Inloggen en beschermde onderdelen." },
+      "dashboard": { "label": "Persoonlijk dashboard", "body": "Een eigen omgeving voor gebruikers of beheerders." },
+      "ai": { "label": "AI-functionaliteit", "body": "Integratie met bestaande AI-services. Externe API-kosten niet inbegrepen." },
+      "payments": { "label": "Online betalingen", "body": "Checkout/betaalflow. Provider-, abonnements- en transactiekosten niet inbegrepen." },
+      "booking": { "label": "Boekings- of reserveringssysteem", "body": "Afspraken of reserveringen. Externe abonnementskosten niet inbegrepen." },
+      "from": "vanaf"
+    },
+    "content": {
+      "title": "Hoe zit het met de content?",
+      "self": { "label": "Ik lever teksten en afbeeldingen aan", "body": "Jij levert de content, ik bouw de site." },
+      "polish": { "label": "Help mijn bestaande teksten verbeteren", "body": "Lichte redactionele aanscherping van wat je al hebt." },
+      "full": { "label": "Hulp bij de volledige websitecontent", "body": "Eerste contentopzet voor de kernpagina's. Grote copytrajecten bespreken we apart." }
+    },
+    "hosting": {
+      "title": "Hosting",
+      "self": { "label": "Ik regel hosting zelf", "body": "Jij levert de omgeving of DNS-toegang." },
+      "cpwd": { "label": "Hosting via CPWD", "body": "Optioneel jaarabonnement, los van de eenmalige projectprijs." },
+      "perYear": "/ jaar"
+    },
+    "calc": {
+      "lines": [
+        "CALCULATING PROJECT SCOPE",
+        "ASSESSING DEVELOPMENT LOAD",
+        "CALCULATING FEATURE COMPLEXITY",
+        "ESTIMATING BUILD WINDOW",
+        "GENERATING PROJECT PROFILE"
+      ]
+    },
+    "summary": {
+      "label": "Project estimate // CPWD",
+      "project": "Project",
+      "pages": "Pagina's",
+      "design": "Design",
+      "features": "Modules",
+      "content": "Content",
+      "none": "Nog geen modules",
+      "priceLabel": "Geschatte projectprijs",
+      "optional": "Optioneel jaarlijks",
+      "hosting": "Hosting",
+      "complexity": "Complexiteit",
+      "build": "Geschatte doorlooptijd",
+      "projectId": "Project-ID",
+      "intake": "Korte technische inventarisatie nodig",
+      "intakeNote": "Bij maatwerkfunctionaliteit kan de definitieve prijs na overleg afwijken van deze inschatting.",
+      "nonBinding": "Vrijblijvende prijsindicatie",
+      "nonBindingBody": "Dit is een eerste inschatting op basis van je keuzes. Na een korte bespreking ontvang je een definitieve prijs, altijd voordat het werk begint.",
+      "positioning": "Geen grote bureauconstructie, maar direct contact en een prijs die past bij het project.",
+      "disclaimer": "De getoonde prijs is een vrijblijvende indicatie en geen bindende offerte. Complex maatwerk, externe diensten, licenties en bijzondere technische vereisten kunnen invloed hebben op de definitieve prijs.",
+      "complexityLevels": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High",
+        "custom": "Custom"
+      },
+      "buildWindows": {
+        "about-1-week": "± 1 week",
+        "about-1-2-weeks": "± 1-2 weken",
+        "about-2-3-weeks": "± 2-3 weken",
+        "about-2-4-weeks": "± 2-4 weken",
+        "after-intake": "Na inventarisatie"
+      }
+    },
+    "request": {
+      "title": "Project aanvragen",
+      "label": "Transmit",
+      "terminalPrompt": "ESTIMATE // REQUEST CHANNEL",
+      "statusReady": "CHANNEL READY",
+      "statusSending": "TRANSMITTING",
+      "statusSent": "PACKET SENT",
+      "statusError": "TRANSMIT FAILED",
+      "close": "Sluiten",
+      "lead": "Stuur je configuratie door. We nemen de projectcode en keuzes automatisch mee.",
+      "name": "Naam",
+      "email": "E-mail",
+      "company": "Bedrijf (optioneel)",
+      "phone": "Telefoon (optioneel)",
+      "note": "Korte toelichting",
+      "submit": "Verstuur aanvraag",
+      "sending": "Versturen…",
+      "success": "Aanvraag verstuurd. Wij reageren zo snel mogelijk.",
+      "error": "Versturen mislukt. Probeer het opnieuw of mail info{'@'}cpwd.nl.",
+      "privacy": "Door te versturen ga je akkoord met het",
+      "privacyLink": "privacybeleid"
+    },
+    "mobileBar": {
+      "label": "Indicatie",
+      "cta": "Bekijk estimate"
+    }
+  }
+}

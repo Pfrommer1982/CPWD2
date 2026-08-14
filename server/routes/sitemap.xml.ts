@@ -94,6 +94,18 @@ export default defineEventHandler((event) => {
       lastmod: getLastModified('app/data/knowledge.ts', 'app/pages/faq/index.vue'),
     },
     {
+      path: '/website-scanner',
+      priority: '0.85',
+      changefreq: 'monthly',
+      lastmod: getLastModified('app/pages/website-scanner.vue', 'server/api/site-audit.post.ts'),
+    },
+    {
+      path: '/project-estimator',
+      priority: '0.85',
+      changefreq: 'monthly',
+      lastmod: getLastModified('app/pages/project-estimator.vue', 'app/data/projectPricing.ts'),
+    },
+    {
       path: '/privacy',
       priority: '0.4',
       changefreq: 'yearly',

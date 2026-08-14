@@ -10,19 +10,11 @@ withDefaults(defineProps<{
   type: 'button',
   disabled: false,
 })
-
-const btnRef = ref<HTMLElement | null>(null)
-const { bindMagnet } = useMagnet(0.35)
-
-onMounted(() => {
-  bindMagnet(btnRef.value)
-})
 </script>
 
 <template>
   <NuxtLink
     v-if="to"
-    ref="btnRef"
     :to="to"
     class="magnetic-btn"
     :class="variant === 'primary' ? 'btn-primary' : 'btn-ghost'"
@@ -32,7 +24,6 @@ onMounted(() => {
   </NuxtLink>
   <a
     v-else-if="href"
-    ref="btnRef"
     :href="href"
     class="magnetic-btn"
     :class="variant === 'primary' ? 'btn-primary' : 'btn-ghost'"
@@ -42,7 +33,6 @@ onMounted(() => {
   </a>
   <button
     v-else
-    ref="btnRef"
     :type="type"
     class="magnetic-btn"
     :class="variant === 'primary' ? 'btn-primary' : 'btn-ghost'"

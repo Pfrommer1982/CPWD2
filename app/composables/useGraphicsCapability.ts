@@ -13,7 +13,7 @@ const state = reactive({
 })
 
 function isLowPowerDesktop(): boolean {
-  // Phones/tablets often under-report cores and RAM — never mark them low-power here.
+  // Phones/tablets often under-report cores and RAM - never mark them low-power here.
   if (navigator.maxTouchPoints > 0) return false
   if (window.matchMedia('(pointer: coarse)').matches) return false
 
@@ -83,7 +83,7 @@ export function useGraphicsCapability() {
   // GSAP / scroll-linked motion: off only for OS-level reduced-motion preference.
   const animateMotion = computed(() => !state.prefersReducedMotion)
 
-  // Lenis smooth scroll: desktop pointer only — native touch scroll stays smoother on iOS.
+  // Lenis smooth scroll: desktop pointer only - native touch scroll stays smoother on iOS.
   const smoothScroll = computed(() => (
     !state.prefersReducedMotion
     && !state.isCoarsePointer

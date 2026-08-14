@@ -1,0 +1,190 @@
+{
+  "projectEstimator": {
+    "eyebrow": "Project estimator",
+    "title": "What will your project cost?",
+    "lead": "Configure your website or web product and get a non-binding price indication in under a minute. Direct collaboration, a sharp project price, no agency markup layer.",
+    "decrypt": {
+      "decrypting": "DECRYPTING",
+      "encrypted": "ENCRYPTED",
+      "sealed": "SEALED",
+      "lockedHint": "Complete earlier steps to unlock this channel",
+      "continue": "Continue",
+      "unlock": "Open step"
+    },
+    "status": {
+      "type": "PROJECT TYPE REGISTERED",
+      "pages": "SCOPE UPDATED",
+      "design": "DESIGN PROFILE SET",
+      "features": "MODULE UPDATED",
+      "content": "CONTENT PATH SET",
+      "hosting": "HOSTING OPTION SET",
+      "ready": "PROJECT PROFILE READY",
+      "reset": "CONFIGURATION CLEARED"
+    },
+    "steps": {
+      "type": "Project type",
+      "pages": "Pages",
+      "design": "Design",
+      "features": "Modules",
+      "content": "Content",
+      "hosting": "Hosting"
+    },
+    "nav": {
+      "next": "Next",
+      "back": "Back",
+      "calculate": "Calculate project",
+      "reset": "New project",
+      "request": "Request project",
+      "copyCode": "Copy project code",
+      "copied": "Copied"
+    },
+    "type": {
+      "title": "What do you want built?",
+      "one-page": {
+        "label": "One-page website",
+        "body": "A compact site where all key information lives on a single page."
+      },
+      "business": {
+        "label": "Business website",
+        "body": "A professional multi-page website. The base includes 3 pages."
+      },
+      "portfolio": {
+        "label": "Portfolio",
+        "body": "For creatives, freelancers or small brands that need to show their work."
+      },
+      "webshop": {
+        "label": "Webshop",
+        "body": "A site where products can be sold and paid for.",
+        "note": "External costs for payment providers, subscriptions or transaction fees are not included by default."
+      },
+      "webapp": {
+        "label": "Web application",
+        "body": "Custom work: dashboards, accounts, tools or other interactive systems.",
+        "note": "This is a first indication only. Custom scope varies strongly per project."
+      },
+      "from": "from"
+    },
+    "pages": {
+      "title": "How many pages do you need?",
+      "included": "{count} pages included in the base price",
+      "extra": "Extra page: €{price}",
+      "overMax": "More than {max} pages? Get in touch for a custom scope."
+    },
+    "design": {
+      "title": "How far should the design go?",
+      "clean": {
+        "label": "Clean",
+        "body": "Professional and polished, with subtle interactions."
+      },
+      "custom": {
+        "label": "Custom",
+        "body": "More custom layout, visuals and animation work."
+      },
+      "showcase": {
+        "label": "Showcase",
+        "body": "Design and interactive presentation as a core part of the build: scroll effects, custom transitions, showcase elements."
+      }
+    },
+    "features": {
+      "title": "Which modules do you want to add?",
+      "multiHint": "Select every module you need. Multiple selections allowed.",
+      "contact-form": { "label": "Contact form", "body": "A clear form for inquiries and messages." },
+      "cms": { "label": "CMS", "body": "Manage selected copy or page sections yourself." },
+      "blog": { "label": "Blog / news", "body": "A news or blog section for updates." },
+      "multilingual": { "label": "Multilingual", "body": "Technical support for multiple languages. Translation work itself is not included." },
+      "maps": { "label": "Google Maps / location", "body": "A map or location block on the site." },
+      "newsletter": { "label": "Newsletter signup", "body": "Signup block connected to your newsletter tool." },
+      "social": { "label": "Social media integration", "body": "Profiles and share actions cleanly connected." },
+      "analytics": { "label": "Basic analytics", "body": "Visitor measurement without unnecessary complexity." },
+      "advanced-animations": { "label": "Advanced animations", "body": "Richer motion for presentation and brand feel." },
+      "api": { "label": "API integration", "body": "Connection to an external service. Complexity varies by case." },
+      "accounts": { "label": "User accounts / login", "body": "Sign-in and protected areas." },
+      "dashboard": { "label": "Personal dashboard", "body": "A dedicated space for users or admins." },
+      "ai": { "label": "AI functionality", "body": "Integration with existing AI services. External API costs not included." },
+      "payments": { "label": "Online payments", "body": "Checkout/payment flow. Provider, subscription and transaction fees not included." },
+      "booking": { "label": "Booking or reservation system", "body": "Appointments or reservations. External subscription costs not included." },
+      "from": "from"
+    },
+    "content": {
+      "title": "How about content?",
+      "self": { "label": "I will supply texts and images", "body": "You provide the content, I build the site." },
+      "polish": { "label": "Help improve my existing copy", "body": "Light editorial sharpening of what you already have." },
+      "full": { "label": "Help with the full website content", "body": "Initial content setup for core pages. Larger copywriting scopes are discussed separately." }
+    },
+    "hosting": {
+      "title": "Hosting",
+      "self": { "label": "I will arrange hosting myself", "body": "You provide the environment or DNS access." },
+      "cpwd": { "label": "Hosting via CPWD", "body": "Optional yearly plan, separate from the one-off project price." },
+      "perYear": "/ year"
+    },
+    "calc": {
+      "lines": [
+        "CALCULATING PROJECT SCOPE",
+        "ASSESSING DEVELOPMENT LOAD",
+        "CALCULATING FEATURE COMPLEXITY",
+        "ESTIMATING BUILD WINDOW",
+        "GENERATING PROJECT PROFILE"
+      ]
+    },
+    "summary": {
+      "label": "Project estimate // CPWD",
+      "project": "Project",
+      "pages": "Pages",
+      "design": "Design",
+      "features": "Modules",
+      "content": "Content",
+      "none": "No modules yet",
+      "priceLabel": "Estimated project price",
+      "optional": "Optional yearly",
+      "hosting": "Hosting",
+      "complexity": "Complexity",
+      "build": "Estimated build window",
+      "projectId": "Project ID",
+      "intake": "Short technical intake needed",
+      "intakeNote": "For custom functionality the final price may differ from this estimate after discussion.",
+      "nonBinding": "Non-binding price indication",
+      "nonBindingBody": "This is a first estimate based on your choices. After a short discussion you receive a final price, always before work starts.",
+      "positioning": "No heavy agency structure, just direct collaboration and a price that fits the project.",
+      "disclaimer": "The shown price is a non-binding indication, not a fixed quote. Complex custom work, external services, licenses and special technical requirements can affect the final price.",
+      "complexityLevels": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High",
+        "custom": "Custom"
+      },
+      "buildWindows": {
+        "about-1-week": "About 1 week",
+        "about-1-2-weeks": "About 1-2 weeks",
+        "about-2-3-weeks": "About 2-3 weeks",
+        "about-2-4-weeks": "About 2-4 weeks",
+        "after-intake": "After intake"
+      }
+    },
+    "request": {
+      "title": "Request project",
+      "label": "Transmit",
+      "terminalPrompt": "ESTIMATE // REQUEST CHANNEL",
+      "statusReady": "CHANNEL READY",
+      "statusSending": "TRANSMITTING",
+      "statusSent": "PACKET SENT",
+      "statusError": "TRANSMIT FAILED",
+      "close": "Close",
+      "lead": "Send your configuration. We include the project code and choices automatically.",
+      "name": "Name",
+      "email": "Email",
+      "company": "Company (optional)",
+      "phone": "Phone (optional)",
+      "note": "Short note",
+      "submit": "Send request",
+      "sending": "Sending...",
+      "success": "Request sent. We will reply as soon as possible.",
+      "error": "Sending failed. Try again or email info{'@'}cpwd.nl.",
+      "privacy": "By sending you agree to the",
+      "privacyLink": "privacy policy"
+    },
+    "mobileBar": {
+      "label": "Estimate",
+      "cta": "View estimate"
+    }
+  }
+}

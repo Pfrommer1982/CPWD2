@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import { getFeaturedProjects } from '~/data/projects'
 
+const { locale } = useI18n()
 const work = useSectionTranslations('work')
 const localePath = useLocalePath()
 const imageKit = useImageKit()
 const { animateMotion } = useGraphicsCapability()
 const projects = getFeaturedProjects()
 const gridRef = ref<HTMLElement | null>(null)
+
+function badgeLabel(badge: { nl: string; en: string }) {
+  return locale.value === 'nl' ? badge.nl : badge.en
+}
 
 let animationCtx: ReturnType<typeof import('gsap').gsap.context> | null = null
 
@@ -24,7 +29,7 @@ onMounted(async () => {
   if (!cards.length) return
 
   animationCtx = gsap.context(() => {
-    // once: true + no reverse — previous `toggleActions: '... reverse'` hid cards again
+    // once: true + no reverse - previous `toggleActions: '... reverse'` hid cards again
     // whenever the grid top crossed back below ~85vh, which is exactly when the
     // "Recent werk" heading is on screen. That made the section look empty on live.
     gsap.fromTo(
@@ -88,6 +93,10 @@ onUnmounted(() => {
             loading="lazy"
             class="work-card__image"
           >
+          <span
+            v-if="project.badge"
+            class="work-card__badge font-mono"
+          >{{ badgeLabel(project.badge) }}</span>
         </div>
         <div class="project-overlay">
           <div>
@@ -178,6 +187,26 @@ onUnmounted(() => {
   &:hover &__image {
     transform: scale(1.05);
     filter: brightness(1);
+  }
+
+  &__badge {
+    position: absolute;
+    top: $space-4;
+    left: $space-4;
+    z-index: 2;
+    padding: 8px 14px;
+    border: 1px solid rgba(56, 150, 90, 0.55);
+    border-radius: $radius-sm;
+    background: rgba(10, 16, 12, 0.92);
+    box-shadow: 0 0 0 1px rgba(5, 8, 7, 0.45), 0 8px 24px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(12px);
+    color: $color-gold-light;
+    font-size: $text-sm;
+    letter-spacing: $tracking-wider;
+    text-transform: uppercase;
+    line-height: 1.2;
+    font-weight: 500;
+    pointer-events: none;
   }
 
   &__title {

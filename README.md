@@ -1,76 +1,47 @@
-# Nuxt Minimal Starter
+# CPWD
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Personal / agency site for CPWD (Nuxt 4).
 
 ## Setup
 
-Make sure to install dependencies:
-
 ```bash
-# npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
+cp .env.example .env
 ```
 
-## Development Server
+Fill secrets in `.env` (never commit real keys).
 
-Start the development server on `http://localhost:3000`:
+### Website scanner (PageSpeed)
+
+The `/website-scanner` scanner uses the **Google PageSpeed Insights API v5** via a server-only endpoint.
+
+1. Create an API key: https://developers.google.com/speed/docs/insights/v5/get-started
+2. Add to `.env`:
 
 ```bash
-# npm
+GOOGLE_PAGESPEED_API_KEY=your_key_here
+```
+
+Do **not** prefix this with `NUXT_PUBLIC_` - the key must stay server-side.
+
+For UI work without calling Google:
+
+```bash
+SITE_AUDIT_MOCK=1 npm run dev
+```
+
+## Scripts
+
+```bash
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+npm run build
+npm run typecheck
+npm run i18n:validate
 ```
 
 ## Production
 
-Build the application for production:
-
 ```bash
-# npm
 npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
 npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
-# CPWD2

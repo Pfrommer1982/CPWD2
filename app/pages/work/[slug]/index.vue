@@ -19,6 +19,9 @@ if (!project) {
   throw createError({ statusCode: 404, statusMessage: 'Project niet gevonden' })
 }
 
+/** New-version frame: keep showcase for `/legacy`, not the main route. */
+const showShowcase = Boolean(project.showcase && !project.hasLegacy)
+
 useSeo({
   title: project.title,
   description: project.subtitle,
@@ -74,7 +77,7 @@ onMounted(async () => {
     const gsap = await init()
     if (!gsap) return
 
-    if (project.showcase) {
+    if (showShowcase) {
       if (nextBg.value && nextSection.value) {
         gsap.to(nextBg.value, {
           yPercent: -15,
@@ -188,7 +191,7 @@ onMounted(async () => {
   <div ref="pageRef" class="project-page" :style="{ '--project-accent': project.accentColor }">
     <SeoProjectSchema :project="project" />
     <ProjectShowcase
-      v-if="project.showcase"
+      v-if="showShowcase && project.showcase"
       :project="project"
       :showcase="project.showcase"
     />
@@ -292,6 +295,47 @@ onMounted(async () => {
           </div>
         </section>
 
+        <section
+          v-if="project.refresh"
+          class="project-refresh section"
+        >
+          <div class="container project-refresh__inner will-reveal">
+            <span class="section-label">{{ projectI18n.t('refresh') }}</span>
+            <h2 class="project-refresh__heading">
+              {{ locale === 'nl' ? project.refresh.title.nl : project.refresh.title.en }}
+            </h2>
+            <p class="project-refresh__text">
+              {{ locale === 'nl' ? project.refresh.body.nl : project.refresh.body.en }}
+            </p>
+          </div>
+        </section>
+
+        <section
+          v-if="project.featureVideo"
+          class="project-feature-video"
+        >
+          <div class="container project-feature-video__head will-reveal">
+            <span class="section-label">{{ projectI18n.t('featureVideo') }}</span>
+            <p
+              v-if="project.featureVideo.caption"
+              class="project-feature-video__title"
+            >
+              {{ locale === 'nl' ? project.featureVideo.caption.nl : project.featureVideo.caption.en }}
+            </p>
+          </div>
+          <div class="project-feature-video__stage will-reveal">
+            <ProjectVideoPlayer
+              variant="editorial"
+              :src="project.featureVideo.src"
+              :poster="project.featureVideo.poster"
+              :caption="locale === 'nl'
+                ? project.featureVideo.caption?.nl
+                : project.featureVideo.caption?.en"
+              :accent-color="project.accentColor"
+            />
+          </div>
+        </section>
+
         <section v-if="project.results?.length" class="project-results section">
           <div class="container">
             <div class="project-results__grid">
@@ -312,7 +356,7 @@ onMounted(async () => {
           </div>
         </section>
 
-        <section class="project-gallery section">
+        <section v-if="!project.hasLegacy" class="project-gallery section">
           <template v-for="(item, index) in nonDuoItems" :key="`${item.src}-${index}`">
             <div
               v-if="item.layout === 'full'"
@@ -381,6 +425,29 @@ onMounted(async () => {
                 {{ item.caption }}
               </p>
             </div>
+          </div>
+        </section>
+
+        <section
+          v-if="project.hasLegacy"
+          class="project-legacy section"
+        >
+          <div class="container project-legacy__inner will-reveal">
+            <span class="section-label">{{ projectI18n.t('legacy.label') }}</span>
+            <h2 class="project-legacy__heading">
+              {{ projectI18n.t('legacy.heading') }}
+            </h2>
+            <p class="project-legacy__body">
+              {{ projectI18n.t('legacy.body') }}
+            </p>
+            <NuxtLink
+              :to="localePath(`/work/${project.slug}/legacy`)"
+              class="link-arrow project-legacy__cta"
+              data-cursor="view"
+            >
+              {{ projectI18n.t('legacy.cta') }}
+              <span class="arrow-icon">→</span>
+            </NuxtLink>
           </div>
         </section>
       </div>
@@ -591,6 +658,62 @@ onMounted(async () => {
   }
 }
 
+.project-refresh {
+  &__inner {
+    max-width: 720px;
+    border-top: 1px solid $color-border;
+    padding-top: $space-5;
+  }
+
+  &__heading {
+    font-family: $font-display;
+    font-size: $text-2xl;
+    font-weight: 300;
+    line-height: $leading-snug;
+    color: $color-text;
+    margin-top: $space-4;
+  }
+
+  &__text {
+    font-size: $text-base;
+    line-height: $leading-relaxed;
+    color: $color-text-muted;
+    margin-top: $space-5;
+    max-width: 62ch;
+  }
+}
+
+.project-feature-video {
+  padding-block: clamp(48px, 8vh, 96px);
+  background: linear-gradient(
+    180deg,
+    $color-bg 0%,
+    rgba(10, 16, 12, 0.96) 40%,
+    $color-bg 100%
+  );
+
+  &__head {
+    max-width: 640px;
+    margin-bottom: clamp(28px, 5vw, 48px);
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: $text-2xl;
+    font-weight: 300;
+    line-height: $leading-snug;
+    color: $color-text;
+    margin-top: $space-4;
+  }
+
+  &__stage {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    padding-inline: 0;
+  }
+}
+
 .project-results {
   background: $color-bg-alt;
   border-top: 1px solid $color-border;
@@ -691,6 +814,40 @@ onMounted(async () => {
     letter-spacing: $tracking-wide;
     padding: $space-3 0;
     text-align: center;
+  }
+}
+
+.project-legacy {
+  border-top: 1px solid $color-border;
+  background: $color-bg-alt;
+
+  &__inner {
+    max-width: 640px;
+  }
+
+  &__heading {
+    font-family: $font-display;
+    font-size: $text-2xl;
+    font-weight: 300;
+    line-height: $leading-snug;
+    color: $color-text;
+    margin-top: $space-4;
+  }
+
+  &__body {
+    font-size: $text-base;
+    line-height: $leading-relaxed;
+    color: $color-text-muted;
+    margin-top: $space-4;
+    margin-bottom: $space-6;
+  }
+
+  &__cta {
+    color: $color-gold;
+
+    &:hover {
+      color: $color-gold-light;
+    }
   }
 }
 

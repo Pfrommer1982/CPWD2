@@ -9,10 +9,20 @@
     "viewSite": "View website",
     "challenge": "THE BRIEF",
     "solution": "OUR APPROACH",
+    "refresh": "THE UPDATE",
+    "featureVideo": "IN MOTION",
     "results": "Results",
     "next": "Next project",
     "nextProject": "NEXT PROJECT",
     "moreScreens": "MORE SCREENS",
+    "legacy": {
+      "label": "PREVIOUS VERSION",
+      "heading": "View the legacy case",
+      "body": "More content for this new version is coming. Until then, the previous case study, with showcase, screenshots and video, remains available.",
+      "cta": "View legacy version",
+      "back": "Back to new version",
+      "badge": "Legacy"
+    },
     "video": {
       "expand": "Enlarge",
       "close": "Close",

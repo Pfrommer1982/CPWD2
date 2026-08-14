@@ -74,7 +74,7 @@ function landBlob(lat: number, lon: number, clat: number, clon: number, slat: nu
   return amp * Math.exp(-(dlat * dlat + dlon * dlon))
 }
 
-/** Fallback when /globe/land-texture.png is unavailable — keeps the dotted globe readable. */
+/** Fallback when /globe/land-texture.png is unavailable - keeps the dotted globe readable. */
 export function proceduralLandSample(latDeg: number, lonDeg: number) {
   let v = 0
   v += landBlob(latDeg, lonDeg, 5, 18, 20, 24, 0.95)

@@ -24,6 +24,14 @@
       "title": "Knowledge base & frequently asked questions",
       "description": "Answers to frequently asked questions about building websites: pricing, process, technology, SEO and maintenance. The complete knowledge base of web development agency CPWD."
     },
+    "websiteScanner": {
+      "title": "Website scanner",
+      "description": "Scan your website’s speed, SEO, accessibility and technical quality. CPWD translates Lighthouse data into clear, human insights."
+    },
+    "projectEstimator": {
+      "title": "Project estimator",
+      "description": "Configure your website or web product and get a non-binding price indication instantly. Professional custom work without agency markup."
+    },
     "privacy": {
       "title": "Privacy policy",
       "description": "CPWD privacy policy. Learn what personal data we process, why, and what rights you have under the GDPR."

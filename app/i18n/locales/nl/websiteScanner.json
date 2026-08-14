@@ -1,0 +1,116 @@
+{
+  "websiteScanner": {
+    "eyebrow": "Website intelligence",
+    "title": "Hoe goed is je website écht?",
+    "lead": "Voer een URL in. We controleren snelheid, SEO, toegankelijkheid en technische kwaliteit, en vertalen de uitkomst naar duidelijke taal.",
+    "input": {
+      "label": "Website-adres",
+      "placeholder": "https://jouwwebsite.nl",
+      "submit": "Website scannen"
+    },
+    "scanner": {
+      "aria": "Websiteanalyse bezig",
+      "logLabel": "Audit stream",
+      "meta": {
+        "target": "Target",
+        "mode": "Mode",
+        "engine": "Engine",
+        "audits": "Audits",
+        "signals": "Signals"
+      },
+      "status": {
+        "init": "Initializing target analysis",
+        "resolve": "Resolving public endpoint",
+        "profile": "Establishing measurement profile",
+        "mobileAudit": "Running mobile performance audit",
+        "render": "Analyzing render pipeline",
+        "vitals": "Inspecting core web vitals",
+        "document": "Checking document structure",
+        "search": "Analyzing search visibility",
+        "a11y": "Verifying accessibility signals",
+        "telemetry": "Processing lighthouse telemetry",
+        "correlate": "Correlating audit results",
+        "priority": "Calculating priority matrix",
+        "report": "Generating human-readable report",
+        "ready": "Report ready"
+      },
+      "complete": "Analyse voltooid",
+      "viewReport": "Bekijk rapport",
+      "viewReportAria": "Sluit analyse-overlay en scroll naar rapport"
+    },
+    "report": {
+      "label": "Rapport",
+      "healthLabel": "CPWD Health Score",
+      "healthNote": "Samengestelde score op basis van Performance (40%), SEO (25%), Accessibility (20%) en Best Practices (15%). Geen officiële Lighthouse-totaalscore.",
+      "strategyLabel": "Meetprofiel",
+      "mobile": "Mobiel",
+      "desktop": "Desktop",
+      "retest": "Opnieuw testen",
+      "another": "Andere website",
+      "downloadPdf": "PDF downloaden",
+      "downloadPdfGenerating": "PDF wordt gemaakt...",
+      "downloadPdfAria": "Download een eenmalige PDF-samenvatting met de grootste problemen en hoe je ze fixt",
+      "priorityLabel": "Prioriteit",
+      "priorityTitle": "Dit moet je als eerste verbeteren",
+      "impact": "Impact",
+      "difficulty": "Moeilijkheid",
+      "howToFix": "Hoe op te lossen",
+      "metricsLabel": "Snelheid",
+      "metricsTitle": "Belangrijke laadmetingen"
+    },
+    "pdf": {
+      "title": "CPWD Website Audit",
+      "generatedOn": "Gegenereerd op",
+      "url": "Website",
+      "strategy": "Meetprofiel",
+      "healthScore": "CPWD Health Score",
+      "categories": "Categorietscores",
+      "biggestProblems": "Grootste problemen",
+      "problem": "Probleem",
+      "howToFix": "Hoe op te lossen",
+      "impact": "Impact",
+      "difficulty": "Moeilijkheid",
+      "noProblems": "Geen grote prioriteitsproblemen gevonden in deze scan.",
+      "disclaimer": "Deze samenvatting is informatief. CPWD verleent geen rechten, garanties of aansprakelijkheid op basis van deze uitkomsten. De PDF wordt eenmalig in je browser gemaakt en niet door CPWD opgeslagen.",
+      "footer": "cpwd.nl"
+    },
+    "status": {
+      "excellent": "Uitstekend",
+      "good": "Goed",
+      "needs-attention": "Aandacht nodig",
+      "poor": "Zwak"
+    },
+    "categories": {
+      "performance": "Performance",
+      "seo": "SEO",
+      "accessibility": "Toegankelijkheid",
+      "best-practices": "Best practices"
+    },
+    "impact": {
+      "high": "Hoog",
+      "medium": "Middel",
+      "low": "Laag"
+    },
+    "difficulty": {
+      "easy": "Makkelijk",
+      "medium": "Gemiddeld",
+      "hard": "Lastig"
+    },
+    "errorTitle": "Scan niet gelukt",
+    "disclaimer": "Dit rapport is informatief. CPWD verleent geen rechten, garanties of aansprakelijkheid op basis van deze uitkomsten.",
+    "errors": {
+      "empty": "Vul een website-adres in.",
+      "tooLong": "Dit adres is te lang.",
+      "httpOnly": "Alleen http- en https-websites zijn toegestaan.",
+      "invalid": "Dit adres lijkt niet geldig. Gebruik bijvoorbeeld voorbeeld.nl.",
+      "invalid_url": "Dit adres lijkt niet geldig. Gebruik een website zoals voorbeeld.nl of https://voorbeeld.nl.",
+      "missing_key": "De scanner is tijdelijk niet beschikbaar. Probeer het later opnieuw.",
+      "rate_limited": "Je hebt te snel achter elkaar gescand. Wacht even en probeer het opnieuw.",
+      "timeout": "De analyse duurde te lang. Controleer het adres of probeer het later opnieuw.",
+      "unreachable": "We konden deze website op dit moment niet analyseren. Controleer het adres of probeer het later opnieuw.",
+      "quota": "De scanner is momenteel druk bezet. Probeer het over een paar minuten opnieuw.",
+      "incomplete": "We ontvingen onvolledige meetgegevens. Probeer het later opnieuw.",
+      "unavailable": "We konden deze website op dit moment niet analyseren. Probeer het later opnieuw."
+    }
+  }
+}

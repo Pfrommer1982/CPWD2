@@ -5,7 +5,7 @@ export const CPWD_LINKEDIN_URL = 'https://www.linkedin.com/in/christoph-pfrommer
 export const CPWD_CONTACT_EMAIL = 'info@cpwd.nl'
 export const CPWD_DEFAULT_SITE_URL = 'https://www.cpwd.nl'
 
-/** Radar phosphor accent — keep in sync with app/assets/scss/_variables.scss */
+/** Radar phosphor accent - keep in sync with app/assets/scss/_variables.scss */
 export const COMMS_RGB = '56, 150, 90'
 export const COMMS_RGB_LIGHT = '80, 168, 114'
 export const COMMS_HEX = '#38965A'

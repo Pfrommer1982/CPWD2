@@ -1,0 +1,116 @@
+{
+  "websiteScanner": {
+    "eyebrow": "Website intelligence",
+    "title": "How good is your website, really?",
+    "lead": "Enter a URL. We check speed, SEO, accessibility and technical quality, then translate the findings into clear language.",
+    "input": {
+      "label": "Website address",
+      "placeholder": "https://yourwebsite.com",
+      "submit": "Scan website"
+    },
+    "scanner": {
+      "aria": "Website analysis in progress",
+      "logLabel": "Audit stream",
+      "meta": {
+        "target": "Target",
+        "mode": "Mode",
+        "engine": "Engine",
+        "audits": "Audits",
+        "signals": "Signals"
+      },
+      "status": {
+        "init": "Initializing target analysis",
+        "resolve": "Resolving public endpoint",
+        "profile": "Establishing measurement profile",
+        "mobileAudit": "Running mobile performance audit",
+        "render": "Analyzing render pipeline",
+        "vitals": "Inspecting core web vitals",
+        "document": "Checking document structure",
+        "search": "Analyzing search visibility",
+        "a11y": "Verifying accessibility signals",
+        "telemetry": "Processing lighthouse telemetry",
+        "correlate": "Correlating audit results",
+        "priority": "Calculating priority matrix",
+        "report": "Generating human-readable report",
+        "ready": "Report ready"
+      },
+      "complete": "Analysis complete",
+      "viewReport": "View report",
+      "viewReportAria": "Dismiss analysis overlay and scroll to report"
+    },
+    "report": {
+      "label": "Report",
+      "healthLabel": "CPWD Health Score",
+      "healthNote": "Composite score based on Performance (40%), SEO (25%), Accessibility (20%) and Best Practices (15%). Not an official Lighthouse overall score.",
+      "strategyLabel": "Measurement profile",
+      "mobile": "Mobile",
+      "desktop": "Desktop",
+      "retest": "Run again",
+      "another": "Another website",
+      "downloadPdf": "Download PDF",
+      "downloadPdfGenerating": "Generating PDF...",
+      "downloadPdfAria": "Download a one-time summary PDF with the biggest problems and how to fix them",
+      "priorityLabel": "Priority",
+      "priorityTitle": "Fix these first",
+      "impact": "Impact",
+      "difficulty": "Difficulty",
+      "howToFix": "How to fix",
+      "metricsLabel": "Speed",
+      "metricsTitle": "Key loading metrics"
+    },
+    "pdf": {
+      "title": "CPWD Website Audit",
+      "generatedOn": "Generated on",
+      "url": "Website",
+      "strategy": "Measurement profile",
+      "healthScore": "CPWD Health Score",
+      "categories": "Category scores",
+      "biggestProblems": "Biggest problems",
+      "problem": "Problem",
+      "howToFix": "How to fix",
+      "impact": "Impact",
+      "difficulty": "Difficulty",
+      "noProblems": "No major priority issues found in this scan.",
+      "disclaimer": "This summary is for information only. CPWD grants no rights, warranties or liability based on these results. The PDF is generated once in your browser and is not stored by CPWD.",
+      "footer": "cpwd.nl"
+    },
+    "status": {
+      "excellent": "Excellent",
+      "good": "Good",
+      "needs-attention": "Needs attention",
+      "poor": "Poor"
+    },
+    "categories": {
+      "performance": "Performance",
+      "seo": "SEO",
+      "accessibility": "Accessibility",
+      "best-practices": "Best practices"
+    },
+    "impact": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "errorTitle": "Scan failed",
+    "disclaimer": "This report is for information only. CPWD grants no rights, warranties or liability based on these results.",
+    "errors": {
+      "empty": "Enter a website address.",
+      "tooLong": "This address is too long.",
+      "httpOnly": "Only http and https websites are allowed.",
+      "invalid": "This address does not look valid. Use something like example.com.",
+      "invalid_url": "This address does not look valid. Use a site like example.com or https://example.com.",
+      "missing_key": "The scanner is temporarily unavailable. Please try again later.",
+      "rate_limited": "You scanned too quickly in a row. Wait a moment and try again.",
+      "timeout": "The analysis took too long. Check the address or try again later.",
+      "unreachable": "We could not analyze this website right now. Check the address or try again later.",
+      "quota": "The scanner is busy right now. Try again in a few minutes.",
+      "incomplete": "We received incomplete measurement data. Please try again later.",
+      "unavailable": "We could not analyze this website right now. Please try again later."
+    }
+  }
+}

@@ -9,10 +9,20 @@
     "viewSite": "Bekijk website",
     "challenge": "DE VRAAG",
     "solution": "ONZE AANPAK",
+    "refresh": "DE UPDATE",
+    "featureVideo": "IN BEELD",
     "results": "Resultaten",
     "next": "Volgend project",
     "nextProject": "VOLGEND PROJECT",
     "moreScreens": "MEER SCHERMEN",
+    "legacy": {
+      "label": "VORIGE VERSIE",
+      "heading": "Bekijk de legacy case",
+      "body": "Meer content voor deze nieuwe versie volgt. Tot die tijd staat de vorige case study, met showcase, screenshots en video, nog online.",
+      "cta": "Bekijk legacy versie",
+      "back": "Terug naar nieuwe versie",
+      "badge": "Legacy"
+    },
     "video": {
       "expand": "Vergroot",
       "close": "Sluiten",

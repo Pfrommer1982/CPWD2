@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
 
   if (!config.resendApiKey || config.resendApiKey.includes('xxxx')) {
     if (import.meta.dev) {
-      console.info('[contact] dev mode — no Resend key, logged message:', payload)
+      console.info('[contact] dev mode - no Resend key, logged message:', payload)
       return { success: true }
     }
     throw createError({ statusCode: 503, statusMessage: 'Contactformulier is tijdelijk niet beschikbaar' })
@@ -75,7 +75,7 @@ export default defineEventHandler(async (event) => {
     const domainUnverified = resendError.message?.includes('domain is not verified')
 
     if (import.meta.dev && domainUnverified) {
-      console.warn('[contact] Resend domain not verified — logged message in dev instead of email')
+      console.warn('[contact] Resend domain not verified - logged message in dev instead of email')
       console.info('[contact]', payload)
       return { success: true }
     }
