@@ -17,11 +17,14 @@ useSeo(computed(() => ({
 
 <template>
   <div class="project-estimator-page">
-    <section class="project-estimator-page__hero section">
+    <section class="project-estimator-page__hero section" data-page-hero>
       <div class="container">
-        <p class="section-label">{{ copy.t('eyebrow') }}</p>
-        <h1 class="project-estimator-page__title font-display">{{ copy.t('title') }}</h1>
-        <p class="project-estimator-page__lead copy-width">{{ copy.t('lead') }}</p>
+        <p class="section-label" data-hero-fade>{{ copy.t('eyebrow') }}</p>
+        <UiStaggeredHeroTitle
+          :text="copy.t('title')"
+          class="project-estimator-page__title"
+        />
+        <p class="project-estimator-page__lead copy-width" data-hero-fade>{{ copy.t('lead') }}</p>
       </div>
     </section>
 
@@ -42,9 +45,6 @@ useSeo(computed(() => ({
 .project-estimator-page__title {
   margin: $space-3 0 $space-3;
   max-width: 16ch;
-  font-size: clamp(2.4rem, 6.5vw, 4.2rem);
-  line-height: 0.95;
-  letter-spacing: -0.04em;
 }
 
 .project-estimator-page__lead {

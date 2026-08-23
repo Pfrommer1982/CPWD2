@@ -72,19 +72,20 @@ onMounted(async () => {
     </div>
 
     <div class="terms-page__inner container">
-      <header class="terms-page__hero">
-        <div class="terms-page__doc-head font-mono">
+      <header class="terms-page__hero" data-page-hero>
+        <div class="terms-page__doc-head font-mono" data-hero-fade>
           <span class="terms-page__ref">{{ terms.t('ref') }}</span>
           <span class="terms-page__version">
             {{ terms.t('updatedLabel') }} · {{ terms.t('updatedDate') }}
           </span>
         </div>
 
-        <span class="section-label">{{ terms.t('label') }}</span>
-        <h1 class="terms-page__heading font-display">
-          {{ terms.t('heading') }}
-        </h1>
-        <p class="terms-page__intro">
+        <span class="section-label" data-hero-fade>{{ terms.t('label') }}</span>
+        <UiStaggeredHeroTitle
+          :text="terms.t('heading')"
+          class="terms-page__heading"
+        />
+        <p class="terms-page__intro" data-hero-fade>
           {{ terms.t('intro') }}
         </p>
 
@@ -212,10 +213,6 @@ onMounted(async () => {
   }
 
   &__heading {
-    font-size: clamp(2.2rem, 4.5vw, 3.4rem);
-    font-weight: 300;
-    line-height: 1.05;
-    letter-spacing: $tracking-tight;
     margin: $space-5 0;
   }
 

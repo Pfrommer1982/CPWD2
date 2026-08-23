@@ -193,22 +193,19 @@ onMounted(async () => {
       />
     </ClientOnly>
 
-    <header ref="heroRef" class="contact-journey__hero">
+    <header ref="heroRef" class="contact-journey__hero" data-page-hero>
       <div class="contact-journey__hero-inner container">
         <div class="contact-journey__stamp font-mono" data-hero-fade>
           {{ contact.t('page.hero.classification') }}
         </div>
         <span class="section-label" data-hero-fade>{{ contact.t('page.hero.label') }}</span>
         <p class="contact-journey__file-id font-mono" data-hero-fade>{{ contact.t('page.hero.fileId') }}</p>
-        <h1 class="contact-journey__heading font-display">
-          <span
-            v-for="(word, wi) in titleWords(contact.t('page.hero.heading'))"
-            :key="`ch-${wi}`"
-            class="contact-journey__heading-word"
-          >
-            <span data-hero-word class="contact-journey__heading-inner">{{ word }}</span>
-          </span>
-        </h1>
+        <UiStaggeredHeroTitle
+          :text="contact.t('page.hero.heading')"
+          class="contact-journey__heading"
+          :delay="0.15"
+          :supporting-at="0.2"
+        />
         <p class="contact-journey__intro" data-hero-fade>
           {{ contact.t('page.hero.intro') }}
         </p>
@@ -758,23 +755,7 @@ onMounted(async () => {
   }
 
   &__heading {
-    font-size: clamp(3rem, 7vw + 1rem, 7rem);
-    font-weight: 300;
-    line-height: 0.92;
-    letter-spacing: $tracking-tight;
     margin-block: $space-6;
-    perspective: 900px;
-  }
-
-  &__heading-word {
-    display: inline-block;
-    overflow: hidden;
-    margin-right: 0.2em;
-    vertical-align: top;
-  }
-
-  &__heading-inner {
-    display: inline-block;
   }
 
   &__intro {

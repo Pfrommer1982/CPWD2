@@ -87,22 +87,6 @@ onMounted(async () => {
       })
     }
 
-    heroTl.from('.showcase-hero__line', {
-      y: '120%',
-      opacity: 0,
-      duration: 1.1,
-      stagger: 0.1,
-      ease: 'power4.out',
-    }, '-=0.85')
-
-    heroTl.from('.showcase-hero__meta, .showcase-hero__scroll', {
-      opacity: 0,
-      y: 28,
-      duration: 0.85,
-      stagger: 0.12,
-      ease: 'power3.out',
-    }, '-=0.55')
-
     if (heroInner.value && heroMedia.value) {
       gsap.to(heroInner.value, {
         yPercent: 18,
@@ -210,7 +194,7 @@ onMounted(async () => {
     :class="{ 'showcase--accurate-black': project.slug === 'accurate-black' }"
     :style="{ '--project-accent': project.accentColor }"
   >
-    <section class="showcase-hero">
+    <section class="showcase-hero" data-page-hero>
       <div ref="heroMedia" class="showcase-hero__media">
         <div ref="heroClip" class="showcase-hero__clip">
           <div ref="heroInner" class="showcase-hero__inner">
@@ -229,23 +213,19 @@ onMounted(async () => {
       </div>
 
       <div class="showcase-hero__content container">
-        <div class="showcase-hero__meta">
+        <div class="showcase-hero__meta" data-hero-fade>
           <span class="label">{{ project.category }}</span>
           <span class="label showcase-hero__year">{{ project.year }}</span>
         </div>
 
-        <h1 class="showcase-hero__title" :aria-label="project.title">
-          <span
-            v-for="(line, i) in taglineLines"
-            :key="i"
-            class="showcase-hero__line-wrap"
-          >
-            <span class="showcase-hero__line">{{ line }}</span>
-          </span>
-        </h1>
+        <UiStaggeredHeroTitle
+          :lines="taglineLines"
+          :aria-label="project.title"
+          class="showcase-hero__title"
+        />
       </div>
 
-      <div class="showcase-hero__scroll">
+      <div class="showcase-hero__scroll" data-hero-fade>
         <div class="showcase-hero__scroll-line" />
         <span class="label">Scroll</span>
       </div>
@@ -504,23 +484,8 @@ onMounted(async () => {
   }
 
   &__title {
-    font-family: $font-display;
-    font-size: clamp(2.5rem, 5vw + 1rem, 6rem);
-    font-weight: 300;
-    line-height: 0.92;
-    letter-spacing: $tracking-tight;
     color: $color-text;
     max-width: 14ch;
-  }
-
-  &__line-wrap {
-    display: block;
-    overflow: hidden;
-    padding-bottom: 0.08em;
-  }
-
-  &__line {
-    display: block;
   }
 
   &__scroll {

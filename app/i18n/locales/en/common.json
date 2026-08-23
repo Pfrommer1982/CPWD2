@@ -17,7 +17,7 @@
         { "text": "info{'@'}cpwd.nl", "reveal": "Email us →", "action": "email" },
         { "text": "Knowledge base", "reveal": "Read the answers →", "action": "faq" },
         { "text": "Website scanner", "reveal": "Scan your site →", "action": "website-scanner" },
-        { "text": "Project estimator", "reveal": "Get your estimate →", "action": "project-estimator" },
+        { "text": "Website planner", "reveal": "Discover what you need →", "action": "project-estimator" },
         { "text": "LinkedIn", "reveal": "Connect →", "action": "linkedin" },
         { "text": "GitHub", "reveal": "View code →", "action": "github" }
       ]

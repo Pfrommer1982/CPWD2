@@ -59,16 +59,6 @@ onMounted(async () => {
   if (!gsap) return
 
   await createContext(scope, () => {
-    const head = scope.querySelector('.faq-article__head')
-    if (head) {
-      gsap.from(head, {
-        y: 24,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-      })
-    }
-
     gsap.utils.toArray<HTMLElement>('.faq-article__reveal').forEach((el) => {
       gsap.from(el, {
         y: 28,
@@ -114,18 +104,19 @@ onMounted(async () => {
         </span>
       </nav>
 
-      <header class="faq-article__head">
-        <span v-if="category" class="faq-article__category font-mono">
+      <header class="faq-article__head" data-page-hero>
+        <span v-if="category" class="faq-article__category font-mono" data-hero-fade>
           <span class="faq-article__category-tick" aria-hidden="true" />
           {{ category.code }} · {{ category.title[lang] }}
         </span>
-        <h1 class="faq-article__title font-display">
-          {{ article.question[lang] }}
-        </h1>
-        <p class="faq-article__lead">
+        <UiStaggeredHeroTitle
+          :text="article.question[lang]"
+          class="faq-article__title"
+        />
+        <p class="faq-article__lead" data-hero-fade>
           {{ article.answer[lang] }}
         </p>
-        <span class="faq-article__updated font-mono">
+        <span class="faq-article__updated font-mono" data-hero-fade>
           {{ faq.t('updatedLabel') }}: {{ updatedLabel }}
         </span>
       </header>
@@ -247,10 +238,6 @@ onMounted(async () => {
 
 .faq-article__title {
   margin-top: $space-4;
-  font-size: clamp(2.2rem, 1.6rem + 3vw, 3.6rem);
-  font-weight: 500;
-  letter-spacing: $tracking-tight;
-  line-height: 1.05;
   color: $color-text;
 }
 

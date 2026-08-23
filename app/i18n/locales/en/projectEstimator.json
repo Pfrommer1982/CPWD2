@@ -1,8 +1,145 @@
 {
   "projectEstimator": {
-    "eyebrow": "Project estimator",
-    "title": "What will your project cost?",
-    "lead": "Configure your website or web product and get a non-binding price indication in under a minute. Direct collaboration, a sharp project price, no agency markup layer.",
+    "eyebrow": "Website planner",
+    "title": "What does your website need?",
+    "lead": "Answer a few simple questions about your business. You’ll get a clear recommendation and price indication—no technical knowledge required.",
+    "progress": { "question": "Question {current} of {total}", "complete": "Proposal ready" },
+    "overview": { "eyebrow": "Your answers", "title": "Your proposal is taking shape", "ready": "Your website plan", "open": "Still to answer", "edit": "Edit", "editStep": "Edit this answer" },
+    "questions": {
+      "goal": {
+        "title": "What should your website achieve?", "hint": "Choose everything that applies.",
+        "options": {
+          "leads": { "label": "Get more inquiries or customers", "body": "Explain your offer and guide visitors towards contact or a quote." },
+          "show-work": { "label": "Show my work or projects", "body": "Let your results, craft and previous projects do the convincing." },
+          "sell": { "label": "Sell products online", "body": "Visitors can browse products, order and pay." },
+          "tool": { "label": "Offer an online service, space or tool", "body": "A digital environment where people sign in or complete tasks." },
+          "unsure": { "label": "I’m not sure yet", "body": "No problem. We’ll start with a safe, flexible foundation." }
+        }
+      },
+      "action": {
+        "title": "What should visitors mainly be able to do?", "hint": "Choose everything that applies. Call and WhatsApp buttons are normal website content, with no extra module charge.",
+        "options": {
+          "contact": { "label": "Get in touch or request a quote", "body": "Through a clear form delivered straight to you." },
+          "call": { "label": "Call or use WhatsApp", "body": "With direct buttons in the right places." },
+          "booking": { "label": "Book an appointment or reservation", "body": "Visitors choose a suitable time themselves." },
+          "buy": { "label": "Buy and pay for something", "body": "With a secure order and payment step." },
+          "login": { "label": "Sign in to a personal area", "body": "For personal data, services or content." },
+          "information": { "label": "Mainly view information", "body": "Browse calmly with clear explanations and navigation." }
+        }
+      },
+      "scope": {
+        "title": "How much do you want to show?", "hint": "Think of Home, About, Services, Projects and Contact.",
+        "options": {
+          "minimal": { "label": "Only the key information", "body": "Probably one strong, easy-to-scan page." },
+          "few": { "label": "A few clear pages", "body": "A compact site with room for your story and offer." },
+          "many": { "label": "Lots of services, projects or information", "body": "A larger structure that stays easy to navigate." },
+          "unsure": { "label": "I’m not sure yet", "body": "We’ll recommend a practical foundation that can grow." }
+        }
+      },
+      "updates": {
+        "title": "Will you update the website yourself?", "hint": "We translate your answer into the simplest suitable editing setup.",
+        "options": {
+          "never": { "label": "No, hardly ever", "body": "The website can stay deliberately simple and low-maintenance." },
+          "occasional": { "label": "Occasionally update copy, photos or projects", "body": "You get a simple place to edit those parts yourself." },
+          "regular": { "label": "Regularly add news, projects or offers", "body": "We include an editing area and a structure for updates." },
+          "unsure": { "label": "I’m not sure yet", "body": "We’ll keep the recommended solution flexible." }
+        }
+      },
+      "capabilities": {
+        "title": "Does any of this matter to you?", "hint": "This is optional. You can choose more than one.",
+        "options": {
+          "languages": { "label": "Multiple languages", "body": "Visitors can use the site in different languages." },
+          "booking": { "label": "Appointments or reservations", "body": "People choose a date or time themselves." },
+          "newsletter": { "label": "Newsletter signup", "body": "New signups go to your newsletter tool." },
+          "login": { "label": "Customer or member login", "body": "A protected personal area." },
+          "integration": { "label": "Connect accounting, stock or another system", "body": "Data is exchanged with an external service." },
+          "statistics": { "label": "Visitor statistics", "body": "See how many people visit and what they view." },
+          "ai": { "label": "Smart AI help or search", "body": "For example, better search or automatic answers." },
+          "none": { "label": "None of these / not sure", "body": "We’ll keep the proposal focused and simple." }
+        }
+      },
+      "content": {
+        "title": "What copy and images do you already have?", "hint": "An honest estimate helps avoid surprises later.",
+        "options": {
+          "ready": { "label": "Copy and images are ready", "body": "You supply the material; we place it in the website." },
+          "polish": { "label": "I have material, but want help improving it", "body": "We lightly sharpen your existing content." },
+          "full": { "label": "I want help with all the content", "body": "We help draft the initial content for key pages." }
+        }
+      },
+      "styleCare": { "title": "How should the website feel?", "hint": "Also choose who takes care of the technology and hosting after launch." },
+      "visual": {
+        "title": "Look and feel",
+        "options": {
+          "calm": { "label": "Calm and professional", "body": "Clear, trustworthy and pleasant to use." },
+          "custom": { "label": "Unique to my brand", "body": "More custom work in form, composition and motion." },
+          "showcase": { "label": "Bold and interactive", "body": "A distinctive presentation with richer interactions." }
+        }
+      },
+      "care": {
+        "title": "Technology and care",
+        "options": {
+          "cpwd": { "label": "CPWD handles technology, updates and hosting", "body": "An optional yearly care plan, separate from the project price." },
+          "self": { "label": "I already have this covered", "body": "You provide the hosting environment or access." },
+          "advice": { "label": "Advise me", "body": "We recommend CPWD care as the safe option; you decide later." }
+        }
+      }
+    },
+    "recommendation": {
+      "eyebrow": "Our recommendation", "lead": "Based on what you told us about your business, visitors and content.",
+      "types": {
+        "one-page": "A strong one-page website with one clear route",
+        "business": "A professional business website that helps customers choose",
+        "portfolio": "A visual website with room for your projects",
+        "webshop": "A clear online store where visitors can buy safely",
+        "webapp": "A custom online environment, scoped after a short intake"
+      },
+      "combinations": {
+        "sellShowWork": "An online store that sells and showcases your projects",
+        "leadsShowWork": "A business website that attracts customers and lets your work speak",
+        "toolSell": "An online platform with sales functionality"
+      },
+      "whyTitle": "Why this fits you",
+      "why": {
+        "goal": {
+          "leads": "The structure guides visitors towards contact and new inquiries.",
+          "show-work": "Your work and projects take a convincing lead role.",
+          "sell": "Product presentation, ordering and payment form one clear route.",
+          "tool": "The solution is designed around the online service and its users.",
+          "unsure": "The foundation stays flexible, ready for focused expansion later."
+        },
+        "action": {
+          "contact": "A clear inquiry form makes it easier to get in touch.",
+          "call": "Calling and WhatsApp stay directly accessible without needless extra technology.",
+          "booking": "Visitors can make their own appointment or reservation.",
+          "buy": "A secure payment route supports direct sales.",
+          "login": "A protected personal area is included in the technical scope.",
+          "information": "Clear structure and readability come first."
+        },
+        "scope": {
+          "minimal": "One compact page keeps the essentials sharp.",
+          "few": "A compact page structure gives every topic enough room.",
+          "many": "A broader navigation keeps substantial content organized.",
+          "unsure": "We start with a logical foundation of around four pages."
+        },
+        "updates": {
+          "occasional": "A simple editing area lets you update photos and copy yourself.",
+          "regular": "An editing area plus news structure supports frequent updates."
+        }
+      },
+      "includedTitle": "Included in the proposal",
+      "included": {
+        "responsive": "A fast website for mobile, tablet and desktop",
+        "foundation": "Technical foundation, accessibility and search-friendly structure",
+        "pages": "A structure of around {pages} pages",
+        "design": { "clean": "A calm, professional look", "custom": "A unique design for your brand", "showcase": "A bold interactive design" },
+        "content": { "polish": "Editorial help with your existing content", "full": "Help with all foundational content" },
+        "features": {
+          "contact-form": "A clear contact or quote form", "cms": "Edit copy, photos or projects yourself", "blog": "A place for news and regular updates", "multilingual": "Support for multiple languages", "maps": "A map or clear location", "newsletter": "Newsletter signup connected to your tool", "social": "Links to your social channels", "analytics": "Insight into visitor statistics", "advanced-animations": "Richer motion and interaction", "api": "A smart connection to an external system", "accounts": "Secure sign-in for customers or members", "dashboard": "A personal user or admin area", "ai": "AI help or smart search", "payments": "Secure ordering and online payment", "booking": "Plan appointments or reservations online"
+        }
+      },
+      "once": "one-off", "careTitle": "Technology, updates and hosting by CPWD", "careAdvice": "This is our safe recommendation; it remains an optional yearly choice.",
+      "intakeLabel": "Discuss first?", "intakeYes": "Yes, a short intake is needed", "intakeNo": "No, ready to make concrete", "details": "Project code and price details"
+    },
     "decrypt": {
       "decrypting": "DECRYPTING",
       "encrypted": "ENCRYPTED",
@@ -10,6 +147,11 @@
       "lockedHint": "Complete earlier steps to unlock this channel",
       "continue": "Continue",
       "unlock": "Open step"
+    },
+    "result": {
+      "channel": "PROFILE LOCKED",
+      "configReady": "Configuration locked",
+      "editHint": "Click a step above to change something and recalculate."
     },
     "status": {
       "type": "PROJECT TYPE REGISTERED",
@@ -22,19 +164,24 @@
       "reset": "CONFIGURATION CLEARED"
     },
     "steps": {
-      "type": "Project type",
-      "pages": "Pages",
-      "design": "Design",
-      "features": "Modules",
+      "goal": "Goal",
+      "action": "Visitor action",
+      "scope": "Scope",
+      "updates": "Self-updates",
+      "capabilities": "Extra needs",
       "content": "Content",
-      "hosting": "Hosting"
+      "styleCare": "Style & care"
     },
     "nav": {
       "next": "Next",
       "back": "Back",
       "calculate": "Calculate project",
-      "reset": "New project",
-      "request": "Request project",
+      "nextQuestion": "Next question",
+      "proposal": "View my proposal",
+      "building": "Building proposal…",
+      "reset": "Start again",
+      "edit": "Edit answers",
+      "request": "Discuss this proposal",
       "copyCode": "Copy project code",
       "copied": "Copied"
     },
@@ -158,6 +305,90 @@
         "about-2-3-weeks": "About 2-3 weeks",
         "about-2-4-weeks": "About 2-4 weeks",
         "after-intake": "After intake"
+      }
+    },
+    "infra": {
+      "eyebrow": "Your choices visualized",
+      "title": "How your website works",
+      "lead": "Your answers become an understandable website blueprint. Choose a part to see why it was recommended.",
+      "inspect": "Why this part",
+      "status": "{services} chosen parts · {complexity}",
+      "mobileCapabilities": "Your features",
+      "legend": {
+        "edge": "Visitor route",
+        "core": "Website foundation",
+        "service": "Your choices",
+        "packets": "Light pulse = active connection"
+      },
+      "meterTraffic": "Simulated traffic",
+      "flow": {
+        "visitors": "Visitors",
+        "edge": "Fast website",
+        "app": "Your website",
+        "origin": "Online & secure"
+      },
+      "roles": {
+        "visitors": "Human traffic",
+        "edge": "Fast and available",
+        "app": "Your website",
+        "origin": {
+          "self": "Own hosting",
+          "cpwd": "CPWD hosting"
+        },
+        "cms": "Edit copy yourself",
+        "payments": "Checkout",
+        "accounts": "Login / users",
+        "api": "Smart connection",
+        "analytics": "Statistics",
+        "ai": "Smart help",
+        "booking": "Appointments",
+        "mail": "Contact"
+      },
+      "explain": {
+        "visitors": "The people who open your site on phone, laptop, or tablet.",
+        "edge": "Helps your site load fast, even for visitors far away. Think of it as a quick front door.",
+        "origin": {
+          "self": "Where your site actually lives: on your own server or with a host you manage yourself.",
+          "cpwd": "Where your site actually lives. We handle hosting, updates, and keeping everything running."
+        },
+        "app": {
+          "one-page": "One strong page that quickly shows what you do and what the visitor should do next.",
+          "business": "Your company site: pages about who you are, what you do, and how people can get in touch.",
+          "portfolio": "A place to show your work, with projects and a clear story.",
+          "webshop": "An online store where visitors browse products, add them to a cart, and check out.",
+          "webapp": "A digital product people can log into and use, not just read."
+        },
+        "cms": "Where you change texts and photos yourself, without anyone needing to write code.",
+        "payments": "Where visitors can pay safely. Orders then come through to you.",
+        "accounts": "Where people log in and manage their own account or details.",
+        "api": "A link to another system, like accounting, stock, or an external service.",
+        "analytics": "Shows how many people visit, what they click, and what works well.",
+        "ai": "A smart helper on your site, for example for search, answers, or text suggestions.",
+        "booking": "Visitors pick a date or time slot and make an appointment or reservation.",
+        "mail": "Contact forms and emails. When someone fills one in, you get a message."
+      },
+      "nodes": {
+        "visitors": "Visitors",
+        "edge": "Fast front door",
+        "origin": {
+          "self": "Own hosting",
+          "cpwd": "Online & secure"
+        },
+        "app": {
+          "one-page": "One-page",
+          "business": "Business site",
+          "portfolio": "Portfolio",
+          "webshop": "Webshop",
+          "webapp": "Web app"
+        },
+        "cms": "Edit content",
+        "payments": "Payments",
+        "accounts": "Sign in",
+        "api": "Smart connection",
+        "analytics": "Statistics",
+        "ai": "Smart help",
+        "booking": "Appointments",
+        "mail": "Contact"
       }
     },
     "request": {

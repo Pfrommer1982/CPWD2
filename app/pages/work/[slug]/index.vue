@@ -61,7 +61,6 @@ const duoPairs = computed(() => {
 const pageRef = ref<HTMLElement>()
 const heroSection = ref<HTMLElement>()
 const heroImg = ref<HTMLImageElement>()
-const heroContent = ref<HTMLElement>()
 const nextSection = ref<HTMLElement>()
 const nextBg = ref<HTMLElement>()
 
@@ -103,20 +102,6 @@ onMounted(async () => {
         ease: 'power4.out',
       })
     }
-
-    if (heroContent.value) {
-      heroTl.from(heroContent.value, {
-        opacity: 0,
-        y: 40,
-        duration: 0.9,
-        ease: 'power3.out',
-      }, '-=0.5')
-    }
-
-    heroTl.from('.project-hero__scroll', {
-      opacity: 0,
-      duration: 0.6,
-    }, '-=0.3')
 
     if (heroImg.value && heroSection.value) {
       gsap.to(heroImg.value, {
@@ -198,7 +183,7 @@ onMounted(async () => {
 
     <template v-else>
       <div ref="pageRef">
-        <section ref="heroSection" class="project-hero">
+        <section ref="heroSection" class="project-hero" data-page-hero>
           <div class="project-hero__media">
             <img
               ref="heroImg"
@@ -212,17 +197,18 @@ onMounted(async () => {
             <div class="project-hero__overlay" />
           </div>
 
-          <div ref="heroContent" class="project-hero__content container">
-            <div class="project-hero__meta">
+          <div class="project-hero__content container">
+            <div class="project-hero__meta" data-hero-fade>
               <span class="label">{{ project.category }}</span>
               <span class="label project-hero__year">{{ project.year }}</span>
             </div>
-            <h1 class="project-hero__title">
-              {{ project.title }}
-            </h1>
+            <UiStaggeredHeroTitle
+              :text="project.title"
+              class="project-hero__title"
+            />
           </div>
 
-          <div class="project-hero__scroll">
+          <div class="project-hero__scroll" data-hero-fade>
             <div class="project-hero__scroll-line" />
             <span class="label">Scroll</span>
           </div>
@@ -534,11 +520,6 @@ onMounted(async () => {
   }
 
   &__title {
-    font-family: $font-display;
-    font-size: $text-4xl;
-    font-weight: 300;
-    line-height: $leading-tight;
-    letter-spacing: $tracking-tight;
     color: $color-text;
     max-width: 900px;
   }

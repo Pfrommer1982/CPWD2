@@ -54,23 +54,6 @@ export function useContactJourney({
           onEnterBack: () => { activeChapter.value = -1 },
         })
 
-        gsap.from(hero.value.querySelectorAll('[data-hero-word]'), {
-          yPercent: 100,
-          opacity: 0,
-          stagger: 0.06,
-          duration: 1,
-          ease: 'power3.out',
-          delay: 0.15,
-        })
-
-        gsap.from(hero.value.querySelectorAll('[data-hero-fade]'), {
-          y: 20,
-          opacity: 0,
-          stagger: 0.07,
-          duration: 0.75,
-          ease: 'power2.out',
-          delay: 0.35,
-        })
       }
 
       if (spineFill.value) {

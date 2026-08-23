@@ -121,7 +121,6 @@ onUnmounted(() => {
 })
 
 const pageRef = ref<HTMLElement | null>(null)
-const heroRef = ref<HTMLElement | null>(null)
 
 onMounted(async () => {
   if (!import.meta.client) return
@@ -129,46 +128,7 @@ onMounted(async () => {
 
   const { init, createContext } = useGsap()
   const gsap = await init()
-  if (!gsap || !heroRef.value) return
-
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: heroRef.value,
-      start: 'top 88%',
-      toggleActions: 'play none none none',
-    },
-  })
-
-  tl.from(heroRef.value.querySelector('.faq-hero__label'), {
-    y: 16,
-    opacity: 0,
-    duration: 0.7,
-    ease: 'power3.out',
-  })
-    .from(heroRef.value.querySelector('.faq-hero__title'), {
-      y: 28,
-      opacity: 0,
-      duration: 0.9,
-      ease: 'power3.out',
-    }, '-=0.45')
-    .from(heroRef.value.querySelector('.faq-hero__intro'), {
-      y: 20,
-      opacity: 0,
-      duration: 0.8,
-      ease: 'power3.out',
-    }, '-=0.55')
-    .from(heroRef.value.querySelector('.faq-hero__readout'), {
-      y: 16,
-      opacity: 0,
-      duration: 0.7,
-      ease: 'power3.out',
-    }, '-=0.5')
-    .from(heroRef.value.querySelector('.faq-hero__search'), {
-      y: 16,
-      opacity: 0,
-      duration: 0.7,
-      ease: 'power3.out',
-    }, '-=0.55')
+  if (!gsap) return
 
   const scope = pageRef.value
   if (!scope) return
@@ -222,7 +182,7 @@ onMounted(async () => {
       </div>
     </ClientOnly>
 
-    <section ref="heroRef" class="faq-hero section">
+    <section class="faq-hero section" data-page-hero>
       <div class="faq-hero__backdrop" aria-hidden="true">
         <div class="faq-hero__grid" />
         <div class="faq-hero__glow" />
@@ -232,20 +192,21 @@ onMounted(async () => {
       </div>
 
       <div class="container faq-hero__inner">
-        <span class="section-label faq-hero__label">{{ faq.t('label') }}</span>
-        <h1 class="faq-hero__title font-display">
-          {{ faq.t('heading') }}
-        </h1>
-        <p class="faq-hero__intro copy-width">
+        <span class="section-label faq-hero__label" data-hero-fade>{{ faq.t('label') }}</span>
+        <UiStaggeredHeroTitle
+          :text="faq.t('heading')"
+          class="faq-hero__title"
+        />
+        <p class="faq-hero__intro copy-width" data-hero-fade>
           {{ faq.t('intro') }}
         </p>
 
-        <div class="faq-hero__readout font-mono" aria-hidden="true">
+        <div class="faq-hero__readout font-mono" data-hero-fade aria-hidden="true">
           <span class="faq-hero__readout-dot" />
           <span>KB-INDEX // {{ String(totalArticles).padStart(2, '0') }} FILES DECRYPTED</span>
         </div>
 
-        <div class="faq-hero__search">
+        <div class="faq-hero__search" data-hero-fade>
           <svg class="faq-hero__search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
             <circle cx="11" cy="11" r="7" />
             <path d="m20 20-3.5-3.5" stroke-linecap="round" />
@@ -417,10 +378,6 @@ onMounted(async () => {
 
   &__title {
     margin-top: $space-5;
-    font-size: clamp(3rem, 2rem + 5vw, 6rem);
-    font-weight: 500;
-    letter-spacing: $tracking-tight;
-    line-height: 0.95;
     max-width: 14ch;
   }
 

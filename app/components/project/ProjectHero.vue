@@ -5,7 +5,6 @@ const props = defineProps<{ project: Project }>()
 
 const heroRef = ref<HTMLElement | null>(null)
 const imageRef = ref<HTMLElement | null>(null)
-const titleRef = ref<HTMLElement | null>(null)
 
 onMounted(async () => {
   if (!import.meta.client) return
@@ -26,16 +25,6 @@ onMounted(async () => {
     )
   }
 
-  if (titleRef.value) {
-    gsap.from(titleRef.value, {
-      y: 100,
-      opacity: 0,
-      duration: 1,
-      delay: 0.5,
-      ease: 'power3.out',
-    })
-  }
-
   if (imageRef.value && heroRef.value) {
     gsap.to(imageRef.value, {
       yPercent: 20,
@@ -52,15 +41,16 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section ref="heroRef" class="project-hero">
+  <section ref="heroRef" class="project-hero" data-page-hero>
     <div ref="imageRef" class="project-hero__image-wrap">
       <img :src="project.heroImage" :alt="project.title" class="project-hero__image">
     </div>
     <div class="project-hero__content">
-      <h1 ref="titleRef" class="project-hero__title font-display">
-        {{ project.title }}
-      </h1>
-      <p class="project-hero__subtitle">
+      <UiStaggeredHeroTitle
+        :text="project.title"
+        class="project-hero__title"
+      />
+      <p class="project-hero__subtitle" data-hero-fade>
         {{ project.subtitle }}
       </p>
     </div>
@@ -96,8 +86,6 @@ onMounted(async () => {
   }
 
   &__title {
-    font-size: $text-4xl;
-    line-height: 0.95;
     margin-bottom: $space-md;
   }
 

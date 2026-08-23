@@ -117,20 +117,24 @@ async function onSwitchStrategy(next: AuditStrategy) {
 
 <template>
   <div class="website-scanner" :class="{ 'website-scanner--scanning': phase === 'scanning' || showCompletion }">
-    <section class="website-scanner__hero section">
+    <section class="website-scanner__hero section" data-page-hero>
       <div class="container">
-        <p class="section-label">{{ copy.t('eyebrow') }}</p>
-        <h1 class="website-scanner__title font-display">{{ copy.t('title') }}</h1>
-        <p class="website-scanner__lead copy-width">{{ copy.t('lead') }}</p>
+        <p class="section-label" data-hero-fade>{{ copy.t('eyebrow') }}</p>
+        <UiStaggeredHeroTitle
+          :text="copy.t('title')"
+          class="website-scanner__title"
+        />
+        <p class="website-scanner__lead copy-width" data-hero-fade>{{ copy.t('lead') }}</p>
 
         <SiteAuditInput
           v-model="inputUrl"
+          data-hero-fade
           :disabled="phase === 'scanning'"
           :error="phase === 'error' ? error?.message : null"
           @submit="onSubmit"
         />
 
-        <p class="website-scanner__disclaimer font-mono">
+        <p class="website-scanner__disclaimer font-mono" data-hero-fade>
           {{ copy.t('disclaimer') }}
         </p>
       </div>
@@ -207,9 +211,6 @@ async function onSwitchStrategy(next: AuditStrategy) {
 .website-scanner__title {
   margin: $space-3 0 $space-3;
   max-width: 14ch;
-  font-size: clamp(2.4rem, 6.5vw, 4.2rem);
-  line-height: 0.95;
-  letter-spacing: -0.04em;
 }
 
 .website-scanner__lead {
@@ -220,7 +221,7 @@ async function onSwitchStrategy(next: AuditStrategy) {
 }
 
 .website-scanner__disclaimer {
-  margin: $space-3 0 0;
+  margin: $space-6 0 0;
   max-width: 42rem;
   font-size: $text-xs;
   line-height: $leading-relaxed;

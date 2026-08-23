@@ -11,6 +11,34 @@ export type ContentOptionId = 'self' | 'polish' | 'full'
 
 export type HostingOptionId = 'self' | 'cpwd'
 
+export type PlannerGoalId = 'leads' | 'show-work' | 'sell' | 'tool' | 'unsure'
+export type PlannerActionId = 'contact' | 'call' | 'booking' | 'buy' | 'login' | 'information'
+export type PlannerScopeId = 'minimal' | 'few' | 'many' | 'unsure'
+export type PlannerUpdatesId = 'never' | 'occasional' | 'regular' | 'unsure'
+export type PlannerCapabilityId =
+  | 'languages'
+  | 'booking'
+  | 'newsletter'
+  | 'login'
+  | 'integration'
+  | 'statistics'
+  | 'ai'
+  | 'none'
+export type PlannerContentId = 'ready' | 'polish' | 'full'
+export type PlannerVisualId = 'calm' | 'custom' | 'showcase'
+export type PlannerCareId = 'cpwd' | 'self' | 'advice'
+
+export interface WebsitePlannerAnswers {
+  goals: PlannerGoalId[]
+  actions: PlannerActionId[]
+  scope: PlannerScopeId | null
+  updates: PlannerUpdatesId | null
+  capabilities: PlannerCapabilityId[]
+  content: PlannerContentId | null
+  visual: PlannerVisualId | null
+  care: PlannerCareId | null
+}
+
 export type FeatureId =
   | 'contact-form'
   | 'cms'

@@ -70,9 +70,9 @@ export default defineEventHandler(async (event) => {
     from: fromAddress,
     to: toAddress,
     replyTo: email,
-    subject: `Project estimator · ${body.estimate.projectCode} · ${name}`,
+    subject: `Website planner · ${body.estimate.projectCode} · ${name}`,
     html: `
-      <h2>Project estimator aanvraag</h2>
+      <h2>Website planner aanvraag</h2>
       <p><strong>Projectcode:</strong> ${code}</p>
       <p><strong>Naam:</strong> ${safeName}</p>
       <p><strong>Email:</strong> ${safeEmail}</p>

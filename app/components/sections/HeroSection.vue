@@ -4,10 +4,13 @@ const localePath = useLocalePath()
 
 const sectionRef = ref<HTMLElement | null>(null)
 const globeRef = ref<{ beginHudIntro: () => void } | null>(null)
-const labelEl = ref<HTMLElement>()
-const bottomEl = ref<HTMLElement>()
-const scrollEl = ref<HTMLElement>()
 const globeScrollProgress = ref(0)
+
+const headlineLines = computed(() => [
+  hero.t('line1'),
+  { text: hero.t('line2'), accent: true },
+  hero.t('line3'),
+])
 
 useHeroGlobeScroll(globeScrollProgress, sectionRef)
 
@@ -26,65 +29,35 @@ onMounted(async () => {
 
   const { gsap } = await import('gsap')
 
-  const label = labelEl.value
-  const bottom = bottomEl.value
-  const scroll = scrollEl.value
-  if (!label || !bottom || !scroll) return
-
-  const tl = gsap.timeline({ delay: 0.5 })
-
-  tl.from(label, {
+  gsap.from('.hero-globe', {
     opacity: 0,
-    y: 20,
-    duration: 0.8,
+    x: 48,
+    duration: 1.4,
+    delay: 0.35,
     ease: 'power3.out',
+    onStart: startHudIntro,
   })
-    .from('.hero__line', {
-      y: 80,
-      opacity: 0,
-      duration: 1.1,
-      stagger: 0.12,
-      ease: 'power4.out',
-    }, '-=0.4')
-    .from(bottom, {
-      opacity: 0,
-      y: 30,
-      duration: 0.8,
-      ease: 'power3.out',
-    }, '-=0.5')
-    .from(scroll, {
-      opacity: 0,
-      duration: 0.6,
-    }, '-=0.3')
-    .from('.hero-globe', {
-      opacity: 0,
-      x: 48,
-      duration: 1.4,
-      ease: 'power3.out',
-      onStart: startHudIntro,
-    }, '-=1.1')
 })
 </script>
 
 <template>
-  <section ref="sectionRef" class="hero section--hero">
+  <section ref="sectionRef" class="hero section--hero" data-page-hero>
     <HeroGlobe ref="globeRef" :scroll-progress="globeScrollProgress" />
 
     <div class="hero__noise" />
 
     <div class="container hero__shell">
       <div class="hero__content copy-width">
-        <p ref="labelEl" class="hero__label section-label">
+        <p class="hero__label section-label" data-hero-fade>
           CPWD
         </p>
 
-        <h1 class="hero__headline">
-          <span class="hero__line hero__line--body">{{ hero.t('line1') }}</span>
-          <span class="hero__line hero__line--display"><em>{{ hero.t('line2') }}</em></span>
-          <span class="hero__line hero__line--body">{{ hero.t('line3') }}</span>
-        </h1>
+        <UiStaggeredHeroTitle
+          :lines="headlineLines"
+          class="hero__headline"
+        />
 
-        <div ref="bottomEl" class="hero__bottom">
+        <div class="hero__bottom" data-hero-fade>
           <NuxtLink :to="localePath('/work')" class="link-arrow" data-cursor="view">
             {{ hero.t('cta') }}
             <span class="arrow-icon">→</span>
@@ -99,7 +72,7 @@ onMounted(async () => {
       </div>
     </div>
 
-    <div ref="scrollEl" class="hero__scroll">
+    <div class="hero__scroll" data-hero-fade>
       <div class="hero__scroll-line" />
       <span class="label">Scroll</span>
     </div>
@@ -149,38 +122,8 @@ onMounted(async () => {
   }
 
   &__headline {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    font-size: clamp(2.6rem, 5vw + 0.4rem, 5.4rem);
     margin-bottom: $space-12;
-  }
-
-  &__line {
-    display: block;
-    overflow: hidden;
-
-    &--body {
-      font-family: $font-body;
-      font-size: clamp(1.35rem, 1.1rem + 1.4vw, 2.25rem);
-      font-weight: 400;
-      letter-spacing: 0.02em;
-      color: $color-text-muted;
-      line-height: 1.15;
-    }
-
-    &--display {
-      font-family: $font-display;
-      font-size: clamp(2.4rem, 1.85rem + 3.2vw, 4.75rem);
-      font-weight: 600;
-      line-height: 0.98;
-      letter-spacing: 0.04em;
-      color: $color-text;
-
-      em {
-        font-style: normal;
-        color: $color-gold-light;
-      }
-    }
   }
 
   &__bottom {

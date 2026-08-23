@@ -7,6 +7,10 @@ import type {
   ProjectEstimateConfig,
   ProjectEstimateResult,
   ProjectTypeId,
+  WebsitePlannerAnswers,
+  PlannerActionId,
+  PlannerCapabilityId,
+  PlannerGoalId,
 } from '~/types/project-estimate'
 
 const DEFAULT_CONFIG: ProjectEstimateConfig = {
@@ -16,6 +20,17 @@ const DEFAULT_CONFIG: ProjectEstimateConfig = {
   features: [],
   content: 'self',
   hosting: 'self',
+}
+
+const DEFAULT_ANSWERS: WebsitePlannerAnswers = {
+  goals: [],
+  actions: [],
+  scope: null,
+  updates: null,
+  capabilities: [],
+  content: null,
+  visual: null,
+  care: null,
 }
 
 function roundToStep(value: number, step: number) {
@@ -157,12 +172,89 @@ export function computeProjectEstimate(
   }
 }
 
+export function mapPlannerAnswers(answers: WebsitePlannerAnswers): ProjectEstimateConfig {
+  const concreteGoals = answers.goals.filter(goal => goal !== 'unsure')
+  const hasGoal = (goal: Exclude<PlannerGoalId, 'unsure'>) => concreteGoals.includes(goal)
+  const hasAction = (action: PlannerActionId) => answers.actions.includes(action)
+  let type: ProjectTypeId | null = answers.goals.length ? 'business' : null
+
+  if (hasGoal('tool') || hasAction('login')) type = 'webapp'
+  else if (hasGoal('sell') || hasAction('buy')) type = 'webshop'
+  else if (hasGoal('show-work') && !hasGoal('leads')) type = 'portfolio'
+  if (answers.scope === 'minimal' && type && ['business', 'portfolio'].includes(type)) type = 'one-page'
+
+  const pages = answers.scope === 'many' ? 9 : answers.scope === 'few' ? 5 : answers.scope === 'minimal' ? 1 : 4
+  const features = new Set<FeatureId>()
+  if (hasAction('contact')) features.add('contact-form')
+  if (hasAction('booking')) features.add('booking')
+  if (hasAction('buy') || hasGoal('sell') || type === 'webshop') features.add('payments')
+  if (hasAction('login') || type === 'webapp') features.add('accounts')
+  if (answers.updates === 'occasional' || answers.updates === 'regular') features.add('cms')
+  if (answers.updates === 'regular') features.add('blog')
+
+  const capabilityMap: Partial<Record<PlannerCapabilityId, FeatureId>> = {
+    languages: 'multilingual',
+    booking: 'booking',
+    newsletter: 'newsletter',
+    login: 'accounts',
+    integration: 'api',
+    statistics: 'analytics',
+    ai: 'ai',
+  }
+  for (const capability of answers.capabilities) {
+    const feature = capabilityMap[capability]
+    if (feature) features.add(feature)
+  }
+
+  return {
+    type,
+    pages,
+    design: answers.visual === 'showcase' ? 'showcase' : answers.visual === 'custom' ? 'custom' : 'clean',
+    features: [...features],
+    content: answers.content === 'full' ? 'full' : answers.content === 'polish' ? 'polish' : 'self',
+    hosting: answers.care === 'self' ? 'self' : 'cpwd',
+  }
+}
+
+export function derivePlannerAnswers(config: ProjectEstimateConfig): WebsitePlannerAnswers {
+  const features = new Set(config.features)
+  const capabilities: PlannerCapabilityId[] = []
+  if (features.has('multilingual')) capabilities.push('languages')
+  if (features.has('booking')) capabilities.push('booking')
+  if (features.has('newsletter')) capabilities.push('newsletter')
+  if (features.has('accounts')) capabilities.push('login')
+  if (features.has('api')) capabilities.push('integration')
+  if (features.has('analytics')) capabilities.push('statistics')
+  if (features.has('ai')) capabilities.push('ai')
+  if (!capabilities.length) capabilities.push('none')
+
+  const goals: PlannerGoalId[] = [config.type === 'portfolio' ? 'show-work' : config.type === 'webshop' ? 'sell' : config.type === 'webapp' ? 'tool' : 'leads']
+  const actions: PlannerActionId[] = []
+  if (features.has('contact-form')) actions.push('contact')
+  if (features.has('booking')) actions.push('booking')
+  if (features.has('payments')) actions.push('buy')
+  if (features.has('accounts')) actions.push('login')
+  if (!actions.length) actions.push('information')
+
+  return {
+    goals,
+    actions,
+    scope: config.type === 'one-page' || config.pages <= 1 ? 'minimal' : config.pages >= 8 ? 'many' : 'few',
+    updates: features.has('blog') ? 'regular' : features.has('cms') ? 'occasional' : 'never',
+    capabilities,
+    content: config.content === 'full' ? 'full' : config.content === 'polish' ? 'polish' : 'ready',
+    visual: config.design === 'showcase' ? 'showcase' : config.design === 'custom' ? 'custom' : 'calm',
+    care: config.hosting === 'cpwd' ? 'cpwd' : 'self',
+  }
+}
+
 export function useProjectEstimate() {
   const route = useRoute()
   const router = useRouter()
   const reducedMotion = usePreferredReducedMotion()
 
-  const config = reactive<ProjectEstimateConfig>({ ...DEFAULT_CONFIG })
+  const answers = reactive<WebsitePlannerAnswers>({ ...DEFAULT_ANSWERS, goals: [], actions: [], capabilities: [] })
+  const config = reactive<ProjectEstimateConfig>({ ...DEFAULT_CONFIG, features: [] })
   const projectCode = ref(createProjectCode())
   const stepIndex = ref(0)
   const showResult = ref(false)
@@ -176,12 +268,7 @@ export function useProjectEstimate() {
   const typeMeta = computed(() => (config.type ? PROJECT_PRICING.types[config.type] : null))
   const usesPages = computed(() => Boolean(typeMeta.value?.usesPages))
 
-  const visibleSteps = computed(() => {
-    const steps: Array<'type' | 'pages' | 'design' | 'features' | 'content' | 'hosting'> = ['type']
-    if (usesPages.value) steps.push('pages')
-    steps.push('design', 'features', 'content', 'hosting')
-    return steps
-  })
+  const visibleSteps = computed(() => ['goal', 'action', 'scope', 'updates', 'capabilities', 'content', 'styleCare'] as const)
 
   const currentStep = computed(() => visibleSteps.value[Math.min(stepIndex.value, visibleSteps.value.length - 1)]!)
 
@@ -190,52 +277,62 @@ export function useProjectEstimate() {
     pages: clampPages(config.type, config.pages),
   }, projectCode.value))
 
-  const canCalculate = computed(() => Boolean(config.type))
+  const canCalculate = computed(() => Boolean(
+    answers.goals.length && answers.actions.length && answers.scope && answers.updates
+    && answers.content && answers.visual && answers.care,
+  ))
 
   function pulseStatus(key: string) {
     statusLine.value = key
   }
 
-  function setType(type: ProjectTypeId) {
-    config.type = type
-    config.pages = clampPages(type, config.pages || PROJECT_PRICING.types[type].includedPages || 3)
-    if (type === 'webshop' && !config.features.includes('payments')) {
-      // soft suggestion only in UI; do not auto-add
+  function syncConfigFromAnswers() {
+    const mapped = mapPlannerAnswers(answers)
+    Object.assign(config, mapped)
+    config.features = [...mapped.features]
+    showResult.value = false
+  }
+
+  function setAnswer<K extends keyof WebsitePlannerAnswers>(key: K, value: WebsitePlannerAnswers[K]) {
+    answers[key] = value
+    syncConfigFromAnswers()
+    pulseStatus(String(key))
+  }
+
+  function toggleCapability(id: PlannerCapabilityId) {
+    if (id === 'none') answers.capabilities = ['none']
+    else {
+      const next = answers.capabilities.filter(item => item !== 'none')
+      const index = next.indexOf(id)
+      if (index >= 0) next.splice(index, 1)
+      else next.push(id)
+      answers.capabilities = next
     }
-    pulseStatus('type')
-    showResult.value = false
+    syncConfigFromAnswers()
+    pulseStatus('capabilities')
   }
 
-  function setPages(pages: number) {
-    config.pages = clampPages(config.type, pages)
-    pulseStatus('pages')
-    showResult.value = false
+  function toggleGoal(id: PlannerGoalId) {
+    if (id === 'unsure') answers.goals = ['unsure']
+    else {
+      const next = answers.goals.filter(goal => goal !== 'unsure')
+      const index = next.indexOf(id)
+      if (index >= 0) next.splice(index, 1)
+      else next.push(id)
+      answers.goals = next
+    }
+    syncConfigFromAnswers()
+    pulseStatus('goal')
   }
 
-  function setDesign(design: ProjectEstimateConfig['design']) {
-    config.design = design
-    pulseStatus('design')
-    showResult.value = false
-  }
-
-  function toggleFeature(id: FeatureId) {
-    const idx = config.features.indexOf(id)
-    if (idx >= 0) config.features.splice(idx, 1)
-    else config.features.push(id)
-    pulseStatus('features')
-    showResult.value = false
-  }
-
-  function setContent(content: ProjectEstimateConfig['content']) {
-    config.content = content
-    pulseStatus('content')
-    showResult.value = false
-  }
-
-  function setHosting(hosting: ProjectEstimateConfig['hosting']) {
-    config.hosting = hosting
-    pulseStatus('hosting')
-    showResult.value = false
+  function toggleAction(id: PlannerActionId) {
+    const next = [...answers.actions]
+    const index = next.indexOf(id)
+    if (index >= 0) next.splice(index, 1)
+    else next.push(id)
+    answers.actions = next
+    syncConfigFromAnswers()
+    pulseStatus('action')
   }
 
   function nextStep() {
@@ -271,6 +368,10 @@ export function useProjectEstimate() {
   }
 
   function reset() {
+    Object.assign(answers, { ...DEFAULT_ANSWERS, goals: [], actions: [], capabilities: [] })
+    answers.goals = []
+    answers.actions = []
+    answers.capabilities = []
     Object.assign(config, { ...DEFAULT_CONFIG, features: [] as FeatureId[] })
     config.features = []
     projectCode.value = createProjectCode()
@@ -293,6 +394,11 @@ export function useProjectEstimate() {
     if (!parsed) return
     Object.assign(config, parsed)
     config.features = [...parsed.features]
+    const derived = derivePlannerAnswers(parsed)
+    Object.assign(answers, derived)
+    answers.goals = [...derived.goals]
+    answers.actions = [...derived.actions]
+    answers.capabilities = [...derived.capabilities]
     config.pages = clampPages(parsed.type, parsed.pages)
     if (parsed.type) {
       showResult.value = true
@@ -364,12 +470,11 @@ export function useProjectEstimate() {
     statusLine,
     requestOpen,
     pricing: PROJECT_PRICING,
-    setType,
-    setPages,
-    setDesign,
-    toggleFeature,
-    setContent,
-    setHosting,
+    answers,
+    setAnswer,
+    toggleGoal,
+    toggleAction,
+    toggleCapability,
     nextStep,
     prevStep,
     goToStep,

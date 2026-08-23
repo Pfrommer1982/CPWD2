@@ -85,6 +85,42 @@ h4 {
   font-family: $font-logo;
 }
 
+.page-hero-title {
+  font-family: $font-display;
+  font-size: clamp(3rem, 7vw + 1rem, 7rem);
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: $tracking-tight;
+  perspective: 900px;
+}
+
+.page-hero-title__line {
+  display: block;
+}
+
+.page-hero-title__line--accent {
+  color: var(--page-hero-title-accent, #{$color-gold-light});
+}
+
+.page-hero-title__word-clip {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.04em;
+  vertical-align: top;
+}
+
+.page-hero-title__word {
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-hero-title__word,
+  [data-hero-fade] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 .italic-serif {
   font-family: $font-display;
   font-style: normal;

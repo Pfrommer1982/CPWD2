@@ -1,8 +1,181 @@
 {
   "projectEstimator": {
-    "eyebrow": "Project estimator",
-    "title": "Wat kost jouw project?",
-    "lead": "Stel je website of weboplossing samen en krijg in minder dan een minuut een vrijblijvende prijsindicatie. Direct contact, scherpe projectprijs, geen bureaulaag ertussen.",
+    "eyebrow": "Website planner",
+    "title": "Wat heeft jouw website nodig?",
+    "lead": "Beantwoord een paar eenvoudige vragen over je bedrijf. Je krijgt direct een helder voorstel met prijsindicatie—zonder dat je technische kennis nodig hebt.",
+    "progress": {
+      "question": "Vraag {current} van {total}",
+      "complete": "Voorstel gereed"
+    },
+    "overview": {
+      "eyebrow": "Jouw antwoorden",
+      "title": "Je voorstel wordt opgebouwd",
+      "ready": "Jouw websiteplan",
+      "open": "Nog te beantwoorden",
+      "edit": "Wijzig",
+      "editStep": "Wijzig dit antwoord"
+    },
+    "questions": {
+      "goal": {
+        "title": "Wat moet je website vooral opleveren?",
+        "hint": "Kies alles wat van toepassing is.",
+        "options": {
+          "leads": { "label": "Meer aanvragen of klanten krijgen", "body": "Maak je aanbod duidelijk en leid bezoekers naar contact of een offerte." },
+          "show-work": { "label": "Mijn werk of projecten laten zien", "body": "Laat resultaten, vakmanschap en eerdere projecten overtuigend spreken." },
+          "sell": { "label": "Producten online verkopen", "body": "Bezoekers kunnen producten bekijken, bestellen en betalen." },
+          "tool": { "label": "Een online dienst, omgeving of tool aanbieden", "body": "Een digitale omgeving waarin mensen inloggen of iets uitvoeren." },
+          "unsure": { "label": "Ik weet het nog niet", "body": "Geen probleem. We starten met een veilige, flexibele basis." }
+        }
+      },
+      "action": {
+        "title": "Wat moeten bezoekers vooral kunnen doen?",
+        "hint": "Kies alles wat van toepassing is. Een bel- of WhatsApp-knop is gewone website-inhoud en kost geen extra module.",
+        "options": {
+          "contact": { "label": "Contact opnemen of een offerte aanvragen", "body": "Via een duidelijk formulier dat bij jou binnenkomt." },
+          "call": { "label": "Bellen of WhatsAppen", "body": "Met directe knoppen op de juiste plekken." },
+          "booking": { "label": "Een afspraak of reservering maken", "body": "Bezoekers kiezen zelf een geschikt moment." },
+          "buy": { "label": "Iets kopen en betalen", "body": "Met een veilige bestel- en betaalstap." },
+          "login": { "label": "Inloggen in een eigen omgeving", "body": "Voor persoonlijke gegevens, diensten of content." },
+          "information": { "label": "Vooral informatie bekijken", "body": "Rustig oriënteren met heldere uitleg en navigatie." }
+        }
+      },
+      "scope": {
+        "title": "Hoeveel wil je ongeveer laten zien?",
+        "hint": "Denk bijvoorbeeld aan Home, Over ons, Diensten, Projecten en Contact.",
+        "options": {
+          "minimal": { "label": "Alleen de belangrijkste informatie", "body": "Waarschijnlijk één sterke, overzichtelijke pagina." },
+          "few": { "label": "Een paar duidelijke pagina's", "body": "Een compacte site met ruimte voor je verhaal en aanbod." },
+          "many": { "label": "Veel diensten, projecten of informatie", "body": "Een ruimere structuur waarin bezoekers snel hun weg vinden." },
+          "unsure": { "label": "Dat weet ik nog niet", "body": "We adviseren een praktische basis die later kan meegroeien." }
+        }
+      },
+      "updates": {
+        "title": "Wil je de website later zelf bijwerken?",
+        "hint": "We vertalen je antwoord naar de eenvoudigste beheeroplossing die past.",
+        "options": {
+          "never": { "label": "Nee, bijna nooit", "body": "De website kan bewust eenvoudig en onderhoudsarm blijven." },
+          "occasional": { "label": "Af en toe teksten, foto's of projecten", "body": "Je krijgt een eenvoudige plek om die onderdelen zelf aan te passen." },
+          "regular": { "label": "Regelmatig nieuws, projecten of aanbod", "body": "We voorzien een beheeromgeving en een structuur voor updates." },
+          "unsure": { "label": "Weet ik nog niet", "body": "We houden de aanbevolen oplossing flexibel." }
+        }
+      },
+      "capabilities": {
+        "title": "Is één van deze dingen belangrijk?",
+        "hint": "Dit is optioneel. Je kunt meerdere antwoorden kiezen.",
+        "options": {
+          "languages": { "label": "Meerdere talen", "body": "Bezoekers kunnen de site in verschillende talen gebruiken." },
+          "booking": { "label": "Afspraken of reserveringen", "body": "Mensen kiezen zelf een datum of tijd." },
+          "newsletter": { "label": "Aanmelden voor een nieuwsbrief", "body": "Nieuwe inschrijvingen gaan naar je nieuwsbrieftool." },
+          "login": { "label": "Klant- of ledenlogin", "body": "Een afgeschermde persoonlijke omgeving." },
+          "integration": { "label": "Koppeling met boekhouding, voorraad of ander systeem", "body": "Gegevens worden uitgewisseld met een externe dienst." },
+          "statistics": { "label": "Bezoekersstatistieken", "body": "Zie hoeveel mensen komen en wat ze bekijken." },
+          "ai": { "label": "Slimme AI-hulp of zoekfunctie", "body": "Bijvoorbeeld beter zoeken of automatisch antwoorden." },
+          "none": { "label": "Geen van deze / weet ik niet", "body": "We houden het voorstel overzichtelijk en eenvoudig." }
+        }
+      },
+      "content": {
+        "title": "Wat heb je al aan teksten en foto's?",
+        "hint": "Eerlijk inschatten helpt om verrassingen later te voorkomen.",
+        "options": {
+          "ready": { "label": "Teksten en foto's zijn klaar", "body": "Jij levert het materiaal aan; wij verwerken het in de website." },
+          "polish": { "label": "Ik heb materiaal, maar wil hulp het beter te maken", "body": "We scherpen je bestaande inhoud licht aan." },
+          "full": { "label": "Ik wil hulp met de volledige inhoud", "body": "We helpen met de eerste inhoud voor de belangrijkste pagina's." }
+        }
+      },
+      "styleCare": { "title": "Hoe mag de website voelen?", "hint": "Kies ook wie de techniek en hosting na oplevering regelt." },
+      "visual": {
+        "title": "Uitstraling",
+        "options": {
+          "calm": { "label": "Rustig en professioneel", "body": "Helder, betrouwbaar en prettig in gebruik." },
+          "custom": { "label": "Uniek voor mijn merk", "body": "Meer maatwerk in vorm, compositie en beweging." },
+          "showcase": { "label": "Opvallend en interactief", "body": "Een uitgesproken presentatie met rijkere interacties." }
+        }
+      },
+      "care": {
+        "title": "Techniek en beheer",
+        "options": {
+          "cpwd": { "label": "CPWD regelt techniek, updates en hosting", "body": "Een optioneel jaarlijks zorgpakket naast de projectprijs." },
+          "self": { "label": "Ik heb dit al geregeld", "body": "Je levert zelf de hostingomgeving of toegang aan." },
+          "advice": { "label": "Adviseer mij", "body": "We adviseren CPWD-zorg als veilige optie; je beslist later." }
+        }
+      }
+    },
+    "recommendation": {
+      "eyebrow": "Ons voorstel",
+      "lead": "Gebaseerd op wat je over je bedrijf, bezoekers en inhoud hebt verteld.",
+      "types": {
+        "one-page": "Een sterke one-page website met één duidelijke route",
+        "business": "Een professionele bedrijfswebsite die klanten helpt kiezen",
+        "portfolio": "Een visuele website met ruimte voor je projecten",
+        "webshop": "Een heldere webshop waarin bezoekers veilig kunnen kopen",
+        "webapp": "Een online omgeving op maat, uitgewerkt na een korte intake"
+      },
+      "combinations": {
+        "sellShowWork": "Een webshop die verkoopt én je projecten overtuigend laat zien",
+        "leadsShowWork": "Een bedrijfswebsite die klanten aantrekt én je werk laat spreken",
+        "toolSell": "Een online platform met verkoopfunctionaliteit"
+      },
+      "whyTitle": "Waarom dit bij je past",
+      "why": {
+        "goal": {
+          "leads": "De opbouw stuurt bezoekers naar contact en nieuwe aanvragen.",
+          "show-work": "Je werk en projecten krijgen een overtuigende hoofdrol.",
+          "sell": "Productpresentatie, bestellen en betalen vormen één duidelijke route.",
+          "tool": "De oplossing wordt rond de online dienst en haar gebruikers ontworpen.",
+          "unsure": "De basis blijft flexibel, zodat je later gericht kunt uitbreiden."
+        },
+        "action": {
+          "contact": "Een duidelijk aanvraagformulier verlaagt de drempel om contact op te nemen.",
+          "call": "Bellen en WhatsApp zijn direct bereikbaar zonder onnodige extra techniek.",
+          "booking": "Bezoekers kunnen zelf een afspraak of reservering maken.",
+          "buy": "Een veilige betaalroute ondersteunt directe verkoop.",
+          "login": "Een persoonlijke, afgeschermde omgeving is onderdeel van de technische scope.",
+          "information": "Heldere structuur en leesbaarheid staan voorop."
+        },
+        "scope": {
+          "minimal": "Eén compacte pagina houdt de belangrijkste informatie scherp.",
+          "few": "Een compacte paginastructuur geeft elk onderwerp genoeg ruimte.",
+          "many": "Een ruimere navigatie maakt veel informatie overzichtelijk.",
+          "unsure": "We starten met een logische basis van ongeveer vier pagina's."
+        },
+        "updates": {
+          "occasional": "Een eenvoudige beheeromgeving laat je zelf foto's en teksten aanpassen.",
+          "regular": "Een beheeromgeving plus nieuwsstructuur ondersteunt regelmatige updates."
+        }
+      },
+      "includedTitle": "Dit zit in het voorstel",
+      "included": {
+        "responsive": "Een snelle website voor mobiel, tablet en desktop",
+        "foundation": "Technische basis, toegankelijkheid en zoekmachinevriendelijke opbouw",
+        "pages": "Een structuur van ongeveer {pages} pagina's",
+        "design": { "clean": "Een rustige professionele uitstraling", "custom": "Een uniek ontwerp voor jouw merk", "showcase": "Een opvallend interactief ontwerp" },
+        "content": { "polish": "Redactionele hulp bij je bestaande inhoud", "full": "Hulp bij de volledige basisinhoud" },
+        "features": {
+          "contact-form": "Een duidelijk contact- of offerteformulier",
+          "cms": "Zelf teksten, foto's of projecten aanpassen",
+          "blog": "Een plek voor nieuws en regelmatige updates",
+          "multilingual": "Ondersteuning voor meerdere talen",
+          "maps": "Een kaart of duidelijke locatie",
+          "newsletter": "Nieuwsbriefinschrijving gekoppeld aan je tool",
+          "social": "Koppelingen met je sociale kanalen",
+          "analytics": "Inzicht in bezoekersstatistieken",
+          "advanced-animations": "Rijkere beweging en interactie",
+          "api": "Een slimme koppeling met een extern systeem",
+          "accounts": "Veilig inloggen voor klanten of leden",
+          "dashboard": "Een persoonlijke gebruikers- of beheeromgeving",
+          "ai": "AI-hulp of een slimme zoekfunctie",
+          "payments": "Veilig bestellen en online betalen",
+          "booking": "Afspraken of reserveringen online plannen"
+        }
+      },
+      "once": "eenmalig",
+      "careTitle": "Techniek, updates en hosting door CPWD",
+      "careAdvice": "Dit is onze veilige aanbeveling; het blijft een optionele jaarlijkse keuze.",
+      "intakeLabel": "Eerst kort bespreken?",
+      "intakeYes": "Ja, korte intake nodig",
+      "intakeNo": "Nee, direct concreet te maken",
+      "details": "Projectcode en prijsdetails"
+    },
     "decrypt": {
       "decrypting": "DECRYPTING",
       "encrypted": "ENCRYPTED",
@@ -10,6 +183,11 @@
       "lockedHint": "Voltooide stappen ontgrendelen dit kanaal",
       "continue": "Doorgaan",
       "unlock": "Open stap"
+    },
+    "result": {
+      "channel": "PROFILE LOCKED",
+      "configReady": "Configuratie vastgelegd",
+      "editHint": "Klik een stap hierboven om iets aan te passen en opnieuw te berekenen."
     },
     "status": {
       "type": "PROJECT TYPE REGISTERED",
@@ -22,19 +200,24 @@
       "reset": "CONFIGURATION CLEARED"
     },
     "steps": {
-      "type": "Projecttype",
-      "pages": "Pagina's",
-      "design": "Design",
-      "features": "Modules",
+      "goal": "Doel",
+      "action": "Bezoekersactie",
+      "scope": "Omvang",
+      "updates": "Zelf bijwerken",
+      "capabilities": "Extra wensen",
       "content": "Content",
-      "hosting": "Hosting"
+      "styleCare": "Uitstraling & zorg"
     },
     "nav": {
       "next": "Volgende",
       "back": "Terug",
       "calculate": "Bereken project",
-      "reset": "Nieuw project",
-      "request": "Project aanvragen",
+      "nextQuestion": "Volgende vraag",
+      "proposal": "Bekijk mijn voorstel",
+      "building": "Voorstel maken…",
+      "reset": "Opnieuw beginnen",
+      "edit": "Antwoorden aanpassen",
+      "request": "Bespreek dit voorstel",
       "copyCode": "Kopieer projectcode",
       "copied": "Gekopieerd"
     },
@@ -158,6 +341,90 @@
         "about-2-3-weeks": "± 2-3 weken",
         "about-2-4-weeks": "± 2-4 weken",
         "after-intake": "Na inventarisatie"
+      }
+    },
+    "infra": {
+      "eyebrow": "Jouw keuzes in beeld",
+      "title": "Zo werkt jouw website",
+      "lead": "Je antwoorden worden een begrijpelijke websiteblauwdruk. Kies een onderdeel om te zien waarom het is aanbevolen.",
+      "inspect": "Waarom dit onderdeel",
+      "status": "{services} gekozen onderdelen · {complexity}",
+      "mobileCapabilities": "Jouw functies",
+      "legend": {
+        "edge": "Bezoekersroute",
+        "core": "Websitebasis",
+        "service": "Jouw keuzes",
+        "packets": "Lichtpuls = actieve verbinding"
+      },
+      "meterTraffic": "Simulated traffic",
+      "flow": {
+        "visitors": "Bezoekers",
+        "edge": "Snelle website",
+        "app": "Jouw website",
+        "origin": "Online & veilig"
+      },
+      "roles": {
+        "visitors": "Menselijk verkeer",
+        "edge": "Snel en bereikbaar",
+        "app": "Jouw website",
+        "origin": {
+          "self": "Eigen hosting",
+          "cpwd": "CPWD hosting"
+        },
+        "cms": "Zelf teksten aanpassen",
+        "payments": "Afrekenen",
+        "accounts": "Login / users",
+        "api": "Slimme koppeling",
+        "analytics": "Statistieken",
+        "ai": "Slimme hulp",
+        "booking": "Afspraken",
+        "mail": "Contact"
+      },
+      "explain": {
+        "visitors": "De mensen die jouw site openen op telefoon, laptop of tablet.",
+        "edge": "Zorgt dat je site snel laadt, ook als bezoekers ver weg zitten. Denk aan een snelle voordeur.",
+        "origin": {
+          "self": "De plek waar jouw site écht staat: op je eigen server of bij een hostingpartij die jij zelf regelt.",
+          "cpwd": "De plek waar jouw site écht staat. Wij regelen hosting, updates en dat alles blijft draaien."
+        },
+        "app": {
+          "one-page": "Eén sterke pagina die meteen duidelijk maakt wat je doet en wat de bezoeker moet doen.",
+          "business": "Je bedrijfssite: pagina's over wie je bent, wat je doet, en hoe mensen contact opnemen.",
+          "portfolio": "Een plek om je werk te laten zien, met projecten en een helder verhaal.",
+          "webshop": "Een online winkel waar bezoekers producten bekijken, in hun mandje doen en afrekenen.",
+          "webapp": "Een digitaal product waar mensen in kunnen inloggen en dingen kunnen doen, niet alleen lezen."
+        },
+        "cms": "Hier pas je teksten en foto's zelf aan, zonder dat er iemand code hoeft te schrijven.",
+        "payments": "Hier kunnen bezoekers veilig betalen. Bestellingen komen daarna bij jou binnen.",
+        "accounts": "Hier loggen mensen in en beheren ze hun eigen account of gegevens.",
+        "api": "Een koppeling met een ander systeem, bijvoorbeeld boekhouding, voorraad of een externe dienst.",
+        "analytics": "Laat zien hoeveel mensen langskomen, wat ze aanklikken en wat goed werkt.",
+        "ai": "Een slimme helper op je site, bijvoorbeeld voor zoeken, antwoorden of tekstvoorstellen.",
+        "booking": "Bezoekers kiezen een datum of tijdslot en maken zo een afspraak of reservering.",
+        "mail": "Contactformulieren en mails. Als iemand iets invult, krijg jij daar een bericht van."
+      },
+      "nodes": {
+        "visitors": "Bezoekers",
+        "edge": "Snelle voordeur",
+        "origin": {
+          "self": "Eigen hosting",
+          "cpwd": "Online & veilig"
+        },
+        "app": {
+          "one-page": "One-page",
+          "business": "Business site",
+          "portfolio": "Portfolio",
+          "webshop": "Webshop",
+          "webapp": "Web app"
+        },
+        "cms": "Zelf aanpassen",
+        "payments": "Betalen",
+        "accounts": "Inloggen",
+        "api": "Slimme koppeling",
+        "analytics": "Statistieken",
+        "ai": "Slimme hulp",
+        "booking": "Afspraken",
+        "mail": "Contact"
       }
     },
     "request": {

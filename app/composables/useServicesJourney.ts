@@ -62,26 +62,6 @@ export function useServicesJourney({
           onEnterBack: () => { activeChapter.value = -1 },
         })
 
-        const heroWords = hero.value.querySelectorAll<HTMLElement>('[data-hero-word]')
-        const heroFade = hero.value.querySelectorAll<HTMLElement>('[data-hero-fade]')
-
-        gsap.from(heroWords, {
-          yPercent: 100,
-          opacity: 0,
-          stagger: 0.07,
-          duration: 1,
-          ease: 'power3.out',
-          delay: 0.1,
-        })
-
-        gsap.from(heroFade, {
-          y: 24,
-          opacity: 0,
-          stagger: 0.08,
-          duration: 0.8,
-          ease: 'power2.out',
-          delay: 0.45,
-        })
       }
 
       if (spineFill.value) {

@@ -40,19 +40,20 @@ const rights = computed(() => {
     </div>
 
     <div class="privacy-page__inner container">
-      <header class="privacy-page__hero">
+      <header class="privacy-page__hero" data-page-hero>
         <div class="privacy-page__hero-copy">
-          <div class="privacy-page__hero-meta">
+          <div class="privacy-page__hero-meta" data-hero-fade>
             <span class="section-label">{{ privacy.t('label') }}</span>
             <span class="privacy-page__badge font-mono">{{ privacy.t('badge') }}</span>
           </div>
-          <h1 class="privacy-page__heading font-display">
-            {{ privacy.t('heading') }}
-          </h1>
-          <p class="privacy-page__intro">
+          <UiStaggeredHeroTitle
+            :text="privacy.t('heading')"
+            class="privacy-page__heading"
+          />
+          <p class="privacy-page__intro" data-hero-fade>
             {{ privacy.t('intro') }}
           </p>
-          <p class="privacy-page__updated font-mono">
+          <p class="privacy-page__updated font-mono" data-hero-fade>
             {{ privacy.t('updatedLabel') }} · {{ privacy.t('updatedDate') }}
           </p>
         </div>
@@ -216,10 +217,6 @@ const rights = computed(() => {
   }
 
   &__heading {
-    font-size: clamp(2.2rem, 4.5vw, 3.4rem);
-    font-weight: 300;
-    line-height: 1.05;
-    letter-spacing: $tracking-tight;
     margin-bottom: $space-5;
   }
 

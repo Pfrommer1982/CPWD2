@@ -73,18 +73,13 @@ onMounted(async () => {
       :ready="journeyReady"
     />
 
-    <header ref="heroRef" class="services-journey__hero">
+    <header ref="heroRef" class="services-journey__hero" data-page-hero>
       <div class="services-journey__hero-inner container">
         <span class="section-label" data-hero-fade>{{ services.t('journey.label') }}</span>
-        <h1 class="services-journey__heading font-display">
-          <span
-            v-for="(word, wi) in titleWords(services.t('journey.heading'))"
-            :key="`jh-${wi}`"
-            class="services-journey__heading-word"
-          >
-            <span data-hero-word class="services-journey__heading-inner">{{ word }}</span>
-          </span>
-        </h1>
+        <UiStaggeredHeroTitle
+          :text="services.t('journey.heading')"
+          class="services-journey__heading"
+        />
         <p class="services-journey__intro" data-hero-fade>
           {{ services.t('journey.intro') }}
         </p>
@@ -254,23 +249,7 @@ onMounted(async () => {
   }
 
   &__heading {
-    font-size: clamp(3rem, 7vw + 1rem, 7.5rem);
-    font-weight: 300;
-    line-height: 0.92;
-    letter-spacing: $tracking-tight;
     margin-block: $space-6;
-    perspective: 900px;
-  }
-
-  &__heading-word {
-    display: inline-block;
-    overflow: hidden;
-    margin-right: 0.2em;
-    vertical-align: top;
-  }
-
-  &__heading-inner {
-    display: inline-block;
   }
 
   &__intro {

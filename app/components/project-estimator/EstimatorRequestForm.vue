@@ -44,7 +44,7 @@ function formatEuro(value: number) {
 
 function buildMessage() {
   const lines = [
-    `Project estimator aanvraag (${props.estimate.projectCode})`,
+    `Website planner aanvraag (${props.estimate.projectCode})`,
     '',
     `Type: ${copy.t(`type.${props.config.type}.label`)}`,
     PROJECT_PRICING.types[props.config.type].usesPages ? `Paginas: ${props.config.pages}` : null,

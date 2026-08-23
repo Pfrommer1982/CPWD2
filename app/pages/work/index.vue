@@ -21,58 +21,23 @@ const sortedProjects = computed(() =>
   [...projects].sort((a, b) => a.order - b.order),
 )
 
-const heroRef = ref<HTMLElement | null>(null)
-
-onMounted(async () => {
-  if (!import.meta.client || !heroRef.value) return
-
-  const { init } = useGsap()
-  const gsap = await init()
-  if (!gsap) return
-
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: heroRef.value,
-      start: 'top 88%',
-      toggleActions: 'play none none none',
-    },
-  })
-
-  tl.from(heroRef.value.querySelector('.work-hero__label'), {
-    y: 16,
-    opacity: 0,
-    duration: 0.7,
-    ease: 'power3.out',
-  })
-    .from(heroRef.value.querySelector('.work-hero__title'), {
-      y: 28,
-      opacity: 0,
-      duration: 0.9,
-      ease: 'power3.out',
-    }, '-=0.45')
-    .from(heroRef.value.querySelector('.work-hero__intro'), {
-      y: 20,
-      opacity: 0,
-      duration: 0.8,
-      ease: 'power3.out',
-    }, '-=0.55')
-})
 </script>
 
 <template>
   <div class="work-page">
-    <section ref="heroRef" class="work-hero section">
+    <section class="work-hero section" data-page-hero>
       <div class="work-hero__backdrop" aria-hidden="true">
         <div class="work-hero__grid" />
         <div class="work-hero__glow" />
       </div>
 
       <div class="container work-hero__inner">
-        <span class="section-label work-hero__label">{{ work.t('label') }}</span>
-        <h1 class="work-hero__title font-display">
-          {{ work.t('heading') }}
-        </h1>
-        <p class="work-hero__intro copy-width">
+        <span class="section-label work-hero__label" data-hero-fade>{{ work.t('label') }}</span>
+        <UiStaggeredHeroTitle
+          :text="work.t('heading')"
+          class="work-hero__title"
+        />
+        <p class="work-hero__intro copy-width" data-hero-fade>
           {{ work.t('intro') }}
         </p>
       </div>
@@ -145,10 +110,6 @@ onMounted(async () => {
 
   &__title {
     margin-top: $space-5;
-    font-size: clamp(3rem, 2rem + 5vw, 6rem);
-    font-weight: 500;
-    letter-spacing: $tracking-tight;
-    line-height: 0.95;
     max-width: 12ch;
   }
 

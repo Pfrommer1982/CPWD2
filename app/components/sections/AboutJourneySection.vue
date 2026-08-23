@@ -120,22 +120,19 @@ onMounted(async () => {
       :ready="journeyReady"
     />
 
-    <header ref="heroRef" class="about-journey__hero">
+    <header ref="heroRef" class="about-journey__hero" data-page-hero>
       <div class="about-journey__hero-inner container">
         <div class="about-journey__stamp font-mono" data-hero-fade>
           {{ about.t('page.hero.classification') }}
         </div>
         <span class="section-label" data-hero-fade>{{ about.t('page.hero.label') }}</span>
         <p class="about-journey__file-id font-mono" data-hero-fade>{{ about.t('page.hero.fileId') }}</p>
-        <h1 class="about-journey__heading font-display">
-          <span
-            v-for="(word, wi) in titleWords(about.t('page.hero.heading'))"
-            :key="`ah-${wi}`"
-            class="about-journey__heading-word"
-          >
-            <span data-hero-word class="about-journey__heading-inner">{{ word }}</span>
-          </span>
-        </h1>
+        <UiStaggeredHeroTitle
+          :text="about.t('page.hero.heading')"
+          class="about-journey__heading"
+          :delay="0.15"
+          :supporting-at="0.2"
+        />
         <p class="about-journey__intro" data-hero-fade>
           {{ about.t('page.hero.intro') }}
         </p>
@@ -474,23 +471,7 @@ onMounted(async () => {
   }
 
   &__heading {
-    font-size: clamp(3rem, 7vw + 1rem, 7rem);
-    font-weight: 300;
-    line-height: 0.92;
-    letter-spacing: $tracking-tight;
     margin-block: $space-6;
-    perspective: 900px;
-  }
-
-  &__heading-word {
-    display: inline-block;
-    overflow: hidden;
-    margin-right: 0.2em;
-    vertical-align: top;
-  }
-
-  &__heading-inner {
-    display: inline-block;
   }
 
   &__intro {
