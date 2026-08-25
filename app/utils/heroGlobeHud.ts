@@ -4,6 +4,55 @@ const DATA_PREFIXES = ['PKT', 'VEC', 'ALT', 'SIG', 'BUF', 'TRK', 'RNG', 'HZ', 'L
 const DATA_SUFFIXES = ['OK', 'RX', 'TX', 'SYNC', 'LOCK', 'ARM', 'GO', 'HOLD']
 const HUD_BG = '5, 8, 7'
 
+export const HERO_HUD_ACCESS_CHECK_MS = 750
+export const HERO_HUD_SEARCH_MS = 1150
+export const HERO_HUD_HIT_SETTLE_MS = 650
+export const HERO_HUD_HIT_BLINK_MS = 700
+export const HERO_HUD_HIT_EXPAND_MS = 450
+export const HERO_HUD_HIT_HOLD_MS = 1900
+export const HERO_HUD_HIT_RELEASE_MS = 650
+export const HERO_HUD_GRANT_AT_MS = HERO_HUD_ACCESS_CHECK_MS
+  + HERO_HUD_SEARCH_MS
+  + HERO_HUD_HIT_SETTLE_MS
+  + HERO_HUD_HIT_BLINK_MS
+  + HERO_HUD_HIT_EXPAND_MS
+export const HERO_HUD_HIT_TOTAL_MS = HERO_HUD_GRANT_AT_MS
+  + HERO_HUD_HIT_HOLD_MS
+  + HERO_HUD_HIT_RELEASE_MS
+
+export interface HeroHudVisitorRecord {
+  ip: string
+  location: string
+  vpn: boolean
+  proxy: boolean
+  tor: boolean
+  provider: string | null
+  networkService: string | null
+  labels: {
+    found: string
+    ip: string
+    location: string
+    provider: string
+    vpn: string
+    proxy: string
+    tor: string
+    vpnExit: string
+    masked: string
+    accessCheck: string
+    accessStatus: string
+    searching: string
+    matched: string
+    granted: string
+    welcome: string
+  }
+}
+
+export interface HeroHudVisitorHit {
+  startTimeMs: number
+  record: HeroHudVisitorRecord
+  static: boolean
+}
+
 function hudSeed(n: number) {
   const x = Math.sin(n * 43758.5453) * 10000
   return x - Math.floor(x)
@@ -29,6 +78,11 @@ function scrollOffset(t: number, channel: number) {
 function easeOutCubic(p: number) {
   const t = Math.min(1, Math.max(0, p))
   return 1 - (1 - t) ** 3
+}
+
+function easeInOutCubic(p: number) {
+  const t = Math.min(1, Math.max(0, p))
+  return t < 0.5 ? 4 * t ** 3 : 1 - (-2 * t + 2) ** 3 / 2
 }
 
 function drawIntroScanLine(
@@ -196,6 +250,250 @@ function drawScrollingData(
   ctx.restore()
 }
 
+function fitHudText(
+  ctx: CanvasRenderingContext2D,
+  value: string,
+  maxWidth: number,
+) {
+  if (ctx.measureText(value).width <= maxWidth) return value
+
+  let fitted = value
+  while (fitted.length > 1 && ctx.measureText(`${fitted}…`).width > maxWidth) {
+    fitted = fitted.slice(0, -1)
+  }
+  return `${fitted}…`
+}
+
+function drawSelectionRow(
+  ctx: CanvasRenderingContext2D,
+  bx: number,
+  bw: number,
+  targetY: number,
+  alpha: number,
+  record: HeroHudVisitorRecord,
+) {
+  const colW = bw / 2
+  const rowX = bx + colW + 4
+  const rowW = colW - 8
+
+  ctx.save()
+  ctx.globalAlpha = alpha
+
+  ctx.fillStyle = `rgba(${HUD_BG}, 0.92)`
+  ctx.fillRect(rowX, targetY - 6, rowW, 12)
+  ctx.fillStyle = `rgba(${COMMS_RGB_LIGHT}, 0.16)`
+  ctx.fillRect(rowX, targetY - 6, rowW, 12)
+  ctx.strokeStyle = `rgba(${COMMS_RGB_LIGHT}, 0.86)`
+  ctx.lineWidth = 1
+
+  ctx.beginPath()
+  ctx.moveTo(rowX, targetY - 1)
+  ctx.lineTo(rowX, targetY - 6)
+  ctx.lineTo(rowX + 8, targetY - 6)
+  ctx.moveTo(rowX + rowW - 8, targetY - 6)
+  ctx.lineTo(rowX + rowW, targetY - 6)
+  ctx.lineTo(rowX + rowW, targetY - 1)
+  ctx.moveTo(rowX + rowW, targetY + 1)
+  ctx.lineTo(rowX + rowW, targetY + 6)
+  ctx.lineTo(rowX + rowW - 8, targetY + 6)
+  ctx.moveTo(rowX + 8, targetY + 6)
+  ctx.lineTo(rowX, targetY + 6)
+  ctx.lineTo(rowX, targetY + 1)
+  ctx.stroke()
+
+  ctx.textAlign = 'left'
+  ctx.font = '600 7px "Courier New", monospace'
+  ctx.fillStyle = `rgba(${COMMS_RGB_LIGHT}, 0.96)`
+  ctx.fillText(fitHudText(ctx, `MATCH/${record.ip}`, rowW - 10), rowX + 5, targetY + 3)
+  ctx.restore()
+}
+
+function drawSequenceStatusStrip(
+  ctx: CanvasRenderingContext2D,
+  bx: number,
+  by: number,
+  bw: number,
+  label: string,
+  detail: string,
+  alpha = 1,
+) {
+  ctx.save()
+  ctx.globalAlpha = alpha
+  ctx.fillStyle = `rgba(${HUD_BG}, 0.92)`
+  ctx.fillRect(bx + 4, by + 4, bw - 8, 17)
+  ctx.strokeStyle = `rgba(${COMMS_RGB}, 0.45)`
+  ctx.beginPath()
+  ctx.moveTo(bx + 4, by + 21)
+  ctx.lineTo(bx + bw - 4, by + 21)
+  ctx.stroke()
+
+  ctx.textAlign = 'left'
+  ctx.font = '600 7px "Courier New", monospace'
+  ctx.fillStyle = `rgba(${COMMS_RGB_LIGHT}, 0.95)`
+  ctx.fillText(fitHudText(ctx, label, bw * 0.56), bx + 9, by + 15)
+  ctx.textAlign = 'right'
+  ctx.font = '6px "Courier New", monospace'
+  ctx.fillStyle = `rgba(${COMMS_RGB}, 0.78)`
+  ctx.fillText(fitHudText(ctx, detail, bw * 0.38), bx + bw - 9, by + 15)
+  ctx.restore()
+}
+
+function drawAuthorizationCheck(
+  ctx: CanvasRenderingContext2D,
+  bx: number,
+  by: number,
+  bw: number,
+  bh: number,
+  progress: number,
+  record: HeroHudVisitorRecord,
+) {
+  const panelW = bw * 0.76
+  const panelH = 44
+  const panelX = bx + (bw - panelW) / 2
+  const panelY = by + bh * 0.5 - panelH / 2
+
+  ctx.save()
+  ctx.fillStyle = `rgba(${HUD_BG}, 0.9)`
+  ctx.fillRect(panelX, panelY, panelW, panelH)
+  ctx.strokeStyle = `rgba(${COMMS_RGB_LIGHT}, 0.56)`
+  drawCornerBrackets(ctx, panelX + panelW / 2, panelY + panelH / 2, panelW, panelH, 7)
+
+  ctx.textAlign = 'center'
+  ctx.font = '600 10px "Courier New", monospace'
+  ctx.fillStyle = `rgba(${COMMS_RGB_LIGHT}, 0.98)`
+  ctx.fillText(fitHudText(ctx, record.labels.accessCheck, panelW - 18), panelX + panelW / 2, panelY + 17)
+  ctx.font = '7px "Courier New", monospace'
+  ctx.fillStyle = `rgba(${COMMS_RGB}, 0.82)`
+  ctx.fillText(fitHudText(ctx, record.labels.accessStatus, panelW - 18), panelX + panelW / 2, panelY + 30)
+
+  const segments = 14
+  const active = Math.max(1, Math.ceil(progress * segments))
+  const gap = 2
+  const segmentW = (panelW - 20 - gap * (segments - 1)) / segments
+  for (let i = 0; i < segments; i++) {
+    ctx.fillStyle = i < active
+      ? `rgba(${COMMS_RGB_LIGHT}, ${0.34 + (i / segments) * 0.5})`
+      : `rgba(${COMMS_RGB}, 0.12)`
+    ctx.fillRect(panelX + 10 + i * (segmentW + gap), panelY + 37, segmentW, 2)
+  }
+  ctx.restore()
+}
+
+function drawExpandedVisitorRecord(
+  ctx: CanvasRenderingContext2D,
+  bx: number,
+  by: number,
+  bw: number,
+  bh: number,
+  targetY: number,
+  openProgress: number,
+  grantedProgress: number,
+  record: HeroHudVisitorRecord,
+) {
+  const colW = bw / 2
+  const rowX = bx + colW + 4
+  const rowW = colW - 8
+  const activeSignals = [
+    record.vpn ? record.labels.vpn : '',
+    record.proxy ? record.labels.proxy : '',
+    record.tor ? record.labels.tor : '',
+  ].filter(Boolean)
+  const hasMaskedNetwork = activeSignals.length > 0
+  const hasProvider = Boolean(record.provider)
+  const calloutH = 70 + (hasProvider ? 13 : 0) + (hasMaskedNetwork ? 14 : 0)
+  const calloutY = Math.max(by + 25, Math.min(targetY - calloutH * 0.52, by + bh - calloutH - 8))
+  const copyW = rowW - 10
+  const open = easeOutCubic(openProgress)
+  const visibleH = 12 + (calloutH - 12) * open
+  const clipY = targetY - visibleH / 2
+
+  ctx.save()
+  ctx.beginPath()
+  ctx.rect(rowX - 2, clipY, rowW + 4, visibleH)
+  ctx.clip()
+
+  ctx.fillStyle = `rgba(${HUD_BG}, 0.95)`
+  ctx.fillRect(rowX, calloutY, rowW, calloutH)
+  ctx.fillStyle = `rgba(${COMMS_RGB_LIGHT}, 0.06)`
+  ctx.fillRect(rowX, calloutY, rowW, calloutH)
+  ctx.strokeStyle = `rgba(${COMMS_RGB_LIGHT}, ${0.44 + open * 0.3})`
+  drawCornerBrackets(ctx, rowX + rowW / 2, calloutY + calloutH / 2, rowW, calloutH, 8)
+
+  ctx.textAlign = 'left'
+  ctx.font = '600 7px "Courier New", monospace'
+  ctx.fillStyle = `rgba(${COMMS_RGB_LIGHT}, 0.94)`
+  ctx.fillText(fitHudText(ctx, record.labels.matched, copyW), rowX + 5, calloutY + 11)
+
+  if (activeSignals.length) {
+    const badge = activeSignals.join('/')
+    ctx.font = '600 6px "Courier New", monospace'
+    const badgeW = ctx.measureText(badge).width + 6
+    ctx.fillStyle = `rgba(${COMMS_RGB_LIGHT}, 0.16)`
+    ctx.fillRect(rowX + rowW - badgeW - 4, calloutY + 3, badgeW, 9)
+    ctx.strokeStyle = `rgba(${COMMS_RGB_LIGHT}, 0.5)`
+    ctx.strokeRect(rowX + rowW - badgeW - 4, calloutY + 3, badgeW, 9)
+    ctx.fillStyle = `rgba(${COMMS_RGB_LIGHT}, 0.96)`
+    ctx.fillText(badge, rowX + rowW - badgeW - 1, calloutY + 11)
+  }
+
+  ctx.font = '7px "Courier New", monospace'
+  ctx.fillStyle = `rgba(${COMMS_RGB}, 0.82)`
+  ctx.fillText(
+    fitHudText(ctx, `${record.labels.ip} ${record.ip}`, copyW),
+    rowX + 5,
+    calloutY + 25,
+  )
+  ctx.fillText(
+    fitHudText(ctx, `${record.labels.location} ${record.location}`, copyW),
+    rowX + 5,
+    calloutY + 38,
+  )
+
+  let detailY = calloutY + 51
+
+  if (record.provider) {
+    ctx.fillStyle = `rgba(${COMMS_RGB_LIGHT}, 0.8)`
+    ctx.fillText(
+      fitHudText(ctx, `${record.labels.provider} ${record.provider}`, copyW),
+      rowX + 5,
+      detailY,
+    )
+    detailY += 13
+  }
+
+  if (hasMaskedNetwork) {
+    const exitLabel = record.vpn ? record.labels.vpnExit : activeSignals.join('/')
+    const service = record.networkService && record.networkService !== record.provider
+      ? ` · ${record.networkService}`
+      : ''
+    ctx.fillStyle = `rgba(${COMMS_RGB_LIGHT}, 0.8)`
+    ctx.fillText(
+      fitHudText(ctx, `${exitLabel} // ${record.labels.masked}${service}`, copyW),
+      rowX + 5,
+      detailY,
+    )
+    detailY += 14
+  }
+
+  if (grantedProgress > 0.001) {
+    const granted = easeOutCubic(grantedProgress)
+    const stampY = detailY + 1
+    ctx.globalAlpha = granted
+    ctx.fillStyle = `rgba(${HUD_BG}, 0.86)`
+    ctx.fillRect(rowX + 4, stampY - 10, rowW - 8, 25)
+    ctx.strokeStyle = `rgba(${COMMS_RGB_LIGHT}, 0.65)`
+    ctx.strokeRect(rowX + 4, stampY - 10, rowW - 8, 25)
+    ctx.textAlign = 'center'
+    ctx.font = '700 10px "Courier New", monospace'
+    ctx.fillStyle = `rgba(${COMMS_RGB_LIGHT}, 1)`
+    ctx.fillText(fitHudText(ctx, record.labels.granted, rowW - 16), rowX + rowW / 2, stampY)
+    ctx.font = '600 6px "Courier New", monospace'
+    ctx.fillStyle = `rgba(${COMMS_RGB}, 0.88)`
+    ctx.fillText(fitHudText(ctx, record.labels.welcome, rowW - 16), rowX + rowW / 2, stampY + 10)
+  }
+  ctx.restore()
+}
+
 function drawTickerStrip(
   ctx: CanvasRenderingContext2D,
   x: number,
@@ -224,10 +522,12 @@ export function drawHeroGlobeHud(
   timeMs: number,
   scrollProgress: number,
   hudIntro = 1,
+  visitorHit: HeroHudVisitorHit | null = null,
 ) {
   if (w < 520) return
 
-  const t = timeMs * 0.001
+  const renderTimeMs = visitorHit?.static ? visitorHit.startTimeMs : timeMs
+  const t = renderTimeMs * 0.001
   const cx = w * (0.76 + scrollProgress * 0.04)
   const cy = h * 0.5
   const radius = Math.min(w, h) * (0.36 - scrollProgress * 0.04)
@@ -270,7 +570,97 @@ export function drawHeroGlobeHud(
   drawCornerBrackets(ctx, cx, cy, bw, bh, bracketLen)
 
   const scanRate = 0.018 + scrollRate(t, 20) * 0.004
-  const scanY = by + ((t * scanRate + scrollProgress * 0.12) % 1) * bh
+  const normalScanY = by + ((t * scanRate + scrollProgress * 0.12) % 1) * bh
+  let scanY = normalScanY
+  let selectionAlpha = 0
+  let recordOpen = 0
+  let grantedProgress = 0
+  let statusLabel = ''
+  let statusDetail = ''
+  let showAuthorization = false
+  let authorizationProgress = 0
+  const targetRow = Math.round((bh * 0.62 - 11) / 9)
+  const targetScanY = by + 11 + targetRow * 9 - 3
+
+  if (visitorHit) {
+    const elapsed = timeMs - visitorHit.startTimeMs
+    const searchAt = HERO_HUD_ACCESS_CHECK_MS
+    const settleAt = searchAt + HERO_HUD_SEARCH_MS
+    const blinkAt = settleAt + HERO_HUD_HIT_SETTLE_MS
+    const expandAt = blinkAt + HERO_HUD_HIT_BLINK_MS
+    const holdAt = expandAt + HERO_HUD_HIT_EXPAND_MS
+    const releaseAt = holdAt + HERO_HUD_HIT_HOLD_MS
+    const sequenceSeed = Math.floor(visitorHit.startTimeMs * 0.01)
+    const searchHash = Math.floor(hudSeed(sequenceSeed + Math.floor(Math.max(0, elapsed) / 90)) * 0xffffff)
+      .toString(16)
+      .toUpperCase()
+      .padStart(6, '0')
+    const matchHash = Math.floor(hudSeed(sequenceSeed + 997) * 0xffffff)
+      .toString(16)
+      .toUpperCase()
+      .padStart(6, '0')
+    const recordCount = 2048 + Math.floor(hudSeed(sequenceSeed + Math.floor(Math.max(0, elapsed) / 120)) * 7951)
+
+    if (visitorHit.static) {
+      scanY = targetScanY
+      selectionAlpha = 1
+      recordOpen = 1
+      grantedProgress = 1
+      statusLabel = visitorHit.record.labels.granted
+      statusDetail = `AUTH/0x${matchHash}`
+    } else if (elapsed >= 0 && elapsed < searchAt) {
+      showAuthorization = true
+      authorizationProgress = elapsed / HERO_HUD_ACCESS_CHECK_MS
+    } else if (elapsed >= searchAt && elapsed < settleAt) {
+      const search = (elapsed - searchAt) / HERO_HUD_SEARCH_MS
+      const startT = visitorHit.startTimeMs * 0.001
+      const startRate = 0.018 + scrollRate(startT, 20) * 0.004
+      const startPosition = (startT * startRate + scrollProgress * 0.12) % 1
+      scanY = by + ((startPosition + search * 2.35) % 1) * bh
+      statusLabel = visitorHit.record.labels.searching
+      statusDetail = `${recordCount.toString().padStart(4, '0')} // #${searchHash}`
+    } else if (elapsed >= settleAt && elapsed < blinkAt) {
+      const settle = easeInOutCubic((elapsed - settleAt) / HERO_HUD_HIT_SETTLE_MS)
+      const startT = visitorHit.startTimeMs * 0.001
+      const startRate = 0.018 + scrollRate(startT, 20) * 0.004
+      const startPosition = (startT * startRate + scrollProgress * 0.12) % 1
+      const searchEndY = by + ((startPosition + 2.35) % 1) * bh
+      scanY = searchEndY + (targetScanY - searchEndY) * settle
+      statusLabel = visitorHit.record.labels.searching
+      statusDetail = `${recordCount.toString().padStart(4, '0')} // #${searchHash}`
+      selectionAlpha = easeOutCubic(Math.max(0, (settle - 0.72) / 0.28))
+    } else if (elapsed >= blinkAt && elapsed < expandAt) {
+      const blinkProgress = (elapsed - blinkAt) / HERO_HUD_HIT_BLINK_MS
+      scanY = targetScanY
+      selectionAlpha = Math.floor(blinkProgress * 6) % 2 === 0 ? 1 : 0.22
+      statusLabel = visitorHit.record.labels.matched
+      statusDetail = `LOCK // #${matchHash}`
+    } else if (elapsed >= expandAt && elapsed < holdAt) {
+      scanY = targetScanY
+      selectionAlpha = 1
+      recordOpen = (elapsed - expandAt) / HERO_HUD_HIT_EXPAND_MS
+      statusLabel = visitorHit.record.labels.matched
+      statusDetail = `LOCK // #${matchHash}`
+    } else if (elapsed >= holdAt && elapsed < releaseAt) {
+      scanY = targetScanY
+      selectionAlpha = 1
+      recordOpen = 1
+      grantedProgress = Math.min(1, (elapsed - holdAt) / 260)
+      statusLabel = visitorHit.record.labels.granted
+      statusDetail = `AUTH // #${matchHash}`
+    } else if (elapsed >= releaseAt && elapsed < HERO_HUD_HIT_TOTAL_MS) {
+      const release = easeInOutCubic(
+        (elapsed - releaseAt) / HERO_HUD_HIT_RELEASE_MS,
+      )
+      scanY = targetScanY + (normalScanY - targetScanY) * release
+      selectionAlpha = 1 - release
+      recordOpen = 1 - release
+      grantedProgress = 1 - release
+      statusLabel = visitorHit.record.labels.granted
+      statusDetail = 'SESSION // OPEN'
+    }
+  }
+
   ctx.strokeStyle = `rgba(${COMMS_RGB_LIGHT}, ${0.22 * contentAlpha})`
   ctx.beginPath()
   ctx.moveTo(bx, scanY)
@@ -279,6 +669,46 @@ export function drawHeroGlobeHud(
 
   ctx.fillStyle = `rgba(${COMMS_RGB_LIGHT}, ${(0.06 + Math.sin(t * 18) * 0.03) * contentAlpha})`
   ctx.fillRect(bx, scanY - 6, bw, 12)
+
+  if (visitorHit) {
+    if (showAuthorization) {
+      drawAuthorizationCheck(
+        ctx,
+        bx,
+        by,
+        bw,
+        bh,
+        authorizationProgress,
+        visitorHit.record,
+      )
+    }
+    if (statusLabel) {
+      drawSequenceStatusStrip(ctx, bx, by, bw, statusLabel, statusDetail, contentAlpha)
+    }
+    if (selectionAlpha > 0.001) {
+      drawSelectionRow(
+        ctx,
+        bx,
+        bw,
+        targetScanY,
+        selectionAlpha * contentAlpha,
+        visitorHit.record,
+      )
+    }
+    if (recordOpen > 0.001) {
+      drawExpandedVisitorRecord(
+        ctx,
+        bx,
+        by,
+        bw,
+        bh,
+        targetScanY,
+        recordOpen,
+        grantedProgress,
+        visitorHit.record,
+      )
+    }
+  }
 
   ctx.strokeStyle = `rgba(${COMMS_RGB}, ${0.45 * contentAlpha})`
   ctx.beginPath()

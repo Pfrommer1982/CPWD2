@@ -11,7 +11,12 @@ import {
   globeSeeded,
   loadGlobeLandMask,
 } from '~/utils/globeCore'
-import { drawHeroGlobeHud } from '~/utils/heroGlobeHud'
+import {
+  drawHeroGlobeHud,
+  HERO_HUD_GRANT_AT_MS,
+  type HeroHudVisitorHit,
+  type HeroHudVisitorRecord,
+} from '~/utils/heroGlobeHud'
 import {
   createMissilePaths,
   disposeMissilePaths,
@@ -23,7 +28,22 @@ const props = defineProps<{
   scrollProgress?: number
 }>()
 
-const { canUseWebGL, animateMotion } = useGraphicsCapability()
+const { canUseWebGL, animateMotion, webgl } = useGraphicsCapability()
+const hero = useSectionTranslations('hero')
+const { locale } = useI18n()
+const route = useRoute()
+
+interface VisitorContext {
+  ip: string | null
+  city: string | null
+  region: string | null
+  country: string | null
+  vpn: boolean | null
+  proxy: boolean | null
+  tor: boolean | null
+  provider: string | null
+  networkService: string | null
+}
 
 const wrapRef = ref<HTMLElement | null>(null)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
@@ -46,6 +66,14 @@ let hudIntroReduced = false
 let hudCanReplayIntro = false
 let hudRunning = false
 let hudRaf = 0
+let visitorRequestController: AbortController | null = null
+let visitorHitScheduled = false
+let reducedHitTimer = 0
+let reducedHudTimeMs = 0
+
+const visitorContext = ref<VisitorContext | null>(null)
+const visitorHit = ref<HeroHudVisitorHit | null>(null)
+const visitorStatus = ref('')
 
 let raf = 0
 let running = false
@@ -273,29 +301,35 @@ function createSatellite(THREE: typeof import('three')) {
   return group
 }
 
+function resizeHudCanvas(w: number, h: number) {
+  const hud = hudRef.value
+  if (!hud) return
+
+  const dpr = Math.min(window.devicePixelRatio, 2)
+  hud.width = Math.floor(w * dpr)
+  hud.height = Math.floor(h * dpr)
+  hud.style.width = `${w}px`
+  hud.style.height = `${h}px`
+}
+
 function resizeCanvas() {
   const wrap = wrapRef.value
-  const canvas = canvasRef.value
-  if (!wrap || !canvas || !camera || !renderer) return
+  if (!wrap) return
 
   const w = wrap.clientWidth
   const h = wrap.clientHeight
   if (w < 1 || h < 1) return
+
+  resizeHudCanvas(w, h)
+
+  const canvas = canvasRef.value
+  if (!canvas || !camera || !renderer) return
 
   const dpr = Math.min(window.devicePixelRatio, 2)
   renderer.setPixelRatio(dpr)
   renderer.setSize(w, h, false)
   camera.aspect = w / h
   camera.updateProjectionMatrix()
-
-  const hud = hudRef.value
-  if (hud) {
-    const dpr = Math.min(window.devicePixelRatio, 2)
-    hud.width = Math.floor(w * dpr)
-    hud.height = Math.floor(h * dpr)
-    hud.style.width = `${w}px`
-    hud.style.height = `${h}px`
-  }
 
   globeOffsetX = globeScreenOffset(w / h)
   if (globeGroup && smoothProgress < 0.02) {
@@ -546,6 +580,150 @@ function tickHudIntroScroll() {
   }
 }
 
+function countryName(code: string | null) {
+  if (!code) return null
+
+  try {
+    return new Intl.DisplayNames(
+      [locale.value === 'en' ? 'en' : 'nl'],
+      { type: 'region' },
+    ).of(code) || code
+  } catch {
+    return code
+  }
+}
+
+function createVisitorRecord(context: VisitorContext): HeroHudVisitorRecord | null {
+  if (!context.ip) return null
+
+  const parts = [context.city, context.region, countryName(context.country)]
+    .filter((part): part is string => Boolean(part))
+    .filter((part, index, values) => (
+      values.findIndex(value => value.toLocaleLowerCase() === part.toLocaleLowerCase()) === index
+    ))
+
+  if (!parts.length) return null
+
+  return {
+    ip: context.ip,
+    location: parts.join(', '),
+    vpn: context.vpn === true,
+    proxy: context.proxy === true,
+    tor: context.tor === true,
+    provider: context.provider,
+    networkService: context.networkService,
+    labels: {
+      found: hero.t('visitorHud.found'),
+      ip: hero.t('visitorHud.ip'),
+      location: hero.t('visitorHud.location'),
+      provider: hero.t('visitorHud.provider'),
+      vpn: hero.t('visitorHud.vpn'),
+      proxy: hero.t('visitorHud.proxy'),
+      tor: hero.t('visitorHud.tor'),
+      vpnExit: hero.t('visitorHud.vpnExit'),
+      masked: hero.t('visitorHud.masked'),
+      accessCheck: hero.t('visitorHud.accessCheck'),
+      accessStatus: hero.t('visitorHud.accessStatus'),
+      searching: hero.t('visitorHud.searching'),
+      matched: hero.t('visitorHud.matched'),
+      granted: hero.t('visitorHud.granted'),
+      welcome: hero.t('visitorHud.welcome'),
+    },
+  }
+}
+
+function resolveHudPreviewMode(value: unknown): 'vpn' | 'direct' | null {
+  const mode = Array.isArray(value) ? value[0] : value
+  return mode === 'vpn' || mode === 'direct' ? mode : null
+}
+
+function previewVisitorContext(): VisitorContext | null {
+  if (!import.meta.dev || !import.meta.client) return null
+
+  const mode = resolveHudPreviewMode(route.query.hudPreview)
+
+  if (!mode) return null
+
+  return {
+    ip: mode === 'vpn' ? '203.0.113.42' : '198.51.100.24',
+    city: 'Amsterdam',
+    region: 'Noord-Holland',
+    country: 'NL',
+    vpn: mode === 'vpn',
+    proxy: false,
+    tor: false,
+    provider: mode === 'vpn' ? 'CPWD Preview Relay' : 'ExampleNet Fiber',
+    networkService: mode === 'vpn' ? 'CPWD Preview Relay' : null,
+  }
+}
+
+async function loadVisitorContext() {
+  const preview = previewVisitorContext()
+  if (preview) {
+    visitorContext.value = preview
+    return
+  }
+
+  visitorRequestController = new AbortController()
+
+  try {
+    visitorContext.value = await $fetch<VisitorContext>('/api/visitor-context', {
+      signal: visitorRequestController.signal,
+    })
+  } catch {
+    visitorContext.value = null
+  }
+}
+
+function scheduleVisitorHit(
+  time: number,
+  intro: number,
+  viewportWidth: number,
+  staticHit = false,
+) {
+  if (visitorHitScheduled || intro < 1 || viewportWidth < 520) return
+
+  const context = visitorContext.value
+  if (!context) return
+
+  const record = createVisitorRecord(context)
+  if (!record) return
+
+  visitorHitScheduled = true
+  visitorHit.value = {
+    startTimeMs: staticHit ? time : time + 250,
+    record,
+    static: staticHit,
+  }
+}
+
+function announceVisitorHit(time: number) {
+  const hit = visitorHit.value
+  if (!hit || visitorStatus.value) return
+
+  const announceAt = hit.startTimeMs + (hit.static ? 0 : HERO_HUD_GRANT_AT_MS)
+  if (time < announceAt) return
+
+  const signals = [
+    hit.record.vpn ? hit.record.labels.vpnExit : '',
+    hit.record.proxy ? hit.record.labels.proxy : '',
+    hit.record.tor ? hit.record.labels.tor : '',
+  ].filter(Boolean)
+  const network = signals.length
+    ? ` ${signals.join(', ')}: ${hit.record.labels.masked}.`
+    : ''
+  const provider = hit.record.provider
+    ? ` ${hit.record.labels.provider} ${hit.record.provider}.`
+    : ''
+
+  visitorStatus.value = hero.t('visitorHud.status', {
+    ip: hit.record.ip,
+    location: hit.record.location,
+    provider,
+    network,
+  })
+}
+
 function drawHudOverlay(time: number) {
   const hud = hudRef.value
   const wrap = wrapRef.value
@@ -561,7 +739,10 @@ function drawHudOverlay(time: number) {
 
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
   ctx.clearRect(0, 0, w, h)
-  drawHeroGlobeHud(ctx, w, h, time, smoothProgress, hudIntroProgress(time))
+  const intro = hudIntroProgress(time)
+  scheduleVisitorHit(time, intro, w, hudIntroReduced)
+  announceVisitorHit(time)
+  drawHeroGlobeHud(ctx, w, h, time, smoothProgress, intro, visitorHit.value)
 }
 
 function renderFrame(time: number) {
@@ -721,10 +902,43 @@ async function boot() {
   if (!wrapRef.value) return
 
   hudIntroReduced = !animateMotion.value
-  if (!canUseWebGL.value) return
+  if (!webgl.value) return
 
-  if (!canvasRef.value) {
+  if (!hudRef.value || (!hudIntroReduced && !canvasRef.value)) {
     await new Promise<void>(resolve => requestAnimationFrame(() => resolve()))
+  }
+  if (!hudRef.value) return
+
+  resizeObserver = new ResizeObserver(() => {
+    resizeCanvas()
+    if (hudIntroReduced && reducedHudTimeMs) {
+      drawHudOverlay(reducedHudTimeMs)
+    }
+  })
+  resizeObserver.observe(wrapRef.value)
+
+  if (hudIntroReduced) {
+    reducedHudTimeMs = performance.now()
+    beginHudIntro()
+    resizeCanvas()
+    drawHudOverlay(reducedHudTimeMs)
+
+    if (wrapRef.value.clientWidth >= 520) {
+      void loadVisitorContext().then(() => {
+        drawHudOverlay(reducedHudTimeMs)
+        if (!visitorHit.value) return
+
+        reducedHitTimer = window.setTimeout(() => {
+          visitorHit.value = null
+          drawHudOverlay(reducedHudTimeMs)
+        }, 3000)
+      })
+    }
+    return
+  }
+
+  if (wrapRef.value.clientWidth >= 520) {
+    void loadVisitorContext()
   }
   if (!canvasRef.value) return
 
@@ -733,24 +947,14 @@ async function boot() {
   await initThree()
   if (!scene) return
 
-  if (hudIntroReduced) {
-    beginHudIntro()
-  }
-  else {
-    hudCanReplayIntro = false
-  }
+  hudCanReplayIntro = false
 
   renderFrame(performance.now())
 
-  if (!hudIntroReduced) {
-    start()
-    window.setTimeout(() => {
-      if (!hudIntroStarted) beginHudIntro()
-    }, 3200)
-  }
-
-  resizeObserver = new ResizeObserver(() => resizeCanvas())
-  resizeObserver.observe(wrapRef.value)
+  start()
+  window.setTimeout(() => {
+    if (!hudIntroStarted) beginHudIntro()
+  }, 3200)
 }
 
 defineExpose({ beginHudIntro })
@@ -761,6 +965,37 @@ watch(() => props.scrollProgress, () => {
   }
 })
 
+if (import.meta.dev) {
+  watch(
+    () => resolveHudPreviewMode(route.query.hudPreview),
+    (mode, previousMode) => {
+      if (!import.meta.client || !mode || !previousMode || mode === previousMode) return
+
+      const preview = previewVisitorContext()
+      if (!preview) return
+
+      window.clearTimeout(reducedHitTimer)
+      visitorContext.value = preview
+      visitorHitScheduled = false
+      visitorHit.value = null
+      visitorStatus.value = ''
+
+      if (!hudIntroReduced) return
+
+      const time = reducedHudTimeMs || performance.now()
+      scheduleVisitorHit(time, 1, wrapRef.value?.clientWidth ?? 0, true)
+      drawHudOverlay(time)
+
+      if (visitorHit.value) {
+        reducedHitTimer = window.setTimeout(() => {
+          visitorHit.value = null
+          drawHudOverlay(time)
+        }, 3000)
+      }
+    },
+  )
+}
+
 onMounted(() => {
   boot()
 })
@@ -769,25 +1004,32 @@ onUnmounted(() => {
   stop()
   stopHudLoop()
   resizeObserver?.disconnect()
+  window.clearTimeout(reducedHitTimer)
+  visitorRequestController?.abort()
   disposeThree?.()
 })
 </script>
 
 <template>
-  <div ref="wrapRef" class="hero-globe" aria-hidden="true">
-    <div
-      v-if="!canUseWebGL"
-      class="graphics-fallback-globe hero-globe__fallback"
-      aria-hidden="true"
-    >
-      <div class="graphics-fallback-globe__stars" />
-      <div class="graphics-fallback-globe__glow" />
-      <div class="graphics-fallback-globe__halo" />
+  <div>
+    <div ref="wrapRef" class="hero-globe" aria-hidden="true">
+      <div
+        v-if="!canUseWebGL"
+        class="graphics-fallback-globe hero-globe__fallback"
+        aria-hidden="true"
+      >
+        <div class="graphics-fallback-globe__stars" />
+        <div class="graphics-fallback-globe__glow" />
+        <div class="graphics-fallback-globe__halo" />
+      </div>
+      <ClientOnly>
+        <canvas v-if="canUseWebGL" ref="canvasRef" class="hero-globe__canvas" />
+        <canvas v-if="webgl" ref="hudRef" class="hero-globe__hud" />
+      </ClientOnly>
     </div>
-    <ClientOnly v-else>
-      <canvas ref="canvasRef" class="hero-globe__canvas" />
-      <canvas ref="hudRef" class="hero-globe__hud" />
-    </ClientOnly>
+    <p v-if="visitorStatus" class="hero-globe__status" role="status">
+      {{ visitorStatus }}
+    </p>
   </div>
 </template>
 
@@ -811,6 +1053,10 @@ onUnmounted(() => {
     width: 100%;
     height: 100%;
     pointer-events: none;
+  }
+
+  &__status {
+    @include visually-hidden;
   }
 }
 </style>

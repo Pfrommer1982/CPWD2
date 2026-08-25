@@ -5,7 +5,7 @@
     "heading": "Privacy policy",
     "intro": "CPWD.nl is an informational website. We do not store visitor data in a database and we have no user accounts. This policy explains what minimal processing does take place.",
     "updatedLabel": "Last updated",
-    "updatedDate": "11 July 2026",
+    "updatedDate": "25 August 2026",
     "navLabel": "Contents",
     "rightsTitle": "Your rights",
     "rightsIntro": "Even with minimal processing you have rights under the GDPR. Questions? Email info{'@'}cpwd.nl.",
@@ -53,10 +53,19 @@
         ]
       },
       {
-        "id": "cookies",
-        "title": "Cookies",
+        "id": "welcome",
+        "title": "Visitor scan in the homepage animation",
         "paragraphs": [
-          "We use functional cookies only, for example for language preference.",
+          "The homepage may show a one-time playful scan inside its existing animation. It displays your public IP address and a broad, approximate network location when our hosting provider includes that information.",
+          "For a best-effort VPN, proxy or Tor indication and network provider name, our server sends the public IP address to ipapi.is. The result may be incomplete or inaccurate. When a VPN is detected, the displayed city is the VPN exit location, not your residence.",
+          "CPWD does not store these details or the lookup result in a database."
+        ]
+      },
+      {
+        "id": "cookies",
+        "title": "Cookies and local storage",
+        "paragraphs": [
+          "We only use functional cookies and local browser storage, for example for language preference and to skip the original loading animation after a first visit.",
           "No tracking or advertising cookies. You can manage cookies in your browser."
         ]
       },

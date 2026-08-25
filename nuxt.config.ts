@@ -85,6 +85,7 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    ipapiIsApiKey: process.env.IPAPI_IS_API_KEY || '',
     imagekitPrivateKey: process.env.IMAGEKIT_PRIVATE_KEY,
     imagekitPublicKey: process.env.IMAGEKIT_PUBLIC_KEY,
     resendApiKey: process.env.RESEND_API_KEY,

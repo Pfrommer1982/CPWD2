@@ -7,6 +7,24 @@
     "cta": "Bekijk ons werk",
     "locationBefore": "Gebaseerd in",
     "locationPlace": "Nederland",
-    "locationAfter": "actief voor klanten wereldwijd"
+    "locationAfter": "actief voor klanten wereldwijd",
+    "visitorHud": {
+      "found": "BEZOEKER GEVONDEN",
+      "ip": "IP",
+      "location": "LOC≈",
+      "provider": "PROVIDER",
+      "vpn": "VPN",
+      "proxy": "PROXY",
+      "tor": "TOR",
+      "vpnExit": "VPN-UITGANG",
+      "masked": "verbinding afgeschermd",
+      "accessCheck": "TOEGANGSCONTROLE",
+      "accessStatus": "controleren of bezoeker is toegestaan",
+      "searching": "DATABASE DOORZOEKEN",
+      "matched": "RECORD GEVONDEN",
+      "granted": "ACCESS GRANTED",
+      "welcome": "WELKOM BIJ CPWD",
+      "status": "Toegang verleend. IP {ip}. Geschatte netwerklocatie {location}.{provider}{network}"
+    }
   }
 }
