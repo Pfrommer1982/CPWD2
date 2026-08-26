@@ -14,6 +14,7 @@ import {
 import {
   drawHeroGlobeHud,
   HERO_HUD_GRANT_AT_MS,
+  HERO_HUD_HIT_TOTAL_MS,
   type HeroHudVisitorHit,
   type HeroHudVisitorRecord,
 } from '~/utils/heroGlobeHud'
@@ -26,6 +27,10 @@ import {
 
 const props = defineProps<{
   scrollProgress?: number
+}>()
+
+const emit = defineEmits<{
+  visitorHitActive: [active: boolean]
 }>()
 
 const { canUseWebGL, animateMotion, webgl } = useGraphicsCapability()
@@ -70,6 +75,7 @@ let visitorRequestController: AbortController | null = null
 let visitorHitScheduled = false
 let reducedHitTimer = 0
 let reducedHudTimeMs = 0
+let mobileVisitorHitActive = false
 
 const visitorContext = ref<VisitorContext | null>(null)
 const visitorHit = ref<HeroHudVisitorHit | null>(null)
@@ -678,10 +684,10 @@ async function loadVisitorContext() {
 function scheduleVisitorHit(
   time: number,
   intro: number,
-  viewportWidth: number,
+  _viewportWidth: number,
   staticHit = false,
 ) {
-  if (visitorHitScheduled || intro < 1 || viewportWidth < 520) return
+  if (visitorHitScheduled || intro < 1) return
 
   const context = visitorContext.value
   if (!context) return
@@ -742,6 +748,19 @@ function drawHudOverlay(time: number) {
   const intro = hudIntroProgress(time)
   scheduleVisitorHit(time, intro, w, hudIntroReduced)
   announceVisitorHit(time)
+
+  const hit = visitorHit.value
+  const nextMobileVisitorHitActive = w < 520
+    && Boolean(hit)
+    && (hit?.static === true || (
+      time >= (hit?.startTimeMs ?? Number.POSITIVE_INFINITY)
+      && time < (hit?.startTimeMs ?? 0) + HERO_HUD_HIT_TOTAL_MS
+    ))
+  if (nextMobileVisitorHitActive !== mobileVisitorHitActive) {
+    mobileVisitorHitActive = nextMobileVisitorHitActive
+    emit('visitorHitActive', mobileVisitorHitActive)
+  }
+
   drawHeroGlobeHud(ctx, w, h, time, smoothProgress, intro, visitorHit.value)
 }
 
@@ -923,23 +942,19 @@ async function boot() {
     resizeCanvas()
     drawHudOverlay(reducedHudTimeMs)
 
-    if (wrapRef.value.clientWidth >= 520) {
-      void loadVisitorContext().then(() => {
-        drawHudOverlay(reducedHudTimeMs)
-        if (!visitorHit.value) return
+    void loadVisitorContext().then(() => {
+      drawHudOverlay(reducedHudTimeMs)
+      if (!visitorHit.value) return
 
-        reducedHitTimer = window.setTimeout(() => {
-          visitorHit.value = null
-          drawHudOverlay(reducedHudTimeMs)
-        }, 3000)
-      })
-    }
+      reducedHitTimer = window.setTimeout(() => {
+        visitorHit.value = null
+        drawHudOverlay(reducedHudTimeMs)
+      }, 3000)
+    })
     return
   }
 
-  if (wrapRef.value.clientWidth >= 520) {
-    void loadVisitorContext()
-  }
+  void loadVisitorContext()
   if (!canvasRef.value) return
 
   startHudLoop()
@@ -1001,6 +1016,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  if (mobileVisitorHitActive) emit('visitorHitActive', false)
   stop()
   stopHudLoop()
   resizeObserver?.disconnect()

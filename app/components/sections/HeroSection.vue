@@ -5,6 +5,7 @@ const localePath = useLocalePath()
 const sectionRef = ref<HTMLElement | null>(null)
 const globeRef = ref<{ beginHudIntro: () => void } | null>(null)
 const globeScrollProgress = ref(0)
+const mobileVisitorHitActive = ref(false)
 
 const headlineLines = computed(() => [
   hero.t('line1'),
@@ -41,8 +42,17 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section ref="sectionRef" class="hero section--hero" data-page-hero>
-    <HeroGlobe ref="globeRef" :scroll-progress="globeScrollProgress" />
+  <section
+    ref="sectionRef"
+    class="hero section--hero"
+    :class="{ 'hero--mobile-hud-active': mobileVisitorHitActive }"
+    data-page-hero
+  >
+    <HeroGlobe
+      ref="globeRef"
+      :scroll-progress="globeScrollProgress"
+      @visitor-hit-active="mobileVisitorHitActive = $event"
+    />
 
     <div class="hero__noise" />
 
@@ -119,6 +129,12 @@ onMounted(async () => {
 
   &__label {
     margin-bottom: $space-8;
+  }
+
+  @media (max-width: 519px) {
+    &--mobile-hud-active &__label {
+      visibility: hidden;
+    }
   }
 
   &__headline {
