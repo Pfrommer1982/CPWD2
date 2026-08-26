@@ -11,7 +11,6 @@ export function resolveLocaleMessage(
   value: unknown,
   rt: (message: LocaleMessageValue) => string,
 ): string {
-  if (typeof value === 'string') return value
   if (value == null) return ''
   return rt(value as LocaleMessageValue)
 }
