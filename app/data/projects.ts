@@ -22,7 +22,7 @@ export interface ProjectShowcase {
     title: { nl: string; en: string }
     body: { nl: string; en: string }
   }
-  video: {
+  video?: {
     src: string
     poster?: string
     caption?: { nl: string; en: string }
@@ -208,89 +208,93 @@ export const projects: Project[] = [
   {
     slug: 'careerpulse',
     title: 'CareerPulse',
-    subtitle: 'AI-gedreven carrièreplatform voor CV\'s, motivatiebrieven en vacaturematching',
+    subtitle: 'Gratis CV-maker, motivatiebrieven en vacatures in één platform',
     category: 'Web Design & Development',
     year: 2026,
     role: ['Product design', 'Development', 'AI integration', 'UX'],
     technologies: ['Nuxt', 'Vue 3', 'TypeScript', 'AI', 'ImageKit'],
-    thumbnail: `${CP}/Screenshot 2026-06-30 at 17.13.17.png`,
-    heroImage: `${CP}/Screenshot 2026-06-30 at 17.12.11.png`,
+    thumbnail: `${CP}/Screenshot 2026-09-22 at 14.32.37.png`,
+    heroImage: `${CP}/Screenshot 2026-09-22 at 14.32.37.png`,
     accentColor: '#38965A',
     challenge: {
-      nl: 'CareerPulse wilde solliciteren moderniseren: geen losse tools meer voor CV, motivatiebrief en vacatures, maar één platform waar alles samenkomt. De uitdaging was een product dat voor job seekers én recruiters direct duidelijk maakt wat het doet, en AI inzet zonder gimmick.',
-      en: 'CareerPulse wanted to modernise job hunting: no more separate tools for CVs, cover letters and vacancies, but one platform where everything comes together. The challenge was a product that makes sense instantly for job seekers and recruiters alike, using AI without feeling like a gimmick.',
+      nl: 'De meeste CV-makers laten je eerst alles invullen en vragen daarna om te betalen of een account. CareerPulse wilde het omgekeerde: solliciteren zonder gedoe, echt gratis, en met één plek voor CV, motivatiebrief en vacatures. De uitdaging was een product dat helder, snel en professioneel voelt, zonder paywall of gimmick-AI.',
+      en: 'Most CV makers let you fill everything in first, then ask you to pay or create an account. CareerPulse wanted the opposite: apply without friction, genuinely free, with one place for CVs, cover letters and jobs. The challenge was a product that feels clear, fast and professional, without a paywall or gimmick AI.',
     },
     solution: {
-      nl: 'CPWD ontwierp en bouwde CareerPulse als volledig platform: gratis CV-maker, AI-motivatiebrieven, vacaturezoeker met match-tools en een recruiter-portal met AI-kloon interviews. Donker en licht, NL en EN, klaar om te schalen.',
-      en: 'We designed and built CareerPulse as a full platform: free CV builder, AI cover letters, job search with match tools and a recruiter portal with AI-clone interviews. Light and dark modes, NL and EN, built to scale.',
+      nl: 'CPWD ontwierp en bouwde CareerPulse opnieuw als volledig gratis platform. Upload een oud CV of begin leeg, kies uit 20 professioneel gestylde templates die je volledig kunt customizen, download direct als PDF, schrijf AI-motivatiebrieven en stem je CV af op vacatures. Donker en licht, NL en EN, met een groeiende templatebibliotheek.',
+      en: 'CPWD redesigned and rebuilt CareerPulse as a fully free platform. Upload an old CV or start blank, pick from 20 professionally styled templates you can fully customize, download straight as PDF, write AI cover letters and tailor your CV to jobs. Light and dark modes, NL and EN, with a growing template library.',
     },
     results: [
-      { value: '3', label: { nl: 'AI-tools in één platform', en: 'AI tools in one platform' } },
-      { value: '12+', label: { nl: 'CV-templates', en: 'CV templates' } },
+      { value: '100%', label: { nl: 'Gratis, altijd', en: 'Free, always' } },
+      { value: '20', label: { nl: 'Professionele templates', en: 'Professional templates' } },
       { value: 'NL/EN', label: { nl: 'Tweetalige interface', en: 'Bilingual interface' } },
     ],
     showcase: {
       tagline: {
-        nl: ['SMART.', 'FOCUSED.', 'READY TO APPLY.', 'AI-gedreven carrièreplatform.'],
-        en: ['SMART.', 'FOCUSED.', 'READY TO APPLY.', 'AI-powered career platform.'],
+        nl: ['CareerPulse'],
+        en: ['CareerPulse'],
       },
       intro: {
-        nl: 'CareerPulse bundelt alles wat je nodig hebt om op te vallen op de arbeidsmarkt. CV\'s genereren, motivatiebrieven op maat schrijven, vacatures matchen en recruiters laten chatten met je AI-profiel. CPWD bouwde het platform van landing tot dashboard.',
-        en: 'CareerPulse bundles everything you need to stand out in the job market. Generate CVs, write tailored cover letters, match vacancies and let recruiters chat with your AI profile. We built the platform from landing page to dashboard.',
+        nl: 'CareerPulse is volledig gratis: geen creditcard, geen verplichte account, wel een echt PDF-download. Je krijgt 20 professioneel gestylde templates die je volledig kunt aanpassen, en er komen er steeds meer bij. CPWD bouwde CV-wizard, live studio, motivatiebrief-generator, vacaturepagina en beheer-stats tot één scherpe flow.',
+        en: 'CareerPulse is fully free: no credit card, no forced account, and a real PDF download. You get 20 professionally styled templates you can fully customize, with more added over time. CPWD built the CV wizard, live studio, cover letter generator, jobs page and admin stats into one sharp flow.',
       },
       devices: [
-        { src: `${CP}/Screenshot 2026-06-30 at 17.12.11.png`, alt: 'CareerPulse, homepage hero' },
-        { src: `${CP}/Screenshot 2026-06-30 at 18.53.19.png`, alt: 'CareerPulse, vacaturezoeker met AI-tools' },
+        { src: `${CP}/Screenshot 2026-09-22 at 14.32.37.png`, alt: 'CareerPulse, homepage hero' },
+        { src: `${CP}/Screenshot 2026-09-22 at 14.34.38.png`, alt: 'CareerPulse, live CV studio' },
       ],
       custom: {
-        title: { nl: 'Van use case tot recruiter portal', en: 'From use cases to recruiter portal' },
+        title: { nl: 'Twintig templates, volledig jouw look', en: 'Twenty templates, fully your look' },
         body: {
-          nl: 'Elke doelgroep krijgt een eigen verhaal: verpleegkundigen, developers, vakmensen. Recruiters krijgen een donker portal om AI-kandidaten te screenen, talent te ontdekken en direct contact te leggen.',
-          en: 'Every audience gets its own story: nurses, developers, skilled trades. Recruiters get a dark portal to screen AI candidates, discover talent and connect directly.',
+          nl: 'Elke template is professioneel gestyled en klaar voor ATS. Kleur, layout en inhoud pas je zelf aan. De bibliotheek groeit door, zodat sollicitanten altijd een frisse, passende uitstraling kunnen kiezen.',
+          en: 'Every template is professionally styled and ATS-ready. You customize colour, layout and content yourself. The library keeps growing, so applicants can always pick a fresh look that fits.',
         },
-      },
-      video: {
-        src: `${CP}/CareerPulse Vid.mp4`,
-        title: { nl: 'Platform demo', en: 'Platform demo' },
-        body: {
-          nl: 'Walkthrough door CareerPulse: van homepage tot CV-studio, templates en vacaturezoeker.',
-          en: 'Walkthrough of CareerPulse: from homepage to CV studio, templates and job search.',
-        },
-        caption: { nl: 'Bekijk CareerPulse in actie', en: 'See CareerPulse in action' },
       },
       imageGroups: [
         {
-          id: 'ai-tools',
-          title: { nl: 'AI Tools', en: 'AI Tools' },
+          id: 'cv-maker',
+          title: { nl: 'CV Maker & Studio', en: 'CV Maker & Studio' },
           body: {
-            nl: 'Drie tools, één flow. CV builder, motivatiebrief-generator en AI-interviewkloon. Gratis starten, professionele output, klaar om te delen met recruiters.',
-            en: 'Three tools, one flow. CV builder, cover letter generator and AI interview clone. Start for free, professional output, ready to share with recruiters.',
+            nl: 'Van wizard tot live preview. Upload je oude CV of begin leeg, vul je gegevens in en zie meteen hoe 20 customizable templates eruitzien. Download direct als PDF, zonder betaalstap.',
+            en: 'From wizard to live preview. Upload your old CV or start blank, fill in your details and instantly see how 20 customizable templates look. Download straight as PDF, with no payment step.',
           },
           images: [
-            { src: `${CP}/Screenshot 2026-06-30 at 17.13.17.png`, alt: 'Drie AI-tools en live CV studio' },
-            { src: `${CP}/Screenshot 2026-06-30 at 17.14.30.png`, alt: 'Registratie en onboarding flow' },
+            { src: `${CP}/Screenshot 2026-09-22 at 14.33.08.png`, alt: 'CareerPulse CV-wizard' },
+            { src: `${CP}/Screenshot 2026-09-22 at 14.34.38.png`, alt: 'CareerPulse live CV studio' },
           ],
         },
         {
-          id: 'platform',
-          title: { nl: 'Platform & Vacatures', en: 'Platform & Jobs' },
+          id: 'apply',
+          title: { nl: 'Motivatiebrief & Vacatures', en: 'Cover letter & Jobs' },
           body: {
-            nl: 'Template-galerij, dashboard en vacaturezoeker met AI-match. Solliciteer sneller met CV en motivatiebrief afgestemd op elke vacature.',
-            en: 'Template gallery, dashboard and job search with AI matching. Apply faster with CV and cover letter tailored to every vacancy.',
+            nl: 'Schrijf een AI-motivatiebrief in jouw toon, afgestemd op de vacature. Browse actuele functies, stem je CV af en open daarna de originele listing om te solliciteren.',
+            en: 'Write an AI cover letter in your own voice, tailored to the vacancy. Browse current roles, tailor your CV, then open the original listing to apply.',
           },
           images: [
-            { src: `${CP}/Screenshot 2026-06-30 at 18.50.26.png`, alt: 'CV-template dashboard' },
-            { src: `${CP}/Screenshot 2026-06-30 at 18.53.19.png`, alt: 'Vacatureoverzicht met AI-acties' },
-            { src: `${CP}/Screenshot 2026-06-30 at 17.13.46.png`, alt: 'Use cases en recruiter portal' },
+            { src: `${CP}/Screenshot 2026-09-22 at 14.35.39.png`, alt: 'CareerPulse motivatiebrief-generator' },
+            { src: `${CP}/Screenshot 2026-09-22 at 14.35.10.png`, alt: 'CareerPulse vacaturepagina' },
+          ],
+        },
+        {
+          id: 'ops',
+          title: { nl: 'Beheer & inzicht', en: 'Ops & insights' },
+          body: {
+            nl: 'Voor de beheerder: een stats-pagina om te zien hoe het platform loopt. Gebruik, downloads en groei in één overzicht, zodat CareerPulse kan blijven verbeteren.',
+            en: 'For admins: a stats page to see how the platform is performing. Usage, downloads and growth in one view, so CareerPulse can keep improving.',
+          },
+          images: [
+            { src: `${CP}/Screenshot 2026-09-22 at 14.37.28.png`, alt: 'CareerPulse stats-pagina voor beheerders' },
           ],
         },
       ],
       stack: ['Nuxt', 'Vue 3', 'TypeScript', 'AI', 'ImageKit', 'Vercel'],
     },
     gallery: [
-      { src: `${CP}/Screenshot 2026-06-30 at 17.14.30.png`, alt: 'Account aanmaken', layout: 'full', fit: 'contain' },
-      { src: `${CP}/Screenshot 2026-06-30 at 17.13.46.png`, alt: 'Use cases en recruiters', layout: 'full', fit: 'contain' },
-      { src: `${CP}/Screenshot 2026-06-30 at 18.50.26.png`, alt: 'Template-galerij', layout: 'full', fit: 'contain' },
+      { src: `${CP}/Screenshot 2026-09-22 at 14.32.37.png`, alt: 'Homepage', layout: 'full', fit: 'contain' },
+      { src: `${CP}/Screenshot 2026-09-22 at 14.33.08.png`, alt: 'CV-wizard', layout: 'full', fit: 'contain' },
+      { src: `${CP}/Screenshot 2026-09-22 at 14.34.38.png`, alt: 'CV-studio', layout: 'full', fit: 'contain' },
+      { src: `${CP}/Screenshot 2026-09-22 at 14.35.10.png`, alt: 'Vacaturepagina', layout: 'full', fit: 'contain' },
+      { src: `${CP}/Screenshot 2026-09-22 at 14.35.39.png`, alt: 'Motivatiebrief-generator', layout: 'full', fit: 'contain' },
+      { src: `${CP}/Screenshot 2026-09-22 at 14.37.28.png`, alt: 'Stats-pagina', layout: 'full', fit: 'contain' },
     ],
     liveUrl: 'https://careerpulse.nl',
     featured: true,

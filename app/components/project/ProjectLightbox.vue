@@ -98,12 +98,14 @@ onUnmounted(() => {
             @after-enter="isTransitioning = false"
           >
             <figure v-if="activeImage" :key="current" class="lightbox__figure">
-              <img
-                :src="activeImage.url"
-                :alt="activeImage.alt"
-                class="lightbox__img"
-                draggable="false"
-              >
+              <div class="lightbox__clip">
+                <img
+                  :src="activeImage.url"
+                  :alt="activeImage.alt"
+                  class="lightbox__img"
+                  draggable="false"
+                >
+              </div>
               <figcaption class="lightbox__caption">
                 {{ activeImage.alt }}
               </figcaption>
@@ -145,6 +147,7 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   pointer-events: none;
+  cursor: auto;
 
   &__backdrop {
     position: absolute;
@@ -181,7 +184,7 @@ onUnmounted(() => {
     background: none;
     border: none;
     pointer-events: auto;
-    cursor: none;
+    cursor: pointer;
 
     &-line {
       position: absolute;
@@ -216,7 +219,7 @@ onUnmounted(() => {
     justify-content: center;
     padding: 0 clamp(12px, 3vw, 32px) clamp(24px, 5vw, 48px);
     pointer-events: auto;
-    cursor: none;
+    cursor: default;
     min-height: 0;
   }
 
@@ -238,6 +241,19 @@ onUnmounted(() => {
     align-items: center;
   }
 
+  &__clip {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    max-width: min(1200px, 94vw);
+    max-height: calc(100vh - 160px);
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    background: $color-bg;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+    line-height: 0;
+  }
+
   &__img {
     display: block;
     max-width: 100%;
@@ -245,9 +261,9 @@ onUnmounted(() => {
     width: auto;
     height: auto;
     object-fit: contain;
-    border: 1px solid $color-border;
-    background: $color-bg-alt;
-    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    transform: scale(1.024);
+    transform-origin: center center;
   }
 
   &__caption {
@@ -261,12 +277,13 @@ onUnmounted(() => {
 
   &__zone {
     position: absolute;
+    z-index: 3;
     top: 0;
     bottom: 0;
     width: 22%;
     background: none;
     border: none;
-    cursor: none;
+    cursor: pointer;
     opacity: 0;
     transition: opacity $dur-fast $ease-gold;
 

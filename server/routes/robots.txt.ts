@@ -8,6 +8,7 @@ export default defineEventHandler((event) => {
 Allow: /
 
 Disallow: /api/
+Disallow: /stats
 Disallow: /_nuxt/
 
 User-agent: GPTBot

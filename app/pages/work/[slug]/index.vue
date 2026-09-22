@@ -244,18 +244,16 @@ onMounted(async () => {
                   </div>
                 </div>
 
-                <div v-if="project.liveUrl" class="project-info__meta-item">
-                  <span class="label">{{ projectI18n.t('live') }}</span>
-                  <a
-                    :href="project.liveUrl"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="link-arrow"
-                  >
-                    {{ projectI18n.t('viewSite') }}
-                    <span class="arrow-icon">↗</span>
-                  </a>
-                </div>
+                <a
+                  v-if="project.liveUrl"
+                  :href="project.liveUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="project-live-cta"
+                >
+                  {{ projectI18n.t('viewSite') }}
+                  <span class="project-live-cta__arrow" aria-hidden="true">↗</span>
+                </a>
               </div>
             </div>
           </div>

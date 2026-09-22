@@ -46,7 +46,9 @@ withDefaults(defineProps<{
 
   &__img {
     display: block;
-    transform: scale(1.012);
+    // Past the window radius, so the desktop sliver in Chrome's rounded
+    // corners is clipped and the frame edge is a clean rectangle.
+    transform: scale(1.024);
     transform-origin: center center;
   }
 

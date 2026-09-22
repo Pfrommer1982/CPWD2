@@ -96,5 +96,6 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 502, statusMessage: 'Sending failed' })
   }
 
+  await recordSiteEvent('estimate').catch(() => undefined)
   return { success: true }
 })

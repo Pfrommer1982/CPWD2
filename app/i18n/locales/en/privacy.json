@@ -3,9 +3,9 @@
     "label": "PRIVACY",
     "badge": "GDPR",
     "heading": "Privacy policy",
-    "intro": "CPWD.nl is an informational website. We do not store visitor data in a database and we have no user accounts. This policy explains what minimal processing does take place.",
+    "intro": "CPWD.nl is an informational website. We do not keep visitor profiles and we have no user accounts. This policy explains what minimal processing does take place.",
     "updatedLabel": "Last updated",
-    "updatedDate": "25 August 2026",
+    "updatedDate": "22 September 2026",
     "navLabel": "Contents",
     "rightsTitle": "Your rights",
     "rightsIntro": "Even with minimal processing you have rights under the GDPR. Questions? Email info{'@'}cpwd.nl.",
@@ -15,9 +15,9 @@
     "authorityBody": "If you disagree with how we handle your request, you may lodge a complaint with the Dutch Data Protection Authority (autoriteitpersoonsgegevens.nl).",
     "encrypt": {
       "label": "End-to-end flow",
-      "plain": "CPWD does not store visitor data",
-      "status": "NO DATABASE STORAGE",
-      "tags": ["TLS 1.3", "AES-256", "ZERO PERSIST"]
+      "plain": "No personal dossiers",
+      "status": "ANONYMOUS TOTALS ONLY",
+      "tags": ["TLS 1.3", "AES-256", "NO IP LOG"]
     },
     "sections": [
       {
@@ -33,7 +33,7 @@
         "title": "No storage",
         "paragraphs": [
           "This website is informational. We do not maintain a database of visitor profiles, accounts or newsletters.",
-          "Visits to cpwd.nl are not linked to a personal dossier on our servers."
+          "Visits to cpwd.nl are not linked to a personal dossier. We do keep anonymous totals: which pages are viewed, on which day, and from which country. No IP address, no name and no message content."
         ]
       },
       {
@@ -62,11 +62,20 @@
         ]
       },
       {
+        "id": "stats",
+        "title": "Anonymous totals",
+        "paragraphs": [
+          "For an internal statistics page we count page views, contact requests, planner requests and scans. By day, by page and by country.",
+          "Those totals contain no IP address, no name, no email and no message content. The page is not public and is not in the navigation."
+        ]
+      },
+      {
         "id": "cookies",
         "title": "Cookies and local storage",
         "paragraphs": [
           "We only use functional cookies and local browser storage, for example for language preference and to skip the original loading animation after a first visit.",
-          "No tracking or advertising cookies. You can manage cookies in your browser."
+          "No tracking or advertising cookies. You can manage cookies in your browser.",
+          "The private statistics page sets one functional session cookie after a successful login. A normal visit does not set it."
         ]
       },
       {

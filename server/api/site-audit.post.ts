@@ -76,6 +76,7 @@ export default defineEventHandler(async (event): Promise<SiteAuditResponse> => {
 
   if (allowMock) {
     await new Promise(resolve => setTimeout(resolve, 900))
+    await recordSiteEvent('scan').catch(() => undefined)
     return {
       ok: true,
       result: createMockSiteAuditResult(validated.url, locale),
@@ -132,6 +133,8 @@ export default defineEventHandler(async (event): Promise<SiteAuditResponse> => {
       data: { code: 'incomplete' },
     })
   }
+
+  await recordSiteEvent('scan').catch(() => undefined)
 
   return {
     ok: true,

@@ -34,6 +34,18 @@ export default defineNuxtConfig({
     '/home': { redirect: { to: '/', statusCode: 301 } },
     '/work/career-pulse': { redirect: { to: '/work/careerpulse', statusCode: 301 } },
     '/website-check': { redirect: { to: '/website-scanner', statusCode: 301 } },
+    '/stats': {
+      headers: {
+        'cache-control': 'private, no-store',
+        'x-robots-tag': 'noindex, nofollow',
+      },
+    },
+    '/api/stats/**': {
+      headers: {
+        'cache-control': 'private, no-store',
+        'x-robots-tag': 'noindex, nofollow',
+      },
+    },
   },
 
   vite: {
@@ -89,6 +101,8 @@ export default defineNuxtConfig({
     imagekitPrivateKey: process.env.IMAGEKIT_PRIVATE_KEY,
     imagekitPublicKey: process.env.IMAGEKIT_PUBLIC_KEY,
     resendApiKey: process.env.RESEND_API_KEY,
+    statsPassword: process.env.STATS_PASSWORD || '',
+    blobReadWriteToken: process.env.BLOB_READ_WRITE_TOKEN || '',
     contactToEmail: process.env.CONTACT_TO_EMAIL || 'info@cpwd.nl',
     contactFromEmail: process.env.CONTACT_FROM_EMAIL || 'CPWD Contact <noreply@cpwd.nl>',
     googlePagespeedApiKey: process.env.GOOGLE_PAGESPEED_API_KEY || '',

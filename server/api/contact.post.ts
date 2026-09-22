@@ -90,6 +90,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 502, statusMessage: 'Verzenden mislukt. Probeer het later opnieuw.' })
   }
 
+  await recordSiteEvent('contact').catch(() => undefined)
   return { success: true }
 })
 

@@ -3,9 +3,9 @@
     "label": "PRIVACY",
     "badge": "AVG / GDPR",
     "heading": "Privacybeleid",
-    "intro": "CPWD.nl is een informatieve website. Wij slaan geen bezoekersgegevens op in een database en hebben geen gebruikersaccounts. Dit beleid legt uit welke minimale gegevensverwerking wél plaatsvindt.",
+    "intro": "CPWD.nl is een informatieve website. Wij bewaren geen bezoekersprofielen en hebben geen gebruikersaccounts. Dit beleid legt uit welke minimale gegevensverwerking wél plaatsvindt.",
     "updatedLabel": "Laatst bijgewerkt",
-    "updatedDate": "25 augustus 2026",
+    "updatedDate": "22 september 2026",
     "navLabel": "Inhoud",
     "rightsTitle": "Jouw rechten",
     "rightsIntro": "Ook bij minimale verwerking heb je rechten onder de AVG. Vragen? Mail naar info{'@'}cpwd.nl.",
@@ -15,9 +15,9 @@
     "authorityBody": "Ben je het niet eens met onze afhandeling? Je kunt een klacht indienen bij de Autoriteit Persoonsgegevens (autoriteitpersoonsgegevens.nl).",
     "encrypt": {
       "label": "End-to-end flow",
-      "plain": "CPWD slaat geen bezoekersdata op",
-      "status": "GEEN DATABASE OPSLAG",
-      "tags": ["TLS 1.3", "AES-256", "ZERO PERSIST"]
+      "plain": "Geen persoonsdossiers",
+      "status": "ALLEEN ANONIEME TOTALEN",
+      "tags": ["TLS 1.3", "AES-256", "GEEN IP-LOG"]
     },
     "sections": [
       {
@@ -33,7 +33,7 @@
         "title": "Geen opslag",
         "paragraphs": [
           "Deze website is informatief. Wij onderhouden geen database met bezoekersprofielen, accounts of nieuwsbrieven.",
-          "Bezoeken aan cpwd.nl worden niet gekoppeld aan een persoonlijk dossier op onze servers."
+          "Bezoeken aan cpwd.nl worden niet gekoppeld aan een persoonlijk dossier. Wel houden we anonieme totalen bij: welke pagina's worden bekeken, op welke dag, en uit welk land. Geen IP-adres, geen naam en geen berichtinhoud."
         ]
       },
       {
@@ -62,11 +62,20 @@
         ]
       },
       {
+        "id": "stats",
+        "title": "Anonieme totalen",
+        "paragraphs": [
+          "Voor een interne statistiekpagina tellen we paginaweergaven, contactaanvragen, planner-aanvragen en scans. Per dag, per pagina en per land.",
+          "Die totalen bevatten geen IP-adres, geen naam, geen e-mail en geen inhoud van berichten. De pagina is niet openbaar en staat niet in de navigatie."
+        ]
+      },
+      {
         "id": "cookies",
         "title": "Cookies en lokale opslag",
         "paragraphs": [
           "Wij gebruiken uitsluitend functionele cookies en lokale browseropslag, bijvoorbeeld voor taalkeuze en om de oorspronkelijke laadanimatie na een eerste bezoek over te slaan.",
-          "Geen tracking- of advertentiecookies. Je kunt cookies beheren via je browser."
+          "Geen tracking- of advertentiecookies. Je kunt cookies beheren via je browser.",
+          "De afgeschermde statistiekpagina zet na een geslaagde login één functionele sessiecookie. Die wordt niet geplaatst bij een gewoon bezoek."
         ]
       },
       {

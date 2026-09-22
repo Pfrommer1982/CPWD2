@@ -28,18 +28,18 @@ const introText = computed(() =>
 
 const videoTitle = computed(() => {
   const video = props.showcase.video
-  if (video.title) return locale.value === 'nl' ? video.title.nl : video.title.en
+  if (video?.title) return locale.value === 'nl' ? video.title.nl : video.title.en
   return locale.value === 'nl' ? props.showcase.custom.title.nl : props.showcase.custom.title.en
 })
 
 const videoBody = computed(() => {
   const video = props.showcase.video
-  if (video.body) return locale.value === 'nl' ? video.body.nl : video.body.en
+  if (video?.body) return locale.value === 'nl' ? video.body.nl : video.body.en
   return locale.value === 'nl' ? props.showcase.custom.body.nl : props.showcase.custom.body.en
 })
 
 const videoCaption = computed(() => {
-  const caption = props.showcase.video.caption
+  const caption = props.showcase.video?.caption
   if (!caption) return undefined
   return locale.value === 'nl' ? caption.nl : caption.en
 })
@@ -191,7 +191,7 @@ onMounted(async () => {
   <div
     ref="pageRef"
     class="showcase"
-    :class="{ 'showcase--accurate-black': project.slug === 'accurate-black' }"
+    :class="{ 'showcase--soft-hero': project.slug === 'accurate-black' || project.slug === 'careerpulse' }"
     :style="{ '--project-accent': project.accentColor }"
   >
     <section class="showcase-hero" data-page-hero>
@@ -231,7 +231,7 @@ onMounted(async () => {
       </div>
     </section>
 
-    <section class="showcase-video showcase-video--hero section">
+    <section v-if="showcase.video" class="showcase-video showcase-video--hero section">
       <div class="container showcase-video__head-wrap">
         <div class="showcase-video__head">
           <span class="section-label">{{ videoTitle }}</span>
@@ -285,19 +285,18 @@ onMounted(async () => {
             />
           </div>
 
-          <div v-if="project.liveUrl" class="showcase-overview__col overview-reveal">
-            <span class="label showcase-overview__key">• {{ projectI18n.t('live') }}</span>
-            <a
-              :href="project.liveUrl"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="link-arrow showcase-overview__link"
-            >
-              {{ projectI18n.t('viewSite') }}
-              <span class="arrow-icon">↗</span>
-            </a>
-          </div>
         </div>
+
+        <a
+          v-if="project.liveUrl"
+          :href="project.liveUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="project-live-cta overview-reveal"
+        >
+          {{ projectI18n.t('viewSite') }}
+          <span class="project-live-cta__arrow" aria-hidden="true">↗</span>
+        </a>
       </div>
     </section>
 
@@ -508,8 +507,8 @@ onMounted(async () => {
   }
 }
 
-// Soften in-image type so page tagline/meta stay readable (Accurate Black only).
-.showcase--accurate-black {
+// Soften in-image type so the hero title stays readable over a busy screenshot.
+.showcase--soft-hero {
   .showcase-hero__img {
     filter: blur(4px) brightness(0.68);
     transform: scale(1.06);
@@ -585,9 +584,6 @@ onMounted(async () => {
     color: $color-text;
   }
 
-  &__link {
-    margin-top: $space-1;
-  }
 }
 
 .showcase-devices {
@@ -653,13 +649,12 @@ onMounted(async () => {
     }
 
     :deep(.project-shot__img) {
-      transform: none;
       transition: transform $dur-slow $ease-gold;
     }
   }
 
   &:hover :deep(.project-shot__img) {
-    transform: scale(1.03);
+    transform: scale(1.06);
   }
 
   &__label {

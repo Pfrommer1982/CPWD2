@@ -87,7 +87,7 @@ function openLightbox(index: number) {
       }
 
       :deep(.project-shot__img) {
-        transform: scale(1.04);
+        transform: scale(1.06);
       }
 
       .image-grid__overlay {
