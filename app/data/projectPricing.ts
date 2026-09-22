@@ -13,36 +13,36 @@ import type {
 export const PROJECT_PRICING = {
   currency: 'EUR',
   maxPages: 20,
-  pagePrice: 85,
-  hostingYearly: 50,
+  pagePrice: 60,
+  hostingYearly: 35,
 
   types: {
     'one-page': {
-      base: 250,
+      base: 175,
       includedPages: 1,
       usesPages: false,
       complexityBase: 1,
     },
     business: {
-      base: 450,
+      base: 325,
       includedPages: 3,
       usesPages: true,
       complexityBase: 2,
     },
     portfolio: {
-      base: 350,
+      base: 250,
       includedPages: 3,
       usesPages: true,
       complexityBase: 2,
     },
     webshop: {
-      base: 750,
+      base: 500,
       includedPages: 5,
       usesPages: true,
       complexityBase: 4,
     },
     webapp: {
-      base: 900,
+      base: 625,
       includedPages: 0,
       usesPages: false,
       complexityBase: 5,
@@ -54,37 +54,37 @@ export const PROJECT_PRICING = {
 
   design: {
     clean: { price: 0, complexity: 0 },
-    custom: { price: 175, complexity: 1 },
-    showcase: { price: 350, complexity: 2 },
+    custom: { price: 125, complexity: 1 },
+    showcase: { price: 250, complexity: 2 },
   } satisfies Record<DesignLevelId, { price: number; complexity: number }>,
 
   features: {
-    'contact-form': { price: 50, complexity: 0, custom: false },
-    cms: { price: 150, complexity: 1, custom: false },
-    blog: { price: 100, complexity: 1, custom: false },
-    multilingual: { price: 125, complexity: 1, custom: false },
-    maps: { price: 35, complexity: 0, custom: false },
-    newsletter: { price: 50, complexity: 0, custom: false },
-    social: { price: 35, complexity: 0, custom: false },
-    analytics: { price: 50, complexity: 0, custom: false },
-    'advanced-animations': { price: 125, complexity: 1, custom: false },
-    api: { price: 175, complexity: 2, custom: true },
-    accounts: { price: 250, complexity: 2, custom: true },
-    dashboard: { price: 300, complexity: 3, custom: true },
-    ai: { price: 200, complexity: 2, custom: true },
-    payments: { price: 250, complexity: 2, custom: true },
-    booking: { price: 250, complexity: 2, custom: true },
+    'contact-form': { price: 35, complexity: 0, custom: false },
+    cms: { price: 100, complexity: 1, custom: false },
+    blog: { price: 75, complexity: 1, custom: false },
+    multilingual: { price: 90, complexity: 1, custom: false },
+    maps: { price: 25, complexity: 0, custom: false },
+    newsletter: { price: 35, complexity: 0, custom: false },
+    social: { price: 25, complexity: 0, custom: false },
+    analytics: { price: 35, complexity: 0, custom: false },
+    'advanced-animations': { price: 90, complexity: 1, custom: false },
+    api: { price: 125, complexity: 2, custom: true },
+    accounts: { price: 175, complexity: 2, custom: true },
+    dashboard: { price: 200, complexity: 3, custom: true },
+    ai: { price: 150, complexity: 2, custom: true },
+    payments: { price: 175, complexity: 2, custom: true },
+    booking: { price: 175, complexity: 2, custom: true },
   } satisfies Record<FeatureId, { price: number; complexity: number; custom: boolean }>,
 
   content: {
     self: { price: 0, complexity: 0 },
-    polish: { price: 75, complexity: 0 },
-    full: { price: 175, complexity: 1 },
+    polish: { price: 50, complexity: 0 },
+    full: { price: 125, complexity: 1 },
   } satisfies Record<ContentOptionId, { price: number; complexity: number }>,
 
   hosting: {
     self: 0,
-    cpwd: 50,
+    cpwd: 35,
   } satisfies Record<HostingOptionId, number>,
 
   /** Features that push the estimate into intake territory when several are selected. */

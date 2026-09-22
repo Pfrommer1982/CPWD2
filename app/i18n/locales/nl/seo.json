@@ -1,44 +1,44 @@
 {
   "seo": {
     "home": {
-      "title": "CPWD",
-      "description": "CPWD is een webdevelopment-bureau uit Nederland. Maatwerk websites, webapps en cloud hosting. Webdesign, development en online lancering."
+      "title": "Website laten maken in Nederland",
+      "description": "CPWD bouwt maatwerk websites en webapps vanuit Nederland. One-page vanaf €175, bedrijfssite vanaf €325. Vrijblijvende prijsindicatie in de planner."
     },
     "about": {
-      "title": "Over",
-      "description": "CPWD is een webdevelopment-bureau uit Nederland. Maatwerk websites, webapps en cloud hosting. Ontmoet het team en bekijk onze expertise."
+      "title": "Webdevelopment bureau Nederland",
+      "description": "CPWD is een webdevelopment-bureau in Nederland. Maatwerk websites, webapps en hosting, van briefing tot livegang."
     },
     "work": {
-      "title": "Werk",
-      "description": "Geselecteerde projecten van CPWD: maatwerk websites en webapps voor merken die online willen domineren. Webdevelopment uit Nederland."
+      "title": "Portfolio webdesign",
+      "description": "Portfolio van CPWD: maatwerk websites en webapps, waaronder CareerPulse en Accurate Black. Webdesign en development uit Nederland."
     },
     "services": {
-      "title": "Diensten",
-      "description": "Webdesign, webdevelopment, cloud hosting, motion en sound design. CPWD levert het complete traject van briefing tot livegang in Nederland en daarbuiten."
+      "title": "Webdesign en webdevelopment",
+      "description": "Webdesign, webdevelopment, hosting, motion en sound bij CPWD. Eén bureau in Nederland, van briefing tot een live maatwerk website."
     },
     "contact": {
-      "title": "Contact",
-      "description": "Neem contact op met CPWD voor je volgende website- of webapp-project. Webdevelopment-bureau uit Nederland. Persoonlijk antwoord binnen 24 uur op werkdagen."
+      "title": "Contact, website laten maken",
+      "description": "Website laten maken bij CPWD? Mail info{'@'}cpwd.nl. Webdevelopment-bureau in Nederland, persoonlijk antwoord binnen 24 uur op werkdagen."
     },
     "faq": {
-      "title": "Kennisbank & veelgestelde vragen",
-      "description": "Antwoorden op veelgestelde vragen over websites laten maken: prijzen, proces, techniek, SEO en onderhoud. De complete kennisbank van webdevelopment-bureau CPWD."
+      "title": "Kennisbank website laten maken",
+      "description": "Antwoorden over een website laten maken: prijzen, doorlooptijd, techniek, SEO en onderhoud. De kennisbank van webdevelopment-bureau CPWD."
     },
     "websiteScanner": {
-      "title": "Website scanner",
-      "description": "Scan snelheid, SEO, toegankelijkheid en technische kwaliteit van je website. CPWD vertaalt Lighthouse-data naar duidelijke, menselijke inzichten."
+      "title": "Gratis website scan",
+      "description": "Gratis scan van snelheid, SEO, toegankelijkheid en techniek. CPWD zet de meting om in een helder rapport over je website."
     },
     "projectEstimator": {
-      "title": "Website planner",
-      "description": "Beantwoord eenvoudige vragen over je bedrijf en krijg direct een helder websitevoorstel met vrijblijvende prijsindicatie."
+      "title": "Prijsindicatie voor je website",
+      "description": "Wat kost een website? Beantwoord een paar vragen en krijg direct een vrijblijvende prijsindicatie voor een maatwerk site van CPWD."
     },
     "privacy": {
       "title": "Privacybeleid",
-      "description": "Privacybeleid van CPWD. Lees welke persoonsgegevens wij verwerken, waarom, en welke rechten je hebt onder de AVG/GDPR."
+      "description": "Privacybeleid van CPWD. Welke gegevens we verwerken, waarom, en welke rechten je hebt onder de AVG."
     },
     "terms": {
       "title": "Algemene voorwaarden",
-      "description": "Algemene voorwaarden van CPWD voor webdesign, webdevelopment en gerelateerde diensten."
+      "description": "Algemene voorwaarden van CPWD voor webdesign, webdevelopment, hosting en gerelateerde diensten."
     }
   }
 }

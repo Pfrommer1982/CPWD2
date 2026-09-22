@@ -15,7 +15,7 @@ const schema = computed(() => ({
   image: imageKit.hero(props.project.heroImage),
   creator: {
     '@type': 'Person',
-    name: 'Christoph Pfrommer',
+    name: 'Christoph',
     url: siteUrl,
   },
   publisher: {

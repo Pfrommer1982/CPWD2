@@ -1,0 +1,33 @@
+{
+  "answers": {
+    "label": "FACTS",
+    "heading": "A custom website, stated plainly.",
+    "intro": "CPWD is a web development studio in the Netherlands. We design and build bespoke websites and web apps, from brief to launch and hosting.",
+    "items": {
+      "what": {
+        "q": "What does CPWD do?",
+        "a": "We build bespoke websites, web apps and the hosting around them. No templates. Design, development and launch sit in one engagement.",
+        "more": "More about the approach",
+        "href": "/faq/wat-doet-cpwd"
+      },
+      "price": {
+        "q": "What does a website cost?",
+        "a": "A one-page site starts at €{onePage}. A portfolio at €{portfolio}. A business site at €{business}. A webshop at €{webshop}. A web app at €{webapp}. Hosting with CPWD is €{hosting} per year. Extra pages and options sit on top. The planner gives a no-obligation indication. The quote after that is a fixed price.",
+        "more": "Open the planner",
+        "href": "/project-estimator"
+      },
+      "time": {
+        "q": "How long does it take?",
+        "a": "A compact site is often live within a few weeks. A webshop or web app takes longer, depending on content and integrations.",
+        "more": "See the timeline",
+        "href": "/faq/hoe-lang-duurt-website"
+      },
+      "where": {
+        "q": "Where do you work?",
+        "a": "From the Netherlands, in Dutch and English, for clients here and abroad. Contact runs through info{'@'}cpwd.nl.",
+        "more": "Send a message",
+        "href": "/contact"
+      }
+    }
+  }
+}

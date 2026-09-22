@@ -11,23 +11,8 @@ Disallow: /api/
 Disallow: /stats
 Disallow: /_nuxt/
 
-User-agent: GPTBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
+# Public pages may be read by search engines and AI answer engines.
+# Machine-readable summary: ${siteUrl}/llms.txt
 
 Sitemap: ${siteUrl}/sitemap.xml
 `

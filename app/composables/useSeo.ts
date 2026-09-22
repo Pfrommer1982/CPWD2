@@ -67,11 +67,12 @@ export function useSeo(options: MaybeRefOrGetter<SeoOptions>) {
       htmlAttrs: { lang: locale.value },
       link: [
         { rel: 'canonical', href: canonical },
+        { rel: 'alternate', type: 'text/plain', href: `${siteUrl}/llms.txt`, title: 'LLMs.txt' },
       ],
       meta: [
         { name: 'description', content: opts.description },
         { name: 'robots', content: robots },
-        { name: 'author', content: 'Christoph Pfrommer' },
+        { name: 'author', content: 'Christoph' },
         { name: 'publisher', content: brand },
         { name: 'theme-color', content: COMMS_HEX },
         { name: 'geo.region', content: 'NL' },

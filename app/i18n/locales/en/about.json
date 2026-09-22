@@ -52,20 +52,20 @@
       },
       "operator": {
         "code": "01",
-        "label": "FOUNDER",
-        "heading": "Christoph Pfrommer",
+        "label": "PROFILE",
+        "heading": "Christoph",
         "role": "Lead Developer // CPWD",
         "feedConnecting": "Connecting",
         "feedDownloading": "Loading profile",
         "feedLive": "Online",
-        "bio": "Founder of CPWD. Builds sharp websites and web apps for brands that want to dominate online. Four times AWS certified. Based in the Netherlands, working with clients at home and abroad.",
+        "bio": "Builds sharp websites and web apps for brands that want to stand out online. Four times AWS certified. Based in the Netherlands, working with clients at home and abroad.",
         "fields": [
           { "key": "LOC", "value": "The Netherlands" },
           { "key": "STATUS", "value": "Available for projects" },
           { "key": "FOCUS", "value": "Websites · Web apps · Cloud" },
           { "key": "COMMS", "value": "info{'@'}cpwd.nl" }
         ],
-        "github": "github.com/Pfrommer1982"
+        "github": "GitHub"
       },
       "mission": {
         "code": "02",

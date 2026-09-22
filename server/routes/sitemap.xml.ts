@@ -101,7 +101,7 @@ export default defineEventHandler((event) => {
     },
     {
       path: '/project-estimator',
-      priority: '0.85',
+      priority: '0.9',
       changefreq: 'monthly',
       lastmod: getLastModified('app/pages/project-estimator.vue', 'app/data/projectPricing.ts'),
     },
@@ -119,9 +119,16 @@ export default defineEventHandler((event) => {
     },
   ]
 
+  const faqPriority: Record<string, string> = {
+    'wat-kost-een-website': '0.8',
+    'wat-doet-cpwd': '0.75',
+    'hoe-lang-duurt-website': '0.7',
+    'gevonden-worden-ai': '0.7',
+  }
+
   const faqPages: SitemapUrl[] = knowledgeArticles.map((article) => ({
     path: `/faq/${article.slug}`,
-    priority: '0.6',
+    priority: faqPriority[article.slug] ?? '0.6',
     changefreq: 'monthly',
     lastmod: toIsoDate(new Date(article.updated)),
   }))

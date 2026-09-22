@@ -1,3 +1,14 @@
+import { PROJECT_PRICING } from './projectPricing'
+
+const startPrice = {
+  onePage: PROJECT_PRICING.types['one-page'].base,
+  portfolio: PROJECT_PRICING.types.portfolio.base,
+  business: PROJECT_PRICING.types.business.base,
+  webshop: PROJECT_PRICING.types.webshop.base,
+  webapp: PROJECT_PRICING.types.webapp.base,
+  hosting: PROJECT_PRICING.hosting.cpwd,
+}
+
 export interface LocaleText {
   nl: string
   en: string
@@ -292,23 +303,23 @@ export const knowledgeArticles: KnowledgeArticle[] = [
     slug: 'wat-kost-een-website',
     categoryId: 'pricing',
     order: 1,
-    updated: '2026-07-08',
-    keywords: ['wat kost een website', 'prijs website laten maken', 'kosten webdesign'],
+    updated: '2026-09-22',
+    keywords: ['wat kost een website', 'prijs website laten maken', 'kosten webdesign', 'website laten maken prijs'],
     related: ['hoe-werkt-offerte', 'betaalafspraken', 'maatwerk-of-template'],
     question: {
       nl: 'Wat kost een website bij CPWD?',
       en: 'What does a website cost at CPWD?',
     },
     answer: {
-      nl: 'Elke prijs is maatwerk en hangt af van omvang en complexiteit. Na een kort gesprek krijg je een heldere offerte met vaste prijs, zonder verrassingen achteraf.',
-      en: 'Every price is bespoke and depends on scope and complexity. After a short call you get a clear fixed-price quote, with no surprises afterwards.',
+      nl: `Een one-page begint bij €${startPrice.onePage}, een portfolio bij €${startPrice.portfolio}, een bedrijfssite bij €${startPrice.business}, een webshop bij €${startPrice.webshop} en een webapp bij €${startPrice.webapp}. Hosting via CPWD is €${startPrice.hosting} per jaar. Dat zijn startprijzen. Extra pagina's en opties komen erbij. Daarna krijg je een vaste, vrijblijvende offerte.`,
+      en: `A one-page site starts at €${startPrice.onePage}, a portfolio at €${startPrice.portfolio}, a business site at €${startPrice.business}, a webshop at €${startPrice.webshop} and a web app at €${startPrice.webapp}. Hosting with CPWD is €${startPrice.hosting} per year. Those are starting prices. Extra pages and options sit on top. After that you get a fixed, no-obligation quote.`,
     },
     body: [
       {
         type: 'paragraph',
         content: {
-          nl: 'Een simpele one-pager kost minder dan een uitgebreid merkplatform of een webapp met accounts en een database. Daarom werken we niet met vaste pakketten, maar met een offerte op basis van jouw wensen.',
-          en: 'A simple one-pager costs less than an extensive brand platform or a web app with accounts and a database. That is why we do not use fixed packages, but a quote based on your needs.',
+          nl: 'De bedragen hierboven zijn startprijzen uit de website planner op cpwd.nl/project-estimator. Een one-pager kost minder dan een webapp met accounts en een database. De planner telt pagina\'s en opties mee. De offerte daarna is een vaste prijs.',
+          en: 'The amounts above are starting prices from the website planner at cpwd.nl/project-estimator. A one-pager costs less than a web app with accounts and a database. The planner adds pages and options. The quote after that is a fixed price.',
         },
       },
       {
@@ -729,6 +740,7 @@ export const knowledgeArticles: KnowledgeArticle[] = [
             'Structured data (schema.org) voor rijke resultaten',
             'Automatische sitemap.xml en robots.txt',
             'Snelle laadtijd en mobiel-first opbouw',
+            'Een llms.txt zodat AI-antwoordmachines je diensten kunnen citeren',
           ],
           en: [
             'Unique titles and meta descriptions per page',
@@ -736,6 +748,7 @@ export const knowledgeArticles: KnowledgeArticle[] = [
             'Structured data (schema.org) for rich results',
             'Automatic sitemap.xml and robots.txt',
             'Fast load time and mobile-first build',
+            'An llms.txt so AI answer engines can cite your services',
           ],
         },
       },
@@ -745,8 +758,8 @@ export const knowledgeArticles: KnowledgeArticle[] = [
     slug: 'gevonden-worden-ai',
     categoryId: 'seo',
     order: 3,
-    updated: '2026-07-08',
-    keywords: ['ai zoekmachines', 'chatgpt vindbaarheid', 'geo generative engine optimization'],
+    updated: '2026-09-22',
+    keywords: ['ai zoekmachines', 'chatgpt vindbaarheid', 'geo generative engine optimization', 'llms.txt'],
     related: ['wat-is-seo-standaard', 'hoe-scoort-mijn-site-google'],
     question: {
       nl: 'Word ik ook gevonden door AI-zoekmachines zoals ChatGPT?',
@@ -767,8 +780,8 @@ export const knowledgeArticles: KnowledgeArticle[] = [
       {
         type: 'paragraph',
         content: {
-          nl: 'Een kennisbank zoals deze is daar een goed voorbeeld van: duidelijke vragen en antwoorden die machines makkelijk kunnen begrijpen.',
-          en: 'A knowledge base like this one is a good example: clear questions and answers that machines can understand easily.',
+          nl: 'Een kennisbank zoals deze is daar een goed voorbeeld van: duidelijke vragen en antwoorden die machines makkelijk kunnen begrijpen. Concrete feiten helpen ook: wie je bent, wat je doet, en vanaf welke prijs. Die samenvatting kan in een llms.txt staan, een kort tekstbestand dat AI-crawlers mogen lezen.',
+          en: 'A knowledge base like this one is a good example: clear questions and answers that machines can understand easily. Concrete facts help too: who you are, what you do, and from which price. That summary can live in an llms.txt, a short text file AI crawlers are allowed to read.',
         },
       },
     ],

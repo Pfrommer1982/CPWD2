@@ -16,6 +16,7 @@ useSeo(computed(() => ({
     <SectionsWorkSection />
     <SectionsAboutSection />
     <SectionsServicesSection />
+    <SectionsHomeAnswersSection />
     <SectionsMotionSection />
   </div>
 </template>

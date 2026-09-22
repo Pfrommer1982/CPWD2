@@ -1,44 +1,44 @@
 {
   "seo": {
     "home": {
-      "title": "CPWD",
-      "description": "CPWD is a web development agency based in the Netherlands. Bespoke websites, web apps and cloud hosting. Web design, development and launch."
+      "title": "Custom website, built in the Netherlands",
+      "description": "CPWD builds bespoke websites and web apps from the Netherlands. One-page sites from €175, business sites from €325. Get a no-obligation estimate in the planner."
     },
     "about": {
-      "title": "About",
-      "description": "CPWD is a web development agency based in the Netherlands. Bespoke websites, web apps and cloud hosting. Meet the team and explore our expertise."
+      "title": "Web development studio, Netherlands",
+      "description": "CPWD is a web development studio in the Netherlands. Bespoke websites, web apps and hosting, from brief to launch."
     },
     "work": {
-      "title": "Work",
-      "description": "Selected projects by CPWD: bespoke websites and web apps for brands ready to dominate online. Web development from the Netherlands."
+      "title": "Web design portfolio",
+      "description": "CPWD portfolio: bespoke websites and web apps, including CareerPulse and Accurate Black. Web design and development from the Netherlands."
     },
     "services": {
-      "title": "Services",
-      "description": "Web design, web development, cloud hosting, motion and sound design. CPWD handles the full scope from brief to launch in the Netherlands and beyond."
+      "title": "Web design and web development",
+      "description": "Web design, web development, hosting, motion and sound at CPWD. One studio in the Netherlands, from brief to a live custom website."
     },
     "contact": {
-      "title": "Contact",
-      "description": "Get in touch with CPWD for your next website or web app project. Web development agency based in the Netherlands. Personal reply within 24 hours on business days."
+      "title": "Contact, commission a website",
+      "description": "Need a website built? Email info{'@'}cpwd.nl. CPWD is a web development studio in the Netherlands and replies personally within 24 hours on business days."
     },
     "faq": {
-      "title": "Knowledge base & frequently asked questions",
-      "description": "Answers to frequently asked questions about building websites: pricing, process, technology, SEO and maintenance. The complete knowledge base of web development agency CPWD."
+      "title": "Website knowledge base",
+      "description": "Answers about commissioning a website: pricing, timeline, technology, SEO and maintenance. The knowledge base of web studio CPWD."
     },
     "websiteScanner": {
-      "title": "Website scanner",
-      "description": "Scan your website’s speed, SEO, accessibility and technical quality. CPWD translates Lighthouse data into clear, human insights."
+      "title": "Free website scan",
+      "description": "Free scan of speed, SEO, accessibility and technical quality. CPWD turns the measurement into a clear report about your website."
     },
     "projectEstimator": {
-      "title": "Website planner",
-      "description": "Answer simple questions about your business and get a clear website recommendation with a non-binding price indication."
+      "title": "Website price estimate",
+      "description": "What does a website cost? Answer a few questions and get a no-obligation price indication for a custom site from CPWD."
     },
     "privacy": {
       "title": "Privacy policy",
-      "description": "CPWD privacy policy. Learn what personal data we process, why, and what rights you have under the GDPR."
+      "description": "CPWD privacy policy. What data we process, why, and which rights you have under the GDPR."
     },
     "terms": {
       "title": "Terms of service",
-      "description": "CPWD terms of service for web design, web development and related services."
+      "description": "CPWD terms of service for web design, web development, hosting and related services."
     }
   }
 }

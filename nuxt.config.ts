@@ -118,12 +118,12 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: 'nl',
       },
-      title: 'CPWD',
+      title: 'Website laten maken in Nederland | CPWD',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: 'CPWD bouwt maatwerk websites en webapps vanuit Nederland. Webdesign, development en online lancering.' },
-        { name: 'author', content: 'Christoph Pfrommer' },
+        { name: 'description', content: 'CPWD bouwt maatwerk websites en webapps vanuit Nederland. One-page vanaf €175, bedrijfssite vanaf €325. Vrijblijvende prijsindicatie in de planner.' },
+        { name: 'author', content: 'Christoph' },
         { name: 'publisher', content: 'CPWD' },
         { name: 'theme-color', content: '#38965A' },
         { name: 'geo.region', content: 'NL' },

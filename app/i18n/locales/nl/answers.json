@@ -1,0 +1,33 @@
+{
+  "answers": {
+    "label": "FEITEN",
+    "heading": "Website laten maken, in het kort.",
+    "intro": "CPWD is een webdevelopment-bureau in Nederland. We ontwerpen en bouwen maatwerk websites en webapps, van briefing tot livegang en hosting.",
+    "items": {
+      "what": {
+        "q": "Wat doet CPWD?",
+        "a": "We maken maatwerk websites, webapps en de hosting eromheen. Geen templates. Design, development en livegang zitten in één traject.",
+        "more": "Meer over de aanpak",
+        "href": "/faq/wat-doet-cpwd"
+      },
+      "price": {
+        "q": "Wat kost een website?",
+        "a": "Een one-page begint bij €{onePage}. Een portfolio bij €{portfolio}. Een bedrijfssite bij €{business}. Een webshop bij €{webshop}. Een webapp bij €{webapp}. Hosting via CPWD is €{hosting} per jaar. Extra pagina's en opties komen daar bovenop. De planner geeft een vrijblijvende indicatie. De offerte daarna is een vaste prijs.",
+        "more": "Open de planner",
+        "href": "/project-estimator"
+      },
+      "time": {
+        "q": "Hoe lang duurt het?",
+        "a": "Een compacte site is vaak binnen een paar weken live. Een webshop of webapp duurt langer, afhankelijk van inhoud en koppelingen.",
+        "more": "Bekijk de doorlooptijd",
+        "href": "/faq/hoe-lang-duurt-website"
+      },
+      "where": {
+        "q": "Waar werken jullie?",
+        "a": "Vanuit Nederland, in het Nederlands en Engels, voor klanten hier en daarbuiten. Contact loopt via info{'@'}cpwd.nl.",
+        "more": "Stuur een bericht",
+        "href": "/contact"
+      }
+    }
+  }
+}

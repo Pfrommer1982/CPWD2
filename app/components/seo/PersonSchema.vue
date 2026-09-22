@@ -8,12 +8,12 @@ const siteUrl = (config.public.siteUrl as string).replace(/\/$/, '')
 const schema = computed(() => ({
   '@context': 'https://schema.org',
   '@type': 'Person',
-  name: 'Christoph Pfrommer',
+  name: 'Christoph',
   url: siteUrl,
-  jobTitle: locale.value === 'nl' ? 'Web Developer // CPWD' : 'Web Developer // CPWD',
+  jobTitle: 'Web Developer // CPWD',
   description: locale.value === 'nl'
-    ? 'Oprichter van CPWD. Webdevelopment-bureau uit Nederland. Maatwerk websites en webapps.'
-    : 'Founder of CPWD. Web development agency based in the Netherlands. Bespoke websites and web apps.',
+    ? 'Bouwt maatwerk websites en webapps bij CPWD, vanuit Nederland.'
+    : 'Builds bespoke websites and web apps at CPWD, from the Netherlands.',
   address: {
     '@type': 'PostalAddress',
     addressCountry: 'NL',
